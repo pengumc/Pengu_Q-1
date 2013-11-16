@@ -1,0 +1,131 @@
+</script>
+<style>
+    *{margin:0px;padding:0px;text-decoration:none;font-family:sans-serif;font-size:16px;}
+    body{
+        background-color:#eee;
+    }
+    #trace {display:inline-block;vertical-align:top;}
+    #page{
+        background-color:white;
+        border:1px solid #ccc;
+        border-bottom:3px solid #ccc;
+        border-right:3px solid #ccc;
+        margin-top:30px;
+        margin-left:auto;
+        margin-right:auto;
+        width:940px;
+        min-height:200px;
+        padding:5px;
+    }
+    .flist{
+        border-bottom:1px solid #ccc;
+        display:inline-block;
+        width:200px;
+    }
+        .func{
+            border:1px solid #ccc;
+            border-bottom:none;
+            padding:3px;
+            background-color:white;
+            color:black;
+            text-decoration:none;
+            font-weight:bold;
+        //    cursor:pointer;
+        }
+        .func:hover{
+            border-right:none;
+            background-color:#0075ff;
+            color:white;
+        }
+    #status{
+        border:1px solid #ccc;
+        margin-bottom:3px;
+        height:25px;
+    }
+        .substatus{
+            float:left;
+            display:inline-block;
+            padding:3px;
+            border-right:1px solid #ccc;
+            background-color:lightgreen;
+            font-weight:bold;
+        }
+        
+    #data{
+        vertical-align:top;
+        padding:3px;
+        display:inline-block;
+        border:1px solid #ccc;
+        border-left:none;
+        min-height:50%;
+    }
+</style>
+
+</head>
+<body>
+<div>
+<div id="page">
+    <div id="status">
+        <div class="substatus">important stuff here</div>
+    </div>
+    <div class="flist">
+        <a href="#" onclick="get_servo_data(this)"><div class="func">get servo data</div></a>
+        <a href="#" onclick="is_library_loaded(this)"><div class="func">is_library_loaded </div></a>
+        <a href="#"><div class="func">aap1 </div></a>
+        <a href="#" onclick="$.ajax({url:'quit'});$('#page').text('server stopped')"><div class="func">quit </div></a>
+    </div><div id="data">
+        data
+    </div>
+</div>
+</div>
+<div id="trace" style="border:1px solid black"></div>
+
+<script>
+//$("#data").hide()
+var servos=new Array(12);
+var aap;
+var libloaded = false;
+
+function sendtest(request){
+    $.ajax({
+        url:request
+    }).success(function traceit(data){trace(data);});
+
+}
+//-------get servo data ---------------------------------------------------------------------------
+function get_servo_data(e){
+    $(".func").css("border-right-color","#ccc");
+    $(e).children().css("border-right-color","white");
+    $.ajax({url:"get_servo_data"}).success(function(d){
+        var el = document.getElementById("data");
+        el.innerHTML = "";
+        el.innerHTML = d.a;
+    });
+}
+//-------is library loaded-------------------------------------------------------------------------
+function is_library_loaded(e){
+    $(".func").css("border-right-color","#ccc");
+    $(e).children().css("border-right-color","white");
+    $.ajax({url:"is_library_loaded"}).success(function(d){
+        if (d.loaded > 0 ){
+            libloaded = true;
+        }else{
+            libloaded = false;
+        }
+        $("#data").text(d);
+    });
+}
+
+
+//=====================
+// TRACE
+//=====================
+function trace(text){
+    el = document.getElementById("trace");
+    if(el.childNodes.length > 40) el.removeChild(el.childNodes[0]);
+    el.innerHTML += "<div>"+text+"</div>";
+}
+</script>
+
+</body>
+</html>
