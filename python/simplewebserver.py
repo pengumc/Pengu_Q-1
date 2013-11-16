@@ -3,6 +3,8 @@ import threading
 import Queue
 import os
 
+ss_quit_event = threading.Event()
+
 def send_data(c, data, mimetype="application/json"):
     response = (
         'HTTP/1.0 200 OK\r\n' + 
@@ -26,7 +28,6 @@ def parse_request(text):
         return(text[a+1:b])
     return('')
 
-
 #accept connections
 #start client for those connections
 class SimpleWebServer(threading.Thread):
@@ -44,18 +45,24 @@ class SimpleWebServer(threading.Thread):
         while self.running:
             try: 
                 c, a = self.s.accept()
+                Client(c, self.q).start()
+            except socket.timeout:
+                if ss_quit_event.wait(0):
+                    self.running = False
+                    break
             except:
                 self.running = False
                 break
-            Client(c, self.q).start()
+        self.s.close()
             
     def setup_socket(self):
+        socket.setdefaulttimeout(1)
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.bind(('', self.port));
         self.s.listen(5)
 
 #parse received data
-#put connection and parsed req on queue
+#put connection and parsed req on queue as (c, req)
 class Client(threading.Thread):
     def __init__(self, c, q):
         threading.Thread.__init__(self)
@@ -75,6 +82,7 @@ class Client(threading.Thread):
             except:
                 done = True
                 break
+            if not data: break
             #create complete msg
             received = received + data
             if received.endswith('\r\n\r\n'):
@@ -85,23 +93,54 @@ class Client(threading.Thread):
             
 #take stuff from que and send responses
 class SimpleHandler(threading.Thread):
+    HTMLFILE1 = "web/webinterface1.html"
+    HTMLFILE2 = "web/webinterface2.html"
+    JQUERYFILE = "web/jquery-2.0.3.min.js"
+
     def __init__(self, q):
         threading.Thread.__init__(self)
         self.q = q
 
     def run(self):
-        while 1:
+        self.running = True
+        while self.running:
             try:
-                c, req = self.q.get()
+                c, req = self.q.get(True, 0.01)
+                data, mimetype = self.gen_data(req)
+                send_data(c, data, mimetype)
+                c.close()
+            except Queue.Empty:
+                pass
+            #except 404, send_404, c.close
             except:
+                self.running = False
                 break
-            send_data(c, "{'1':'42'}")
-            c.close()
-            if req == 'quit':
-                os._exit(0)
+            if ss_quit_event.wait(0): self.running = False
+    
+    def gen_data(self, req):
+        if req == '/quit':
+            ss_quit_event.set()
+        elif req == '/':
+            return(self.gen_data_page(), "text/html")
+        else:
+            return('{"a":"43"}', "application/json")
+            #raise 404
+            
+    def gen_data_page(self):
+        f = open(self.HTMLFILE1)
+        page = f.read()
+        f.close()
+        f = open(self.JQUERYFILE)
+        page = page + f.read()
+        f.close()
+        f = open(self.HTMLFILE2)
+        page = page + f.read()
+        f.close()
+        return(page)
             
 S = SimpleWebServer(42426)
 H = SimpleHandler(S.q)
     
 if __name__ == "__main__":
-    pass
+    S.start()
+    H.start()
