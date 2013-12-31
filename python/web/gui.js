@@ -200,7 +200,7 @@ function setup_canvas(ctx, height, width){
 
 //------------------------------------------------MAIN-------------------------------
 function setup_main(){
-
+    start();
 }
 
 
