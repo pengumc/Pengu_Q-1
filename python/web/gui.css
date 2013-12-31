@@ -1,0 +1,178 @@
+*{padding:0px;margin:0px;font-family:sans-serif;font-size:16px;}
+
+body{background-color:#eee;}
+
+#trace {display:inline-block;vertical-align:top;}
+
+#page{
+    background-color:white;
+    border:1px solid #ccc;
+    border-bottom:3px solid #ccc;
+    border-right:3px solid #ccc;
+    margin-top:30px;
+    margin-left:auto;
+    margin-right:auto;
+    min-height:200px;
+    padding:5px;
+    width:940px;
+}
+#topbar{
+    border:1px solid #ccc;
+    border-bottom:3px solid #ccc;
+    border-right:3px solid #ccc;
+}
+    #topbar .topitemred, #topbar .topitemgreen{
+        border-right:1px solid #ccc;
+        display:inline-block;
+        font-weight:bold;
+        padding:3px;
+        padding-left:10px;
+        padding-right:10px;
+        margin-bottom:-3px;
+    }
+    #topbar .topitemred{
+        border-bottom:3px solid red;
+        background-color:pink;
+    }
+    #topbar .topitemred:hover{
+        background-color:gold;
+        cursor:pointer;
+    }
+    #topbar .topitemgreen{
+        border-bottom:3px solid #00aa00;
+        background-color:lightgreen;
+    }
+    
+#tabfield{
+    border-left:1px solid #ccc;
+}
+    #tabfield .tab, #tabfield .taba{
+        display:inline-block;
+        border:1px solid #ccc;
+        border-left:none;
+        font-weight:bold;
+        padding:3px;
+        padding-left:10px;
+        padding-right:10px;
+        z-index:1
+    }
+    #tabfield .tab{
+        border-bottom:1px solid #ccc;
+        background-color:#f8f8f8;
+        padding-bottom:5px;
+    }
+    #tabfield .tab:hover{
+        border-bottom:3px solid #ccc;
+        padding-bottom:3px;
+        cursor:pointer;
+    }
+    #tabfield .taba{
+        border-bottom:3px solid white;
+        padding-bottom:3px;
+    }
+    
+.data{
+    border:1px solid #ccc;
+    border-bottom:3px solid #ccc;
+    border-right:3px solid #ccc;
+    margin-top:-1px;
+    padding:10px;
+    width:90;
+    z-index:0;
+}
+    .cvleg, .cvmain{
+        background-color:white;
+        border:1px solid #ccc;
+        margin-left:15px;
+    }
+#v_Manual{}
+    .spacer{
+        display:inline-block;
+        width:50px;
+    }
+    .sbox{
+        border:1px solid #ccc;
+        display:inline-block;
+        margin-right:10px;
+    }
+        .sno{
+            padding:5px;
+            font-weight:bold;
+            color:white;
+            background-color:#0075ff;
+            text-align:center;
+        }
+        .spw, .sangle{
+            padding:5px;
+            text-align:right;
+        }
+        .sbox canvas{
+            display:inline-block;
+            padding:5px;
+        }
+        .sdhold{
+            vertical-align:top;
+            display:inline-block;
+        }
+        .sup, .sdown{
+            background-color:#0075ff;
+            display:inline-block;
+            font-weight:bold;
+            font-size:22px;
+            text-align:center;
+            width:58px;
+        }
+        .sup{border-left:3px solid white;}
+        .sup:hover, .sdown:hover{
+            background-color:#0050aa;
+            cursor:pointer;
+        }
+    
+#errors{
+    border:1px solid #ccc;
+    border-bottom:3px solid #ccc;
+    border-right:3px solid #ccc;
+    padding:10px;
+    margin-top:20px;
+    height:400px;
+    overflow-y:scroll;
+}
+    #errors .err, #errors .suc, #errors .msg{
+        padding:3px;
+        padding-left:10px;
+        margin-bottom:10px;
+    }
+    
+    #errors .err{
+        border:1px solid red;
+        border-left:3px solid red;
+    }
+    #errors .suc{
+        border:1px solid #0a0;
+        border-left:3px solid #0a0;
+    }
+    #errors .msg{
+        border:1px solid #ccc;
+        border-left:3px solid #ccc;
+    }
+
+/*arrows*/
+    .arrow-left, .arrow-right, .arrow-up, .arrow-down{
+        border-width:14px;
+        border-style:solid;
+        width:00px;
+        height:00px;
+        position:relative;
+        display:inline-block;
+    }
+    .arrow-up{
+        border-color:transparent transparent white transparent;
+        top:-3px;
+        left:0px;
+    }
+    .arrow-down{
+        border-color:white transparent transparent transparent;
+        top:10px;
+        left:0px;
+    }
+    

@@ -4,6 +4,7 @@ import Queue
 import os
 
 ss_quit_event = threading.Event()
+ss_queue = Queue.Queue()
 
 def send_data(c, data, mimetype="application/json"):
     response = (
@@ -16,25 +17,39 @@ def send_data(c, data, mimetype="application/json"):
     )
     c.sendall(response)
 
+def send_404(c):
+    response =(
+        'HTTP/1.0 404 Not Found\r\n' + 
+        'Connection: close\r\n\r\n'
+        'Content-Length: 0\r\n\r\n'
+    )
+    c.sendall(response)
+    
+    
 def parse_request(text):
     #only look at first line
     first_linebreak = text.find('\r\n')
     if first_linebreak > 1 :
-        print(text[0:first_linebreak])
         #now find the request between the 
         #first two spaces
         a = text.find(' ')
         b = text.find(' ', a + 1)
         return(text[a+1:b])
-    return('')
+    return('unknown')
 
+
+class NotFound404(Exception):
+    def __init__(self,value):
+        self.value = value
+    def __str__(self):
+        return(repr(self.value))
+    
 #accept connections
 #start client for those connections
 class SimpleWebServer(threading.Thread):
     def __init__(self, port):
         threading.Thread.__init__(self)
         self.port = port
-        self.q = Queue.Queue()
         self.running = False
         self.s = None
         
@@ -45,12 +60,13 @@ class SimpleWebServer(threading.Thread):
         while self.running:
             try: 
                 c, a = self.s.accept()
-                Client(c, self.q).start()
+                Client(c).start()
             except socket.timeout:
                 if ss_quit_event.wait(0):
                     self.running = False
                     break
-            except:
+            except Exception as e:
+                print(e.value)
                 self.running = False
                 break
         self.s.close()
@@ -64,10 +80,9 @@ class SimpleWebServer(threading.Thread):
 #parse received data
 #put connection and parsed req on queue as (c, req)
 class Client(threading.Thread):
-    def __init__(self, c, q):
+    def __init__(self, c):
         threading.Thread.__init__(self)
         self.c = c
-        self.q = q
         
     def run(self):
         #recv and parse
@@ -88,58 +103,73 @@ class Client(threading.Thread):
             if received.endswith('\r\n\r\n'):
                 #received request
                 req = parse_request(received)
-                self.q.put((self.c, req))
+                ss_queue.put((self.c, req))
                 done = True
-            
+                return
+        self.c.close()
 #take stuff from que and send responses
 class SimpleHandler(threading.Thread):
     HTMLFILE1 = "web/webinterface1.html"
     HTMLFILE2 = "web/webinterface2.html"
     JQUERYFILE = "web/jquery-2.0.3.min.js"
 
-    def __init__(self, q):
+    def __init__(self):
         threading.Thread.__init__(self)
-        self.q = q
 
     def run(self):
         self.running = True
         while self.running:
             try:
-                c, req = self.q.get(True, 0.01)
-                data, mimetype = self.gen_data(req)
+                c, req = ss_queue.get(True, 1)
+                print("handling: {}".format(req))
+                data, mimetype = gen_data(req)
                 send_data(c, data, mimetype)
                 c.close()
             except Queue.Empty:
-                pass
-            #except 404, send_404, c.close
-            except:
+                continue
+            except NotFound404:
+                send_404(c)
+                c.close()
+                break
+            except Exception as e:
+                print(e)
                 self.running = False
+                c.close()
                 break
             if ss_quit_event.wait(0): self.running = False
     
-    def gen_data(self, req):
-        if req == '/quit':
-            ss_quit_event.set()
-        elif req == '/':
-            return(self.gen_data_page(), "text/html")
-        else:
-            return('{"a":"43"}', "application/json")
-            #raise 404
-            
-    def gen_data_page(self):
-        f = open(self.HTMLFILE1)
-        page = f.read()
-        f.close()
-        f = open(self.JQUERYFILE)
-        page = page + f.read()
-        f.close()
-        f = open(self.HTMLFILE2)
-        page = page + f.read()
-        f.close()
-        return(page)
+def gen_data(req):
+    if req == '/quit':
+        ss_quit_event.set()
+        return('{"quit":"yes"}', "application/json")
+    elif req == '/':
+        return(gen_data_page(), "text/html")
+    elif req == '/get_servo_data':
+        return(gen_data_sd(), "application/json")
+    elif req == 'is_library_loaded':
+        return('{"aap":1}', "application/json")
+    elif req == '/favicon.ico':
+        raise(NotFound404("404"))
+    else:
+        return('{"error":"unknown function"}', "application/json")
+        
+def gen_data_page():
+    f = open(SimpleHandler.HTMLFILE1)
+    page = f.read()
+    f.close()
+    f = open(SimpleHandler.JQUERYFILE)
+    page = page + f.read()
+    f.close()
+    f = open(SimpleHandler.HTMLFILE2)
+    page = page + f.read()
+    f.close()
+    return(page)
+
+def gen_data_sd():
+    return('{"pw":[1,2,3,4,5,6,7,8,9,10,11,12]}')
             
 S = SimpleWebServer(42426)
-H = SimpleHandler(S.q)
+H = SimpleHandler()
     
 if __name__ == "__main__":
     S.start()

@@ -30,7 +30,8 @@
             color:black;
             text-decoration:none;
             font-weight:bold;
-        //    cursor:pointer;
+            z-index:1;
+        
         }
         .func:hover{
             border-right:none;
@@ -46,18 +47,25 @@
             float:left;
             display:inline-block;
             padding:3px;
+            padding-right:10px;
+            padding-left:10px;
             border-right:1px solid #ccc;
-            background-color:lightgreen;
             font-weight:bold;
         }
+        #libloaded{background-color:pink;}
+        #usb{background-color:pink;}
+        
         
     #data{
         vertical-align:top;
         padding:3px;
         display:inline-block;
         border:1px solid #ccc;
-        border-left:none;
-        min-height:50%;
+        margin-left:-1px;
+        /*border-left:none;*/
+        min-height:500px;
+        min-width:700px;
+        z-index:0;
     }
 </style>
 
@@ -66,15 +74,20 @@
 <div>
 <div id="page">
     <div id="status">
-        <div class="substatus">important stuff here</div>
+        <div id="libloaded" class="substatus">No Library</div>
+        <div id="usb" class="substatus">No USB Connection</div>
     </div>
+    <div>
     <div class="flist">
         <a href="#" onclick="get_servo_data(this)"><div class="func">get servo data</div></a>
         <a href="#" onclick="is_library_loaded(this)"><div class="func">is_library_loaded </div></a>
-        <a href="#"><div class="func">aap1 </div></a>
-        <a href="#" onclick="$.ajax({url:'quit'});$('#page').text('server stopped')"><div class="func">quit </div></a>
+        <a href="#" onclick="echo(this)"><div class="func">echo?aap=3&noot=mies</div></a>
+        <a href="#" onclick="load_lib(this)"><div class="func">load_lib</div></a>
+        <a href="#" onclick="$.ajax({url:'quit'});$('#page').text('server stopped')">
+        <div class="func">quit </div></a>
     </div><div id="data">
         data
+    </div>
     </div>
 </div>
 </div>
@@ -85,6 +98,10 @@
 var servos=new Array(12);
 var aap;
 var libloaded = false;
+$(document).ajaxError(function(ev, d){
+   alert(d.responseJSON.error);
+});
+window.addEventListener("keypress",function(){$.ajax({url:"get_servo_data"})})
 
 function sendtest(request){
     $.ajax({
@@ -92,20 +109,23 @@ function sendtest(request){
     }).success(function traceit(data){trace(data);});
 
 }
+function update_func_css(e){
+    $(".func").css("border-right","1px solid #ccc");
+    $(e).children().css("border-right","5px solid blue");
+}
+
 //-------get servo data ---------------------------------------------------------------------------
 function get_servo_data(e){
-    $(".func").css("border-right-color","#ccc");
-    $(e).children().css("border-right-color","white");
+    update_func_css(e);
     $.ajax({url:"get_servo_data"}).success(function(d){
         var el = document.getElementById("data");
         el.innerHTML = "";
-        el.innerHTML = d.a;
+        el.innerHTML = d.pw
     });
 }
 //-------is library loaded-------------------------------------------------------------------------
 function is_library_loaded(e){
-    $(".func").css("border-right-color","#ccc");
-    $(e).children().css("border-right-color","white");
+    update_func_css(e);
     $.ajax({url:"is_library_loaded"}).success(function(d){
         if (d.loaded > 0 ){
             libloaded = true;
@@ -115,7 +135,28 @@ function is_library_loaded(e){
         $("#data").text(d);
     });
 }
-
+//-------echo -------------------------------------------------------------------------------------
+function echo(e){
+    update_func_css(e);
+    $.ajax({url:"echo?aap=3&noot=mies"}).success(function(d){
+        $('#data').text(d);
+    });
+}
+//-------load_lib ---------------------------------------------------------------------------------
+function load_lib(e){
+    update_func_css(e);
+    $.ajax({url:"load_lib?path=libcrobot64.dll"}).success(function(d){
+        $('#libloaded').css("background-color","lightgreen").text("Library Loaded");
+    }).error(function(d){
+        err = d.responseJSON.error
+        $('#data').text(err)
+        if (err == "'already loaded'"){
+            $('#libloaded').css("background-color","lightgreen").text("Library Loaded");
+        }else{
+            $('#libloaded').css("background-color","pink").text("No Library");
+        }
+    });
+}
 
 //=====================
 // TRACE

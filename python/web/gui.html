@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Q-1 GUI</title>
+    <script src="gui.js"></script>
+    <script src="jquery-2.0.3.min.js"></script>
+    <link rel="stylesheet" href="gui.css">
+</head>
+<body>
+    <div id="page">
+        <div id="topbar">
+            <div id = "toplib" onclick="click_library(this)" class="topitemred">Library</div><div id="topusb" class="topitemred" onclick="click_usb(this)">USB</div><div id="topctrl" class="topitemgreen">Controller</div><div id="topacc" class="topitemred">Accelerometer</div>
+        </div>
+        &nbsp
+        <div id="tabfield">
+            <div class="tab" onclick="click_tab(this)">Main</div><div class="taba" onclick="click_tab(this)">Manual</div><div class="tab" onclick="click_tab(this)">Configuration</div>
+        </div>
+        <div id="v_Main" class="data">
+            <canvas width="400" height="400" id="cvmain" class="cvmain"></canvas>
+        </div>
+        <div id="v_Manual" class="data">
+        
+        
+        </div>
+        <div id="v_Configuration" class="data">
+            config
+        </div>
+        <div id="errors">
+        </div>
+
+    </div>
+    
+    <div id="trace" style="border:1px solid black">zomg</div>
+    <script>
+        click_tab($('.taba'));
+        setup_manual();
+        
+        var ctx_main = document.getElementById("cvmain").getContext("2d");
+        draw_grid(ctx_main, 400,400,20,"#ccc");
+        setup_canvas(ctx_main, 200,200);
+        
+        
+    </script>
+</body>
+</html>
