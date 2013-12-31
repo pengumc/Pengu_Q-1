@@ -29,7 +29,8 @@ class Crobot:
         return(self.connected)
     #---------------------------------------------------------------------------
     def __del__(self):
-        self.lib.Quadruped_free(self.qped)
+        if hasattr(self,"lib"):
+            self.lib.Quadruped_free(self.qped)
     #--------------------------------------------------------------------------    
     def getButton(self, button):
         t = self.lib.Quadruped_getPsButton(self.qped, button)
@@ -103,6 +104,9 @@ class Crobot:
         #TODO parse return value
         print("rotate: " + str(result))
         return(result)
+    #--------------------------------------------------------------------------
+    def get_servo_data(self):
+        return(self.lib.Quadruped_getServoData(self.qped))
                 
 class SERVOPOS (Structure):
     _fields_ = [("x", c_double*Crobot.SERVOCOUNT),

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Q-1 GUI</title>
+    <script src="../../../../js/q1webgl/mainwebgl.js"></script>
+    <script src="../../../../js/q1webgl/line3d.js"></script>
+    <script src="../../../../js/q1webgl/q1model.js"></script>
+    <script src="../../../../js/q1webgl/object3d.js"></script>
+    <script src="gui.js"></script>
+    <script src="jquery-2.0.3.min.js"></script>
+    <link rel="stylesheet" href="gui.css">
+</head>
+<body>
+    <div id="debug"><div>
+    <div id="page">
+        <div id="topbar">
+            <div id = "toplib" onclick="click_library(this)" class="topitemred">Library</div><div id="topusb" class="topitemred" onclick="click_usb(this)">USB</div><div id="topctrl" class="topitemgreen">Controller</div><div id="topacc" class="topitemred">Accelerometer</div>
+        </div>
+        &nbsp
+        <div id="tabfield">
+            <div class="tab" onclick="click_tab(this)">Main</div><div class="taba" onclick="click_tab(this)">Manual</div><div class="tab" onclick="click_tab(this)">Configuration</div>
+        </div>
+        <div id="v_Main" class="data">
+            <canvas id="webglcv" width="512" height="512"> </canvas>
+        </div>
+        <div id="v_Manual" class="data">
+        
+        
+        </div>
+        <div id="v_Configuration" class="data">
+            config
+        </div>
+        <div id="errors">
+        </div>
+
+    </div>
+    
+    <div id="trace" style="border:1px solid black">zomg</div>
+    
+            <div id="fragment_shader_src" style="display:none;">
+            varying lowp vec3 vLighting;
+            varying lowp vec3 vColor;
+            void main(void) {
+                gl_FragColor = vec4(vColor*vLighting, 1.0);
+              }
+        </div>
+        <div id="vertex_shader_src" style="display:none;">
+            attribute vec3 aVertexPosition;
+            attribute vec3 aVertexNormal;
+            uniform lowp mat4 uMVCMatrix;//world
+            uniform lowp mat4 uMVOMatrix;//object
+            uniform lowp mat4 uPMatrix;
+            uniform lowp mat4 uRMatrix;
+            uniform lowp mat4 uOriMatrix;
+            uniform lowp mat4 uScaleMatrix;
+            uniform lowp vec3 uColor;
+            
+            varying lowp vec3 vLighting;
+            varying lowp vec3 vColor;
+            
+            void main(void) {
+                const lowp vec3 ambientLightColor = vec3(0.5, 0.5, 0.5);
+                const lowp vec3 directLightDir = vec3(0.0, 0.0, 1.0);
+                const lowp vec3 directLightColor = vec3(.7, .7, .7);
+                
+                //yes, this is incredibly redundant, i know                
+                gl_Position = uPMatrix * uMVCMatrix * uRMatrix * uMVOMatrix * uOriMatrix * uScaleMatrix * vec4(aVertexPosition, 1.0);
+    
+                lowp vec4 transformedNormal =  uOriMatrix * vec4(aVertexNormal, 1.0);
+                float intensity =max(dot(transformedNormal.xyz, directLightDir), 0.0);
+                vLighting = ambientLightColor + (directLightColor * intensity);
+                vColor = uColor;
+            }
+        </div>
+        <div id="line_shader" style="display:none;">
+            attribute vec3 aVertexPosition;
+            uniform lowp mat4 uMVCMatrix;//world
+            uniform lowp mat4 uMVOMatrixStart;//object
+            uniform lowp mat4 uMVOMatrixEnd;//object
+            uniform lowp mat4 uPMatrix;
+            uniform lowp mat4 uRMatrix;
+            uniform lowp vec3 uColor;
+            
+            varying lowp vec3 vLighting;
+            varying lowp vec3 vColor;
+            
+            void main(void){
+                if(aVertexPosition[0] == -1.0)
+                    gl_Position =  uPMatrix * uMVCMatrix * uRMatrix * uMVOMatrixStart * vec4(0.0, 0.0, 0.0, 1.0);
+                else
+                    gl_Position =  uPMatrix * uMVCMatrix * uRMatrix * uMVOMatrixEnd * vec4(0.0, 0.0, 0.0, 1.0);
+                
+                vLighting = vec3(1.0, 1.0, 1.0);
+                vColor = uColor;
+            }
+            
+        </div>
+        <div id="dumb_vertex_shader" style="display:none;">
+            attribute vec3 aVertexPosition;
+            uniform lowp mat4 uMVCMatrix;//world
+            uniform lowp mat4 uMVOMatrix;//object
+            uniform lowp mat4 uPMatrix;
+            uniform lowp mat4 uRMatrix;
+            uniform lowp mat4 uOriMatrix;
+            uniform lowp mat4 uScaleMatrix;
+            uniform mediump float uIndex;
+            
+            varying mediump float index;
+            
+            void main(void){
+                //yes, this is incredibly redundant, i know
+                gl_Position = uPMatrix * uMVCMatrix * uRMatrix * uMVOMatrix * uOriMatrix * uScaleMatrix * vec4(aVertexPosition, 1.0);
+                index = uIndex;
+            }
+            
+        </div>
+        <div id="dumb_fragment_shader" style="display:none;">
+            varying mediump float index;
+            
+            void main(void){
+                gl_FragColor = vec4(0.0, 0.0, (index+1.0)/255.0, 1.0);
+            }
+        </div>
+
+    
+    
+    <script>
+        click_tab($('.taba'));
+        setup_manual();
+        setup_main();
+        
+        
+    </script>
+</body>
+</html>
