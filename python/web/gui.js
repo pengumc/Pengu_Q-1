@@ -168,6 +168,20 @@ function add_sbox(n, parent){
     parent.append(el);
 }
 
+
+//=====================
+// DRAW ANGLE
+//=====================
+function draw_angle(ctx, angle, size){
+    ctx.clearRect(-size/2, -size/2, size, size)
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.arc(0,0,size*0.4, 0, Math.PI*2);
+    ctx.moveTo(0,0);
+    ctx.lineTo(Math.cos(angle)*size*0.4,Math.sin(angle)*size*0.4 );
+    ctx.stroke();
+}
+
 //=====================
 // SETUP CANVAS
 //=====================
@@ -184,46 +198,9 @@ function setup_canvas(ctx, height, width){
     ctx.lineWidth = 0.1;
 }
 
+//------------------------------------------------MAIN-------------------------------
+function setup_main(){
 
-//=====================
-// DRAW GRID
-//=====================
-function draw_grid(ctx, width, height, size, color){
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.moveTo(0,0);
-    var i;
-    for(i=0;i<width;i+=size){
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i,height);
-    }
-    for(i=0;i<height;i+=size){
-        ctx.moveTo(0, i);
-        ctx.lineTo(width,i);
-    }
-    ctx.stroke();
-    ctx.closePath();
 }
 
 
-//=====================
-// DRAW LEG
-//=====================
-function draw_leg(ctx, s1, s2, s3, A,B,C){
-    ctx.beginPath();
-    ctx.fillStyle="red";
-    ctx.fillRect(s1.x-1, s1.y-1, 2,2);
-}
-
-//=====================
-// DRAW ANGLE
-//=====================
-function draw_angle(ctx, angle, size){
-    ctx.clearRect(-size/2, -size/2, size, size)
-    ctx.beginPath();
-    ctx.strokeStyle = "black";
-    ctx.arc(0,0,size*0.4, 0, Math.PI*2);
-    ctx.moveTo(0,0);
-    ctx.lineTo(Math.cos(angle)*size*0.4,Math.sin(angle)*size*0.4 );
-    ctx.stroke();
-}

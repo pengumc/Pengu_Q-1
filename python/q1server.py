@@ -169,7 +169,7 @@ def send_change_servo(c, d={}):
         r = crobot.commit()
         if r < 0:
             synced = False
-        send_data(c, gen_servo_data(sync))
+        send_data(c, gen_servo_data(synced))
     except Exception as e:
         send_error(c, e)
     
