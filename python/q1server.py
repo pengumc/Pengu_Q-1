@@ -180,23 +180,56 @@ def gen_servo_data(synced):
         l = ['{"synced":"1",']
     else:
         l = ['{"synced":"0",']
+	#"pw":[pw,pw,pw]
     l.append('"pw":[')
     for pw in crobot.com.pulsewidths:
         l.append(repr(pw))
         l.append(',')
+	#"angles":[a,a,a,a]
     l[-1] = '], "angles":['
     for angle in crobot.com.angles:
         l.append(repr(angle))
         l.append(',')
+    #"servoposx":[x,x,x]
+    l[-1] = '], "servoposx":['
+    for x in crobot.com.servopos.x:
+		l.append(repr(x))
+		l.append(',')
+    #"servoposy":[y,y,y]
+    l[-1] = '], "servoposy":['
+    for y in crobot.com.servopos.y:
+		l.append(repr(y))
+		l.append(',')
+    #"servoposz":[z,z,z]
+    l[-1] = '], "servoposz":['
+    for z in crobot.com.servopos.z:
+		l.append(repr(z))
+		l.append(',')
+    #"endpointx":[x,x,x]
+    l[-1] = '], "endpointx":['
+    for x in crobot.com.endpoints.x:
+		l.append(repr(x))
+		l.append(',')
+    #"endpointy":[y,y,y]
+    l[-1] = '], "endpointy":['
+    for y in crobot.com.endpoints.y:
+		l.append(repr(y))
+		l.append(',')
+    #"endpointz":[z,z,z]
+    l[-1] = '], "endpointz":['
+    for z in crobot.com.endpoints.z:
+		l.append(repr(z))
+		l.append(',')
     l[-1] = ']}'
     return("".join(l))
+
 
 def send_connect(c):
     global crobot
     try:
         if crobot.connect() < 1:
             raise(Exception("connection failed"))
-        send_data(c, gen_servo_data())
+        send_data(c, gen_servo_data(True))
     except Exception as e:
         send_error(c, e)
     
@@ -246,7 +279,8 @@ class Server(threading.Thread):
 if __name__ == "__main__":
     crobot = None
     try:
-        crobot = crobotlib.Crobot("libcrobot642.dll")
+        crobot = crobotlib.Crobot("./libcrobot64.so.1.0.1")
+        crobot.enable_com()
         load_config()
     except Exception as e:
         print(e)

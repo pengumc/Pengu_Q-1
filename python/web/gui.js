@@ -125,7 +125,7 @@ function setup_manual(){
 
 function update_sboxes(data){
     snoes = $('.sno').each(function(index){
-        //$(this) is curren sno now
+        //$(this) is current sno now
         //update angle and pw text
         var i = parseInt($(this).text());
         $(this).parent().find('.spw').text(data['pw'][i]);
@@ -136,20 +136,45 @@ function update_sboxes(data){
     });
 }
 
+function update_Q1model(data){
+	//Q1 is global model
+	for(var s,i=0;s=Q1.servos[i];i++){
+		s.set_position(
+			data['servoposx'][i],
+			data['servoposy'][i],
+			data['servoposz'][i]
+		);
+	}
+	for(var e,i=0;e=Q1.endpoints[i];i++){
+		e.set_position(
+			data['endpointx'][i],
+			data['endpointy'][i],
+			data['endpointz'][i]
+		);
+	}
+}
+
 function click_sud(e, v){
     if ($('#toplib').hasClass('topitemred')) {
         simple_error("change_servo", {responseJSON:{error:"library state is unkown"}});
         return
     }
     var n = $(e).parent().siblings('.sno').text();
+    inc_servo(n,v);
+}
+
+function inc_servo(n,v){
     req = "change_servo?n=" + n + "&v=" + v;
-    $.ajax({url:req}).success(function(d){
-        simple_success("change_servo " + n + " by " + v, "success");
-        update_sboxes(d)
-        //redraw servo stuff
-    }).error(function(d){
-        simple_error(req, d);
-    });
+    for(var i=0;i<1;i++){ //x 10 to test response time
+		$.ajax({url:req}).success(function(d){
+			simple_success("change_servo " + n + " by " + v, "success");
+			update_sboxes(d);
+			update_Q1model(d);
+			//redraw servo stuff
+		}).error(function(d){
+			simple_error(req, d);
+		});
+	}
 }
 
 function add_sbox(n, parent){
@@ -201,6 +226,19 @@ function setup_canvas(ctx, height, width){
 //------------------------------------------------MAIN-------------------------------
 function setup_main(){
     start();
+    simple_msg("start");
+    var cv = document.getElementById("webglcv");
+    window.addEventListener("keydown", main_keydown);
 }
 
+function main_keydown(e){
+	if(Q1.selection_i >= 0 && Q1.selection_i < 12){
+		if(e.keyCode == 90){ //z
+			inc_servo(Q1.selection_i, -0.1);
+		}
+		else if(e.keyCode == 65){ //a
+			inc_servo(Q1.selection_i, 0.1);
+		}
 
+	}
+}
