@@ -165,17 +165,39 @@ function click_sud(e, v){
 
 function inc_servo(n,v){
     req = "change_servo?n=" + n + "&v=" + v;
-    for(var i=0;i<1;i++){ //x 10 to test response time
-		$.ajax({url:req}).success(function(d){
-			simple_success("change_servo " + n + " by " + v, "success");
-			update_sboxes(d);
-			update_Q1model(d);
-			//redraw servo stuff
-		}).error(function(d){
-			simple_error(req, d);
-		});
-	}
+	$.ajax({url:req}).success(function(d){
+		simple_success("change_servo " + n + " by " + v, "success");
+		update_sboxes(d);
+		update_Q1model(d);
+		//redraw servo stuff
+	}).error(function(d){
+		simple_error(req, d);
+	});
 }
+
+function change_leg(l, dx, dy, dz){
+	req = "change_leg?l=" + l + "&dx=" + dx + "&dy=" + dy + "&dz=" + dz;
+	$.ajax({url:req}).success(function(d){
+		simple_success("change_leg " + l + " by " + dx + ", " + dy + ", " + dz + " success");
+		update_sboxes(d);
+		update_Q1model(d);
+	}).error(function(d){
+		simple_error(req, d);
+	});
+}
+
+function change_all_legs(dx, dy, dz){
+	req = "change_all_legs?dx=" + dx + "&dy=" + dy + "&dz=" + dz;
+	$.ajax({url:req}).success(function(d){
+		simple_success("change_all_legs by " + dx + ", " + dy + ", " + dz + " success");
+		update_sboxes(d);
+		update_Q1model(d);
+	}).error(function(d){
+		simple_error(req, d);
+	});
+}
+
+
 
 function add_sbox(n, parent){
     /*other functions assume on this parent/child structure
@@ -233,12 +255,27 @@ function setup_main(){
 
 function main_keydown(e){
 	if(Q1.selection_i >= 0 && Q1.selection_i < 12){
+		//inc/dec servo angle
 		if(e.keyCode == 90){ //z
 			inc_servo(Q1.selection_i, -0.1);
 		}
 		else if(e.keyCode == 65){ //a
 			inc_servo(Q1.selection_i, 0.1);
 		}
-
+	}else if(Q1.selection_i >= 12){
+		//move leg connected to that endpoint
+		var leg = Q1.selection_i - 12;
+		if(e.keyCode == 90){ //z
+			change_leg(leg, 0.0, 0.0, -0.1);
+		}else if (e.keyCode == 65){ //a
+			change_leg(leg, 0.0, 0.0, 0.1);
+		}
+	}else{
+		//move body
+		if(e.keyCode == 90){ //z body down = legs up
+			change_all_legs(0.0, 0.0, 0.1);
+		}else if (e.keyCode == 65){ //a body up
+			change_all_legs(0.0, 0.0, -0.1);
+		}
 	}
 }

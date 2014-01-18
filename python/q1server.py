@@ -112,6 +112,10 @@ def switchboard(c, req):
         send_load_lib(c, req[1])
     elif req[0] == '/change_servo':
         send_change_servo(c, req[1]);
+    elif req[0] == '/change_leg':
+        send_change_leg(c, req[1]);
+    elif req[0] == '/change_all_legs':
+        send_change_all(c, req[1]);
     elif req[0] == '/connect':
         send_connect(c)
     else:
@@ -172,7 +176,37 @@ def send_change_servo(c, d={}):
         send_data(c, gen_servo_data(synced))
     except Exception as e:
         send_error(c, e)
-    
+
+def send_change_leg(c, d={}):
+	synced = True
+	try:
+		l = int(d['l'])
+		dx =float(d['dx'])
+		dy =float(d['dy'])
+		dz =float(d['dz'])
+		crobot.changeLeg(l, dx, dy, dz)
+		r = crobot.commit()
+		if r < 0:
+			synced = False
+		send_data(c, gen_servo_data(synced))
+	except Exception as e:
+		send_error(c,e)
+		
+def send_change_all(c, d={}):
+	synced = True
+	try:
+		dx =float(d['dx'])
+		dy =float(d['dy'])
+		dz =float(d['dz'])
+		crobot.changeAllLegs(dx, dy, dz)
+		r = crobot.commit()
+		if r < 0:
+			synced = False
+		send_data(c, gen_servo_data(synced))
+	except Exception as e:
+		send_error(c,e)
+		
+	
 def gen_servo_data(synced):
     global crobot
     if synced:
