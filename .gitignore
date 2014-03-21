@@ -1,1 +1,4 @@
 /cpplint.py
+/quadruped/*.o
+/quadruped/bin/*.exe
+/stream.txt

@@ -4,7 +4,9 @@
 
 #ifndef QUADRUPED_INCLUDE_LOG_H_
 #define QUADRUPED_INCLUDE_LOG_H_
+
 #include <stdarg.h>
+#include <stdio.h>
 
 namespace Q1 {
 

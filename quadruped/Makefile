@@ -11,7 +11,7 @@ CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 CLIBS =
 CC = gcc
 CPPC = g++
-OBJECTS =
+OBJECTS = log.o hmatrix.o pivot.o leg.o
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)
