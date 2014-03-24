@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['rotatevector',['RotateVector',['../class_q1_1_1_h_matrix.html#abb08d23d043fc373b0cca8231e872739',1,'Q1::HMatrix']]]
+  ['pivot',['Pivot',['../class_q1_1_1_pivot.html',1,'Q1']]],
+  ['pivot',['Pivot',['../class_q1_1_1_pivot.html#a767a03fe70e76735bec9ef33bca5d4a5',1,'Q1::Pivot']]],
+  ['pivot_2ecpp',['pivot.cpp',['../pivot_8cpp.html',1,'']]],
+  ['pivot_2eh',['pivot.h',['../pivot_8h.html',1,'']]]
 ];

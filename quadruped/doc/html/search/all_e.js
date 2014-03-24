@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['set_5farray',['set_array',['../class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516',1,'Q1::HMatrix']]],
-  ['set_5fenabled',['set_enabled',['../class_q1_1_1_logger.html#a3640a14f71855699161bfedc43f8a6bd',1,'Q1::Logger']]],
-  ['setx',['SetX',['../class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d',1,'Q1::HMatrix']]],
-  ['sety',['SetY',['../class_q1_1_1_h_matrix.html#a63d9933c5fb794389b5ee91906984163',1,'Q1::HMatrix']]]
+  ['q1',['Q1',['../namespace_q1.html',1,'']]],
+  ['q1test_2ecpp',['Q1test.cpp',['../_q1test_8cpp.html',1,'']]],
+  ['quadruped',['Quadruped',['../class_q1_1_1_quadruped.html',1,'Q1']]],
+  ['quadruped',['Quadruped',['../class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71',1,'Q1::Quadruped']]],
+  ['quadruped_2ecpp',['quadruped.cpp',['../quadruped_8cpp.html',1,'']]],
+  ['quadruped_2eh',['quadruped.h',['../quadruped_8h.html',1,'']]]
 ];

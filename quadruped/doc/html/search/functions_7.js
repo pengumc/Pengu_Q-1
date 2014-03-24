@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['openlog',['OpenLog',['../class_q1_1_1_logger.html#a90762440ce77fdb298d1d6a982a9cdd5',1,'Q1::Logger']]]
+  ['main',['main',['../_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'Q1test.cpp']]]
 ];

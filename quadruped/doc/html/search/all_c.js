@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['q1',['Q1',['../namespace_q1.html',1,'']]],
-  ['quadruped_2ecpp',['quadruped.cpp',['../quadruped_8cpp.html',1,'']]],
-  ['quadruped_2eh',['quadruped.h',['../quadruped_8h.html',1,'']]]
+  ['offset_5fangle_5f',['offset_angle_',['../class_q1_1_1_pivot.html#a92403c8a3019e211d424aca86d7e6edb',1,'Q1::Pivot']]],
+  ['openlog',['OpenLog',['../class_q1_1_1_logger.html#a90762440ce77fdb298d1d6a982a9cdd5',1,'Q1::Logger']]]
 ];
