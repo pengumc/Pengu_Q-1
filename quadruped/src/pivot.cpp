@@ -18,14 +18,14 @@ Pivot::Pivot() {
 // ------------------------------------------------------------set_abs_max_angle
 /** @brief mutator for \ref abs_max_angle_*/
 void Pivot::set_abs_max_angle(double angle) {
-  abs_max_angle_ = angle;
+  abs_max_angle_ = NormalizeAngle(angle);
   // TODO(michiel): update angle and hmatrix if we fall out of range
 }
 
 // -------------------------------------------------------------set_offset_angle
 /** @brief mutator for \ref offset_angle_*/
 void Pivot::set_offset_angle(double angle) {
-  offset_angle_ = angle;
+  offset_angle_ = NormalizeAngle(angle);
   // TODO(michiel): update angle and hmatrix
 }
 
@@ -36,10 +36,17 @@ bool Pivot::set_angle(double angle) {
 }
 
 // ---------------------------------------------------------------------set_axis
-/** @brief mutator for \ref axis_*/
+/** @brief mutator for \ref axis_
+ * 
+ * Changing the axis resets \ref abs_max_angle_, \ref offset_angle_ and 
+ * \ref angle_ to 0.0;
+ */
 void Pivot::set_axis(Axis axis) {
   axis_ = axis;
-  // TODO(michiel): rebuild Hmatrix
+  angle_ = 0.0;
+  abs_max_angle_ = 0.0;
+  offset_angle_ = 0.0;
+  ChangeAngle(0.0);
 }
 
 // ------------------------------------------------------------------SetPosition
@@ -51,10 +58,16 @@ void Pivot::SetPosition(double x, double y, double z) {
 }
 
 // ------------------------------------------------------------------ChangeAngle
-/** @brief change the angle of rotation. false if new angle is out of range*/
+/** @brief change the angle of rotation. false if new angle is out of range
+ * 
+ * if false is returned, nothing has changed.
+ */
 bool Pivot::ChangeAngle(double delta_angle) {
   const double a = offset_angle_ + angle_ + delta_angle;
-  // TODO(michiel): do range check
+  if (!IsInRange(a)) {
+    return false;
+  }
+  
   switch (axis_) {
     case Z_AXIS: {
       const double newH[HMatrix::kMagic16] = {
@@ -67,24 +80,40 @@ bool Pivot::ChangeAngle(double delta_angle) {
     }
     case Y_AXIS: {
       const double newH[HMatrix::kMagic16] = {
-        std::cos(a), -std::sin(a), 0, H_frame_.GetX(),
-        0,            1,           0, H_frame_.GetY(),
-        std::sin(a),  std::cos(a), 1, H_frame_.GetZ(),
-        0,            0,           0, 1};
+         std::cos(a), 0, std::sin(a),  H_frame_.GetX(),
+         0,           1, 0,            H_frame_.GetY(),
+        -std::sin(a), 0, std::cos(a),  H_frame_.GetZ(),
+         0,           0, 0,            1};
       H_frame_.set_array(newH);
       break;
     }
     case X_AXIS: {
       const double newH[HMatrix::kMagic16] = {
-        1,            0,           0, H_frame_.GetX(),
-        std::cos(a), -std::sin(a), 0, H_frame_.GetY(),
-        std::sin(a),  std::cos(a), 1, H_frame_.GetZ(),
-        0,            0,           0, 1};
+        1, 0,            0,           H_frame_.GetX(),
+        0, std::cos(a), -std::sin(a), H_frame_.GetY(),
+        0, std::sin(a),  std::cos(a), H_frame_.GetZ(),
+        0, 0,            0,           1};
       H_frame_.set_array(newH);
       break;
     }
   }
   return true;
+}
+
+// --------------------------------------------------------------------IsInRange
+/** @brief true if angle is within the range specified by the offset and max
+ * 
+ * \image html angles.png
+ */
+bool Pivot::IsInRange(double angle) {
+  const double test = NormalizeAngle(angle - offset_angle_);
+  return (test <= abs_max_angle_ && test >= -abs_max_angle_);
+}
+
+// --------------------------------------------------------------GetHMatrixArray
+/** @brief return a readable 16 value array with the elements of \ref H_frame_*/
+const double* Pivot::GetHMatrixArray() {
+  return H_frame_.array();
 }
 
 }  // namespace Q1

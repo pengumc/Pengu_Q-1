@@ -20,17 +20,20 @@ namespace Q1 {
 
 /** @brief represents a pivot of a leg
  *
- * internal - abs_max_angle_ &gt; + angle_ &gt; + abs_max_angle_<br>
+ * -abs_max_angle_ &gt; + angle_ &gt; + abs_max_angle_<br>
  * offset_angle_ is meant to be the middle of the angle range. so
- * the range is (offset - abs_max, offset + abs_max)
+ * the range is (offset - abs_max, offset + abs_max)<br>
+ * <br>
+ * The only functions that modify the HMatrix are \ref ChangeAngle and
+ * \ref SetPosition
  */
 class Pivot {
  public:
   // types
   typedef enum {
-    X_AXIS = 0,
-    Y_AXIS = 1,
-    Z_AXIS = 2
+    X_AXIS = 0, /**< 0*/
+    Y_AXIS = 1, /**< 1*/
+    Z_AXIS = 2  /**< 2*/
   } Axis;
   // constructors
   Pivot();
@@ -42,6 +45,8 @@ class Pivot {
   // functions
   bool ChangeAngle(double delta_angle);
   void SetPosition(double x, double y, double z);
+  bool IsInRange(double angle);
+  const double* GetHMatrixArray();
 
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/
