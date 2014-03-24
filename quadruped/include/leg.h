@@ -6,7 +6,7 @@
 #define QUADRUPED_INCLUDE_LEG_H_
 
 #include <stdint.h>
-#include "include/hmatrix.h"
+#include "include/pivot.h"
 
 namespace Q1 {
 

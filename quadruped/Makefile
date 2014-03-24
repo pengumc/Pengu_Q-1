@@ -8,13 +8,17 @@
 NAME = quadruped
 TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
+LIBNAME = $(NAME).dll
+EXT = .exe
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
+	LIBNAME = lib$(NAME).so
+	EXT = 
 endif
 CLIBS =
 CC = gcc
 CPPC = g++
-OBJECTS = log.o hmatrix.o pivot.o leg.o
+OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)
@@ -35,10 +39,10 @@ everything:library stylecheck doc
 %.o:src/%.cpp
 	$(CPPC) $(CFLAGS) -c $< -o $@
 
-library:lib/$(NAME).dll
+library:lib/$(LIBNAME)
 
-lib/$(NAME).dll:$(OBJECTS_DLL)
-	$(CPPC) -shared -Wall -o $(TARGETDIR)/$(NAME).dll $(CLIBS) $(OBJECTS_DLL)
+lib/$(LIBNAME):$(OBJECTS_DLL)
+	$(CPPC) -shared -Wall -o $(TARGETDIR)/$(LIBNAME) $(CLIBS) $(OBJECTS_DLL)
 
 doc:
 	doxygen
@@ -49,7 +53,7 @@ stylecheck:
 clean:
 	rm $(OBJECTS_ALL)
 
-test:library $(TARGETDIR)\$(TESTNAME).exe
+test:library $(TARGETDIR)/$(TESTNAME)$(EXT)
 
-$(TARGETDIR)\$(TESTNAME).exe:$(OBJECTS_TEST)
-	$(CPPC) -Wall -o $@ $(CLIBS_TEST) $(OBJECTS_TEST)
+$(TARGETDIR)/$(TESTNAME)$(EXT):$(OBJECTS_TEST)
+	$(CPPC) -Wall -o $@ $(OBJECTS_TEST) $(CLIBS_TEST)
