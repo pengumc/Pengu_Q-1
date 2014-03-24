@@ -2,3 +2,4 @@
 /quadruped/*.o
 /quadruped/bin/*.exe
 /stream.txt
+/quadruped/session

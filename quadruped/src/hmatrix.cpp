@@ -226,6 +226,13 @@ double HMatrix::GetY() {
   return array_[kY];
 }
 
+// -------------------------------------------------------------------------GetZ
+/** @brief return the z coordinate value of the HMatrix
+ */
+double HMatrix::GetZ() {
+  return array_[kZ];
+}
+
 // -------------------------------------------------------------------------SetX
 /** @brief set the value for the x coordinate in the h-matrix
  *
@@ -242,6 +249,15 @@ void HMatrix::SetX(double value) {
  */
 void HMatrix::SetY(double value) {
   array_[kY] = value;
+}
+
+// -------------------------------------------------------------------------SetZ
+/** @brief set the value for the z coordinate in the h-matrix
+ *
+ * @param value the new z coordinate
+ */
+void HMatrix::SetZ(double value) {
+  array_[kZ] = value;
 }
 
 // ---------------------------------------------------------------------Distance

@@ -46,6 +46,8 @@ class HMatrix {
   void SetX(double value);
   double GetY();
   void SetY(double value);
+  double GetZ();
+  void SetZ(double value);
   double Distance();
   void set_array(const double* array);
   HMatrix Dot(HMatrix right);

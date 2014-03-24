@@ -8,6 +8,9 @@
 NAME = quadruped
 TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
+ifeq ($(shell uname), Linux)
+	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
+endif
 CLIBS =
 CC = gcc
 CPPC = g++
