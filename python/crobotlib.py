@@ -6,7 +6,7 @@ class Crobot:
     LEGCOUNT = 4
     
     def __init__(self, libpath):
-        self.lib = CDLL(libpath)
+        self.lib = CDLL(libpath, 0x100 | 0x2)
         #restypes
         self.lib.Quadruped_alloc.restype = c_void_p
         self.lib.Communication_alloc.restype = c_void_p

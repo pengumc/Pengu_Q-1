@@ -317,7 +317,7 @@ if __name__ == "__main__":
         crobot.enable_com()
         load_config()
     except Exception as e:
-        print(e)
+        raise(e)
     S = Server()
     S.start()
     S.join()
