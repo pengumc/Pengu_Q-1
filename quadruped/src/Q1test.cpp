@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     a = atof(argv[1]);
   }
   Q1::Quadruped* aap = new Q1::Quadruped();
-  
+  const double* ar = aap->GetHMatrixArrayByIndex(0);
   for (int i = 0; i < Q1::HMatrix::kMagic16; ++i) {
     printf("%.2f\n", ar[i]);
   }

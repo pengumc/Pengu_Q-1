@@ -30,8 +30,8 @@ Quadruped::~Quadruped() {
 // TODO(michiel): rewrite
 const double* Quadruped::GetHMatrixArrayByIndex(int index) {
   if (index < kLegCount * Leg::kPivotCount) {  // index < 11
-    const 
-    return legs_[index / Leg::kPivotCount]->pivot(index % Leg::kPivotCount);
+    Leg* L = legs_[index / Leg::kPivotCount];
+    return L->GetHMatrixArray(index % Leg::kPivotCount);
   } else {
     return NULL;
   }

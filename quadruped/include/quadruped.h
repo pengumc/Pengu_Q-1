@@ -23,7 +23,7 @@ class Quadruped {
   Quadruped();
   ~Quadruped();
   // functions
-  const double* GetPivotHMatrixArrayByIndex(int index);
+  const double* GetHMatrixArrayByIndex(int index);
   
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
