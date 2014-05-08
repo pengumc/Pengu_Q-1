@@ -52,5 +52,10 @@ const double* Leg::GetHMatrixArray(int index) {
   }
 }
 
+// ------------------------------------------------------------------SetPivotPos
+/** @ brief set the x,y,z coordinates of a pivot h-matrix*/
+void Leg::SetPivotPos(int index, double x, double y, double z) {
+  pivots_[index]->SetPosition(x, y, z);
+}
 
 }  // namespace Q1

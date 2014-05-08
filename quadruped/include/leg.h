@@ -26,6 +26,7 @@ class Leg {
   const Pivot* pivot(int index);
   const Pivot* foot();
   const double* GetHMatrixArray(int index);
+  void SetPivotPos(int index, double x, double y, double z);
  private:
   uint8_t index_;/** @brief index of the leg (0..3)*/
   Pivot* pivots_[kPivotCount];

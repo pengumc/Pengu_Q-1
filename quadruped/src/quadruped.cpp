@@ -49,4 +49,11 @@ const double* Quadruped::GetEndpoint(int index) {
   }
 }
 
+// ------------------------------------------------------------------SetPivotPos
+/** @brief set the x,y,z coordinates of a pivot of a leg*/
+void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
+                            double z) {
+  legs_[leg_index]->SetPivotPos(pivot_index, x, y, z);
+}
+
 }  // namespace Q1

@@ -13,8 +13,25 @@ class Quadruped:
     def __del__(self):
         self.lib.QuadrupedFree(self.q)
         
+    def set_pivot_pos(self, leg, pivot, x, y, z):
+        self.lib.QuadrupedSetPivotPos(
+            self.q,
+            int(leg),
+            int(pivot),
+            c_double(x),
+            c_double(y),
+            c_double(z))
+        
     def test(self):
+        self.set_pivot_pos(0, 0, 5.125689, 5.0, 0.0)
         a =  self.lib.QuadrupedGetHMatrix(self.q, 0)
-        for i in range(16):
-            print a[i]
+        self.print_hmatrix(a)
         return a
+        
+    def print_hmatrix(self, H):
+        print("{} {} {} {}\n{} {} {} {}\n{} {} {} {}\n{} {} {} {}".format(
+            H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7], H[8], H[9], H[10],
+            H[11], H[12], H[13], H[14], H[15]).rjust(4))
+    
+    def get_hmatrix(self, index):
+        return self.lib.QuadrupedGetHMatrix(self.q, int(index))

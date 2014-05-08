@@ -24,7 +24,7 @@ extern "C" void QuadrupedFree(Quadruped* q) {
 }
 
 // ----------------------------------------------------------QuadrupedGetHMatrix
-/** @brief return a pointer to the values of a hmatrix
+/** @brief return a pointer to the values of a hmatrix (pivots and feet)
  *
  * @param q pointer to a quadruped.
  * @param index The index of the HMatrix. numbering: <br>
@@ -44,6 +44,22 @@ extern "C" const double* QuadrupedGetHMatrix(Quadruped* q, int index) {
   } else {
     return q->GetHMatrixArrayByIndex(l * Leg::kPivotCount + p);
   }
+}
+
+// ---------------------------------------------------------QuadrupedSetPivotPos
+/** @brief set x y and z coordinates of a pivot
+ *
+ * @param q pointer to a quadruped
+ * @param leg_index index of the leg
+ * @param pivot_index index of the pivot
+ * @param x new x coordinate
+ * @param y new y coordinate
+ * @param z new z coordinate
+ */
+extern "C" void QuadrupedSetPivotPos(Quadruped* q, int leg_index,
+                                     int pivot_index, double x, double y,
+                                     double z) {
+  q->SetPivotPos(leg_index, pivot_index, x, y, z);
 }
 
 }  // namespace Q1
