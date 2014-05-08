@@ -197,6 +197,42 @@ HMatrix HMatrix::Dot(HMatrix right) {
   return HMatrix(result);
 }
 
+// ----------------------------------------------------------------------SelfDot
+/** @brief this = this dot right
+ * 
+ * @param right the right hand side of the dot operation
+ */
+void HMatrix::SelfDot(HMatrix right) {
+  double result[kMagic16];
+  // rv          * lv
+  // 00 01 02 03   00 01 02 03   00*00 + 01*04 + 02*08 + 03*12 etc.
+  // 04 05 06 07 * 04 05 06 07 =
+  // 08 09 10 11   08 09 10 11
+  // 12 13 14 15   12 13 14 15
+  const double* rv = right.array();  // values of right H-matrix
+  const double* lv = array_;  // values of left H-matrix
+  result[0] = lv[0]*rv[0] + lv[1]*rv[4] + lv[2]*rv[8] + lv[3]*rv[12];
+  result[1] = lv[0]*rv[1] + lv[1]*rv[5] + lv[2]*rv[9] + lv[3]*rv[13];
+  result[2] = lv[0]*rv[2] + lv[1]*rv[6] + lv[2]*rv[10] + lv[3]*rv[14];
+  result[3] = lv[0]*rv[3] + lv[1]*rv[7] + lv[2]*rv[11] + lv[3]*rv[15];
+
+  result[4] = lv[4]*rv[0] + lv[5]*rv[4] + lv[6]*rv[8] + lv[7]*rv[12];
+  result[5] = lv[4]*rv[1] + lv[5]*rv[5] + lv[6]*rv[9] + lv[7]*rv[13];
+  result[6] = lv[4]*rv[2] + lv[5]*rv[6] + lv[6]*rv[10] + lv[7]*rv[14];
+  result[7] = lv[4]*rv[3] + lv[5]*rv[7] + lv[6]*rv[11] + lv[7]*rv[15];
+
+  result[8] = lv[8]*rv[0] + lv[9]*rv[4] + lv[10]*rv[8] + lv[11]*rv[12];
+  result[9] = lv[8]*rv[1] + lv[9]*rv[5] + lv[10]*rv[9] + lv[11]*rv[13];
+  result[10] = lv[8]*rv[2] + lv[9]*rv[6] + lv[10]*rv[10] + lv[11] *rv[14];
+  result[11] = lv[8]*rv[3] + lv[9]*rv[7] + lv[10]*rv[11] + lv[11] *rv[15];
+
+  result[12] = lv[12]*rv[0] + lv[13]*rv[4] + lv[14]*rv[8] + lv[15]*rv[12];
+  result[13] = lv[12]*rv[1] + lv[13]*rv[5] + lv[14]*rv[9] + lv[15]*rv[13];
+  result[14] = lv[12]*rv[2] + lv[13]*rv[6] + lv[14]*rv[10] + lv[15]*rv[14];
+  result[15] = lv[12]*rv[3] + lv[13]*rv[7] + lv[14]*rv[11] + lv[15]*rv[15];
+  set_array(result);
+}
+
 // ----------------------------------------------------------CounterRotateVector
 /** @brief write <b>R<SUP>-1</SUP></b> * <b>vector_in</b> to <b>vector_out</b>.
   * 

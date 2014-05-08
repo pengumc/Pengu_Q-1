@@ -66,10 +66,10 @@ bool Pivot::ChangeAngle(double delta_angle) {
   const double a = offset_angle_ + angle_ + delta_angle;
   if (!IsInRange(a)) {
     return false;
+  } else {
+    H_frame_.SelfDot(HMatrix(axis_, delta_angle));
+    return true;
   }
-  HMatrix R = HMatrix(axis_, delta_angle);
-  H_frame_.Copy(H_frame_.Dot(R));
-  return true;
 }
 
 // --------------------------------------------------------------------IsInRange
