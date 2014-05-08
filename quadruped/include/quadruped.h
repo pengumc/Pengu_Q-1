@@ -24,6 +24,7 @@ class Quadruped {
   ~Quadruped();
   // functions
   const double* GetHMatrixArrayByIndex(int index);
+  const double* GetEndpoint(int index);
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/

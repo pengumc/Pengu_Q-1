@@ -5,11 +5,16 @@ class Quadruped:
     def __init__(self, libpath):
         self.lib = CDLL(libpath)
         #restypes
-        self.lib.quadruped_alloc.restype = c_void_p
+        self.lib.QuadrupedAlloc.restype = c_void_p
+        self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
         #startup
-        self.q = self.lib.quadruped_alloc();
+        self.q = self.lib.QuadrupedAlloc();
         
     def __del__(self):
-        self.lib.quadruped_free(self.q)
+        self.lib.QuadrupedFree(self.q)
         
-        
+    def test(self):
+        a =  self.lib.QuadrupedGetHMatrix(self.q, 0)
+        for i in range(16):
+            print a[i]
+        return a
