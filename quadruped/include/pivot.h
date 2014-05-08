@@ -41,6 +41,7 @@ class Pivot {
   void SetPosition(double x, double y, double z);
   bool IsInRange(double angle);
   const double* GetHMatrixArray();
+  void ConfigureRot(Axis axis, double angle);
 
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/

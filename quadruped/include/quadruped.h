@@ -27,6 +27,8 @@ class Quadruped {
   const double* GetEndpoint(int index);
   void SetPivotPos(int leg_index, int pivot_index, double x, double y,
                    double z);
+  void ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
+                         double angle);
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
 };

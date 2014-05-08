@@ -56,4 +56,11 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
   legs_[leg_index]->SetPivotPos(pivot_index, x, y, z);
 }
 
+// ------------------------------------------------------------ConfigurePivotRot
+/** @brief modify R of a pivot while keeping Pivot::angle_ the same*/
+void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
+                                  double angle) {
+  legs_[leg_index]->ConfigurePivotRot(pivot_index, axis, angle);
+}
+
 }  // namespace Q1

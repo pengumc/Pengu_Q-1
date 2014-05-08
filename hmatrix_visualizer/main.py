@@ -4,6 +4,7 @@
 import threading
 import Queue
 from quadruped import *
+import math
 
 class KeyboardThread (threading.Thread):
     
@@ -16,7 +17,9 @@ class KeyboardThread (threading.Thread):
         self.Q = Quadruped("../quadruped/bin/quadruped.dll")
         self.setup_pivot0s()
         x = 5.0
-        print("usage:\n\t'q' quit\n\t'p' plot\n")
+        angle = 0.0
+        print("usage:\n\t'q' quit\n\t'p' plot")
+        print("\t'a' pivot00 x+1\n\t'z' pivot00 angle -0.1\n")
         while True:
             c = keyboard.getch()
             if c == 'q':
@@ -33,10 +36,18 @@ class KeyboardThread (threading.Thread):
                 x = x + 1.0
                 self.Q.set_pivot_pos(0, 0, x, 0, 0)
                 print("pivot00 x = {}".format(x))
+            elif c == 'z':
+                angle = angle - 0.1
+                self.Q.configure_pivot_rot(0, 0, 2, angle)
+                print("pivot00 angle = {}".format(angle))
                 
     def setup_pivot0s(self):
         self.Q.set_pivot_pos(0, 0, 5, 5, 0)
+        self.Q.configure_pivot_rot(0, 0, 2, math.pi/4) 
         self.Q.set_pivot_pos(1, 0, -5, 5, 0)
+        self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4) 
         self.Q.set_pivot_pos(2, 0, -5, -5, 0)
+        self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4) 
         self.Q.set_pivot_pos(3, 0, 5, -5, 0)
+        self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4) 
         

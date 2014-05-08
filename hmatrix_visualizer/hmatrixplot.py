@@ -55,5 +55,6 @@ class PlotThread (threading.Thread):
             # combinations('ABCD', 2) --> AB AC AD BC BD CD
             #if np.sum(np.abs(s-e)) == r[1]-r[0]: #only take lines with length 2
             delta = s-e
-            if np.round(np.sqrt(delta[0]**2 + delta[1]**2 + delta[2]**2),2) == 2:
+            #magic 2.1
+            if np.round(np.sqrt(delta[0]**2 + delta[1]**2 + delta[2]**2),2) <= 2.1:
                 self.ax.plot3D(*zip(s,e), color="b")

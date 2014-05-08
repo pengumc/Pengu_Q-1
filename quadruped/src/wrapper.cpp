@@ -62,4 +62,13 @@ extern "C" void QuadrupedSetPivotPos(Quadruped* q, int leg_index,
   q->SetPivotPos(leg_index, pivot_index, x, y, z);
 }
 
+// ---------------------------------------------------QuadrupedConfigurePivotRot
+/** @brief
+*/
+extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
+                                        int pivot_index, Axis axis,
+                                        double angle) {
+  q->ConfigurePivotRot(leg_index, pivot_index, axis, angle);
+}
+
 }  // namespace Q1

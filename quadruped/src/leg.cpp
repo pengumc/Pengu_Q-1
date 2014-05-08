@@ -40,7 +40,7 @@ const Pivot* Leg::foot() {
 
 // --------------------------------------------------------------GetHMatrixArray
 /** @brief returns the HMatrix array of one of the pivots or the foot
- * 
+ *
  * index = 0..2: pivots<br>
  * index >= \ref kPivotCount : foot
  */
@@ -53,9 +53,15 @@ const double* Leg::GetHMatrixArray(int index) {
 }
 
 // ------------------------------------------------------------------SetPivotPos
-/** @ brief set the x,y,z coordinates of a pivot h-matrix*/
+/** @brief set the x,y,z coordinates of a pivot h-matrix*/
 void Leg::SetPivotPos(int index, double x, double y, double z) {
   pivots_[index]->SetPosition(x, y, z);
+}
+
+// ------------------------------------------------------------ConfigurePivotRot
+/** @brief configure <b>R</b> of a pivot without touching Pivot::angle_*/
+void Leg::ConfigurePivotRot(int index, Axis axis, double angle) {
+  pivots_[index]->ConfigureRot(axis, angle);
 }
 
 }  // namespace Q1

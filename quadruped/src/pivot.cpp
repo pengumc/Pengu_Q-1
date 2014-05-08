@@ -68,6 +68,7 @@ bool Pivot::ChangeAngle(double delta_angle) {
     return false;
   } else {
     H_frame_.SelfDot(HMatrix(axis_, delta_angle));
+    angle_ += delta_angle;
     return true;
   }
 }
@@ -86,6 +87,16 @@ bool Pivot::IsInRange(double angle) {
 /** @brief return a readable 16 value array with the elements of \ref H_frame_*/
 const double* Pivot::GetHMatrixArray() {
   return H_frame_.array();
+}
+
+// -----------------------------------------------------------------ConfigureRot
+/** @brief configre the base orientation of the pivot*/
+void Pivot::ConfigureRot(Axis axis, double angle) {
+  HMatrix configured = HMatrix(axis, angle);
+  configured.SetX(H_frame_.GetX());
+  configured.SetY(H_frame_.GetY());
+  configured.SetZ(H_frame_.GetZ());
+  H_frame_.Copy(configured);
 }
 
 }  // namespace Q1

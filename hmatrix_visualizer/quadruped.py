@@ -35,3 +35,7 @@ class Quadruped:
     
     def get_hmatrix(self, index):
         return self.lib.QuadrupedGetHMatrix(self.q, int(index))
+    
+    def configure_pivot_rot(self, leg, pivot, axis, angle):
+        self.lib.QuadrupedConfigurePivotRot(self.q, int(leg), int(pivot),
+                                          int(axis), c_double(angle))
