@@ -69,7 +69,7 @@ HMatrix::HMatrix(double x, double y, double z) {
 }
 
 // -----------------------------------------------------------------Constructor4
-/** @brief create a HMatrix with only <b>R<br> for a rotation along 1 axis*/
+/** @brief create a HMatrix with only <b>R</b> for a rotation along 1 axis*/
 HMatrix::HMatrix(Axis axis, double angle) {
   array_[3] = 0.0;
   array_[7] = 0.0;

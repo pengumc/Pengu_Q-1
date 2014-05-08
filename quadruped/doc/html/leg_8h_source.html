@@ -115,28 +115,45 @@ $(document).ready(function(){initNavTree('leg_8h_source.html','');});
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>Q1 {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_q1_1_1_leg.html">Leg</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="class_q1_1_1_leg.html#a9c1b636eb522a217d8ce4e50a56411f3">Leg</a>(uint8_t index);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">   21</a></span>&#160;  uint8_t <a class="code" href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">index_</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}  <span class="comment">// namespace Q1</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif  // QUADRUPED_INCLUDE_LEG_H_</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_q1_1_1_leg.html">Leg</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="comment">// constants</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f">   21</a></span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f">kPivotCount</a> = 3;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">// con/destructors</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="class_q1_1_1_leg.html#a9c1b636eb522a217d8ce4e50a56411f3">Leg</a>(uint8_t index);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="class_q1_1_1_leg.html#af3a48dd380bc8cef934fd6cac1017d6b">~Leg</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="comment">// functions</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">const</span> <a class="code" href="class_q1_1_1_pivot.html">Pivot</a>* <a class="code" href="class_q1_1_1_leg.html#a5caeb5b228c06736f66a4fa636fb9bd9">pivot</a>(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">const</span> <a class="code" href="class_q1_1_1_pivot.html">Pivot</a>* <a class="code" href="class_q1_1_1_leg.html#a62337b99cf7d377ed67d1eb2ad64c847">foot</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">double</span>* <a class="code" href="class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91">GetHMatrixArray</a>(<span class="keywordtype">int</span> index);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">   30</a></span>&#160;  uint8_t <a class="code" href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">index_</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html#a4fb718679da4dd329645c62d7096a206">   31</a></span>&#160;  <a class="code" href="class_q1_1_1_pivot.html">Pivot</a>* <a class="code" href="class_q1_1_1_leg.html#a4fb718679da4dd329645c62d7096a206">pivots_</a>[<a class="code" href="class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f">kPivotCount</a>];</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_q1_1_1_leg.html#a530d17023d4aa5d7b3b938ed1927fdfa">   32</a></span>&#160;  <a class="code" href="class_q1_1_1_pivot.html">Pivot</a>* <a class="code" href="class_q1_1_1_leg.html#a530d17023d4aa5d7b3b938ed1927fdfa">foot_</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}  <span class="comment">// namespace Q1</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif  // QUADRUPED_INCLUDE_LEG_H_</span></div>
 <div class="ttc" id="pivot_8h_html"><div class="ttname"><a href="pivot_8h.html">pivot.h</a></div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a530d17023d4aa5d7b3b938ed1927fdfa"><div class="ttname"><a href="class_q1_1_1_leg.html#a530d17023d4aa5d7b3b938ed1927fdfa">Q1::Leg::foot_</a></div><div class="ttdeci">Pivot * foot_</div><div class="ttdef"><b>Definition:</b> leg.h:32</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_af3a48dd380bc8cef934fd6cac1017d6b"><div class="ttname"><a href="class_q1_1_1_leg.html#af3a48dd380bc8cef934fd6cac1017d6b">Q1::Leg::~Leg</a></div><div class="ttdeci">~Leg()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> leg.cpp:22</div></div>
 <div class="ttc" id="class_q1_1_1_leg_html_a9c1b636eb522a217d8ce4e50a56411f3"><div class="ttname"><a href="class_q1_1_1_leg.html#a9c1b636eb522a217d8ce4e50a56411f3">Q1::Leg::Leg</a></div><div class="ttdeci">Leg(uint8_t index)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> leg.cpp:11</div></div>
-<div class="ttc" id="class_q1_1_1_leg_html"><div class="ttname"><a href="class_q1_1_1_leg.html">Q1::Leg</a></div><div class="ttdoc">represents a leg of the quadruped </div><div class="ttdef"><b>Definition:</b> leg.h:16</div></div>
-<div class="ttc" id="class_q1_1_1_leg_html_a771d67ddd45678c008eefe49a3c0e5a0"><div class="ttname"><a href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">Q1::Leg::index_</a></div><div class="ttdeci">uint8_t index_</div><div class="ttdef"><b>Definition:</b> leg.h:21</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a35b38e7b5fbec3c0d91342405b82ae8f"><div class="ttname"><a href="class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f">Q1::Leg::kPivotCount</a></div><div class="ttdeci">static const int kPivotCount</div><div class="ttdef"><b>Definition:</b> leg.h:21</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html"><div class="ttname"><a href="class_q1_1_1_leg.html">Q1::Leg</a></div><div class="ttdoc">represents a leg of the quadruped </div><div class="ttdef"><b>Definition:</b> leg.h:18</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a62337b99cf7d377ed67d1eb2ad64c847"><div class="ttname"><a href="class_q1_1_1_leg.html#a62337b99cf7d377ed67d1eb2ad64c847">Q1::Leg::foot</a></div><div class="ttdeci">const Pivot * foot()</div><div class="ttdoc">returns the foot </div><div class="ttdef"><b>Definition:</b> leg.cpp:37</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_ab7165c859b43bc2abe67702fcf170a91"><div class="ttname"><a href="class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91">Q1::Leg::GetHMatrixArray</a></div><div class="ttdeci">const double * GetHMatrixArray(int index)</div><div class="ttdoc">returns the HMatrix array of one of the pivots or the foot </div><div class="ttdef"><b>Definition:</b> leg.cpp:47</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a4fb718679da4dd329645c62d7096a206"><div class="ttname"><a href="class_q1_1_1_leg.html#a4fb718679da4dd329645c62d7096a206">Q1::Leg::pivots_</a></div><div class="ttdeci">Pivot * pivots_[kPivotCount]</div><div class="ttdoc">index of the leg (0..3) </div><div class="ttdef"><b>Definition:</b> leg.h:31</div></div>
+<div class="ttc" id="class_q1_1_1_pivot_html"><div class="ttname"><a href="class_q1_1_1_pivot.html">Q1::Pivot</a></div><div class="ttdoc">represents a pivot of a leg </div><div class="ttdef"><b>Definition:</b> pivot.h:30</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a5caeb5b228c06736f66a4fa636fb9bd9"><div class="ttname"><a href="class_q1_1_1_leg.html#a5caeb5b228c06736f66a4fa636fb9bd9">Q1::Leg::pivot</a></div><div class="ttdeci">const Pivot * pivot(int index)</div><div class="ttdoc">returns a pivot </div><div class="ttdef"><b>Definition:</b> leg.cpp:31</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html_a771d67ddd45678c008eefe49a3c0e5a0"><div class="ttname"><a href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">Q1::Leg::index_</a></div><div class="ttdeci">uint8_t index_</div><div class="ttdef"><b>Definition:</b> leg.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="leg_8h.html">leg.h</a></li>
-    <li class="footer">Generated on Mon Mar 24 2014 15:20:11 for quadruped Q1 by
+    <li class="footer">Generated on Thu May 8 2014 12:09:07 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

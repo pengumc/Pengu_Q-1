@@ -1,10 +1,5 @@
 var class_q1_1_1_pivot =
 [
-    [ "Axis", "class_q1_1_1_pivot.html#a90f8d37765c512fc26a8cd43bbeaa5f2", [
-      [ "X_AXIS", "class_q1_1_1_pivot.html#a90f8d37765c512fc26a8cd43bbeaa5f2a6a3a02e32896968030187001e056be07", null ],
-      [ "Y_AXIS", "class_q1_1_1_pivot.html#a90f8d37765c512fc26a8cd43bbeaa5f2afea6bb7be34ad143b80783595f3e5b29", null ],
-      [ "Z_AXIS", "class_q1_1_1_pivot.html#a90f8d37765c512fc26a8cd43bbeaa5f2a8f103df85323c63807872ce680390f64", null ]
-    ] ],
     [ "Pivot", "class_q1_1_1_pivot.html#a767a03fe70e76735bec9ef33bca5d4a5", null ],
     [ "ChangeAngle", "class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151", null ],
     [ "GetHMatrixArray", "class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8", null ],

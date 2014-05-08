@@ -18,7 +18,7 @@ extern "C" Quadruped* QuadrupedAlloc() {
 }
 
 // ---------------------------------------------------------------QuadrupedFree
-/** @brief free the memory allocate by \ref QuadrupedAlloc */
+/** @brief free the memory allocated by \ref QuadrupedAlloc */
 extern "C" void QuadrupedFree(Quadruped* q) {
   delete q;
 }
