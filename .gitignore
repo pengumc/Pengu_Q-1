@@ -6,3 +6,4 @@
 /quadruped/session
 /quadruped/tags
 /quadruped/bin
+*.pyc
