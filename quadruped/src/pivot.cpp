@@ -67,39 +67,8 @@ bool Pivot::ChangeAngle(double delta_angle) {
   if (!IsInRange(a)) {
     return false;
   }
-  HMatrix R;
-  switch (axis_) {
-    case Z_AXIS: {
-      const double newH[HMatrix::kMagic16] = {
-        std::cos(a), -std::sin(a), 0, 0,
-        std::sin(a),  std::cos(a), 0, 0,
-        0,           0,            1, 0,
-        0,           0,            0, 1};
-      R.set_array(newH);
-      H_frame_.Copy(H_frame_.Dot(R));
-      break;
-    }
-    case Y_AXIS: {
-      const double newH[HMatrix::kMagic16] = {
-         std::cos(a), 0, std::sin(a),  0,
-         0,           1, 0,            0,
-        -std::sin(a), 0, std::cos(a),  0,
-         0,           0, 0,            1};
-      R.set_array(newH);
-      H_frame_.Copy(H_frame_.Dot(R));
-      break;
-    }
-    case X_AXIS: {
-      const double newH[HMatrix::kMagic16] = {
-        1, 0,            0,           0,
-        0, std::cos(a), -std::sin(a), 0,
-        0, std::sin(a),  std::cos(a), 0,
-        0, 0,            0,           1};
-      R.set_array(newH);
-      H_frame_.Copy(H_frame_.Dot(R));
-      break;
-    }
-  }
+  HMatrix R = HMatrix(axis_, delta_angle);
+  H_frame_.Copy(H_frame_.Dot(R));
   return true;
 }
 
