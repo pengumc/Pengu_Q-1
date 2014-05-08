@@ -29,12 +29,6 @@ namespace Q1 {
  */
 class Pivot {
  public:
-  // types
-  typedef enum {
-    X_AXIS = 0, /**< 0*/
-    Y_AXIS = 1, /**< 1*/
-    Z_AXIS = 2  /**< 2*/
-  } Axis;
   // constructors
   Pivot();
   // accessors mutators

@@ -42,7 +42,7 @@ const Pivot* Leg::foot() {
 /** @brief returns the HMatrix array of one of the pivots or the foot
  * 
  * index = 0..2: pivots<br>
- * index >= 3 : foot
+ * index >= \ref kPivotCount : foot
  */
 const double* Leg::GetHMatrixArray(int index) {
   if (index < kPivotCount) {

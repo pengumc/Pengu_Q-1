@@ -68,6 +68,56 @@ HMatrix::HMatrix(double x, double y, double z) {
   array_[15] = 1.0;
 }
 
+// -----------------------------------------------------------------Constructor4
+/** @brief create a HMatrix with only <b>R<br> for a rotation along 1 axis*/
+HMatrix::HMatrix(Axis axis, double angle) {
+  array_[3] = 0.0;
+  array_[7] = 0.0;
+  array_[11] = 0.0;
+  array_[12] = 0.0;
+  array_[13] = 0.0;
+  array_[14] = 0.0;
+  array_[15] = 0.0;
+  switch (axis) {
+    case Z_AXIS: {
+      array_[0] = std::cos(angle);
+      array_[1] = -std::sin(angle);
+      array_[2] = 0.0;
+      array_[4] = std::sin(angle);
+      array_[5] = std::cos(angle);
+      array_[6] = 0.0;
+      array_[8] = 0.0;
+      array_[9] = 0.0;
+      array_[10] = 1.0;
+      break;
+    }
+    case Y_AXIS: {
+      array_[0] = std::cos(angle);
+      array_[1] = 0.0;
+      array_[2] = std::sin(angle);
+      array_[4] = 0.0;
+      array_[5] = 1.0;
+      array_[6] = 0.0;
+      array_[8] = -std::sin(angle);
+      array_[9] = 0.0;
+      array_[10] = std::cos(angle);
+      break;
+    }
+    case X_AXIS: {
+      array_[0] = 1.0;
+      array_[1] = 0.0;
+      array_[2] = 0.0;
+      array_[4] = 0.0;
+      array_[5] = std::cos(angle);
+      array_[6] = -std::sin(angle);
+      array_[8] = 0.0;
+      array_[9] = std::sin(angle);
+      array_[10] = std::cos(angle);
+      break;
+    }
+  }
+}
+
 // -------------------------------------------------------------------------Copy
 /** @brief Copy data from another HMatrix*/
 void HMatrix::Copy(const HMatrix src) {

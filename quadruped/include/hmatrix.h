@@ -12,6 +12,14 @@
 
 namespace Q1 {
 
+/** @brief This is used across classes so it can't be in one :(*/
+typedef enum {
+  X_AXIS = 0, /**< 0*/
+  Y_AXIS = 1, /**< 1*/
+  Z_AXIS = 2  /**< 2*/
+} Axis;
+
+
 /** @brief Holds a 4x4 Homogeneous matrix.
  *
  * indices of \ref array_ <br>
@@ -31,6 +39,7 @@ namespace Q1 {
  */
 class HMatrix {
  public:
+  // types
   // constants
   static const int kMagic16 = 16;/**<@brief Number of elements in a H-matrix.*/
   static const int kX = 3;/**< @brief index in HMatrix for the x coordinate*/
@@ -40,6 +49,7 @@ class HMatrix {
   HMatrix();
   explicit HMatrix(const double* array);
   HMatrix(double x, double y, double z);
+  HMatrix(Axis axis, double angle);
   // methods
   const double* array();
   double GetX();
