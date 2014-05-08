@@ -27,7 +27,6 @@ Quadruped::~Quadruped() {
  * 
  * numbering: leg0 pivot0, leg0 pivot1 ... leg3 pivot2
  */
-// TODO(michiel): rewrite
 const double* Quadruped::GetHMatrixArrayByIndex(int index) {
   if (index < kLegCount * Leg::kPivotCount) {  // index < 11
     Leg* L = legs_[index / Leg::kPivotCount];
