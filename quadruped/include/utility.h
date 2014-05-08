@@ -19,7 +19,6 @@ namespace Q1 {
 
 double NormalizeAngle(double angle);
 
-
 }  // namespace Q1
 
 #endif  // QUADRUPED_INCLUDE_UTILITY_H_

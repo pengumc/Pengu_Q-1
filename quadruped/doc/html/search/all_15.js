@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['z_5faxis',['Z_AXIS',['../namespace_q1.html#a9629e29a0b82307ac5cefd30ce321977a4c52648ffb0369e077e12e6505065bc9',1,'Q1']]]
+  ['_7equadruped',['~Quadruped',['../class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952',1,'Q1::Quadruped']]]
 ];

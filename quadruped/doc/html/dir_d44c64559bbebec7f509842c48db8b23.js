@@ -1,6 +1,8 @@
 var dir_d44c64559bbebec7f509842c48db8b23 =
 [
-    [ "hmatrix.h", "hmatrix_8h.html", "hmatrix_8h" ],
+    [ "hmatrix.h", "hmatrix_8h.html", [
+      [ "HMatrix", "class_q1_1_1_h_matrix.html", "class_q1_1_1_h_matrix" ]
+    ] ],
     [ "leg.h", "leg_8h.html", [
       [ "Leg", "class_q1_1_1_leg.html", "class_q1_1_1_leg" ]
     ] ],

@@ -110,8 +110,8 @@ $(document).ready(function(){initNavTree('quadruped_8h_source.html','');});
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef QUADRUPED_INCLUDE_QUADRUPED_H_</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define QUADRUPED_INCLUDE_QUADRUPED_H_</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="leg_8h.html">include/leg.h</a>&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
@@ -119,30 +119,20 @@ $(document).ready(function(){initNavTree('quadruped_8h_source.html','');});
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_q1_1_1_quadruped.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_q1_1_1_quadruped.html">Quadruped</a> {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="comment">// constants</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">   21</a></span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">kLegCount</a> = 4;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">// con/destructors</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71">Quadruped</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <a class="code" href="class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952">~Quadruped</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="comment">// functions</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">double</span>* <a class="code" href="class_q1_1_1_quadruped.html#a307c899d40a9f58dd54279c4c4856a30">GetHMatrixArrayByIndex</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">double</span>* <a class="code" href="class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7">GetEndpoint</a>(<span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068">   30</a></span>&#160;  <a class="code" href="class_q1_1_1_leg.html">Leg</a>* <a class="code" href="class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068">legs_</a>[<a class="code" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">kLegCount</a>]; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}  <span class="comment">// namespace Q1</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif  // QUADRUPED_INCLUDE_QUADRUPED_H_</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <a class="code" href="class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71">Quadruped</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952">~Quadruped</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_q1_1_1_quadruped.html#ac418173ce84234686ce7e32260cf69a5">   23</a></span>&#160;  <a class="code" href="class_q1_1_1_leg.html">Leg</a>* <a class="code" href="class_q1_1_1_quadruped.html#ac418173ce84234686ce7e32260cf69a5">legs_</a>[4]; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}  <span class="comment">// namespace Q1</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif  // QUADRUPED_INCLUDE_QUADRUPED_H_</span></div>
 <div class="ttc" id="class_q1_1_1_quadruped_html"><div class="ttname"><a href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></div><div class="ttdoc">the main quadruped class </div><div class="ttdef"><b>Definition:</b> quadruped.h:18</div></div>
 <div class="ttc" id="class_q1_1_1_quadruped_html_a68080e72d9d95a005545b468fa62ac71"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71">Q1::Quadruped::Quadruped</a></div><div class="ttdeci">Quadruped()</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> quadruped.cpp:11</div></div>
-<div class="ttc" id="class_q1_1_1_leg_html"><div class="ttname"><a href="class_q1_1_1_leg.html">Q1::Leg</a></div><div class="ttdoc">represents a leg of the quadruped </div><div class="ttdef"><b>Definition:</b> leg.h:18</div></div>
-<div class="ttc" id="class_q1_1_1_quadruped_html_a4f28556c898b6e4529c3a237c9c97fc7"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7">Q1::Quadruped::GetEndpoint</a></div><div class="ttdeci">const double * GetEndpoint(int index)</div><div class="ttdoc">returns the HMatrix::array_ of the foot of leg index </div><div class="ttdef"><b>Definition:</b> quadruped.cpp:44</div></div>
+<div class="ttc" id="class_q1_1_1_leg_html"><div class="ttname"><a href="class_q1_1_1_leg.html">Q1::Leg</a></div><div class="ttdoc">represents a leg of the quadruped </div><div class="ttdef"><b>Definition:</b> leg.h:16</div></div>
 <div class="ttc" id="class_q1_1_1_quadruped_html_a8db9ee2a81c635bacadf5c38cec0a952"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952">Q1::Quadruped::~Quadruped</a></div><div class="ttdeci">~Quadruped()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> quadruped.cpp:19</div></div>
-<div class="ttc" id="class_q1_1_1_quadruped_html_a6f567fe80a8a9290352ba3ad69a0b926"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">Q1::Quadruped::kLegCount</a></div><div class="ttdeci">static const int kLegCount</div><div class="ttdef"><b>Definition:</b> quadruped.h:21</div></div>
-<div class="ttc" id="class_q1_1_1_quadruped_html_a736443495d5bbe612d13f620a1262068"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068">Q1::Quadruped::legs_</a></div><div class="ttdeci">Leg * legs_[kLegCount]</div><div class="ttdoc">leg pointers </div><div class="ttdef"><b>Definition:</b> quadruped.h:30</div></div>
-<div class="ttc" id="class_q1_1_1_quadruped_html_a307c899d40a9f58dd54279c4c4856a30"><div class="ttname"><a href="class_q1_1_1_quadruped.html#a307c899d40a9f58dd54279c4c4856a30">Q1::Quadruped::GetHMatrixArrayByIndex</a></div><div class="ttdeci">const double * GetHMatrixArrayByIndex(int index)</div><div class="ttdoc">returns the HMatrix::array_ of the HMatrix at index </div><div class="ttdef"><b>Definition:</b> quadruped.cpp:30</div></div>
+<div class="ttc" id="class_q1_1_1_quadruped_html_ac418173ce84234686ce7e32260cf69a5"><div class="ttname"><a href="class_q1_1_1_quadruped.html#ac418173ce84234686ce7e32260cf69a5">Q1::Quadruped::legs_</a></div><div class="ttdeci">Leg * legs_[4]</div><div class="ttdoc">leg pointers </div><div class="ttdef"><b>Definition:</b> quadruped.h:23</div></div>
 <div class="ttc" id="leg_8h_html"><div class="ttname"><a href="leg_8h.html">leg.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -150,7 +140,7 @@ $(document).ready(function(){initNavTree('quadruped_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="quadruped_8h.html">quadruped.h</a></li>
-    <li class="footer">Generated on Thu May 8 2014 12:09:07 for quadruped Q1 by
+    <li class="footer">Generated on Mon Mar 24 2014 15:20:11 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>
