@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include "include/pivot.h"
+#include "include/hmatrix.h"
 
 namespace Q1 {
 
@@ -20,12 +21,13 @@ class Leg {
   // constants
   static const int kPivotCount = 3;
   // con/destructors
-  explicit Leg(uint8_t index);
+  explicit Leg(uint8_t index, HMatrix* H_cob);
   ~Leg();
   // functions
   const Pivot* pivot(int index);
   const Pivot* foot();
   const double* GetHMatrixArray(int index);
+  const double* GetRelativeHMatrixArray(int index);
   void SetPivotPos(int index, double x, double y, double z);
   void ConfigurePivotRot(int index, Axis axis, double angle);
  private:

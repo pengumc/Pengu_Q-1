@@ -7,6 +7,7 @@ class Quadruped:
         #restypes
         self.lib.QuadrupedAlloc.restype = c_void_p
         self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
+        self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
         #startup
         self.q = self.lib.QuadrupedAlloc();
         
@@ -36,6 +37,10 @@ class Quadruped:
     def get_hmatrix(self, index):
         return self.lib.QuadrupedGetHMatrix(self.q, int(index))
     
+    def get_relative_hmatrix(self, leg, pivot):
+        return self.lib.QuadrupedGetRelativeHMatrix(self.q, int(leg), 
+            int(pivot))
+    
     def configure_pivot_rot(self, leg, pivot, axis, angle):
         self.lib.QuadrupedConfigurePivotRot(self.q, int(leg), int(pivot),
-                                          int(axis), c_double(angle))
+            int(axis), c_double(angle))

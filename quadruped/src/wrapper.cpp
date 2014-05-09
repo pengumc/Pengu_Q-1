@@ -63,12 +63,29 @@ extern "C" void QuadrupedSetPivotPos(Quadruped* q, int leg_index,
 }
 
 // ---------------------------------------------------QuadrupedConfigurePivotRot
-/** @brief
-*/
+/** @brief configure the base rotation of a pivot. see 
+ * \ref Quadruped::ConfigurePivotRot*/
 extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
                                         int pivot_index, Axis axis,
                                         double angle) {
   q->ConfigurePivotRot(leg_index, pivot_index, axis, angle);
 }
+
+// --------------------------------------------------QuadrupedGetRelativeHMatrix
+/** @brief get the values of a hmatrix relative to the cob
+ * @param q pointer to a quadruped.
+ * @param index The index of the HMatrix. numbering: <br>
+ * 0 = leg 0, pivot 0<br>
+ * 1 = leg 0, pivot 1<br>
+ * 3 = leg 0, foot/endpoint<br>
+ * 14 = leg 3, pivot 2<br>
+ * 15 = leg 3, foot/endpoint<br>
+ */
+extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
+                                                     int leg_index, 
+                                                     int pivot_index) {
+  return q->GetRelativeHMatrixArray(leg_index, pivot_index);
+}
+
 
 }  // namespace Q1

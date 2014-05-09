@@ -8,12 +8,13 @@ namespace Q1 {
 
 // --------------------------------------------------------------Constructor Leg
 /** @brief Constructor*/
-Leg::Leg(uint8_t index) {
+Leg::Leg(uint8_t index, HMatrix* H_cob) {
   index = index;
-  for (int i = 0; i < kPivotCount; ++i) {
-    pivots_[i] = new Pivot();
+  pivots_[0] = new Pivot(H_cob);
+  for (int i = 1; i < kPivotCount; ++i) {
+    pivots_[i] = new Pivot(pivots_[i-1]->H_framep());
   }
-  foot_ = new Pivot();
+  foot_ = new Pivot(pivots_[kPivotCount-1]->H_framep());
 }
 
 
@@ -62,6 +63,17 @@ void Leg::SetPivotPos(int index, double x, double y, double z) {
 /** @brief configure <b>R</b> of a pivot without touching Pivot::angle_*/
 void Leg::ConfigurePivotRot(int index, Axis axis, double angle) {
   pivots_[index]->ConfigureRot(axis, angle);
+}
+
+// ------------------------------------------------------GetRelativeHMatrixArray
+/** @brief return the hmatrix array of one of the pivots or the foot relative
+ * to the COB*/
+const double* Leg::GetRelativeHMatrixArray(int index) {
+  if (index < kPivotCount) {
+    return pivots_[index]->GetRelativeHMatrixArray();
+  } else {
+    return foot_->GetRelativeHMatrixArray();
+  }
 }
 
 }  // namespace Q1

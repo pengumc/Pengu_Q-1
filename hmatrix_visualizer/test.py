@@ -1,36 +1,21 @@
+#linux test for threaded ctypes
 import threading
 import Queue
+from quadruped import *
 
-main_queue = None
 
 class A (threading.Thread):
     
-    def __init__(self):
+    def __init__(self, Q):
         threading.Thread.__init__(self)
-        self.queue = Queue.Queue()
-        global main_queue
-        main_queue = self.queue
-    
+        self.Q = Q
+        
     def run(self):
-        #do something with self.stuff
-        import keyboard
-        while 1:
-            c = keyboard.getch()
-            self.queue.put(c)
-            if c == 'q':
-                break
+        self.Q.set_pivot_pos(0, 0, 5, 5, 0)
 
 if __name__ == "__main__":
-    t1 = A()
+    libpath = "../quadruped/bin/libquadruped.so"
+    Q = Quadruped(libpath)
+    t1 = A(Q)
     t1.start()
-    c = None
-    while 1:
-        try:
-            c = main_queue.get(True, 0.1)
-        except Queue.Empty:
-            pass
-        if c == 'q':
-            break
-        else:
-            print c
-            
+    t1.join()

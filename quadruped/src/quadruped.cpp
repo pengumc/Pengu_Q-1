@@ -10,8 +10,9 @@ namespace Q1 {
 /** @brief Constructor*/
 Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
-    legs_[i] = new Leg(i);
+    legs_[i] = new Leg(i, &H_cob_);
   }
+  H_cob_ = HMatrix(X_AXIS, 0.3);
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -62,5 +63,14 @@ void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
                                   double angle) {
   legs_[leg_index]->ConfigurePivotRot(pivot_index, axis, angle);
 }
+
+// ------------------------------------------------------GetRelativeHMatrixArray
+/** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg 
+ * relative to cob.*/
+const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
+                                                 int pivot_index) {
+  return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
+}
+
 
 }  // namespace Q1

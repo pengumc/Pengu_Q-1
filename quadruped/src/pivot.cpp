@@ -15,6 +15,56 @@ Pivot::Pivot() {
   axis_ = X_AXIS;
 }
 
+// -----------------------------------------------------------------Constructor2
+/** @brief Constructor, set parent*/
+Pivot::Pivot(HMatrix* parent) {
+  // same as normal constructor
+  abs_max_angle_ = 30 * M_PI/180;  // 30 degrees
+  angle_ = 0.0;
+  offset_angle_ = 0.0;
+  axis_ = X_AXIS;
+  // just add parent
+  H_frame_.set_parent(parent);
+}
+
+// ----------------------------------------------------------------------H_frame
+/** @brief accessor for \ref H_frame_*/
+HMatrix Pivot::H_frame() {
+  return H_frame_;
+}
+
+// ---------------------------------------------------------------------H_framep
+/** @brief returns a pointer to \ref H_frame_ (for use as parent)*/
+HMatrix* Pivot::H_framep() {
+  return &H_frame_;
+}
+
+// ------------------------------------------------------------------------H_rel
+/** @brief accessor for \ref H_rel_ (update H_rel as well)*/
+HMatrix Pivot::H_rel() {
+  // first update rel by traversing the tranform tree till we find a matrix
+  // with parent NULL
+  HMatrix* p = H_frame_.parent();
+  if (p == NULL) {
+    // H_frame_ is already relative to origin
+    H_rel_.Copy(H_frame_);
+  } else {
+    H_rel_ = H_frame_.Inverse();
+    while (p != NULL) {
+      H_rel_.SelfDot(p->Inverse());
+      p = p->parent();
+    }
+    H_rel_ = H_rel_.Inverse();
+  }
+  return H_rel_;
+}
+
+// -------------------------------------------------------------------set_parent
+/** @brief mutator for \ref parent_*/
+void Pivot::set_parent(HMatrix* parent) {
+  H_frame_.set_parent(parent);
+}
+
 // ------------------------------------------------------------set_abs_max_angle
 /** @brief mutator for \ref abs_max_angle_*/
 void Pivot::set_abs_max_angle(double angle) {
@@ -89,14 +139,17 @@ const double* Pivot::GetHMatrixArray() {
   return H_frame_.array();
 }
 
+// ------------------------------------------------------GetRelativeHMatrixArray
+/** @vbrief return a readable 16 value array with the elements of \ref H_rel_*/
+const double* Pivot::GetRelativeHMatrixArray() {
+  H_rel();  // update H_rel_
+  return H_rel_.array();
+}
+
 // -----------------------------------------------------------------ConfigureRot
 /** @brief configre the base orientation of the pivot*/
 void Pivot::ConfigureRot(Axis axis, double angle) {
-  HMatrix configured = HMatrix(axis, angle);
-  configured.SetX(H_frame_.GetX());
-  configured.SetY(H_frame_.GetY());
-  configured.SetZ(H_frame_.GetZ());
-  H_frame_.Copy(configured);
+  H_frame_.SelfDot(HMatrix(axis, angle));
 }
 
 }  // namespace Q1

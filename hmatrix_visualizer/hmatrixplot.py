@@ -32,12 +32,12 @@ class PlotThread (threading.Thread):
         self.ax.set_xlabel("X")
         self.ax.set_ylabel("Y")
         self.ax.set_zlabel("Z")
-        self.ax.set_xlim((-10,10))
-        self.ax.set_ylim((-10,10))
-        self.ax.set_zlim((-10,10))
         for raw_H in self.hmatrices:
             H = np_conv_hmatrix16(raw_H)
             self.draw_hmatrix(H)
+        self.ax.set_xlim((-10,10))
+        self.ax.set_ylim((-10,10))
+        self.ax.set_zlim((-10,10))
         plt.show()
         plt.close('all')
     

@@ -51,6 +51,8 @@ class HMatrix {
   HMatrix(double x, double y, double z);
   HMatrix(Axis axis, double angle);
   // methods
+  void set_parent(HMatrix* parent);
+  HMatrix* parent();
   const double* array();
   double GetX();
   void SetX(double value);
@@ -67,10 +69,12 @@ class HMatrix {
   void CounterRotateVector(const double* vector, double* vector_out);
   void RotateVector(const double* vector, double* vector_out);
   void LogMatrix(Logger* logger);
+  void Clear();
 
  private:
   // members
   double array_[kMagic16];/**<@brief The array that holds the H-matrix values.*/
+  HMatrix* parent_;/**< @brief parent in the transform tree, NULL = origin*/
 };
 
 }  // namespace Q1

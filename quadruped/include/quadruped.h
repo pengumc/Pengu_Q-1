@@ -9,6 +9,7 @@
 #include <cstddef>
 
 #include "include/leg.h"
+#include "include/hmatrix.h"
 
 namespace Q1 {
 
@@ -24,6 +25,7 @@ class Quadruped {
   ~Quadruped();
   // functions
   const double* GetHMatrixArrayByIndex(int index);
+  const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
   void SetPivotPos(int leg_index, int pivot_index, double x, double y,
                    double z);
@@ -31,6 +33,7 @@ class Quadruped {
                          double angle);
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
+  HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
 };
 
 }  // namespace Q1

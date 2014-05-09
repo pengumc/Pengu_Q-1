@@ -27,6 +27,7 @@ HMatrix::HMatrix() {
   array_[13] = 0.0;
   array_[14] = 0.0;
   array_[15] = 1.0;
+  parent_ = NULL;
 }
 
 // -----------------------------------------------------------------Constructor2
@@ -38,6 +39,7 @@ HMatrix::HMatrix(const double* array) {
   for (int i = 0; i < kMagic16; ++i) {
     array_[i] = array[i];
   }
+  parent_ = NULL;
 }
 
 // -----------------------------------------------------------------Constructor3
@@ -66,6 +68,7 @@ HMatrix::HMatrix(double x, double y, double z) {
   array_[13] = 0.0;
   array_[14] = 0.0;
   array_[15] = 1.0;
+  parent_ = NULL;
 }
 
 // -----------------------------------------------------------------Constructor4
@@ -77,7 +80,7 @@ HMatrix::HMatrix(Axis axis, double angle) {
   array_[12] = 0.0;
   array_[13] = 0.0;
   array_[14] = 0.0;
-  array_[15] = 0.0;
+  array_[15] = 1.0;
   switch (axis) {
     case Z_AXIS: {
       array_[0] = std::cos(angle);
@@ -116,6 +119,29 @@ HMatrix::HMatrix(Axis axis, double angle) {
       break;
     }
   }
+  parent_ = NULL;
+}
+
+// ------------------------------------------------------------------------Clear
+/** @brief set to <b>I</b> and clear parent*/
+void HMatrix::Clear() {
+  array_[0] = 1.0;
+  array_[1] = 0.0;
+  array_[2] = 0.0;
+  array_[3] = 0.0;
+  array_[4] = 0.0;
+  array_[5] = 1.0;
+  array_[6] = 0.0;
+  array_[7] = 0.0;
+  array_[8] = 0.0;
+  array_[9] = 0.0;
+  array_[10] = 1.0;
+  array_[11] = 0.0;
+  array_[12] = 0.0;
+  array_[13] = 0.0;
+  array_[14] = 0.0;
+  array_[15] = 1.0;
+  parent_ = NULL;
 }
 
 // -------------------------------------------------------------------------Copy
@@ -124,6 +150,18 @@ void HMatrix::Copy(const HMatrix src) {
   for (int i = 0; i < kMagic16; ++i) {
     array_[i] = src.array_[i];
   }
+}
+
+// -------------------------------------------------------------------set_parent
+/** @brief set the parent*/
+void HMatrix::set_parent(HMatrix* parent) {
+  parent_ = parent;
+}
+
+// --------------------------------------------------------------parent accessor
+/** @brief returns \ref parent_*/
+HMatrix* HMatrix::parent() {
+  return parent_;
 }
 
 // ---------------------------------------------------------------array accessor

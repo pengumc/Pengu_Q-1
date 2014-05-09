@@ -35,10 +35,14 @@ class KeyboardThread (threading.Thread):
                 break
             elif c == 'p':
                 #raw_pivot00 = self.Q.get_hmatrix(0)
-                raw_pivots = [self.Q.get_hmatrix(i) for i in range(16)]
-                self.queue.put(raw_pivots)
+                raw_pivots = []
+                for leg in range(4):
+                    for pivot in range(4):
+                        raw_pivots.append(
+                            self.Q.get_relative_hmatrix(leg, pivot))
+                self.queue.put(raw_pivots[0:16])
+                self.Q.print_hmatrix(raw_pivots[3])
                 print("plot requested")
-                self.Q.print_hmatrix(raw_pivots[0])
             elif c == 'a':
                 x = x + 1.0
                 self.Q.set_pivot_pos(0, 0, x, 0, 0)
@@ -51,12 +55,31 @@ class KeyboardThread (threading.Thread):
     def setup_pivot0s(self):
         print("setting up pivots in thread {}".format(
           threading.current_thread().name))
+        #leg 0
         self.Q.set_pivot_pos(0, 0, 5, 2, 0)
         self.Q.configure_pivot_rot(0, 0, 2, math.pi/4) 
+        self.Q.set_pivot_pos(0, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(0, 2, 5, 0, 0)
+        self.Q.set_pivot_pos(0, 3, 5, 0, 0)
+        #leg 1
         self.Q.set_pivot_pos(1, 0, -5, 2, 0)
         self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4) 
+        self.Q.set_pivot_pos(1, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(1, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(1, 2, 5, 0, 0)
+        self.Q.set_pivot_pos(1, 3, 5, 0, 0)
+        #leg 2
         self.Q.set_pivot_pos(2, 0, -5, -2, 0)
         self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4) 
+        self.Q.set_pivot_pos(2, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(2, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(2, 2, 5, 0, 0)
+        self.Q.set_pivot_pos(2, 3, 5, 0, 0)
+        #leg 3
         self.Q.set_pivot_pos(3, 0, 5, -2, 0)
         self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4) 
+        self.Q.set_pivot_pos(3, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(3, 1, 5, 0, 0)
+        self.Q.set_pivot_pos(3, 2, 5, 0, 0)
+        self.Q.set_pivot_pos(3, 3, 5, 0, 0)
         
