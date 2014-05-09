@@ -3,18 +3,24 @@
 
 import threading
 import Queue
-from quadruped import *
 import math
+import quadruped
+from os import uname
 
 class KeyboardThread (threading.Thread):
     
     def __init__(self):
         threading.Thread.__init__(self)
         self.queue = Queue.Queue()
+        if uname()[0] == 'Linux':
+            libpath = "../quadruped/bin/libquadruped.so"
+        else: #there's only linux and windows :p
+          libpath = "../quadruped/bin/quadruped.dll"
+        print("Using library: {}".format(libpath))
+        self.Q = quadruped.Quadruped(libpath)
         
     def run(self):
         import keyboard
-        self.Q = Quadruped("../quadruped/bin/quadruped.dll")
         self.setup_pivot0s()
         x = 5.0
         angle = 0.0
@@ -32,6 +38,7 @@ class KeyboardThread (threading.Thread):
                 raw_pivots = [self.Q.get_hmatrix(i) for i in range(16)]
                 self.queue.put(raw_pivots)
                 print("plot requested")
+                self.Q.print_hmatrix(raw_pivots[0])
             elif c == 'a':
                 x = x + 1.0
                 self.Q.set_pivot_pos(0, 0, x, 0, 0)
@@ -42,12 +49,14 @@ class KeyboardThread (threading.Thread):
                 print("pivot00 angle = {}".format(angle))
                 
     def setup_pivot0s(self):
-        self.Q.set_pivot_pos(0, 0, 5, 5, 0)
+        print("setting up pivots in thread {}".format(
+          threading.current_thread().name))
+        self.Q.set_pivot_pos(0, 0, 5, 2, 0)
         self.Q.configure_pivot_rot(0, 0, 2, math.pi/4) 
-        self.Q.set_pivot_pos(1, 0, -5, 5, 0)
+        self.Q.set_pivot_pos(1, 0, -5, 2, 0)
         self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4) 
-        self.Q.set_pivot_pos(2, 0, -5, -5, 0)
+        self.Q.set_pivot_pos(2, 0, -5, -2, 0)
         self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4) 
-        self.Q.set_pivot_pos(3, 0, 5, -5, 0)
+        self.Q.set_pivot_pos(3, 0, 5, -2, 0)
         self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4) 
         
