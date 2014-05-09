@@ -87,5 +87,4 @@ extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
   return q->GetRelativeHMatrixArray(leg_index, pivot_index);
 }
 
-
 }  // namespace Q1

@@ -5,20 +5,20 @@ import threading
 import Queue
 import math
 import quadruped
-from os import uname
+from platform import system
 
 class KeyboardThread (threading.Thread):
-    
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.queue = Queue.Queue()
-        if uname()[0] == 'Linux':
+        if system() == 'Linux':
             libpath = "../quadruped/bin/libquadruped.so"
         else: #there's only linux and windows :p
           libpath = "../quadruped/bin/quadruped.dll"
         print("Using library: {}".format(libpath))
         self.Q = quadruped.Quadruped(libpath)
-        
+
     def run(self):
         import keyboard
         self.setup_pivot0s()
@@ -41,7 +41,6 @@ class KeyboardThread (threading.Thread):
                         raw_pivots.append(
                             self.Q.get_relative_hmatrix(leg, pivot))
                 self.queue.put(raw_pivots[0:16])
-                self.Q.print_hmatrix(raw_pivots[3])
                 print("plot requested")
             elif c == 'a':
                 x = x + 1.0
@@ -51,35 +50,40 @@ class KeyboardThread (threading.Thread):
                 angle = angle - 0.1
                 self.Q.configure_pivot_rot(0, 0, 2, angle)
                 print("pivot00 angle = {}".format(angle))
-                
+
     def setup_pivot0s(self):
         print("setting up pivots in thread {}".format(
           threading.current_thread().name))
         #leg 0
-        self.Q.set_pivot_pos(0, 0, 5, 2, 0)
-        self.Q.configure_pivot_rot(0, 0, 2, math.pi/4) 
-        self.Q.set_pivot_pos(0, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(0, 2, 5, 0, 0)
-        self.Q.set_pivot_pos(0, 3, 5, 0, 0)
+        self.Q.set_pivot_pos(0, 0, 5.37, 5.37, 0)
+        self.Q.configure_pivot_rot(0, 0, 2, math.pi/4)
+        self.Q.set_pivot_pos(0, 1, 3.6, 0, 0)
+        self.Q.configure_pivot_rot(0, 1, 0, math.pi/2)
+        self.Q.set_pivot_pos(0, 2, 6.8, 0, 0)
+        self.Q.configure_pivot_rot(0, 2, 2, -math.pi/2)
+        self.Q.set_pivot_pos(0, 3, 10, 0, 0)
         #leg 1
-        self.Q.set_pivot_pos(1, 0, -5, 2, 0)
-        self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4) 
-        self.Q.set_pivot_pos(1, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(1, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(1, 2, 5, 0, 0)
-        self.Q.set_pivot_pos(1, 3, 5, 0, 0)
+        self.Q.set_pivot_pos(1, 0, -5.37, 5.37, 0)
+        self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4)
+        self.Q.set_pivot_pos(1, 1, 3.6, 0, 0)
+        self.Q.configure_pivot_rot(1, 1, 0, math.pi/2)
+        self.Q.set_pivot_pos(1, 2, 6.8, 0, 0)
+        self.Q.configure_pivot_rot(1, 2, 2, -math.pi/2)
+        self.Q.set_pivot_pos(1, 3, 10, 0, 0)
         #leg 2
-        self.Q.set_pivot_pos(2, 0, -5, -2, 0)
-        self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4) 
-        self.Q.set_pivot_pos(2, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(2, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(2, 2, 5, 0, 0)
-        self.Q.set_pivot_pos(2, 3, 5, 0, 0)
+        self.Q.set_pivot_pos(2, 0, -5.37, -5.37, 0)
+        self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4)
+        self.Q.set_pivot_pos(2, 1, 3.6, 0, 0)
+        self.Q.configure_pivot_rot(2, 1, 0, math.pi/2)
+        self.Q.set_pivot_pos(2, 2, 6.8, 0, 0)
+        self.Q.configure_pivot_rot(2, 2, 2, -math.pi/2)
+        self.Q.set_pivot_pos(2, 3, 10, 0, 0)
         #leg 3
-        self.Q.set_pivot_pos(3, 0, 5, -2, 0)
-        self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4) 
-        self.Q.set_pivot_pos(3, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(3, 1, 5, 0, 0)
-        self.Q.set_pivot_pos(3, 2, 5, 0, 0)
-        self.Q.set_pivot_pos(3, 3, 5, 0, 0)
-        
+        self.Q.set_pivot_pos(3, 0, 5.37, -5.37, 0)
+        self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4)
+        self.Q.set_pivot_pos(3, 1, 3.6, 0, 0)
+        self.Q.configure_pivot_rot(3, 1, 0, math.pi/2)
+        self.Q.set_pivot_pos(3, 2, 6.8, 0, 0)
+        self.Q.configure_pivot_rot(3, 2, 2, -math.pi/2)
+        self.Q.set_pivot_pos(3, 3, 10, 0, 0)
+

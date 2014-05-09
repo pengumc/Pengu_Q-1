@@ -35,9 +35,9 @@ class PlotThread (threading.Thread):
         for raw_H in self.hmatrices:
             H = np_conv_hmatrix16(raw_H)
             self.draw_hmatrix(H)
-        self.ax.set_xlim((-10,10))
-        self.ax.set_ylim((-10,10))
-        self.ax.set_zlim((-10,10))
+        self.ax.set_xlim((-20,20))
+        self.ax.set_ylim((-20,20))
+        self.ax.set_zlim((-20,20))
         plt.show()
         plt.close('all')
     
@@ -50,7 +50,7 @@ class PlotThread (threading.Thread):
         self.add_cube(transformed_points)
 
     def add_cube(self, points):
-        self.ax.scatter(*points[7], s=30, color="g")
+        self.ax.scatter(*points[7], s=10, color="r")
         for s, e in combinations(points, 2):
             # combinations('ABCD', 2) --> AB AC AD BC BD CD
             #if np.sum(np.abs(s-e)) == r[1]-r[0]: #only take lines with length 2

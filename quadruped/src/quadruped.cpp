@@ -12,7 +12,6 @@ Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
     legs_[i] = new Leg(i, &H_cob_);
   }
-  H_cob_ = HMatrix(X_AXIS, 0.3);
 }
 
 // ---------------------------------------------------------Destructor Quadruped
