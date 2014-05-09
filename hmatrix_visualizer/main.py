@@ -5,6 +5,7 @@ import threading
 import Queue
 import math
 import quadruped
+import configuration
 from platform import system
 
 class KeyboardThread (threading.Thread):
@@ -12,16 +13,19 @@ class KeyboardThread (threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.queue = Queue.Queue()
+        #quadruped
         if system() == 'Linux':
             libpath = "../quadruped/bin/libquadruped.so"
         else: #there's only linux and windows :p
           libpath = "../quadruped/bin/quadruped.dll"
         print("Using library: {}".format(libpath))
         self.Q = quadruped.Quadruped(libpath)
-
+        #configfile
+        self.config = configuration.Configuration("config.xml")
+        
     def run(self):
         import keyboard
-        self.setup_pivot0s()
+        self.apply_config()
         x = 5.0
         angle = 0.0
         print("usage:\n\t'q' quit\n\t'p' plot")
@@ -51,6 +55,15 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(0, 0, 2, angle)
                 print("pivot00 angle = {}".format(angle))
 
+    def apply_config(self):
+        for leg in self.config.legs:
+            for pivot in leg.pivots:
+                self.Q.set_pivot_pos(leg.id, pivot.id, pivot.x, pivot.y,
+                    pivot.z)
+                self.Q.configure_pivot_rot(leg.id, pivot.id, 0, pivot.rotx)
+                self.Q.configure_pivot_rot(leg.id, pivot.id, 1, pivot.roty)
+                self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
+    
     def setup_pivot0s(self):
         print("setting up pivots in thread {}".format(
           threading.current_thread().name))
