@@ -71,5 +71,11 @@ const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
   return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
 }
 
+// ---------------------------------------------------------------SetPivotConfig
+/** @brief set the axis, offset and max of a pivot*/
+void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
+                               double abs_max) {
+  legs_[leg_index]->SetPivotConfig(pivot_index, offset, abs_max);
+}
 
 }  // namespace Q1

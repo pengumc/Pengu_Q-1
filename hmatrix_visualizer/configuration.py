@@ -23,12 +23,14 @@ class Configuration:
                 rotx = pivot.attrib["rotx"]
                 roty = pivot.attrib["roty"]
                 rotz = pivot.attrib["rotz"]
+                offset = pivot.attrib["offset"]
+                abs_max = pivot.attrib["abs_max"]
                 pos = pivot.find("pos")
                 x = pos.attrib["x"]
                 y = pos.attrib["y"]
                 z = pos.attrib["z"]
                 self.legs[-1].pivots.append(ConfigPivot(
-                    id, x, y, z, rotx, roty, rotz))
+                    id, x, y, z, rotx, roty, rotz, offset, abs_max))
         return(True)
 
 
@@ -40,7 +42,7 @@ class ConfigLeg:
 
 class ConfigPivot:
 
-    def __init__(self, id, x, y, z, rotx, roty, rotz):
+    def __init__(self, id, x, y, z, rotx, roty, rotz, offset, abs_max):
         self.id = int(id)
         self.x = float(x)
         self.y = float(y)
@@ -48,3 +50,5 @@ class ConfigPivot:
         self.rotx = float(rotx)
         self.roty = float(roty)
         self.rotz = float(rotz)
+        self.offset = float(offset)
+        self.abs_max = float(abs_max)

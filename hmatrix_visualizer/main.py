@@ -22,7 +22,7 @@ class KeyboardThread (threading.Thread):
         self.Q = quadruped.Quadruped(libpath)
         #configfile
         self.config = configuration.Configuration("config.xml")
-        
+
     def run(self):
         import keyboard
         self.apply_config()
@@ -63,40 +63,5 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 0, pivot.rotx)
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 1, pivot.roty)
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
-    
-    def setup_pivot0s(self):
-        print("setting up pivots in thread {}".format(
-          threading.current_thread().name))
-        #leg 0
-        self.Q.set_pivot_pos(0, 0, 5.37, 5.37, 0)
-        self.Q.configure_pivot_rot(0, 0, 2, math.pi/4)
-        self.Q.set_pivot_pos(0, 1, 3.6, 0, 0)
-        self.Q.configure_pivot_rot(0, 1, 0, math.pi/2)
-        self.Q.set_pivot_pos(0, 2, 6.8, 0, 0)
-        self.Q.configure_pivot_rot(0, 2, 2, -math.pi/2)
-        self.Q.set_pivot_pos(0, 3, 10, 0, 0)
-        #leg 1
-        self.Q.set_pivot_pos(1, 0, -5.37, 5.37, 0)
-        self.Q.configure_pivot_rot(1, 0, 2, 3*math.pi/4)
-        self.Q.set_pivot_pos(1, 1, 3.6, 0, 0)
-        self.Q.configure_pivot_rot(1, 1, 0, math.pi/2)
-        self.Q.set_pivot_pos(1, 2, 6.8, 0, 0)
-        self.Q.configure_pivot_rot(1, 2, 2, -math.pi/2)
-        self.Q.set_pivot_pos(1, 3, 10, 0, 0)
-        #leg 2
-        self.Q.set_pivot_pos(2, 0, -5.37, -5.37, 0)
-        self.Q.configure_pivot_rot(2, 0, 2, 5*math.pi/4)
-        self.Q.set_pivot_pos(2, 1, 3.6, 0, 0)
-        self.Q.configure_pivot_rot(2, 1, 0, math.pi/2)
-        self.Q.set_pivot_pos(2, 2, 6.8, 0, 0)
-        self.Q.configure_pivot_rot(2, 2, 2, -math.pi/2)
-        self.Q.set_pivot_pos(2, 3, 10, 0, 0)
-        #leg 3
-        self.Q.set_pivot_pos(3, 0, 5.37, -5.37, 0)
-        self.Q.configure_pivot_rot(3, 0, 2, 7*math.pi/4)
-        self.Q.set_pivot_pos(3, 1, 3.6, 0, 0)
-        self.Q.configure_pivot_rot(3, 1, 0, math.pi/2)
-        self.Q.set_pivot_pos(3, 2, 6.8, 0, 0)
-        self.Q.configure_pivot_rot(3, 2, 2, -math.pi/2)
-        self.Q.set_pivot_pos(3, 3, 10, 0, 0)
-
+                self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset, 
+                    pivot.abs_max)

@@ -76,4 +76,21 @@ const double* Leg::GetRelativeHMatrixArray(int index) {
   }
 }
 
+// ---------------------------------------------------------------SetPivotConfig
+/** @brief set the offset and rotational angle of a pivot
+ *
+ * @param index the pivot index, 0..2
+ * @param the offset angle \ref Pivot::offset_angle_
+ * @param the absolute maximum angle \ref Pivot::abs_max_angle
+ */
+void Leg::SetPivotConfig(int index, double offset, double abs_max) {
+  if (index < kPivotCount) {
+    pivots_[index]->set_offset_angle(offset);
+    pivots_[index]->set_abs_max_angle(abs_max);
+  } else if (index == kPivotCount) {
+    foot_->set_offset_angle(offset);
+    foot_->set_abs_max_angle(abs_max);
+  }
+}
+
 }  // namespace Q1

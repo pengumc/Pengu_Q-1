@@ -63,7 +63,7 @@ extern "C" void QuadrupedSetPivotPos(Quadruped* q, int leg_index,
 }
 
 // ---------------------------------------------------QuadrupedConfigurePivotRot
-/** @brief configure the base rotation of a pivot. see 
+/** @brief configure the base rotation of a pivot. see
  * \ref Quadruped::ConfigurePivotRot*/
 extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
                                         int pivot_index, Axis axis,
@@ -82,9 +82,21 @@ extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
  * 15 = leg 3, foot/endpoint<br>
  */
 extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
-                                                     int leg_index, 
+                                                     int leg_index,
                                                      int pivot_index) {
   return q->GetRelativeHMatrixArray(leg_index, pivot_index);
+}
+
+// ------------------------------------------------------QuadrupedSetPivotConfig
+/** @brief set the offset and axis of a pivot
+ *
+ * @param axis the \ref Axis around which the pivot rotates
+ * @param offset the offset angle (i.e. the neutral angle)
+ */
+extern "C" void QuadrupedSetPivotConfig(Quadruped* q, int leg_index,
+                                         int pivot_index, double offset,
+                                         double abs_max) {
+  q->SetPivotConfig(leg_index, pivot_index, offset, abs_max);
 }
 
 }  // namespace Q1
