@@ -72,15 +72,7 @@ extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
 }
 
 // --------------------------------------------------QuadrupedGetRelativeHMatrix
-/** @brief get the values of a hmatrix relative to the cob
- * @param q pointer to a quadruped.
- * @param index The index of the HMatrix. numbering: <br>
- * 0 = leg 0, pivot 0<br>
- * 1 = leg 0, pivot 1<br>
- * 3 = leg 0, foot/endpoint<br>
- * 14 = leg 3, pivot 2<br>
- * 15 = leg 3, foot/endpoint<br>
- */
+/** @brief get the values of a hmatrix relative to the cob*/
 extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
                                                      int leg_index,
                                                      int pivot_index) {
@@ -90,13 +82,24 @@ extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
 // ------------------------------------------------------QuadrupedSetPivotConfig
 /** @brief set the offset and axis of a pivot
  *
- * @param axis the \ref Axis around which the pivot rotates
+ * @param q pointer to a quadruped
+ * @param leg_index index for the leg (0..3)
+ * @param pivot_index index of the pivot (0..3)
  * @param offset the offset angle (i.e. the neutral angle)
+ * @param abs_max the absolute maximum angle relative to the offset for the 
+ * pivot
  */
 extern "C" void QuadrupedSetPivotConfig(Quadruped* q, int leg_index,
                                          int pivot_index, double offset,
                                          double abs_max) {
   q->SetPivotConfig(leg_index, pivot_index, offset, abs_max);
+}
+
+// --------------------------------------------------- QuadrupedChangePivotAngle
+/** @brief change the angle of a pivot, false on out of range*/
+extern "C" bool QuadrupedChangePivotAngle(Quadruped* q, int leg_index,
+                                            int pivot_index, double angle) {
+  return q->ChangePivotAngle(leg_index, pivot_index, angle);
 }
 
 }  // namespace Q1

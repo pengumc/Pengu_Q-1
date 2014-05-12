@@ -58,7 +58,7 @@ HMatrix Pivot::H_rel() {
 }
 
 // -------------------------------------------------------------------set_parent
-/** @brief mutator for \ref parent_*/
+/** @brief mutator for \ref HMatrix::parent_, NULL means origin*/
 void Pivot::set_parent(HMatrix* parent) {
   H_frame_.set_parent(parent);
 }
@@ -76,7 +76,7 @@ void Pivot::set_abs_max_angle(double angle) {
 // -------------------------------------------------------------set_offset_angle
 /** @brief mutator for \ref offset_angle_
  * 
- * \image offsetchange.png
+ * \image html offsetchange.png
  */
 void Pivot::set_offset_angle(double angle) {
   const double diff = angle - offset_angle_;
@@ -132,7 +132,7 @@ const double* Pivot::GetHMatrixArray() {
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
-/** @vbrief return a readable 16 value array with the elements of \ref H_rel_*/
+/** @brief return a readable 16 value array with the elements of \ref H_rel_*/
 const double* Pivot::GetRelativeHMatrixArray() {
   H_rel();  // update H_rel_
   return H_rel_.array();

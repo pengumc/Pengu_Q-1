@@ -8,6 +8,7 @@ class Quadruped:
         self.lib.QuadrupedAlloc.restype = c_void_p
         self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
+        self.lib.QuadrupedChangePivotAngle.restype = c_bool;
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -46,6 +47,10 @@ class Quadruped:
             int(axis), c_double(angle))
 
     def set_pivot_config(self, leg, pivot, offset, abs_max):
-        self.lib.QuadrupedSetPivotConfig(self.q, int(leg), int(pivot), c_double(offset),
-            c_double(abs_max))
-        
+        self.lib.QuadrupedSetPivotConfig(self.q, int(leg), int(pivot),
+            c_double(offset), c_double(abs_max))
+    
+    def change_pivot_angle(self, leg, pivot, angle):
+        return self.lib.QuadrupedChangePivotAngle(self.q, int(leg), int(pivot),
+            c_double(angle))
+    

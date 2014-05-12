@@ -27,7 +27,6 @@ class KeyboardThread (threading.Thread):
         import keyboard
         self.apply_config()
         x = 5.0
-        angle = 0.0
         print("usage:\n\t'q' quit\n\t'p' plot")
         print("\t'a' pivot00 x+1\n\t'z' pivot00 angle -0.1\n")
         while True:
@@ -51,10 +50,9 @@ class KeyboardThread (threading.Thread):
                 self.Q.set_pivot_pos(0, 0, x, 0, 0)
                 print("pivot00 x = {}".format(x))
             elif c == 'z':
-                angle = angle - 0.1
-                self.Q.configure_pivot_rot(0, 0, 2, angle)
-                print("pivot00 angle = {}".format(angle))
-
+                result = self.Q.change_pivot_angle(0, 0, 0.1)
+                print("changed pivot00 angle by 0.1: {}".format(result))
+  
     def apply_config(self):
         for leg in self.config.legs:
             for pivot in leg.pivots:

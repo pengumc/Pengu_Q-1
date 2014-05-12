@@ -78,4 +78,11 @@ void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
   legs_[leg_index]->SetPivotConfig(pivot_index, offset, abs_max);
 }
 
+// -------------------------------------------------------------ChangePivotAngle
+/** @brief change a pivots angle, false on out of bounds*/
+bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
+                                  double angle) {
+  return legs_[leg_index]->ChangePivotAngle(pivot_index, angle);
+}
+
 }  // namespace Q1

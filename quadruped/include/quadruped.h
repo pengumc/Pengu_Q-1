@@ -33,6 +33,7 @@ class Quadruped {
                        double abs_max);
   void ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
                          double angle);
+  bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/

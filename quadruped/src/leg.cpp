@@ -27,18 +27,6 @@ Leg::~Leg() {
   delete foot_;
 }
 
-// --------------------------------------------------------------Accessor Pivots
-/** @brief returns a pivot*/
-const Pivot* Leg::pivot(int index) {
-  return pivots_[index];
-}
-
-// ----------------------------------------------------------------Accessor foot
-/** @brief returns the foot*/
-const Pivot* Leg::foot() {
-  return foot_;
-}
-
 // --------------------------------------------------------------GetHMatrixArray
 /** @brief returns the HMatrix array of one of the pivots or the foot
  *
@@ -56,13 +44,19 @@ const double* Leg::GetHMatrixArray(int index) {
 // ------------------------------------------------------------------SetPivotPos
 /** @brief set the x,y,z coordinates of a pivot h-matrix*/
 void Leg::SetPivotPos(int index, double x, double y, double z) {
-  pivots_[index]->SetPosition(x, y, z);
+  if (index < kPivotCount) {
+    pivots_[index]->SetPosition(x, y, z);
+  } else if (index == kPivotCount) {
+    foot_->SetPosition(x, y, z);
+  }
 }
 
 // ------------------------------------------------------------ConfigurePivotRot
 /** @brief configure <b>R</b> of a pivot without touching Pivot::angle_*/
 void Leg::ConfigurePivotRot(int index, Axis axis, double angle) {
-  pivots_[index]->ConfigureRot(axis, angle);
+  if (index < kPivotCount) {
+    pivots_[index]->ConfigureRot(axis, angle);
+  }
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
@@ -80,8 +74,8 @@ const double* Leg::GetRelativeHMatrixArray(int index) {
 /** @brief set the offset and rotational angle of a pivot
  *
  * @param index the pivot index, 0..2
- * @param the offset angle \ref Pivot::offset_angle_
- * @param the absolute maximum angle \ref Pivot::abs_max_angle
+ * @param offset the offset angle \ref Pivot::offset_angle_
+ * @param abs_max the absolute maximum angle \ref Pivot::abs_max_angle_
  */
 void Leg::SetPivotConfig(int index, double offset, double abs_max) {
   if (index < kPivotCount) {
@@ -90,6 +84,19 @@ void Leg::SetPivotConfig(int index, double offset, double abs_max) {
   } else if (index == kPivotCount) {
     foot_->set_offset_angle(offset);
     foot_->set_abs_max_angle(abs_max);
+  }
+}
+
+// -------------------------------------------------------------ChangePivotAngle
+/** @brief change the angle of a pivot, false on out of bounds
+ * 
+ * index > kPivotCount returns always false
+ */
+bool Leg::ChangePivotAngle(int index, double angle) {
+  if (index < kPivotCount) {
+    pivots_[index]->ChangeAngle(angle);
+  } else {
+    return false;
   }
 }
 
