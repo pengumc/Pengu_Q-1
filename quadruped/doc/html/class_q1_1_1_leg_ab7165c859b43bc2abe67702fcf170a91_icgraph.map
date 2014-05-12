@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a307c899d40a9f58dd54279c4c4856a30" title="returns the HMatrix::array_ of the HMatrix at index" alt="" coords="229,5,493,35"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7" title="returns the HMatrix::array_ of the foot of leg index" alt="" coords="267,59,456,88"/>
+<area shape="rect" id="node5" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="605,5,656,35"/>
+<area shape="rect" id="node7" href="$namespace_q1.html#a9515d2667d92a9431234103726eeb410" title="return a pointer to the values of a hmatrix (pivots and feet)" alt="" coords="543,59,719,88"/>
+</map>
