@@ -95,6 +95,7 @@ void Leg::SetPivotConfig(int index, double offset, double abs_max) {
 bool Leg::ChangePivotAngle(int index, double angle) {
   if (index < kPivotCount) {
     pivots_[index]->ChangeAngle(angle);
+    return true;
   } else {
     return false;
   }

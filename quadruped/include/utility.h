@@ -18,6 +18,10 @@
 namespace Q1 {
 
 double NormalizeAngle(double angle);
+void CrossProduct3(const double* v_left, const double* v_right,
+                   double* v_out);
+double VectorDotProduct(const double* v1, const double* v2, 
+                      int element_count);                   
 
 }  // namespace Q1
 

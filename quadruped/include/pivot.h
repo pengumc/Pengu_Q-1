@@ -67,7 +67,7 @@ class Pivot {
   bool set_angle(double angle);
   HMatrix H_frame();
   HMatrix* H_framep();
-  HMatrix H_rel();
+  void UpdateH_rel();
   // functions
   bool ChangeAngle(double delta_angle);
   void SetPosition(double x, double y, double z);
@@ -75,7 +75,7 @@ class Pivot {
   const double* GetHMatrixArray();
   const double* GetRelativeHMatrixArray();
   void ConfigureRot(Axis axis, double angle);
-
+  HMatrix GetSpecificH(HMatrix* target);
 
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/

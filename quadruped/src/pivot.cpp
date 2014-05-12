@@ -39,7 +39,7 @@ HMatrix* Pivot::H_framep() {
 
 // ------------------------------------------------------------------------H_rel
 /** @brief accessor for \ref H_rel_ (update H_rel as well)*/
-HMatrix Pivot::H_rel() {
+void Pivot::UpdateH_rel() {
   // first update rel by traversing the tranform tree till we find a matrix
   // with parent NULL
   HMatrix* p = H_frame_.parent();
@@ -54,7 +54,31 @@ HMatrix Pivot::H_rel() {
     }
     H_rel_ = H_rel_.Inverse();
   }
-  return H_rel_;
+}
+
+// -----------------------------------------------------------------GetSpecificH
+/** @brief a h-matrix from this to a specified matrix in its upward tree path
+ * 
+ * @param target pointer to a target hmatrix. if target is not in the upward
+ * path, the parent will not be set.
+ * @return H_this_target or a parentless HMatrix if target was not encountered
+ */
+HMatrix Pivot::GetSpecificH(HMatrix* target) {
+  HMatrix* p = H_frame_.parent();
+  if (p == NULL && target != NULL) {
+    return HMatrix();
+  } else {
+    HMatrix H_this_target = H_frame_.Inverse();
+    while (p != target) {
+      H_this_target.SelfDot(p->Inverse());
+      p = p->parent();
+      if (p == NULL) {
+        return HMatrix();
+      }
+    }
+    H_this_target.set_parent(&H_frame_);
+    return H_this_target;
+  }
 }
 
 // -------------------------------------------------------------------set_parent
@@ -105,7 +129,7 @@ void Pivot::SetPosition(double x, double y, double z) {
  * \ref angle_ is kept up to date
  */
 bool Pivot::ChangeAngle(double delta_angle) {
-  const double a = offset_angle_ + angle_ + delta_angle; // target true angle
+  const double a = offset_angle_ + angle_ + delta_angle;  // target true angle
   if (!IsInRange(a)) {
     return false;
   } else {
@@ -134,7 +158,7 @@ const double* Pivot::GetHMatrixArray() {
 // ------------------------------------------------------GetRelativeHMatrixArray
 /** @brief return a readable 16 value array with the elements of \ref H_rel_*/
 const double* Pivot::GetRelativeHMatrixArray() {
-  H_rel();  // update H_rel_
+  UpdateH_rel();
   return H_rel_.array();
 }
 
