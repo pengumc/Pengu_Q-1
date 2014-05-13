@@ -9,7 +9,7 @@ namespace Q1 {
 
 // ------------------------------------------------------------------Constructor
 /** @brief constructor
- * 
+ *
  * @param pivot_count number of pivots in the chain, the last one is considered
  * the endpoint. pivot_count minimum: 2
  */
@@ -60,29 +60,23 @@ void InvKinematic::ConstructJacobian() {
   HMatrix H_0_s = HMatrix(
     pivots_[pivot_count_ - 1]->GetRelativeHMatrixArray());
   HMatrix H_0_pj;
-  printf(" transposed jacobian:\n");
+  //  printf(" transposed jacobian:\n");
   for (int j = 0; j < end; ++j) {
     H_0_pj = HMatrix(pivots_[j]->GetRelativeHMatrixArray());
-    //~ HMatrix diff = pivots_[end]->GetSpecificH(pivots_[j]->H_framep());
-    //~ if (diff.parent() == NULL) {
-      //~ // pivot is not in chain to end-effector. error in setup
-      //~ flag_ = NOT_ALL_PIVOT_IN_CHAIN;
-      //~ return;
-    //~ }
     H_0_pj.RotateVector(unity_z, v_j);
     const double v_diff[3] = {
       H_0_s.GetX() - H_0_pj.GetX(),
       H_0_s.GetY() - H_0_pj.GetY(),
       H_0_s.GetZ() - H_0_pj.GetZ()};
     CrossProduct3(v_j, v_diff, &jacobianT_[j*3]);
-    printf(" %.4f, %.4f, %.4f\n", jacobianT_[j*3], jacobianT_[j*3+1], 
-      jacobianT_[j*3+2]);
+    //  printf(" %.4f, %.4f, %.4f\n", jacobianT_[j*3], jacobianT_[j*3+1],
+      //  jacobianT_[j*3+2]);
   }
 }
 
 // --------------------------------------------------------------------SetTarget
 /** @brief set the target end position
- * 
+ *
  * target is relative to origin
  */
 void InvKinematic::SetTargetPos(double x, double y, double z) {
@@ -108,67 +102,66 @@ double InvKinematic::Step() {
   // x y z
   // x y z
   // x y z
-  
+
   // normal jacobian should be
   // x x x x
-  // y y y y 
+  // y y y y
   // z z z z
-  
+
   // calculate J * transpose(J)
 
-  //~ double JJT[end*3];  // k rows x 3 columns
-  //~ int r = 0;
-  //~ for (m = 0; m < 3; ++m) {
-    //~ for (n = 0; n < end; ++n) {
-      //~ JJT[m, n] = 0;
-      //~ for (trow = 0; trow < end; ++trow) {
-        //~ JJT[3*m + n] += jacobianT_[3*trow + m] * jacobianT_[3*trow + n];
-      //~ }
-    //~ }
-  //~ }
-  
+  //  double JJT[end*3];  // k rows x 3 columns
+  //  int r = 0;
+  //  for (m = 0; m < 3; ++m) {
+    //  for (n = 0; n < end; ++n) {
+      //  JJT[m, n] = 0;
+      //  for (trow = 0; trow < end; ++trow) {
+        //  JJT[3*m + n] += jacobianT_[3*trow + m] * jacobianT_[3*trow + n];
+      //  }
+    //  }
+  //  }
+
   // calculate e = columnvector(e_x, e_y, e_z)
-  printf(" H_0_s: %f, %f, %f\n", H_0_s.GetX(), H_0_s.GetY(), H_0_s.GetZ());
+  //  printf(" H_0_s: %f, %f, %f\n", H_0_s.GetX(), H_0_s.GetY(), H_0_s.GetZ());
   double e[3] = {
     target_[0] - H_0_s.GetX(),
     target_[1] - H_0_s.GetY(),
     target_[2] - H_0_s.GetZ(),
   };
-  printf(" error\n %f\n %f\n %f\n", e[0], e[1], e[2]);
-  
+  //  printf(" error\n %f\n %f\n %f\n", e[0], e[1], e[2]);
+
   // calc JT * e
   double JTe[end];  // column vector
-  printf(" JTe:\n");
+  //  printf(" JTe:\n");
   for (int i = 0; i < end; ++i) {
     JTe[i] = jacobianT_[3*i] * e[0] + jacobianT_[3*i + 1] * e[1] +
              jacobianT_[3*i + 2] * e[2];
-    printf(" %f\n", JTe[i]);
+    //  printf(" %f\n", JTe[i]);
   }
-  
-  
+
+
   // calc J*JT*e
   double JJTe[3];
-  printf(" JJTe:\n");
+  //  printf(" JJTe:\n");
   for (int m = 0; m < 3; ++m) {
     JJTe[m] = 0.0;
     for (int n = 0; n < end; ++n) {
       JJTe[m] += jacobianT_[3*n + m] * JTe[n];
     }
-    printf(" %f\n", JJTe[m]);
+    //  printf(" %f\n", JJTe[m]);
   }
-  
+
   // alpha = (e * JJTe) / (JJTe * JJTe)
-  double divisor = (JJTe[0] * JJTe[0] + JJTe[1] * JJTe[1] + JJTe[2] * JJTe[2]); 
+  double divisor = (JJTe[0] * JJTe[0] + JJTe[1] * JJTe[1] + JJTe[2] * JJTe[2]);
   double alpha;
   if (divisor == 0.0) {
     alpha = 0.0;
-    printf(" alpha = 0.0 (divisor was 0)\n");
+    //  printf(" alpha = 0.0 (divisor was 0)\n");
   } else {
     alpha = (e[0]*JJTe[0] + e[1] * JJTe[1] + e[2] * JJTe[2]) / divisor;
-    printf(" alpha: %f\n", alpha);
+    //  printf(" alpha: %f\n", alpha);
   }
-  
-                  ;
+
   // change angles by alpha * JTe
   for (int i = 0; i < end; ++i) {
     bool success = pivots_[i]->ChangeAngle(alpha * JTe[i]);
@@ -176,8 +169,8 @@ double InvKinematic::Step() {
       flag_ = NEW_ANGLE_OUT_OF_REACH;
     }
   }
-  
-  //recalc e
+
+  // recalc e
   H_0_s = HMatrix(pivots_[pivot_count_ - 1]->GetRelativeHMatrixArray());
   e[0] = target_[0] - H_0_s.GetX();
   e[1] = target_[1] - H_0_s.GetY();
@@ -185,4 +178,26 @@ double InvKinematic::Step() {
   return std::sqrt(std::pow(e[0], 2) + std::pow(e[1], 2) + std::pow(e[2], 2));
 }
 
+// ----------------------------------------------------------------------Iterate
+/** @brief perform steps until error <= max_allowed_error.
+ *
+ * The validity of the result can be checked with \ref flag()
+ * @param max_steps the maximun amount of step to do before giving up
+ * @return the number of steps taken
+ */
+int InvKinematic::Iterate(int max_steps) {
+  double error;
+  flag_ = NOTHING_WRONG;
+  for (int i = 0; i< max_steps; ++i) {
+    error = Step();
+    if (flag_ != NOTHING_WRONG) {
+      return i;
+    }
+    if (error <= max_allowed_error_) {
+      return i;
+    }
+  }
+  flag_ = EXCEEDED_MAX_STEPS;
+  return(max_steps);
+}
 }  // namespace Q1

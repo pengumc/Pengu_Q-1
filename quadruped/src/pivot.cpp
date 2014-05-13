@@ -139,7 +139,7 @@ bool Pivot::ChangeAngle(double delta_angle) {
     return false;
   } else {
     H_frame_.SelfDot(HMatrix(Z_AXIS, delta_angle));
-    angle_ += delta_angle;
+    angle_ = NormalizeAngle(angle_ + delta_angle);
     return true;
   }
 }

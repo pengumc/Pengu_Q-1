@@ -8,3 +8,4 @@
 /quadruped/bin
 *.pyc
 *.pdf
+*.csv

@@ -14,7 +14,7 @@
 namespace Q1 {
 
 /** @brief Inverse kinematics engine
- * 
+ *
  * supports only single end effectors, so jacobian = 1 x n x 3 big
  * ... that's actually the transposed jacobian?
  */
@@ -24,18 +24,20 @@ class InvKinematic {
   typedef enum {
     NOTHING_WRONG = 0,
     NOT_ALL_PIVOT_IN_CHAIN = 1,
-    NEW_ANGLE_OUT_OF_REACH = 2
+    NEW_ANGLE_OUT_OF_REACH = 2,
+    EXCEEDED_MAX_STEPS = 3
   } IKFlags;
   // de/constructors
   explicit InvKinematic(int pivot_count);
   ~InvKinematic();
   // functions
+  IKFlags flag();
   void SetPivot(int pivot_index, Pivot* pivot);
   void SetTargetPos(double x, double y, double z);
   void SetMaxAllowedError(double max_allowed_error);
   void ConstructJacobian();
   double Step();
-  IKFlags flag();
+  int Iterate(int max_steps);
 
  private:
   int pivot_count_;/**< @brief number of pivots in chain (n)*/
