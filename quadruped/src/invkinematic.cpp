@@ -32,6 +32,12 @@ InvKinematic::~InvKinematic() {
   free(pivots_);
 }
 
+// ----------------------------------------------------------------flag accessor
+/** @brief returns the current flag*/
+InvKinematic::IKFlags InvKinematic::flag() {
+  return flag_;
+}
+
 // ---------------------------------------------------------------------SetPivot
 /** @brief provide a pointer to a pivot in the chain*/
 void InvKinematic::SetPivot(int pivot_index, Pivot* pivot) {
@@ -122,6 +128,7 @@ double InvKinematic::Step() {
   //~ }
   
   // calculate e = columnvector(e_x, e_y, e_z)
+  printf(" H_0_s: %f, %f, %f\n", H_0_s.GetX(), H_0_s.GetY(), H_0_s.GetZ());
   double e[3] = {
     target_[0] - H_0_s.GetX(),
     target_[1] - H_0_s.GetY(),

@@ -35,6 +35,7 @@ class InvKinematic {
   void SetMaxAllowedError(double max_allowed_error);
   void ConstructJacobian();
   double Step();
+  IKFlags flag();
 
  private:
   int pivot_count_;/**< @brief number of pivots in chain (n)*/
