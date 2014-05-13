@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <cmath>
 
 #include "include/pivot.h"
 
@@ -22,7 +23,8 @@ class InvKinematic {
   // types
   typedef enum {
     NOTHING_WRONG = 0,
-    NOT_ALL_PIVOT_IN_CHAIN = 1
+    NOT_ALL_PIVOT_IN_CHAIN = 1,
+    NEW_ANGLE_OUT_OF_REACH = 2
   } IKFlags;
   // de/constructors
   explicit InvKinematic(int pivot_count);
@@ -30,8 +32,9 @@ class InvKinematic {
   // functions
   void SetPivot(int pivot_index, Pivot* pivot);
   void SetTargetPos(double x, double y, double z);
+  void SetMaxAllowedError(double max_allowed_error);
   void ConstructJacobian();
-  void Step();
+  double Step();
 
  private:
   int pivot_count_;/**< @brief number of pivots in chain (n)*/
@@ -39,6 +42,7 @@ class InvKinematic {
   double* jacobianT_;/**< @brief jacobian matrix values (n x 3 doubles)*/
   IKFlags flag_;/** @brief last known status of engine*/
   double target_[3];/**< @brief x,y,z of target pos*/
+  double max_allowed_error_;/**< @brief max error that's acceptable (0.005)*/
 };
 
 }  // namespace Q1

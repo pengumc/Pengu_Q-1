@@ -10,11 +10,15 @@ namespace Q1 {
 /** @brief Constructor*/
 Leg::Leg(uint8_t index, HMatrix* H_cob) {
   index = index;
+  ik_engine_ = new InvKinematic(kPivotCount + 1);
   pivots_[0] = new Pivot(H_cob);
+  ik_engine_->SetPivot(0, pivots_[0]);
   for (int i = 1; i < kPivotCount; ++i) {
     pivots_[i] = new Pivot(pivots_[i-1]->H_framep());
+    ik_engine_->SetPivot(i, pivots_[i]);
   }
   foot_ = new Pivot(pivots_[kPivotCount-1]->H_framep());
+  ik_engine_->SetPivot(kPivotCount, foot_);
 }
 
 
@@ -25,6 +29,7 @@ Leg::~Leg() {
     delete pivots_[i];
   }
   delete foot_;
+  delete ik_engine_;
 }
 
 // --------------------------------------------------------------GetHMatrixArray

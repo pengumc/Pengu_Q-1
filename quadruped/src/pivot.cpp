@@ -37,7 +37,7 @@ HMatrix* Pivot::H_framep() {
   return &H_frame_;
 }
 
-// ------------------------------------------------------------------------H_rel
+// ------------------------------------------------------------------updateH_rel
 /** @brief accessor for \ref H_rel_ (update H_rel as well)*/
 void Pivot::UpdateH_rel() {
   // first update rel by traversing the tranform tree till we find a matrix
@@ -54,6 +54,11 @@ void Pivot::UpdateH_rel() {
     }
     H_rel_ = H_rel_.Inverse();
   }
+}
+
+// ---------------------------------------------------------------angle accessor
+double Pivot::angle() {
+  return angle_;
 }
 
 // -----------------------------------------------------------------GetSpecificH

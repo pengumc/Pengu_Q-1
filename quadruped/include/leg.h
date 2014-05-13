@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "include/pivot.h"
 #include "include/hmatrix.h"
+#include "include/invkinematic.h"
 
 namespace Q1 {
 
@@ -34,6 +35,7 @@ class Leg {
   uint8_t index_;/** @brief index of the leg (0..3)*/
   Pivot* pivots_[kPivotCount];
   Pivot* foot_;
+  InvKinematic* ik_engine_;
 };
 
 }  // namespace Q1

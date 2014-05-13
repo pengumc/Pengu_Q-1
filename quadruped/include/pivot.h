@@ -65,10 +65,11 @@ class Pivot {
   void set_offset_angle(double angle);
   void set_parent(HMatrix* parent);
   bool set_angle(double angle);
+  double angle();
   HMatrix H_frame();
   HMatrix* H_framep();
-  void UpdateH_rel();
   // functions
+  void UpdateH_rel();
   bool ChangeAngle(double delta_angle);
   void SetPosition(double x, double y, double z);
   bool IsInRange(double angle);

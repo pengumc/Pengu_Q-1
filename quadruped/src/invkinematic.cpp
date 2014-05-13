@@ -11,7 +11,7 @@ namespace Q1 {
 /** @brief constructor
  * 
  * @param pivot_count number of pivots in the chain, the last one is considered
- * the endpoint.
+ * the endpoint. pivot_count minimum: 2
  */
 InvKinematic::InvKinematic(int pivot_count) {
   pivot_count_ = pivot_count;
@@ -22,6 +22,7 @@ InvKinematic::InvKinematic(int pivot_count) {
   target_[0] = 0.0;
   target_[1] = 0.0;
   target_[2] = 0.0;
+  max_allowed_error_ = 0.005;
 }
 
 // -------------------------------------------------------------------Destructor
@@ -50,16 +51,26 @@ void InvKinematic::ConstructJacobian() {
   const int end = pivot_count_ - 1;  // don't include the end effector
   double unity_z[3] = {0.0, 0.0, 1.0};
   double v_j[3];
+  HMatrix H_0_s = HMatrix(
+    pivots_[pivot_count_ - 1]->GetRelativeHMatrixArray());
+  HMatrix H_0_pj;
+  printf(" transposed jacobian:\n");
   for (int j = 0; j < end; ++j) {
-    HMatrix diff = pivots_[end]->GetSpecificH(pivots_[j]->H_framep());
-    if (diff.parent() == NULL) {
-      // pivot is not in chain to end-effector. error in setup
-      flag_ = NOT_ALL_PIVOT_IN_CHAIN;
-      return;
-    }
-    pivots_[j]->H_framep()->RotateVector(unity_z, v_j);
-    const double v_diff[3] = {diff.GetX(), diff.GetY(), diff.GetZ()};
+    H_0_pj = HMatrix(pivots_[j]->GetRelativeHMatrixArray());
+    //~ HMatrix diff = pivots_[end]->GetSpecificH(pivots_[j]->H_framep());
+    //~ if (diff.parent() == NULL) {
+      //~ // pivot is not in chain to end-effector. error in setup
+      //~ flag_ = NOT_ALL_PIVOT_IN_CHAIN;
+      //~ return;
+    //~ }
+    H_0_pj.RotateVector(unity_z, v_j);
+    const double v_diff[3] = {
+      H_0_s.GetX() - H_0_pj.GetX(),
+      H_0_s.GetY() - H_0_pj.GetY(),
+      H_0_s.GetZ() - H_0_pj.GetZ()};
     CrossProduct3(v_j, v_diff, &jacobianT_[j*3]);
+    printf(" %.4f, %.4f, %.4f\n", jacobianT_[j*3], jacobianT_[j*3+1], 
+      jacobianT_[j*3+2]);
   }
 }
 
@@ -74,10 +85,18 @@ void InvKinematic::SetTargetPos(double x, double y, double z) {
   target_[2] = z;
 }
 
+// -----------------------------------------------------------SetMaxAllowedError
+/** @brief set the maximum allowable error */
+void InvKinematic::SetMaxAllowedError(double max_allowed_error) {
+  max_allowed_error_ = std::abs(max_allowed_error);
+}
+
 // -------------------------------------------------------------------------Step
-/** @brief do a single iteration*/
-void InvKinematic::Step() {
+/** @brief do a single iteration, returns the new error distance*/
+double InvKinematic::Step() {
   ConstructJacobian();
+  const int end = pivot_count_ - 1;  // index of last pivot in chain
+  HMatrix H_0_s = HMatrix(pivots_[pivot_count_ - 1]->GetRelativeHMatrixArray());
   // jacobianT_ stored as:
   // x y z
   // x y z
@@ -90,55 +109,73 @@ void InvKinematic::Step() {
   // z z z z
   
   // calculate J * transpose(J)
-  const int end = pivot_count_ - 1;
-  double JJT[end*3];  // k rows x 3 columns
-  int r = 0;
-  // m = col in transposed jacobian
-  // n = row in transposed jacobian
-  for (m = 0; m < 3; ++m) {
-    for (n = 0; n < end; ++n) {
-      JJT[m, n] = 0;
-      for (trow = 0; trow < end; ++trow) {
-        // JJT[m, n] += J[m,trow] * JT[trow,n];
-        JJT[3*m + n] += jacobianT_[3*trow + m] * jacobianT_[3*trow + n];
-      }
-    }
-  }
+
+  //~ double JJT[end*3];  // k rows x 3 columns
+  //~ int r = 0;
+  //~ for (m = 0; m < 3; ++m) {
+    //~ for (n = 0; n < end; ++n) {
+      //~ JJT[m, n] = 0;
+      //~ for (trow = 0; trow < end; ++trow) {
+        //~ JJT[3*m + n] += jacobianT_[3*trow + m] * jacobianT_[3*trow + n];
+      //~ }
+    //~ }
+  //~ }
   
   // calculate e = columnvector(e_x, e_y, e_z)
   double e[3] = {
-    target_[0] - pivots_[pivot_count_]->GetX(),
-    target_[1] - pivots_[pivot_count_]->GetY(),
-    target_[2] - pivots_[pivot_count_]->GetZ(),
+    target_[0] - H_0_s.GetX(),
+    target_[1] - H_0_s.GetY(),
+    target_[2] - H_0_s.GetZ(),
   };
+  printf(" error\n %f\n %f\n %f\n", e[0], e[1], e[2]);
   
   // calc JT * e
-  for row in jt
-    jte[row] = jt[row, col1] * ex + jt[row, col2] * ey + jt[row, col3] * ez
-  
-  double JTe[end];
-    for (int i; i < end; ++i) {
-      JTe[i] = jacobianT_[3*i] * e[0] + jacobianT_[3*i + 1] * e[1] +
-               jacobianT_[3*i + 2] * e[2];
-    }
+  double JTe[end];  // column vector
+  printf(" JTe:\n");
+  for (int i = 0; i < end; ++i) {
+    JTe[i] = jacobianT_[3*i] * e[0] + jacobianT_[3*i + 1] * e[1] +
+             jacobianT_[3*i + 2] * e[2];
+    printf(" %f\n", JTe[i]);
   }
   
-  // calc JJTe
-  double JJTe[3]
+  
+  // calc J*JT*e
+  double JJTe[3];
+  printf(" JJTe:\n");
   for (int m = 0; m < 3; ++m) {
-    JJTe[m] = 0;
+    JJTe[m] = 0.0;
     for (int n = 0; n < end; ++n) {
-      JJTE[m] += jacobianT_[3*n + m] * JTe[n];
+      JJTe[m] += jacobianT_[3*n + m] * JTe[n];
     }
+    printf(" %f\n", JJTe[m]);
   }
   
-  // calc alpha = (e * JJTe) / (JJTe * JJTe)
-  double alpha = (e[0]*JJTe[0] + e[1] * JJTe[1] + e[2] * JJTe[2]) /
-                  (JJTe[0] * JJTe[0] + JJTe[1] * JJTe[1] + JJTe[2] * JJTe[2]);
+  // alpha = (e * JJTe) / (JJTe * JJTe)
+  double divisor = (JJTe[0] * JJTe[0] + JJTe[1] * JJTe[1] + JJTe[2] * JJTe[2]); 
+  double alpha;
+  if (divisor == 0.0) {
+    alpha = 0.0;
+    printf(" alpha = 0.0 (divisor was 0)\n");
+  } else {
+    alpha = (e[0]*JJTe[0] + e[1] * JJTe[1] + e[2] * JJTe[2]) / divisor;
+    printf(" alpha: %f\n", alpha);
+  }
+  
+                  ;
   // change angles by alpha * JTe
   for (int i = 0; i < end; ++i) {
-    pivots_[i]->ChangeAngle(alpha * JTe[i]);
+    bool success = pivots_[i]->ChangeAngle(alpha * JTe[i]);
+    if (!success) {
+      flag_ = NEW_ANGLE_OUT_OF_REACH;
+    }
   }
+  
+  //recalc e
+  H_0_s = HMatrix(pivots_[pivot_count_ - 1]->GetRelativeHMatrixArray());
+  e[0] = target_[0] - H_0_s.GetX();
+  e[1] = target_[1] - H_0_s.GetY();
+  e[2] = target_[2] - H_0_s.GetZ();
+  return std::sqrt(std::pow(e[0], 2) + std::pow(e[1], 2) + std::pow(e[2], 2));
 }
 
 }  // namespace Q1
