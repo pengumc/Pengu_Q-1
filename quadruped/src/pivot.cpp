@@ -117,6 +117,7 @@ void Pivot::set_offset_angle(double angle) {
 /** @brief mutator for \ref angle_. false if angle is out of range*/
 bool Pivot::set_angle(double angle) {
   return ChangeAngle(angle - angle_);
+  // TODO(michiel): should offset be included here?
 }
 
 // ------------------------------------------------------------------SetPosition
