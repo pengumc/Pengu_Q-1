@@ -1,6 +1,7 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$pivot_8h.html" title="include/pivot.h" alt="" coords="127,83,233,112"/>
-<area shape="rect" id="node10" href="$hmatrix_8h.html" title="include/hmatrix.h" alt="" coords="277,160,397,189"/>
-<area shape="rect" id="node21" href="$utility_8h.html" title="include/utility.h" alt="" coords="144,160,253,189"/>
-<area shape="rect" id="node15" href="$log_8h.html" title="include/log.h" alt="" coords="367,237,460,267"/>
+<map id="include/leg.h" name="include/leg.h">
+<area shape="rect" id="node3" href="$pivot_8h.html" title="include/pivot.h" alt="" coords="217,155,321,181"/>
+<area shape="rect" id="node5" href="$hmatrix_8h.html" title="include/hmatrix.h" alt="" coords="399,229,520,256"/>
+<area shape="rect" id="node11" href="$invkinematic_8h.html" title="include/invkinematic.h" alt="" coords="82,80,231,107"/>
+<area shape="rect" id="node10" href="$utility_8h.html" title="include/utility.h" alt="" coords="214,229,323,256"/>
+<area shape="rect" id="node7" href="$log_8h.html" title="include/log.h" alt="" coords="389,304,484,331"/>
 </map>

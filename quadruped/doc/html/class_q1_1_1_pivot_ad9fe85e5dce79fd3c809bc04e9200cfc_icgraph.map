@@ -1,5 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="257,5,420,35"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="471,5,676,35"/>
-<area shape="rect" id="node7" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="727,5,924,35"/>
+<map id="Q1::Pivot::set_abs_max_angle" name="Q1::Pivot::set_abs_max_angle">
+<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot " alt="" coords="183,5,343,32"/>
+<area shape="rect" id="node5" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="237,56,288,83"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot " alt="" coords="391,5,593,32"/>
+<area shape="rect" id="node4" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot " alt="" coords="641,5,836,32"/>
 </map>
