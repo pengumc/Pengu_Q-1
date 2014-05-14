@@ -1,9 +1,9 @@
-<map id="include/invkinematic.h" name="include/invkinematic.h">
-<area shape="rect" id="node2" href="$invkinematic_8cpp.html" title="src/invkinematic.cpp" alt="" coords="5,80,145,107"/>
-<area shape="rect" id="node3" href="$leg_8h.html" title="include/leg.h" alt="" coords="169,80,264,107"/>
-<area shape="rect" id="node4" href="$leg_8cpp.html" title="src/leg.cpp" alt="" coords="104,155,191,181"/>
-<area shape="rect" id="node5" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="215,155,354,181"/>
-<area shape="rect" id="node6" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="88,229,196,256"/>
-<area shape="rect" id="node7" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="220,229,349,256"/>
-<area shape="rect" id="node8" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="374,229,489,256"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$invkinematic_8cpp.html" title="src/invkinematic.cpp" alt="" coords="5,83,147,112"/>
+<area shape="rect" id="node5" href="$leg_8h.html" title="include/leg.h" alt="" coords="171,83,264,112"/>
+<area shape="rect" id="node7" href="$leg_8cpp.html" title="src/leg.cpp" alt="" coords="107,160,192,189"/>
+<area shape="rect" id="node9" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="216,160,355,189"/>
+<area shape="rect" id="node11" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="91,237,197,267"/>
+<area shape="rect" id="node13" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="221,237,349,267"/>
+<area shape="rect" id="node15" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="373,237,488,267"/>
 </map>

@@ -1,11 +1,11 @@
-<map id="Q1::Leg::SetPivotConfig" name="Q1::Leg::SetPivotConfig">
-<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_ " alt="" coords="588,70,727,111"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_ " alt="" coords="213,129,343,170"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right " alt="" coords="785,31,928,57"/>
-<area shape="rect" id="node6" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range " alt="" coords="984,157,1123,184"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="989,56,1118,83"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="976,5,1131,32"/>
-<area shape="rect" id="node8" href="$class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range " alt="" coords="391,136,529,163"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range " alt="" coords="577,136,737,163"/>
-<area shape="rect" id="node10" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max " alt="" coords="787,132,927,159"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="659,84,840,113"/>
+<area shape="rect" id="node13" href="$class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="220,137,420,167"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="889,32,1033,61"/>
+<area shape="rect" id="node11" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="1091,163,1229,192"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1095,59,1225,88"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1083,5,1237,35"/>
+<area shape="rect" id="node16" href="$class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="469,137,611,167"/>
+<area shape="rect" id="node18" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="668,137,831,167"/>
+<area shape="rect" id="node20" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="889,136,1033,165"/>
 </map>

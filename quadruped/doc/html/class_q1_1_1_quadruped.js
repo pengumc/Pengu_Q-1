@@ -2,6 +2,7 @@ var class_q1_1_1_quadruped =
 [
     [ "Quadruped", "class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71", null ],
     [ "~Quadruped", "class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952", null ],
+    [ "ChangeFootPos", "class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f", null ],
     [ "ChangePivotAngle", "class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac", null ],
     [ "ConfigurePivotRot", "class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62", null ],
     [ "GetEndpoint", "class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7", null ],

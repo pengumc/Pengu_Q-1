@@ -1,6 +1,6 @@
-<map id="Q1::Pivot::ConfigureRot" name="Q1::Pivot::ConfigureRot">
-<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_ " alt="" coords="211,13,389,39"/>
-<area shape="rect" id="node5" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="275,63,325,90"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same " alt="" coords="437,5,609,47"/>
-<area shape="rect" id="node4" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot " alt="" coords="657,13,869,39"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="217,5,399,35"/>
+<area shape="rect" id="node9" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="283,59,333,88"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="449,5,673,35"/>
+<area shape="rect" id="node7" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="724,5,940,35"/>
 </map>

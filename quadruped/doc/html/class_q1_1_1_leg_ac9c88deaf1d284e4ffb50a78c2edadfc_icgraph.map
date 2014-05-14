@@ -1,4 +1,4 @@
-<map id="Q1::Leg::SetPivotPos" name="Q1::Leg::SetPivotPos">
-<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5" title="set the x,y,z coordinates of a pivot of a leg " alt="" coords="200,5,389,32"/>
-<area shape="rect" id="node3" href="$namespace_q1.html#ae8ddde9238ad1f4adeb7d3feb6cdebb6" title="set x y and z coordinates of a pivot " alt="" coords="437,5,619,32"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5" title="set the x,y,z coordinates of a pivot of a leg" alt="" coords="204,5,393,35"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#ae8ddde9238ad1f4adeb7d3feb6cdebb6" title="set x y and z coordinates of a pivot" alt="" coords="444,5,625,35"/>
 </map>

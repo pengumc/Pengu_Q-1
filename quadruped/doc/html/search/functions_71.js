@@ -2,6 +2,7 @@ var searchData=
 [
   ['quadruped',['Quadruped',['../class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71',1,'Q1::Quadruped']]],
   ['quadrupedalloc',['QuadrupedAlloc',['../namespace_q1.html#a8dcb91a2e006787c4203ca1354e77e53',1,'Q1']]],
+  ['quadrupedchangefootpos',['QuadrupedChangeFootPos',['../namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb',1,'Q1']]],
   ['quadrupedchangepivotangle',['QuadrupedChangePivotAngle',['../namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52',1,'Q1']]],
   ['quadrupedconfigurepivotrot',['QuadrupedConfigurePivotRot',['../namespace_q1.html#a80014718b9c9d306a28150d5843f774e',1,'Q1']]],
   ['quadrupedfree',['QuadrupedFree',['../namespace_q1.html#a549bb89bbf2bdbed26305d2d767b1624',1,'Q1']]],

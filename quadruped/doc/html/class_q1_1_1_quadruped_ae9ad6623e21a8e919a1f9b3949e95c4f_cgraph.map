@@ -1,0 +1,28 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="267,371,437,400"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_" alt="" coords="1000,57,1229,87"/>
+<area shape="rect" id="node22" href="$class_q1_1_1_inv_kinematic.html#a6d2c9d1c9932e5d23cb1b13a296c17f4" title="set the target end position" alt="" coords="485,344,696,373"/>
+<area shape="rect" id="node24" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="507,397,675,427"/>
+<area shape="rect" id="node62" href="$class_q1_1_1_inv_kinematic.html#aee0f5a90afd2ba671007120be682fec4" title="returns the current flag" alt="" coords="515,451,667,480"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="1293,57,1451,87"/>
+<area shape="rect" id="node17" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1716,59,1847,88"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c" title="returns parent_" alt="" coords="1515,84,1651,113"/>
+<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#aac09c206d0c196b34ddb984a706b9c5e" title="Copy data from another HMatrix." alt="" coords="1517,137,1648,167"/>
+<area shape="rect" id="node13" href="$class_q1_1_1_h_matrix.html#ac330aaec9a75631f57c797b88d015264" title="Invert a HMatrix." alt="" coords="1511,31,1655,60"/>
+<area shape="rect" id="node15" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="1511,191,1655,220"/>
+<area shape="rect" id="node19" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1704,191,1859,220"/>
+<area shape="rect" id="node26" href="$class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor" alt="" coords="788,476,903,505"/>
+<area shape="rect" id="node28" href="$class_q1_1_1_pivot.html#a47b39af65b7a86ed61619492cd276f4a" title="abs_max_angle_ accessor" alt="" coords="757,529,933,559"/>
+<area shape="rect" id="node30" href="$class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="745,423,945,452"/>
+<area shape="rect" id="node34" href="$class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="1044,423,1185,452"/>
+<area shape="rect" id="node44" href="$class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="767,295,924,324"/>
+<area shape="rect" id="node32" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="1712,424,1851,453"/>
+<area shape="rect" id="node36" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="1291,377,1453,407"/>
+<area shape="rect" id="node38" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="1511,372,1655,401"/>
+<area shape="rect" id="node46" href="$class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2" title="updates the stored jacobian for the current values in the pivots" alt="" coords="995,217,1235,247"/>
+<area shape="rect" id="node50" href="$class_q1_1_1_h_matrix.html#a006e040b8e86cac5418588ba2e938563" title="return the x coordinate value of the HMatrix" alt="" coords="1307,324,1437,353"/>
+<area shape="rect" id="node52" href="$class_q1_1_1_h_matrix.html#a42895e1d7221963519389518dfe34454" title="return the y coordinate value of the HMatrix" alt="" coords="1307,111,1437,140"/>
+<area shape="rect" id="node54" href="$class_q1_1_1_h_matrix.html#a1834b18cf9a9c571718e433418352bc8" title="return the z coordinate value of the HMatrix" alt="" coords="1307,271,1437,300"/>
+<area shape="rect" id="node48" href="$class_q1_1_1_h_matrix.html#abb08d23d043fc373b0cca8231e872739" title="write R * vector_in to vector_out." alt="" coords="1283,164,1461,193"/>
+<area shape="rect" id="node56" href="$namespace_q1.html#a4f32e4419d91b2f6c36fc4bd179c4a9f" title="crossproduct of two 3 dimensional vectors" alt="" coords="1305,217,1439,247"/>
+</map>

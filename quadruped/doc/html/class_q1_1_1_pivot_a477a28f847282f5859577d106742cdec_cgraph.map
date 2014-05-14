@@ -1,5 +1,5 @@
-<map id="Q1::Pivot::SetPosition" name="Q1::Pivot::SetPosition">
-<area shape="rect" id="node2" href="$class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d" title="set the value for the x coordinate in the h&#45;matrix " alt="" coords="205,5,332,32"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#a63d9933c5fb794389b5ee91906984163" title="set the value for the y coordinate in the h&#45;matrix " alt="" coords="204,56,333,83"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#a880dbe3e7764763684a89dd53a43cf24" title="set the value for the z coordinate in the h&#45;matrix " alt="" coords="205,107,332,133"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d" title="set the value for the x coordinate in the h&#45;matrix" alt="" coords="205,5,336,35"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#a63d9933c5fb794389b5ee91906984163" title="set the value for the y coordinate in the h&#45;matrix" alt="" coords="205,59,336,88"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#a880dbe3e7764763684a89dd53a43cf24" title="set the value for the z coordinate in the h&#45;matrix" alt="" coords="207,112,335,141"/>
 </map>

@@ -1,3 +1,7 @@
-<map id="Q1::Pivot::angle" name="Q1::Pivot::angle">
-<area shape="rect" id="node2" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="168,5,219,32"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="171,7,339,36"/>
+<area shape="rect" id="node11" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="447,59,497,88"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="387,5,557,35"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="607,5,817,35"/>
+<area shape="rect" id="node9" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="868,5,1071,35"/>
 </map>

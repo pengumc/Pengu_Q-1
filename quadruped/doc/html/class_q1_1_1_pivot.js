@@ -2,6 +2,7 @@ var class_q1_1_1_pivot =
 [
     [ "Pivot", "class_q1_1_1_pivot.html#a767a03fe70e76735bec9ef33bca5d4a5", null ],
     [ "Pivot", "class_q1_1_1_pivot.html#ad27d12ee133185aab5b733c0f182adb8", null ],
+    [ "abs_max_angle", "class_q1_1_1_pivot.html#a47b39af65b7a86ed61619492cd276f4a", null ],
     [ "angle", "class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37", null ],
     [ "ChangeAngle", "class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151", null ],
     [ "ConfigureRot", "class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206", null ],

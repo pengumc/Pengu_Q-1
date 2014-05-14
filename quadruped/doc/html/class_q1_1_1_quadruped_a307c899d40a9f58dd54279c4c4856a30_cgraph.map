@@ -1,5 +1,5 @@
-<map id="Q1::Quadruped::GetHMatrixArrayByIndex" name="Q1::Quadruped::GetHMatrixArrayByIndex">
-<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91" title="returns the HMatrix array of one of the pivots or the foot " alt="" coords="237,13,411,39"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8" title="return a readable 16 value array with the elements of H_frame_ " alt="" coords="459,13,639,39"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="687,13,816,39"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91" title="returns the HMatrix array of one of the pivots or the foot" alt="" coords="319,5,492,35"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8" title="return a readable 16 value array with the elements of H_frame_" alt="" coords="543,5,724,35"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="773,5,904,35"/>
 </map>

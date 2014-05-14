@@ -1,6 +1,9 @@
-<map id="Q1::CrossProduct3" name="Q1::CrossProduct3">
-<area shape="rect" id="node2" href="$class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2" title="updates the stored jacobian for the current values in the pivots " alt="" coords="187,5,371,47"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance " alt="" coords="419,13,573,39"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error. " alt="" coords="621,13,785,39"/>
-<area shape="rect" id="node5" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="833,13,884,39"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2" title="updates the stored jacobian for the current values in the pivots" alt="" coords="189,32,429,61"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="479,32,636,61"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="685,32,853,61"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="901,5,1072,35"/>
+<area shape="rect" id="node15" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="961,59,1012,88"/>
+<area shape="rect" id="node11" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="1121,5,1332,35"/>
+<area shape="rect" id="node13" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="1383,5,1585,35"/>
 </map>

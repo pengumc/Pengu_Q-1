@@ -1,4 +1,4 @@
-<map id="Q1::Leg::ChangePivotAngle" name="Q1::Leg::ChangePivotAngle">
-<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds " alt="" coords="235,5,425,47"/>
-<area shape="rect" id="node3" href="$namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range " alt="" coords="473,5,656,47"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds" alt="" coords="237,5,464,35"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range" alt="" coords="512,5,731,35"/>
 </map>

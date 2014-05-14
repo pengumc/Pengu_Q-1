@@ -1,11 +1,6 @@
 var class_q1_1_1_inv_kinematic =
 [
-    [ "IKFlags", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39", [
-      [ "NOTHING_WRONG", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39a9aec9b9ecf6a56a9418f5991480213e8", null ],
-      [ "NOT_ALL_PIVOT_IN_CHAIN", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39a6dd5b5d75d47a5f90bf392b199b1ca7b", null ],
-      [ "NEW_ANGLE_OUT_OF_REACH", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39a4d3017316d046076f30f0411b32ac641", null ],
-      [ "EXCEEDED_MAX_STEPS", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39a4d736d5e42f16c24f55d8c46d296efa5", null ]
-    ] ],
+    [ "IKFlags", "class_q1_1_1_inv_kinematic.html#a7408eeb90a2ab467f61cb836b0577a39", null ],
     [ "InvKinematic", "class_q1_1_1_inv_kinematic.html#a0b978d5f10c210759eee54ce7fd83b74", null ],
     [ "~InvKinematic", "class_q1_1_1_inv_kinematic.html#a74dd74551e428984c9c4e412a8e2b96d", null ],
     [ "ConstructJacobian", "class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2", null ],

@@ -1,5 +1,5 @@
-<map id="Q1::HMatrix::set_parent" name="Q1::HMatrix::set_parent">
-<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#ad27d12ee133185aab5b733c0f182adb8" title="Constructor, set parent. " alt="" coords="239,5,349,32"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path " alt="" coords="215,56,373,83"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_pivot.html#ac9fbac905dff9a2126be535a5a8b6275" title="mutator for HMatrix::parent_, NULL means origin " alt="" coords="222,107,366,133"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#ad27d12ee133185aab5b733c0f182adb8" title="Constructor, set parent." alt="" coords="240,5,355,35"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path" alt="" coords="216,59,379,88"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#ac9fbac905dff9a2126be535a5a8b6275" title="mutator for HMatrix::parent_, NULL means origin" alt="" coords="224,112,371,141"/>
 </map>

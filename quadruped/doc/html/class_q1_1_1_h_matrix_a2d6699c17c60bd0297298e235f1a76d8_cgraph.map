@@ -1,4 +1,4 @@
-<map id="Q1::HMatrix::Dot" name="Q1::HMatrix::Dot">
-<area shape="rect" id="node2" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="181,5,311,32"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#ad5d31cb3620ed722f5ab0385d82e7be3" title="Constructor for HMatrix The matrix is initialized to the identity matrix. I(4) " alt="" coords="173,56,319,83"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="184,5,315,35"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#ad5d31cb3620ed722f5ab0385d82e7be3" title="Constructor for HMatrix The matrix is initialized to the identity matrix. I(4)" alt="" coords="176,59,323,88"/>
 </map>

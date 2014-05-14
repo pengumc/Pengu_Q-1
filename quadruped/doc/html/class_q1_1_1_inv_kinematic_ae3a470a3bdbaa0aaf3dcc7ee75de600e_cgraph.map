@@ -1,14 +1,14 @@
-<map id="Q1::InvKinematic::Step" name="Q1::InvKinematic::Step">
-<area shape="rect" id="node2" href="$class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2" title="updates the stored jacobian for the current values in the pivots " alt="" coords="208,91,392,133"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#a006e040b8e86cac5418588ba2e938563" title="return the x coordinate value of the HMatrix " alt="" coords="464,5,592,32"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#a42895e1d7221963519389518dfe34454" title="return the y coordinate value of the HMatrix " alt="" coords="463,157,593,184"/>
-<area shape="rect" id="node6" href="$class_q1_1_1_h_matrix.html#a1834b18cf9a9c571718e433418352bc8" title="return the z coordinate value of the HMatrix " alt="" coords="464,208,592,235"/>
-<area shape="rect" id="node8" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range " alt="" coords="220,284,380,311"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#abb08d23d043fc373b0cca8231e872739" title="write R * vector_in to vector_out. " alt="" coords="440,56,616,83"/>
-<area shape="rect" id="node7" href="$namespace_q1.html#a4f32e4419d91b2f6c36fc4bd179c4a9f" title="crossproduct of two 3 dimensional vectors " alt="" coords="461,107,595,133"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max " alt="" coords="458,259,598,285"/>
-<area shape="rect" id="node10" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range " alt="" coords="672,272,811,299"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right " alt="" coords="457,360,599,387"/>
-<area shape="rect" id="node12" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="677,335,806,361"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="664,385,819,412"/>
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#a11737d17473be96a962671f631ad10c2" title="updates the stored jacobian for the current values in the pivots" alt="" coords="213,113,453,143"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#a006e040b8e86cac5418588ba2e938563" title="return the x coordinate value of the HMatrix" alt="" coords="525,5,656,35"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#a42895e1d7221963519389518dfe34454" title="return the y coordinate value of the HMatrix" alt="" coords="525,165,656,195"/>
+<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#a1834b18cf9a9c571718e433418352bc8" title="return the z coordinate value of the HMatrix" alt="" coords="525,219,656,248"/>
+<area shape="rect" id="node18" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="252,297,415,327"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#abb08d23d043fc373b0cca8231e872739" title="write R * vector_in to vector_out." alt="" coords="501,59,680,88"/>
+<area shape="rect" id="node13" href="$namespace_q1.html#a4f32e4419d91b2f6c36fc4bd179c4a9f" title="crossproduct of two 3 dimensional vectors" alt="" coords="524,112,657,141"/>
+<area shape="rect" id="node20" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="519,272,663,301"/>
+<area shape="rect" id="node22" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="736,297,875,327"/>
+<area shape="rect" id="node24" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="519,376,663,405"/>
+<area shape="rect" id="node26" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="740,363,871,392"/>
+<area shape="rect" id="node28" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="728,416,883,445"/>
 </map>
