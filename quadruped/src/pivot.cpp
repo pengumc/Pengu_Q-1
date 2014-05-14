@@ -57,8 +57,15 @@ void Pivot::UpdateH_rel() {
 }
 
 // ---------------------------------------------------------------angle accessor
+/** @brief \ref angle_ accessor*/
 double Pivot::angle() {
   return angle_;
+}
+
+// -------------------------------------------------------abs_max_angle accessor
+/** @brief \ref abs_max_angle_ accessor*/
+double Pivot::abs_max_angle() {
+  return abs_max_angle_;
 }
 
 // -----------------------------------------------------------------GetSpecificH

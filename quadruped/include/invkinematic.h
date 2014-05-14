@@ -10,6 +10,7 @@
 #include <cmath>
 
 #include "include/pivot.h"
+#include "include/utility.h"
 
 namespace Q1 {
 

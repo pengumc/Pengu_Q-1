@@ -47,10 +47,10 @@ int main(int argc, char** argv) {
       const double* H = foot.GetRelativeHMatrixArray();
       printf("%.2f, %.2f, %.2f\n", H[Q1::HMatrix::kX], H[Q1::HMatrix::kY],
              H[Q1::HMatrix::kZ]);
-      if (r >= 0) {
+      // if (r >= 0) {
         fprintf(f, "%f, %f, %f, %d, %f, %f, %f\n", 
                 x, y, z, r, p0.angle(), p1.angle(), p2.angle());
-      }
+      // }
       p0.set_angle(0.0);
       p1.set_angle(0.0);
       p2.set_angle(0.0);

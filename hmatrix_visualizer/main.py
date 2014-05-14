@@ -28,7 +28,7 @@ class KeyboardThread (threading.Thread):
         self.apply_config()
         x = 5.0
         print("usage:\n\t'q' quit\n\t'p' plot")
-        print("\t'a' pivot00 x+1\n\t'z' pivot00 angle -0.1\n")
+        print("\t'a' foot0 z + 0.3\n\t'z' foot0 z - 0.3\n")
         while True:
             c = keyboard.getch()
             if c == 'q':
@@ -46,13 +46,11 @@ class KeyboardThread (threading.Thread):
                 self.queue.put(raw_pivots[0:16])
                 print("plot requested")
             elif c == 'a':
-                x = x + 1.0
-                self.Q.set_pivot_pos(0, 0, x, 0, 0)
-                print("pivot00 x = {}".format(x))
+              self.Q.change_foot_pos(0, 0, 0, 0.3, 0)
+              print("foot0 z + 0.3")
             elif c == 'z':
-                result = self.Q.change_pivot_angle(0, 0, 0.1)
-                print("changed pivot00 angle by 0.1: {}".format(result))
-  
+              self.Q.change_foot_pos(0, 0, 0, -0.3, 0)
+              print("foot0 z - 0.3")
     def apply_config(self):
         for leg in self.config.legs:
             for pivot in leg.pivots:

@@ -66,6 +66,7 @@ class Pivot {
   void set_parent(HMatrix* parent);
   bool set_angle(double angle);
   double angle();
+  double abs_max_angle();
   HMatrix H_frame();
   HMatrix* H_framep();
   // functions

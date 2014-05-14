@@ -188,16 +188,53 @@ double InvKinematic::Step() {
 int InvKinematic::Iterate(int max_steps) {
   double error;
   flag_ = NOTHING_WRONG;
-  for (int i = 0; i< max_steps; ++i) {
+  const int end = pivot_count_ -1;
+  // store original angles and limits of the pivots
+  double original_angles[end];
+  double original_max[end];
+  for (int i = 0; i < end; ++i) {
+    original_angles[i] = pivots_[i]->angle();
+    original_max[i] = pivots_[i]->abs_max_angle();
+    pivots_[i]->set_abs_max_angle(M_PI);
+    // setting abs_max_angle clears the current angle, so let's restore it:
+    pivots_[i]->set_angle(original_angles[i]);
+  }
+  for (int i = 0; i < max_steps; ++i) {
     error = Step();
     if (flag_ != NOTHING_WRONG) {
+      // restore original values
+      for (int j = 0; j < end; ++j) {
+        pivots_[j]->set_abs_max_angle(original_max[j]);
+        pivots_[j]->set_angle(original_angles[j]);
+      }
       return i;
     }
     if (error <= max_allowed_error_) {
+      // success. now let's see if those angles actually available
+      int success = 0;
+      double angle;
+      for (int j = 0; j < end; ++j) {
+        angle = pivots_[j]->angle();
+        pivots_[j]->set_abs_max_angle(original_max[j]);
+        // this has cleared the angle, so let's try setting it again:
+        if (pivots_[j]->set_angle(angle)) {
+          ++success;
+        }
+      }
+      if (success < end) {
+        for (int j = 0; j < end; ++j) {
+          pivots_[j]->set_angle(original_angles[j]);
+        }
+      }
       return i;
     }
   }
   flag_ = EXCEEDED_MAX_STEPS;
+  // restore original values
+  for (int j = 0; j < end; ++j) {
+    pivots_[j]->set_abs_max_angle(original_max[j]);
+    pivots_[j]->set_angle(original_angles[j]);
+  }
   return(max_steps);
 }
 }  // namespace Q1

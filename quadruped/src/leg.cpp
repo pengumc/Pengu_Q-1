@@ -106,4 +106,22 @@ bool Leg::ChangePivotAngle(int index, double angle) {
   }
 }
 
+// ----------------------------------------------------------------ChangeFootPos
+/** @brief change the position of a foot (relative to Origin) */
+bool Leg::ChangeFootPos(double dx, double dy, double dz) {
+  const double* H_0_s = foot_->GetRelativeHMatrixArray();
+  ik_engine_->SetTargetPos(
+    dx + H_0_s[HMatrix::kX],
+    dy + H_0_s[HMatrix::kY],
+    dz + H_0_s[HMatrix::kZ]);
+  int r = ik_engine_->Iterate(kMaxIter);
+  if (r == kMaxIter) {
+    return false;
+  } else if (ik_engine_->flag() != InvKinematic::NOTHING_WRONG) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 }  // namespace Q1

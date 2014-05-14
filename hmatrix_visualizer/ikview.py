@@ -52,7 +52,7 @@ def loadcsv(filename):
     a = np.genfromtxt(filename, delimiter=',', skip_header=1)
     X = []
     Y = []
-    Z = [];
+    Z = []
     for row in a:
        X.append(row[0]-0.05)
        Y.append(row[1]-0.05)
@@ -63,7 +63,7 @@ def loadcsv_angles(filename, x, y, z):
   a = np.genfromtxt(filename, delimiter=',', skip_header=1)
   for row in a:
     if row[0] == float(x) and row[1] == float(y) and row[2] == float(z):
-        return row[4], row[5], row[6]
+        return row[4], row[5], row[6], row[3]
   return np.nan, np.nan, np.nan
   
 def hmatrix():
@@ -105,10 +105,10 @@ if __name__ == "__main__":
         plt.show()
     elif sys.argv[1] == "single":
         print(sys.argv)
-        a0, a1, a2 = loadcsv_angles("../quadruped/ikdata.csv", sys.argv[2],
+        a0, a1, a2, r = loadcsv_angles("../quadruped/ikdata.csv", sys.argv[2],
             sys.argv[3], sys.argv[4])
         if not np.isnan(a0):
-            print("{} {} {}".format(a0, a1, a2))
+            print("{} {} {} {}".format(a0, a1, a2, r))
             p0 = hrot(hmatrix(), 'z', np.pi/4*3)
             p0 = hrot(p0, 'z', a0)
             
