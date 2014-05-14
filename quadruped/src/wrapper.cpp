@@ -102,4 +102,27 @@ extern "C" bool QuadrupedChangePivotAngle(Quadruped* q, int leg_index,
   return q->ChangePivotAngle(leg_index, pivot_index, angle);
 }
 
+// -------------------------------------------------------QuadrupedChangeFootPos
+/** @brief change the foot position of a leg. coords relative to cob*
+ * 
+ * @param q pointer to a quadruped
+ * @param leg_index index of the leg
+ * @param dx change in x direction
+ * @param dy change in y direction
+ * @param dz change in z direction
+ * @param mode sets interpretation of dx,dy,dz:<br>
+ * mode 0 = relative to Origin<br>
+ * mode 1 = relative to COB (not implemented)
+ */
+extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index, 
+                                       double dx, double dy, double dz,
+                                       int mode) {
+  if (mode == 0) {
+    // relative to COB
+    return q->ChangeFootPos(leg_index, dx, dy, dz);
+  }
+  return false;
+}
+                                       
+
 }  // namespace Q1

@@ -65,17 +65,19 @@ class Pivot {
   void set_offset_angle(double angle);
   void set_parent(HMatrix* parent);
   bool set_angle(double angle);
+  double angle();
+  double abs_max_angle();
   HMatrix H_frame();
   HMatrix* H_framep();
-  HMatrix H_rel();
   // functions
+  void UpdateH_rel();
   bool ChangeAngle(double delta_angle);
   void SetPosition(double x, double y, double z);
   bool IsInRange(double angle);
   const double* GetHMatrixArray();
   const double* GetRelativeHMatrixArray();
   void ConfigureRot(Axis axis, double angle);
-
+  HMatrix GetSpecificH(HMatrix* target);
 
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/

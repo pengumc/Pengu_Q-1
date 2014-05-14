@@ -85,4 +85,11 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
   return legs_[leg_index]->ChangePivotAngle(pivot_index, angle);
 }
 
+//-----------------------------------------------------------------ChangeFootPos
+/** @brief change the position of a foot, false if IK fails*/
+bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
+                              double dz) {
+  return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
 }  // namespace Q1

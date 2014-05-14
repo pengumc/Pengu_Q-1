@@ -1,11 +1,11 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB" alt="" coords="319,165,540,195"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_" alt="" coords="591,165,820,195"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#a6258e0122c93e77c1deadad9e18af26e" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="871,112,985,141"/>
-<area shape="rect" id="node17" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1241,217,1372,247"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c" title="returns parent_" alt="" coords="1040,5,1176,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#aac09c206d0c196b34ddb984a706b9c5e" title="Copy data from another HMatrix." alt="" coords="1043,59,1173,88"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_h_matrix.html#ac330aaec9a75631f57c797b88d015264" title="Invert a HMatrix." alt="" coords="1036,112,1180,141"/>
-<area shape="rect" id="node15" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="1036,165,1180,195"/>
-<area shape="rect" id="node19" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1229,164,1384,193"/>
+<map id="Q1::Quadruped::GetRelativeHMatrixArray" name="Q1::Quadruped::GetRelativeHMatrixArray">
+<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB " alt="" coords="237,150,424,191"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_ " alt="" coords="472,150,667,191"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well) " alt="" coords="715,107,869,133"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="1121,208,1250,235"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c" title="returns parent_ " alt="" coords="921,5,1057,32"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_h_matrix.html#aac09c206d0c196b34ddb984a706b9c5e" title="Copy data from another HMatrix. " alt="" coords="923,56,1054,83"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#ac330aaec9a75631f57c797b88d015264" title="Invert a HMatrix. " alt="" coords="919,107,1059,133"/>
+<area shape="rect" id="node8" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right " alt="" coords="917,157,1060,184"/>
+<area shape="rect" id="node10" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="1108,157,1263,184"/>
 </map>

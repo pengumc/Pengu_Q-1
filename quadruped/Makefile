@@ -18,7 +18,7 @@ endif
 CLIBS =
 CC = gcc
 CPPC = g++
-OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o
+OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)

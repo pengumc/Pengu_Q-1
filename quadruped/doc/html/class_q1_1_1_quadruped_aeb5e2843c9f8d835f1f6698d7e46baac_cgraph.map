@@ -1,9 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds" alt="" coords="280,32,464,61"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="512,32,675,61"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="724,5,868,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="724,59,868,88"/>
-<area shape="rect" id="node9" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="925,5,1064,35"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="929,59,1060,88"/>
-<area shape="rect" id="node15" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="917,112,1072,141"/>
+<map id="Q1::Quadruped::ChangePivotAngle" name="Q1::Quadruped::ChangePivotAngle">
+<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds " alt="" coords="244,56,425,83"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range " alt="" coords="473,56,633,83"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max " alt="" coords="683,5,823,32"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range " alt="" coords="880,19,1019,45"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right " alt="" coords="681,107,824,133"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="885,81,1014,108"/>
+<area shape="rect" id="node8" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="872,132,1027,159"/>
 </map>

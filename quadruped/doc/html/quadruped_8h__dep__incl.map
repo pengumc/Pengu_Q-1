@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="5,83,112,112"/>
-<area shape="rect" id="node5" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="136,83,264,112"/>
-<area shape="rect" id="node7" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="288,83,403,112"/>
+<map id="include/quadruped.h" name="include/quadruped.h">
+<area shape="rect" id="node2" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="5,80,113,107"/>
+<area shape="rect" id="node3" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="137,80,267,107"/>
+<area shape="rect" id="node4" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="291,80,406,107"/>
 </map>

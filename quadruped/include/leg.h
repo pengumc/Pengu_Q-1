@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "include/pivot.h"
 #include "include/hmatrix.h"
+#include "include/invkinematic.h"
 
 namespace Q1 {
 
@@ -19,7 +20,8 @@ namespace Q1 {
 class Leg {
  public:
   // constants
-  static const int kPivotCount = 3;
+  static const int kPivotCount = 3;/**< @brief number of joints in the leg*/
+  static const int kMaxIter = 100;/**< @brief max iterations for IK*/
   // con/destructors
   explicit Leg(uint8_t index, HMatrix* H_cob);
   ~Leg();
@@ -30,10 +32,13 @@ class Leg {
   void SetPivotConfig(int index, double offset, double abs_max);
   void ConfigurePivotRot(int index, Axis axis, double angle);
   bool ChangePivotAngle(int index, double angle);
+  bool ChangeFootPos(double dx, double dy, double dz);
+  
  private:
-  uint8_t index_;/** @brief index of the leg (0..3)*/
-  Pivot* pivots_[kPivotCount];
-  Pivot* foot_;
+  uint8_t index_;/**< @brief index of the leg (0..3)*/
+  Pivot* pivots_[kPivotCount];/**< @brief pivots in the leg (excl foot)*/
+  Pivot* foot_;/**< @brief pivot for the foot*/
+  InvKinematic* ik_engine_;/**< @brief the inverse kinematics engine*/
 };
 
 }  // namespace Q1

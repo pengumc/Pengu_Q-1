@@ -1,9 +1,10 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="236,5,399,35"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="236,59,399,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="449,5,655,35"/>
-<area shape="rect" id="node7" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="719,5,916,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="461,59,643,88"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="705,59,929,88"/>
-<area shape="rect" id="node15" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="980,59,1196,88"/>
+<map id="Q1::Pivot::set_offset_angle" name="Q1::Pivot::set_offset_angle">
+<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot " alt="" coords="192,9,352,36"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot " alt="" coords="193,60,351,87"/>
+<area shape="rect" id="node9" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="476,111,527,137"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot " alt="" coords="400,9,603,36"/>
+<area shape="rect" id="node4" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot " alt="" coords="651,5,845,32"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_ " alt="" coords="412,60,591,87"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same " alt="" coords="662,57,834,98"/>
+<area shape="rect" id="node8" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot " alt="" coords="893,64,1105,91"/>
 </map>

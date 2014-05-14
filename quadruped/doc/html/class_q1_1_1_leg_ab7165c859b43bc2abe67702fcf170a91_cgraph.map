@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8" title="return a readable 16 value array with the elements of H_frame_" alt="" coords="231,5,412,35"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="461,5,592,35"/>
+<map id="Q1::Leg::GetHMatrixArray" name="Q1::Leg::GetHMatrixArray">
+<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8" title="return a readable 16 value array with the elements of H_frame_ " alt="" coords="227,5,407,32"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="455,5,584,32"/>
 </map>

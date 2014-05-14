@@ -1,0 +1,7 @@
+<map id="Q1::Pivot::UpdateH_rel" name="Q1::Pivot::UpdateH_rel">
+<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_ " alt="" coords="208,35,403,76"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB " alt="" coords="451,5,637,47"/>
+<area shape="rect" id="node6" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="519,71,569,98"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob. ..." alt="" coords="685,5,869,47"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob " alt="" coords="917,5,1093,47"/>
+</map>

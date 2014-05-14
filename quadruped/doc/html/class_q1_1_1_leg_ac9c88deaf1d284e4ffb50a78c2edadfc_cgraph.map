@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a477a28f847282f5859577d106742cdec" title="Set x y z relative to previous pivot or COB." alt="" coords="203,59,355,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d" title="set the value for the x coordinate in the h&#45;matrix" alt="" coords="403,5,533,35"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#a63d9933c5fb794389b5ee91906984163" title="set the value for the y coordinate in the h&#45;matrix" alt="" coords="403,59,533,88"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#a880dbe3e7764763684a89dd53a43cf24" title="set the value for the z coordinate in the h&#45;matrix" alt="" coords="404,112,532,141"/>
+<map id="Q1::Leg::SetPivotPos" name="Q1::Leg::SetPivotPos">
+<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#a477a28f847282f5859577d106742cdec" title="Set x y z relative to previous pivot or COB. " alt="" coords="200,56,351,83"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d" title="set the value for the x coordinate in the h&#45;matrix " alt="" coords="400,5,527,32"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#a63d9933c5fb794389b5ee91906984163" title="set the value for the y coordinate in the h&#45;matrix " alt="" coords="399,56,528,83"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#a880dbe3e7764763684a89dd53a43cf24" title="set the value for the z coordinate in the h&#45;matrix " alt="" coords="400,107,527,133"/>
 </map>
