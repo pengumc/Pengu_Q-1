@@ -12,7 +12,6 @@ var files =
     [ "src/leg.cpp", "leg_8cpp.html", null ],
     [ "src/log.cpp", "log_8cpp.html", null ],
     [ "src/pivot.cpp", "pivot_8cpp.html", null ],
-    [ "src/Q1test.cpp", "_q1test_8cpp.html", "_q1test_8cpp" ],
     [ "src/quadruped.cpp", "quadruped_8cpp.html", null ],
     [ "src/utility.cpp", "utility_8cpp.html", "utility_8cpp" ],
     [ "src/wrapper.cpp", "wrapper_8cpp.html", "wrapper_8cpp" ]

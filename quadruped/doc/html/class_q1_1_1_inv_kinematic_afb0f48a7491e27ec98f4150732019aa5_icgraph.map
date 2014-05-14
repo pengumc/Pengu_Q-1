@@ -1,6 +1,5 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="221,5,392,35"/>
-<area shape="rect" id="node9" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="281,59,332,88"/>
 <area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="441,5,652,35"/>
 <area shape="rect" id="node7" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="703,5,905,35"/>
 </map>

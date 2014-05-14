@@ -1,7 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="236,7,399,36"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="236,60,399,89"/>
-<area shape="rect" id="node17" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="527,112,577,141"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="236,5,399,35"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="236,59,399,88"/>
 <area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="449,5,655,35"/>
 <area shape="rect" id="node7" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="719,5,916,35"/>
 <area shape="rect" id="node11" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="461,59,643,88"/>

@@ -1,13 +1,12 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$pivot_8h.html" title="include/pivot.h" alt="" coords="159,83,265,112"/>
 <area shape="rect" id="node5" href="$invkinematic_8h.html" title="include/invkinematic.h" alt="" coords="31,160,180,189"/>
-<area shape="rect" id="node25" href="$utility_8cpp.html" title="src/utility.cpp" alt="" coords="289,83,388,112"/>
+<area shape="rect" id="node23" href="$utility_8cpp.html" title="src/utility.cpp" alt="" coords="289,83,388,112"/>
 <area shape="rect" id="node9" href="$leg_8h.html" title="include/leg.h" alt="" coords="171,237,264,267"/>
-<area shape="rect" id="node22" href="$pivot_8cpp.html" title="src/pivot.cpp" alt="" coords="255,160,351,189"/>
+<area shape="rect" id="node20" href="$pivot_8cpp.html" title="src/pivot.cpp" alt="" coords="255,160,351,189"/>
 <area shape="rect" id="node7" href="$invkinematic_8cpp.html" title="src/invkinematic.cpp" alt="" coords="5,237,147,267"/>
 <area shape="rect" id="node11" href="$leg_8cpp.html" title="src/leg.cpp" alt="" coords="107,315,192,344"/>
 <area shape="rect" id="node13" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="216,315,355,344"/>
-<area shape="rect" id="node15" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="91,392,197,421"/>
-<area shape="rect" id="node17" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="221,392,349,421"/>
-<area shape="rect" id="node19" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="373,392,488,421"/>
+<area shape="rect" id="node15" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="148,392,276,421"/>
+<area shape="rect" id="node17" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="300,392,415,421"/>
 </map>

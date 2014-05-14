@@ -693,7 +693,7 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is 
 # run.
 
-EXCLUDE                = 
+EXCLUDE                = src/Q1test.cpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 
@@ -1133,7 +1133,7 @@ GENERATE_TREEVIEW      = YES
 # documentation. Note that a value of 0 will completely suppress the enum 
 # values from appearing in the overview section.
 
-ENUM_VALUES_PER_LINE   = 4
+ENUM_VALUES_PER_LINE   = 1
 
 # By enabling USE_INLINE_TREES, doxygen will generate the Groups, Directories, 
 # and Class Hierarchy pages using a tree view instead of an ordered list.

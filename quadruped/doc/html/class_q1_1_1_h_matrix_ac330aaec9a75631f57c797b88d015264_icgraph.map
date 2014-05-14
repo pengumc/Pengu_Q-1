@@ -1,10 +1,9 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="200,59,357,88"/>
-<area shape="rect" id="node21" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path" alt="" coords="197,112,360,141"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_" alt="" coords="409,59,639,88"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="200,32,357,61"/>
+<area shape="rect" id="node19" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path" alt="" coords="197,85,360,115"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_" alt="" coords="409,32,639,61"/>
 <area shape="rect" id="node7" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB" alt="" coords="689,5,911,35"/>
 <area shape="rect" id="node13" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="715,59,885,88"/>
-<area shape="rect" id="node19" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="775,112,825,141"/>
 <area shape="rect" id="node9" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob." alt="" coords="960,5,1224,35"/>
 <area shape="rect" id="node11" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob" alt="" coords="1273,5,1497,35"/>
 <area shape="rect" id="node15" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="987,59,1197,88"/>

@@ -34,11 +34,9 @@ var NAVTREEINDEX =
 "leg_8cpp.html":[3,0,9],
 "log_8cpp.html":[3,0,10],
 "pivot_8cpp.html":[3,0,11],
-"_q1test_8cpp.html":[3,0,12],
-"quadruped_8cpp.html":[3,0,13],
-"utility_8cpp.html":[3,0,14],
-"wrapper_8cpp.html":[3,0,15],
+"quadruped_8cpp.html":[3,0,12],
+"utility_8cpp.html":[3,0,13],
+"wrapper_8cpp.html":[3,0,14],
 "globals.html":[3,1,0],
-"globals_func.html":[3,1,1],
-"globals_defs.html":[3,1,2]
+"globals_defs.html":[3,1,1]
 };

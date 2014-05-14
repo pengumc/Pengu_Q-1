@@ -1,7 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$leg_8cpp.html" title="src/leg.cpp" alt="" coords="21,83,107,112"/>
-<area shape="rect" id="node5" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="131,83,269,112"/>
-<area shape="rect" id="node7" href="$_q1test_8cpp.html" title="src/Q1test.cpp" alt="" coords="5,160,112,189"/>
-<area shape="rect" id="node9" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="136,160,264,189"/>
-<area shape="rect" id="node11" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="288,160,403,189"/>
+<area shape="rect" id="node3" href="$leg_8cpp.html" title="src/leg.cpp" alt="" coords="5,83,91,112"/>
+<area shape="rect" id="node5" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="115,83,253,112"/>
+<area shape="rect" id="node7" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="47,160,175,189"/>
+<area shape="rect" id="node9" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="199,160,313,189"/>
 </map>

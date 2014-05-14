@@ -1,7 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB" alt="" coords="287,5,508,35"/>
 <area shape="rect" id="node9" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="312,59,483,88"/>
-<area shape="rect" id="node15" href="$_q1test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="372,112,423,141"/>
 <area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob." alt="" coords="557,5,821,35"/>
 <area shape="rect" id="node7" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob" alt="" coords="871,5,1095,35"/>
 <area shape="rect" id="node11" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="584,59,795,88"/>
