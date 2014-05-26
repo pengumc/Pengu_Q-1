@@ -1,5 +1,5 @@
 /**
- * @file usbcp,.cpp
+ * @file usbcom.cpp
  */
 #include "include/usbcom.h"
 
@@ -37,8 +37,9 @@ UsbCom::~UsbCom() {
 int UsbCom::Connect() {
   int init_result = hid_init();
   if (init_result) {
+    handle_ = NULL;
     return 1;
-  } 
+  }
   handle_ = hid_open(vid_, pid_, NULL);
   if (!handle_) {
     return 2;

@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include <stdint.h>
 #include <cstddef>
 
 #include "include/leg.h"

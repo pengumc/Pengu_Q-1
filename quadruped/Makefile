@@ -10,14 +10,15 @@ TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 LIBNAME = $(NAME).dll
 EXT = .exe
-CLIBS_TEST = $(CLIBS) -L$(TARGETDIR) -l$(NAME) -lhidapi
+CLIBS = -L$(TARGETDIR) -lhidapi
+CLIBS_TEST = $(CLIBS) -l$(NAME)
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
 	LIBNAME = lib$(NAME).so
 	EXT = 
-	CLIBS_TEST = $(CLIBS) -L$(TARGETDIR) -l$(NAME) -lhidapi-libusb -lusb-1.0
+	CLIBS = -L$(TARGETDIR) -lhidapi-libusb -lusb-1.0
+	CLIBS_TEST = $(CLIBS) -l$(NAME)
 endif
-CLIBS =
 CC = gcc
 CPPC = g++
 OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o usbcom.o
@@ -43,7 +44,7 @@ everything:library stylecheck doc
 library:lib/$(LIBNAME)
 
 lib/$(LIBNAME):$(OBJECTS_DLL)
-	$(CPPC) -shared -Wall -o $(TARGETDIR)/$(LIBNAME) $(CLIBS) $(OBJECTS_DLL)
+	$(CPPC) -shared -Wall -o $(TARGETDIR)/$(LIBNAME) $(OBJECTS_DLL) $(CLIBS)
 
 doc:
 	doxygen
