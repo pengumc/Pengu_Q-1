@@ -17,10 +17,10 @@ class UsbCom {
   // constants
   static const int kUsbWriteBufferSize = 14;
   /**< should correspond to the <b>input</b> report size (in bytes) +1 of the
-   *  usbmaster <a href"https://github/com/pengumc/usbtoi2c">UsbToI2C</a>*/
+   *  usbmaster https://github.com/pengumc/usbtoi2c*/
   static const int kUsbReadBufferSize = 8;
   /**< should correspond to the <b>output</b> report size (in bytes) of the
-   *  usbmaster <a href"https://github/com/pengumc/usbtoi2c">UsbToI2C</a>*/
+   *  usbmaster href"https://github.com/pengumc/usbtoi2c">UsbToI2C*/
   // constructor, destructor
   UsbCom(uint16_t vid, uint16_t pid);
   ~UsbCom();
@@ -28,11 +28,11 @@ class UsbCom {
   int Connect();
 
  private:
-  hid_device* handle_;/**< usb device handle*/
-  uint16_t vid_;/**< vendor id*/
-  uint16_t pid_;/**< product id*/
-  uint8_t wbuf_[kUsbWriteBufferSize];/**< buffer for writing to the device*/
-  uint8_t rbuf_[kUsbReadBufferSize];/**< buffer for reading from the device*/
+  hid_device* handle_;/**< @brief usb device handle*/
+  uint16_t vid_;/**< @brief vendor id*/
+  uint16_t pid_;/**< @brief product id*/
+  uint8_t wbuf_[kUsbWriteBufferSize];/**< @brief write buffer*/
+  uint8_t rbuf_[kUsbReadBufferSize];/**< @brief read buffer*/
 };
 
 }  // namespace Q1

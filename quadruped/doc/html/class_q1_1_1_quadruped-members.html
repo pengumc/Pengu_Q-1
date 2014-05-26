@@ -52,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -108,10 +109,13 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_quadru
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d">GetRelativeHMatrixArray</a>(int leg_index, int pivot_index)</td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#aef7dba7490b3869a0ddebe3a74fe07e5">H_cob_</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">kLegCount</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a9ef2cc03986f4b9647a499e298df0fdd">kUsbPid</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a69fb5cd8a9c4449568d6df0ab5fcb4b5">kUsbVid</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068">legs_</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a68080e72d9d95a005545b468fa62ac71">Quadruped</a>()</td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50">SetPivotConfig</a>(int leg_index, int pivot_index, double offset, double abs_max)</td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5">SetPivotPos</a>(int leg_index, int pivot_index, double x, double y, double z)</td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a3b7edfde41280d2bd062ea2a6a9d7db5">usb_</a></td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_quadruped.html#a8db9ee2a81c635bacadf5c38cec0a952">~Quadruped</a>()</td><td><a class="el" href="class_q1_1_1_quadruped.html">Q1::Quadruped</a></td><td></td></tr>
 </table></div><!-- contents -->
 <!-- window showing the filter options -->
@@ -119,7 +123,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_quadru
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -132,7 +136,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_quadru
   <div id="nav-path" class="navpath">
     <ul>
 
-    <li class="footer">Generated on Wed May 14 2014 20:55:50 for quadruped Q1 by
+    <li class="footer">Generated on Mon May 26 2014 22:13:53 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

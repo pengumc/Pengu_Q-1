@@ -1,9 +1,11 @@
 var annotated =
 [
+    [ "hid_device_info", "structhid__device__info.html", "structhid__device__info" ],
     [ "Q1::HMatrix", "class_q1_1_1_h_matrix.html", "class_q1_1_1_h_matrix" ],
     [ "Q1::InvKinematic", "class_q1_1_1_inv_kinematic.html", "class_q1_1_1_inv_kinematic" ],
     [ "Q1::Leg", "class_q1_1_1_leg.html", "class_q1_1_1_leg" ],
     [ "Q1::Logger", "class_q1_1_1_logger.html", "class_q1_1_1_logger" ],
     [ "Q1::Pivot", "class_q1_1_1_pivot.html", "class_q1_1_1_pivot" ],
-    [ "Q1::Quadruped", "class_q1_1_1_quadruped.html", "class_q1_1_1_quadruped" ]
+    [ "Q1::Quadruped", "class_q1_1_1_quadruped.html", "class_q1_1_1_quadruped" ],
+    [ "Q1::UsbCom", "class_q1_1_1_usb_com.html", "class_q1_1_1_usb_com" ]
 ];

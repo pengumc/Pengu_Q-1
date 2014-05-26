@@ -6,6 +6,7 @@ var namespace_q1 =
     [ "Logger", "class_q1_1_1_logger.html", null ],
     [ "Pivot", "class_q1_1_1_pivot.html", null ],
     [ "Quadruped", "class_q1_1_1_quadruped.html", null ],
+    [ "UsbCom", "class_q1_1_1_usb_com.html", null ],
     [ "Axis", "namespace_q1.html#a9629e29a0b82307ac5cefd30ce321977", null ],
     [ "CrossProduct3", "namespace_q1.html#a4f32e4419d91b2f6c36fc4bd179c4a9f", null ],
     [ "NormalizeAngle", "namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2", null ],

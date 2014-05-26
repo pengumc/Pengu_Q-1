@@ -1,6 +1,7 @@
 var searchData=
 [
   ['selfdot',['SelfDot',['../class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab',1,'Q1::HMatrix']]],
+  ['serial_5fnumber',['serial_number',['../structhid__device__info.html#a80756cea367e1566f966438984b75faf',1,'hid_device_info']]],
   ['set_5fabs_5fmax_5fangle',['set_abs_max_angle',['../class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc',1,'Q1::Pivot']]],
   ['set_5fangle',['set_angle',['../class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c',1,'Q1::Pivot']]],
   ['set_5farray',['set_array',['../class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516',1,'Q1::HMatrix']]],

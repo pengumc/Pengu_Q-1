@@ -12,5 +12,8 @@ var class_q1_1_1_quadruped =
     [ "SetPivotPos", "class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5", null ],
     [ "H_cob_", "class_q1_1_1_quadruped.html#aef7dba7490b3869a0ddebe3a74fe07e5", null ],
     [ "kLegCount", "class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926", null ],
-    [ "legs_", "class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068", null ]
+    [ "kUsbPid", "class_q1_1_1_quadruped.html#a9ef2cc03986f4b9647a499e298df0fdd", null ],
+    [ "kUsbVid", "class_q1_1_1_quadruped.html#a69fb5cd8a9c4449568d6df0ab5fcb4b5", null ],
+    [ "legs_", "class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068", null ],
+    [ "usb_", "class_q1_1_1_quadruped.html#a3b7edfde41280d2bd062ea2a6a9d7db5", null ]
 ];

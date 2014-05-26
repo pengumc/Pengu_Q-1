@@ -1,6 +1,13 @@
 var searchData=
 [
   ['updateh_5frel',['UpdateH_rel',['../class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a',1,'Q1::Pivot']]],
+  ['usage',['usage',['../structhid__device__info.html#a47f8011d58bcddd67f1403d6d3b4cab6',1,'hid_device_info']]],
+  ['usage_5fpage',['usage_page',['../structhid__device__info.html#ab811117f8084ce2036815bdd33b16b3b',1,'hid_device_info']]],
+  ['usb_5f',['usb_',['../class_q1_1_1_quadruped.html#a3b7edfde41280d2bd062ea2a6a9d7db5',1,'Q1::Quadruped']]],
+  ['usbcom',['UsbCom',['../class_q1_1_1_usb_com.html#aedc42c71f0d582543de3f9f6f43475fd',1,'Q1::UsbCom']]],
+  ['usbcom',['UsbCom',['../class_q1_1_1_usb_com.html',1,'Q1']]],
+  ['usbcom_2ecpp',['usbcom.cpp',['../usbcom_8cpp.html',1,'']]],
+  ['usbcom_2eh',['usbcom.h',['../usbcom_8h.html',1,'']]],
   ['utility_2ecpp',['utility.cpp',['../utility_8cpp.html',1,'']]],
   ['utility_2eh',['utility.h',['../utility_8h.html',1,'']]]
 ];
