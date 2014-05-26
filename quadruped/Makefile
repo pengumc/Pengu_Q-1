@@ -10,21 +10,22 @@ TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 LIBNAME = $(NAME).dll
 EXT = .exe
+CLIBS_TEST = $(CLIBS) -L$(TARGETDIR) -l$(NAME) -lhidapi
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
 	LIBNAME = lib$(NAME).so
 	EXT = 
+	CLIBS_TEST = $(CLIBS) -L$(TARGETDIR) -l$(NAME) -lhidapi-libusb -lusb-1.0
 endif
 CLIBS =
 CC = gcc
 CPPC = g++
-OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o
+OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o usbcom.o
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)
-#20-sim wants the dll in the same dir as the model file
 TARGETDIR = bin
-CLIBS_TEST = $(CLIBS) -L$(TARGETDIR) -l$(NAME)
+
 
 .PHONY:all library doc stylecheck everything
 
@@ -48,7 +49,7 @@ doc:
 	doxygen
 
 stylecheck:
-	python cpplint.py --filter=-legal,-build/include_what_you_use src/*.cpp include/*.h
+	python cpplint.py --filter=-legal,-build/include_what_you_use,-runtime/arrays src/*.cpp $(filter-out include/hidapi.h, $(wildcard include/*.h))
 
 clean:
 	rm $(OBJECTS_ALL)

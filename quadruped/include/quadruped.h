@@ -6,10 +6,13 @@
 #define QUADRUPED_INCLUDE_QUADRUPED_H_
 
 #include <stdint.h>
+
+#include <stdint.h>
 #include <cstddef>
 
 #include "include/leg.h"
 #include "include/hmatrix.h"
+#include "include/usbcom.h"
 
 namespace Q1 {
 
@@ -20,6 +23,8 @@ class Quadruped {
  public:
   // constants
   static const int kLegCount = 4;
+  static const uint16_t kUsbVid = 0x16c0;
+  static const uint16_t kUsbPid = 0x05df;
   // con/destructors
   Quadruped();
   ~Quadruped();
@@ -35,10 +40,11 @@ class Quadruped {
                          double angle);
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
-  
+
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
+  UsbCom* usb_;/**< @brief usb communications*/
 };
 
 }  // namespace Q1

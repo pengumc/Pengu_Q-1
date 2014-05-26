@@ -12,6 +12,8 @@ Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
     legs_[i] = new Leg(i, &H_cob_);
   }
+  usb_ = new UsbCom(kUsbVid, kUsbPid);
+  usb_->Connect();
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -20,6 +22,7 @@ Quadruped::~Quadruped() {
   for (int i = 0; i < kLegCount; ++i) {
     delete legs_[i];
   }
+  delete usb_;
 }
 
 // -------------------------------------------------------GetHMatrixArrayByIndex
@@ -85,7 +88,7 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
   return legs_[leg_index]->ChangePivotAngle(pivot_index, angle);
 }
 
-//-----------------------------------------------------------------ChangeFootPos
+// ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot, false if IK fails*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {

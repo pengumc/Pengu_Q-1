@@ -86,7 +86,7 @@ extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
  * @param leg_index index for the leg (0..3)
  * @param pivot_index index of the pivot (0..3)
  * @param offset the offset angle (i.e. the neutral angle)
- * @param abs_max the absolute maximum angle relative to the offset for the 
+ * @param abs_max the absolute maximum angle relative to the offset for the
  * pivot
  */
 extern "C" void QuadrupedSetPivotConfig(Quadruped* q, int leg_index,
@@ -104,7 +104,7 @@ extern "C" bool QuadrupedChangePivotAngle(Quadruped* q, int leg_index,
 
 // -------------------------------------------------------QuadrupedChangeFootPos
 /** @brief change the foot position of a leg. coords relative to cob*
- * 
+ *
  * @param q pointer to a quadruped
  * @param leg_index index of the leg
  * @param dx change in x direction
@@ -114,7 +114,7 @@ extern "C" bool QuadrupedChangePivotAngle(Quadruped* q, int leg_index,
  * mode 0 = relative to Origin<br>
  * mode 1 = relative to COB (not implemented)
  */
-extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index, 
+extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index,
                                        double dx, double dy, double dz,
                                        int mode) {
   if (mode == 0) {
@@ -123,6 +123,6 @@ extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index,
   }
   return false;
 }
-                                       
+
 
 }  // namespace Q1
