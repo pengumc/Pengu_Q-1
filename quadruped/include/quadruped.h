@@ -37,6 +37,7 @@ class Quadruped {
                          double angle);
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
+  bool SetFootPos(int leg_index, double x, double y, double z);
   int ConnectDevice(uint16_t vid, uint16_t pid);
   const double* GetDeviceAngles();
   bool SyncToDevice();

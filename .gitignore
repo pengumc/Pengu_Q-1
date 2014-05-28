@@ -6,6 +6,7 @@
 /quadruped/session
 /quadruped/tags
 /quadruped/bin
+/hmatrix_visualizer/*.dll
 *.pyc
 *.pdf
 *.csv

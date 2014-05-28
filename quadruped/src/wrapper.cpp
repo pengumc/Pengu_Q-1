@@ -124,6 +124,20 @@ extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index,
   return false;
 }
 
+// ----------------------------------------------------------QuadrupedSetFootPos
+/** @brief change the foot position of a leg. coords relative to cob*
+ *
+ * @param q pointer to a quadruped
+ * @param leg_index index of the leg
+ * @param x new x coord
+ * @param y new y coord
+ * @param z new z coord
+ */
+extern "C" bool QuadrupedSetFootPos(Quadruped* q, int leg_index, double x,
+                                     double y, double z) {
+  return q->SetFootPos(leg_index, x, y, z);
+}
+
 // ----------------------------------------------------------QuadrupedConnectDev
 /** Connect to the usb device with vid, pid*/
 extern "C" int QuadrupedConnectDev(Quadruped* q, uint16_t vid, uint16_t pid) {

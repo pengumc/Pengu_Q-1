@@ -10,6 +10,9 @@ class Quadruped:
         self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedChangePivotAngle.restype = c_bool;
         self.lib.QuadrupedChangeFootPos.restype = c_bool;
+        self.lib.QuadrupedSetFootPos.restype = c_bool;
+        self.lib.QuadrupedSyncToDev.restype = c_bool;
+        self.lib.QuadrupedSyncFromDev.restype = c_bool;
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -54,7 +57,20 @@ class Quadruped:
     def change_pivot_angle(self, leg, pivot, angle):
         return self.lib.QuadrupedChangePivotAngle(self.q, int(leg), int(pivot),
             c_double(angle))
-
+    
     def change_foot_pos(self, leg, dx, dy, dz, mode):
         return self.lib.QuadrupedChangeFootPos(self.q, int(leg), c_double(dx),
             c_double(dy), c_double(dz), int(mode))
+    def set_foot_pos(self, leg, x, y, z):
+        return self.lib.QuadrupedSetFootPos(self.q, int(leg), c_double(x),
+            c_double(y), c_double(z))
+
+    def connect(self, vid, pid):
+        return self.lib.QuadrupedConnectDev(self.q, c_uint16(vid),
+            c_uint16(pid))
+    
+    def sync_from_device(self):
+        return self.lib.QuadrupedSyncFromDev(self.q)
+        
+    def sync_to_device(self):
+        return self.lib.QuadrupedSyncToDev(self.q)

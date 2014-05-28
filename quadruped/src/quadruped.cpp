@@ -86,10 +86,21 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
 }
 
 // ----------------------------------------------------------------ChangeFootPos
-/** @brief change the position of a foot, false if IK fails*/
+/** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
   return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
+// -------------------------------------------------------------------SetFootPos
+/** @brief set x y  z for foot. false if IK fails. COB frame*/
+bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
+  const double* H = legs_[leg_index]->GetRelativeHMatrixArray(
+                                                              Leg::kPivotCount);
+  const double dx = x - H[HMatrix::kX];
+  const double dy = y - H[HMatrix::kY];
+  const double dz = z - H[HMatrix::kZ];
+  return ChangeFootPos(leg_index, dx, dy, dz);
 }
 
 // ----------------------------------------------------------------ConnectDevice
@@ -121,6 +132,7 @@ bool Quadruped::SyncFromDevice() {
   for (int l = 0; l < kLegCount; ++l) {
     for (int i = 0; i < Leg::kPivotCount; ++i) {
       legs_[l]->SetPivotAngle(i, angles[l*Leg::kPivotCount + i]);
+      printf("%.3f\n", angles[l*Leg::kPivotCount + i]);
     }
   }
   return true;

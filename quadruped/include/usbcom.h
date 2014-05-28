@@ -18,7 +18,7 @@ namespace Q1 {
 class UsbCom {
  public:
   // constants
-  static const double kDefaultK = 0.034;/**< default value for \ref K_*/
+  static const double kDefaultK = -0.034;/**< default value for \ref K_*/
   static const double kMidPW = 72;
   static const int kDeviceServoCount =12;
   /**< number of servos. Should match \ref Quadruped::kLegCount * \ref 
