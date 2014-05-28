@@ -85,11 +85,72 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
   return legs_[leg_index]->ChangePivotAngle(pivot_index, angle);
 }
 
-//-----------------------------------------------------------------ChangeFootPos
-/** @brief change the position of a foot, false if IK fails*/
+// ----------------------------------------------------------------ChangeFootPos
+/** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
   return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
+// -------------------------------------------------------------------SetFootPos
+/** @brief set x y  z for foot. false if IK fails. COB frame*/
+bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
+  const double* H = legs_[leg_index]->GetRelativeHMatrixArray(
+                                                              Leg::kPivotCount);
+  const double dx = x - H[HMatrix::kX];
+  const double dy = y - H[HMatrix::kY];
+  const double dz = z - H[HMatrix::kZ];
+  return ChangeFootPos(leg_index, dx, dy, dz);
+}
+
+// ----------------------------------------------------------------ConnectDevice
+/** @brief connect to usb device, see \ref UsbCom::Connect for return values*/
+int Quadruped::ConnectDevice(uint16_t vid, uint16_t pid) {
+  return usb_.Connect(vid, pid);
+}
+
+// --------------------------------------------------------------GetDeviceAngles
+/** @brief read device servo angles*/
+const double* Quadruped::GetDeviceAngles() {
+  if (usb_.ReadServoAngles() == 0) {
+    return usb_.device_servo_angles();
+  } else {
+    return NULL;
+  }
+}
+
+// ---------------------------------------------------------------SyncFromDevice
+/** @brief update everything to match the currect device data*
+ * 
+ * @return 1 on failure, 0 on success
+ */
+bool Quadruped::SyncFromDevice() {
+  if (usb_.ReadServoAngles()) {
+    return false;
+  }
+  const double* angles = usb_.device_servo_angles();
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      legs_[l]->SetPivotAngle(i, angles[l*Leg::kPivotCount + i]);
+      printf("%.3f\n", angles[l*Leg::kPivotCount + i]);
+    }
+  }
+  return true;
+}
+
+// -----------------------------------------------------------------SyncToDevice
+/** @brief update everything on the device to match the local data*/
+bool Quadruped::SyncToDevice() {
+    double angles[UsbCom::kDeviceServoCount];
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
+    }
+  }
+  if (usb_.WriteServoAngles(angles)) {
+    return false;
+  }
+  return true;
 }
 
 }  // namespace Q1

@@ -32,8 +32,10 @@ class Leg {
   void SetPivotConfig(int index, double offset, double abs_max);
   void ConfigurePivotRot(int index, Axis axis, double angle);
   bool ChangePivotAngle(int index, double angle);
+  bool SetPivotAngle(int index, double angle);
+  double GetPivotAngle(int index);
   bool ChangeFootPos(double dx, double dy, double dz);
-  
+
  private:
   uint8_t index_;/**< @brief index of the leg (0..3)*/
   Pivot* pivots_[kPivotCount];/**< @brief pivots in the leg (excl foot)*/

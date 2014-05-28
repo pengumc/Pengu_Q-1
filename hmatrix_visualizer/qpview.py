@@ -12,6 +12,8 @@ if __name__ == "__main__":
             if hmatrices:
                 pt = hmatrixplot.PlotThread(hmatrices)
                 pt.run()
+            else:
+              break
         else:
             break
         

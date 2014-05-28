@@ -52,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -105,6 +106,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_leg.ht
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2">ConfigurePivotRot</a>(int index, Axis axis, double angle)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a530d17023d4aa5d7b3b938ed1927fdfa">foot_</a></td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91">GetHMatrixArray</a>(int index)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839">GetPivotAngle</a>(int index)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec">GetRelativeHMatrixArray</a>(int index)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#ad21e6c44a7e85db56285e47117dd594b">ik_engine_</a></td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a771d67ddd45678c008eefe49a3c0e5a0">index_</a></td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [private]</code></td></tr>
@@ -112,6 +114,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_leg.ht
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f">kPivotCount</a></td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a464ca742ec7367f1b77d8511e683c4f2">Leg</a>(uint8_t index, HMatrix *H_cob)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [explicit]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a4fb718679da4dd329645c62d7096a206">pivots_</a></td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td><code> [private]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a">SetPivotAngle</a>(int index, double angle)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5">SetPivotConfig</a>(int index, double offset, double abs_max)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#ac9c88deaf1d284e4ffb50a78c2edadfc">SetPivotPos</a>(int index, double x, double y, double z)</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_q1_1_1_leg.html#af3a48dd380bc8cef934fd6cac1017d6b">~Leg</a>()</td><td><a class="el" href="class_q1_1_1_leg.html">Q1::Leg</a></td><td></td></tr>
@@ -121,7 +124,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_leg.ht
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -134,7 +137,7 @@ This is the complete list of members for <a class="el" href="class_q1_1_1_leg.ht
   <div id="nav-path" class="navpath">
     <ul>
 
-    <li class="footer">Generated on Wed May 14 2014 20:55:50 for quadruped Q1 by
+    <li class="footer">Generated on Wed May 28 2014 14:50:57 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

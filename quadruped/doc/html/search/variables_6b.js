@@ -1,9 +1,20 @@
 var searchData=
 [
+  ['k_5f',['K_',['../class_q1_1_1_usb_com.html#a625bedf859d8831dee15240d4912b3fe',1,'Q1::UsbCom']]],
+  ['kdefaultk',['kDefaultK',['../class_q1_1_1_usb_com.html#a2893b16b98c61fd998a8050303eef5c2',1,'Q1::UsbCom']]],
+  ['kdeviceservocount',['kDeviceServoCount',['../class_q1_1_1_usb_com.html#a270cc25c3c023012b955b56b69203196',1,'Q1::UsbCom']]],
+  ['khighposcount',['kHighPosCount',['../class_q1_1_1_usb_com.html#a38434b1e5c49eeda79c8cf78f8cd6583',1,'Q1::UsbCom']]],
   ['klegcount',['kLegCount',['../class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926',1,'Q1::Quadruped']]],
   ['kmagic16',['kMagic16',['../class_q1_1_1_h_matrix.html#aca6e56f20423b16a76b746b4e88b0e42',1,'Q1::HMatrix']]],
   ['kmaxiter',['kMaxIter',['../class_q1_1_1_leg.html#a7d59225901b0581eb08fe94f4ea892f3',1,'Q1::Leg']]],
+  ['kmidpw',['kMidPW',['../class_q1_1_1_usb_com.html#a9c48869bf889f18729d35fe0c989952c',1,'Q1::UsbCom']]],
   ['kpivotcount',['kPivotCount',['../class_q1_1_1_leg.html#a35b38e7b5fbec3c0d91342405b82ae8f',1,'Q1::Leg']]],
+  ['kusbcustomgetposh',['kUsbCustomGetPosH',['../class_q1_1_1_usb_com.html#a43bd5a2963ac409f00be5d887b20ca28',1,'Q1::UsbCom']]],
+  ['kusbcustomgetposl',['kUsbCustomGetPosL',['../class_q1_1_1_usb_com.html#a7f484c12074a22378afe045b1b28d5f7',1,'Q1::UsbCom']]],
+  ['kusbcustomsetdata',['kUsbCustomSetData',['../class_q1_1_1_usb_com.html#a36c4e2f983a2c7693ffa1d1b1a3afcbe',1,'Q1::UsbCom']]],
+  ['kusbreadbuffersize',['kUsbReadBufferSize',['../class_q1_1_1_usb_com.html#aa7db5cde97ec86e43a0c636c3916dd46',1,'Q1::UsbCom']]],
+  ['kusbsuccess',['kUsbSuccess',['../class_q1_1_1_usb_com.html#abb22f12cd332bc880b58a2efe4b7249e',1,'Q1::UsbCom']]],
+  ['kusbwritebuffersize',['kUsbWriteBufferSize',['../class_q1_1_1_usb_com.html#a708f009aa9c4f05b1b6cb0818d62e2e4',1,'Q1::UsbCom']]],
   ['kx',['kX',['../class_q1_1_1_h_matrix.html#ac0b8bd294822210420c73610e2e0456c',1,'Q1::HMatrix']]],
   ['ky',['kY',['../class_q1_1_1_h_matrix.html#abf7a2f9bafd2b747e0fee2483484e93c',1,'Q1::HMatrix']]],
   ['kz',['kZ',['../class_q1_1_1_h_matrix.html#a073452fb4279420fcd75ec7067da2373',1,'Q1::HMatrix']]]

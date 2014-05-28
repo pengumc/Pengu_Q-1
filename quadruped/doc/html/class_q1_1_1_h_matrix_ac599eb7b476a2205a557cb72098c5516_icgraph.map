@@ -1,28 +1,31 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="209,319,353,348"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="405,121,563,151"/>
-<area shape="rect" id="node21" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path" alt="" coords="403,423,565,452"/>
-<area shape="rect" id="node23" href="$class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="639,319,820,348"/>
-<area shape="rect" id="node31" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="925,371,1088,400"/>
-<area shape="rect" id="node39" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="403,239,565,268"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="209,369,353,399"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_pivot.html#ac272f6dbfce6a857663bbc3aac811a0a" title="accessor for H_rel_ (update H_rel as well)" alt="" coords="405,147,563,176"/>
+<area shape="rect" id="node21" href="$class_q1_1_1_pivot.html#ad3aa7c6c3b7d264e65a23b1483dd1b05" title="a h&#45;matrix from this to a specified matrix in its upward tree path" alt="" coords="403,473,565,503"/>
+<area shape="rect" id="node23" href="$class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="639,369,820,399"/>
+<area shape="rect" id="node31" href="$class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="925,421,1088,451"/>
+<area shape="rect" id="node39" href="$class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="403,289,565,319"/>
 <area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#aa11f5257ff720819755d181d17dd9e88" title="return a readable 16 value array with the elements of H_rel_" alt="" coords="615,57,844,87"/>
 <area shape="rect" id="node9" href="$class_q1_1_1_leg.html#a10de105055ca4bf95a7e05be66b88dec" title="return the hmatrix array of one of the pivots or the foot relative to the COB" alt="" coords="896,5,1117,35"/>
-<area shape="rect" id="node15" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="1508,97,1679,127"/>
+<area shape="rect" id="node15" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="1508,85,1679,115"/>
 <area shape="rect" id="node11" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob." alt="" coords="1168,5,1432,35"/>
 <area shape="rect" id="node13" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob" alt="" coords="1481,5,1705,35"/>
-<area shape="rect" id="node17" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="1759,97,1969,127"/>
-<area shape="rect" id="node19" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="2023,97,2225,127"/>
-<area shape="rect" id="node25" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="1219,317,1381,347"/>
-<area shape="rect" id="node27" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="1491,317,1696,347"/>
-<area shape="rect" id="node29" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="1765,317,1963,347"/>
-<area shape="rect" id="node33" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="1209,371,1391,400"/>
-<area shape="rect" id="node35" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="1481,371,1705,400"/>
-<area shape="rect" id="node37" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="1756,371,1972,400"/>
-<area shape="rect" id="node41" href="$class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="928,109,1085,139"/>
-<area shape="rect" id="node46" href="$class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds" alt="" coords="637,265,821,295"/>
-<area shape="rect" id="node52" href="$class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="659,212,800,241"/>
+<area shape="rect" id="node17" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="1759,85,1969,115"/>
+<area shape="rect" id="node19" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="2023,85,2225,115"/>
+<area shape="rect" id="node25" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="1219,369,1381,399"/>
+<area shape="rect" id="node27" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="1491,369,1696,399"/>
+<area shape="rect" id="node29" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="1765,369,1963,399"/>
+<area shape="rect" id="node33" href="$class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="1209,423,1391,452"/>
+<area shape="rect" id="node35" href="$class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="1481,423,1705,452"/>
+<area shape="rect" id="node37" href="$namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="1756,423,1972,452"/>
+<area shape="rect" id="node41" href="$class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="651,160,808,189"/>
+<area shape="rect" id="node46" href="$class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds" alt="" coords="637,316,821,345"/>
+<area shape="rect" id="node52" href="$class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="659,263,800,292"/>
 <area shape="rect" id="node43" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="1216,135,1384,164"/>
-<area shape="rect" id="node48" href="$class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds" alt="" coords="893,267,1120,296"/>
-<area shape="rect" id="node50" href="$namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range" alt="" coords="1191,264,1409,293"/>
-<area shape="rect" id="node55" href="$class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="907,213,1107,243"/>
+<area shape="rect" id="node48" href="$class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds" alt="" coords="893,317,1120,347"/>
+<area shape="rect" id="node50" href="$namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range" alt="" coords="1191,316,1409,345"/>
+<area shape="rect" id="node55" href="$class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a" title="set the angle of a pivot, false on out of bounds" alt="" coords="928,264,1085,293"/>
+<area shape="rect" id="node61" href="$class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="907,211,1107,240"/>
+<area shape="rect" id="node57" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="1191,263,1409,292"/>
+<area shape="rect" id="node59" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="1496,263,1691,292"/>
 </map>

@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['leg',['Leg',['../class_q1_1_1_leg.html',1,'Q1']]],
+  ['last_5ferror',['last_error',['../class_q1_1_1_usb_com.html#a737049c69ef87d30fbeb082b3e5a5fb8',1,'Q1::UsbCom']]],
+  ['last_5ferror_5f',['last_error_',['../class_q1_1_1_usb_com.html#aa80de7e3bda4352eea6024cfaebeed40',1,'Q1::UsbCom']]],
   ['leg',['Leg',['../class_q1_1_1_leg.html#a464ca742ec7367f1b77d8511e683c4f2',1,'Q1::Leg']]],
+  ['leg',['Leg',['../class_q1_1_1_leg.html',1,'Q1']]],
   ['leg_2ecpp',['leg.cpp',['../leg_8cpp.html',1,'']]],
   ['leg_2eh',['leg.h',['../leg_8h.html',1,'']]],
   ['legs_5f',['legs_',['../class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068',1,'Q1::Quadruped']]],

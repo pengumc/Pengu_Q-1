@@ -52,6 +52,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -117,6 +118,8 @@ Classes</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">represents a pivot of a leg  <a href="class_q1_1_1_pivot.html#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">the main quadruped class  <a href="class_q1_1_1_quadruped.html#details">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_usb_com.html">UsbCom</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">usb communcations using hidapi  <a href="class_q1_1_1_usb_com.html#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_q1.html#a9629e29a0b82307ac5cefd30ce321977">Axis</a> { <br/>
@@ -154,6 +157,11 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change the angle of a pivot, false on out of range  <a href="#a314ba6190999333b7f2aa7ced38f5d52"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb">QuadrupedChangeFootPos</a> (<a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a> *q, int leg_index, double dx, double dy, double dz, int mode)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change the foot position of a leg. coords relative to cob*  <a href="#aa3e929f2a0ba798ecef95057525ff5fb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_q1.html#a10d778a9d07f2ed87edc8e23e2ee0cc2">QuadrupedConnectDev</a> (<a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a> *q, uint16_t vid, uint16_t pid)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_q1.html#a6b5453756849136d617e21ac9172973d">QuadrupedSyncToDev</a> (<a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a> *q)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">send all local pivot angles to the connected device  <a href="#a6b5453756849136d617e21ac9172973d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_q1.html#a9f7c4e580f1df908d5750b788575d094">QuadrupedSyncFromDev</a> (<a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a> *q)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">send all local pivot angles to the connected device  <a href="#a9f7c4e580f1df908d5750b788575d094"></a><br/></td></tr>
 </table>
 <hr/><h2>Enumeration Type Documentation</h2>
 <a class="anchor" id="a9629e29a0b82307ac5cefd30ce321977"></a><!-- doxytag: member="Q1::Axis" ref="a9629e29a0b82307ac5cefd30ce321977" args="" -->
@@ -252,7 +260,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespace_q1_a9a3ee03155d7b6a0ee91e8bab4931fe2_icgraph.png" border="0" usemap="#namespace_q1_a9a3ee03155d7b6a0ee91e8bab4931fe2_icgraph" alt=""/></div>
 <map name="namespace_q1_a9a3ee03155d7b6a0ee91e8bab4931fe2_icgraph" id="namespace_q1_a9a3ee03155d7b6a0ee91e8bab4931fe2_icgraph">
-<area shape="rect" id="node3" href="class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="843,59,1043,88"/><area shape="rect" id="node19" href="class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="599,217,780,247"/><area shape="rect" id="node30" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="387,111,549,140"/><area shape="rect" id="node46" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="193,137,337,167"/><area shape="rect" id="node5" href="class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="1129,59,1297,88"/><area shape="rect" id="node13" href="class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="1132,213,1295,243"/><area shape="rect" id="node7" href="class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="1399,59,1569,88"/><area shape="rect" id="node9" href="class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="1649,59,1860,88"/><area shape="rect" id="node11" href="namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="1913,59,2116,88"/><area shape="rect" id="node15" href="class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="1381,213,1587,243"/><area shape="rect" id="node17" href="namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="1656,213,1853,243"/><area shape="rect" id="node22" href="class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="861,267,1024,296"/><area shape="rect" id="node24" href="class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="1123,267,1304,296"/><area shape="rect" id="node26" href="class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="1372,267,1596,296"/><area shape="rect" id="node28" href="namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="1647,267,1863,296"/><area shape="rect" id="node32" href="class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="864,5,1021,35"/><area shape="rect" id="node35" href="class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds" alt="" coords="597,164,781,193"/><area shape="rect" id="node41" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="619,111,760,140"/><area shape="rect" id="node37" href="class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds" alt="" coords="829,163,1056,192"/><area shape="rect" id="node39" href="namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range" alt="" coords="1104,160,1323,189"/></map>
+<area shape="rect" id="node3" href="class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc" title="mutator for abs_max_angle_" alt="" coords="843,213,1043,243"/><area shape="rect" id="node19" href="class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="599,267,780,296"/><area shape="rect" id="node30" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="387,109,549,139"/><area shape="rect" id="node52" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="193,161,337,191"/><area shape="rect" id="node5" href="class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="1129,161,1297,191"/><area shape="rect" id="node13" href="class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="1132,215,1295,244"/><area shape="rect" id="node7" href="class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="1399,161,1569,191"/><area shape="rect" id="node9" href="class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="1649,161,1860,191"/><area shape="rect" id="node11" href="namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="1913,161,2116,191"/><area shape="rect" id="node15" href="class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="1381,215,1587,244"/><area shape="rect" id="node17" href="namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="1656,215,1853,244"/><area shape="rect" id="node22" href="class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="861,267,1024,296"/><area shape="rect" id="node24" href="class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="1123,268,1304,297"/><area shape="rect" id="node26" href="class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="1372,268,1596,297"/><area shape="rect" id="node28" href="namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="1647,268,1863,297"/><area shape="rect" id="node32" href="class_q1_1_1_inv_kinematic.html#ae3a470a3bdbaa0aaf3dcc7ee75de600e" title="do a single iteration, returns the new error distance" alt="" coords="611,84,768,113"/><area shape="rect" id="node35" href="class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds" alt="" coords="597,19,781,48"/><area shape="rect" id="node41" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="619,161,760,191"/><area shape="rect" id="node37" href="class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds" alt="" coords="829,5,1056,35"/><area shape="rect" id="node39" href="namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range" alt="" coords="1104,5,1323,35"/><area shape="rect" id="node44" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a" title="set the angle of a pivot, false on out of bounds" alt="" coords="864,109,1021,139"/><area shape="rect" id="node46" href="class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="1104,108,1323,137"/><area shape="rect" id="node48" href="namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="1387,108,1581,137"/></map>
 </div>
 </p>
 
@@ -453,6 +461,49 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="namespace_q1_a80014718b9c9d306a28150d5843f774e_cgraph.png" border="0" usemap="#namespace_q1_a80014718b9c9d306a28150d5843f774e_cgraph" alt=""/></div>
 <map name="namespace_q1_a80014718b9c9d306a28150d5843f774e_cgraph" id="namespace_q1_a80014718b9c9d306a28150d5843f774e_cgraph">
 <area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#a5d1fdb53c6f1644ece45f2b1a77ebc62" title="modify R of a pivot while keeping Pivot::angle_ the same" alt="" coords="273,84,497,113"/><area shape="rect" id="node5" href="class_q1_1_1_leg.html#a7ee22062817af1379121dd5f1d71bfb2" title="configure R of a pivot without touching Pivot::angle_" alt="" coords="548,84,729,113"/><area shape="rect" id="node7" href="class_q1_1_1_pivot.html#a4029c4a9c80112fe95534e30af3d1206" title="configre the base orientation of the pivot" alt="" coords="779,84,941,113"/><area shape="rect" id="node9" href="class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839" title="mutator for offset_angle_" alt="" coords="1179,84,1360,113"/><area shape="rect" id="node11" href="class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="1409,33,1553,63"/><area shape="rect" id="node19" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="989,136,1131,165"/><area shape="rect" id="node17" href="namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="1611,136,1749,165"/><area shape="rect" id="node13" href="class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1615,59,1745,88"/><area shape="rect" id="node15" href="class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1603,5,1757,35"/><area shape="rect" id="node21" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="1188,137,1351,167"/><area shape="rect" id="node23" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="1409,188,1553,217"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a10d778a9d07f2ed87edc8e23e2ee0cc2"></a><!-- doxytag: member="Q1::QuadrupedConnectDev" ref="a10d778a9d07f2ed87edc8e23e2ee0cc2" args="(Quadruped *q, uint16_t vid, uint16_t pid)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="namespace_q1.html#a10d778a9d07f2ed87edc8e23e2ee0cc2">Q1::QuadrupedConnectDev</a> </td>
+          <td>(</td>
+          <td class="paramtype">Quadruped *&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>vid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>pid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Connect to the usb device with vid, pid </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespace_q1_a10d778a9d07f2ed87edc8e23e2ee0cc2_cgraph.png" border="0" usemap="#namespace_q1_a10d778a9d07f2ed87edc8e23e2ee0cc2_cgraph" alt=""/></div>
+<map name="namespace_q1_a10d778a9d07f2ed87edc8e23e2ee0cc2_cgraph" id="namespace_q1_a10d778a9d07f2ed87edc8e23e2ee0cc2_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12" title="connect to usb device, see UsbCom::Connect for return values" alt="" coords="237,32,445,61"/><area shape="rect" id="node5" href="class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_" alt="" coords="495,32,649,61"/><area shape="rect" id="node7" href="group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="705,5,767,35"/><area shape="rect" id="node9" href="group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="699,59,773,88"/></map>
 </div>
 </p>
 
@@ -711,6 +762,62 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="a9f7c4e580f1df908d5750b788575d094"></a><!-- doxytag: member="Q1::QuadrupedSyncFromDev" ref="a9f7c4e580f1df908d5750b788575d094" args="(Quadruped *q)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="namespace_q1.html#a9f7c4e580f1df908d5750b788575d094">Q1::QuadrupedSyncFromDev</a> </td>
+          <td>(</td>
+          <td class="paramtype">Quadruped *&#160;</td>
+          <td class="paramname"><em>q</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>send all local pivot angles to the connected device </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespace_q1_a9f7c4e580f1df908d5750b788575d094_cgraph.png" border="0" usemap="#namespace_q1_a9f7c4e580f1df908d5750b788575d094_cgraph" alt=""/></div>
+<map name="namespace_q1_a9f7c4e580f1df908d5750b788575d094_cgraph" id="namespace_q1_a9f7c4e580f1df908d5750b788575d094_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="248,112,467,141"/><area shape="rect" id="node5" href="class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device" alt="" coords="524,59,735,88"/><area shape="rect" id="node13" href="class_q1_1_1_usb_com.html#ae18f4b71ee539643beafa4ac7e057e34" title="accessor for device_servo_angles_" alt="" coords="515,112,744,141"/><area shape="rect" id="node15" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a" title="set the angle of a pivot, false on out of bounds" alt="" coords="551,165,708,195"/><area shape="rect" id="node7" href="group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="825,5,900,35"/><area shape="rect" id="node9" href="group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="827,59,899,88"/><area shape="rect" id="node11" href="group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="828,112,897,141"/><area shape="rect" id="node17" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="792,165,933,195"/><area shape="rect" id="node19" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="981,165,1144,195"/><area shape="rect" id="node21" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="1193,113,1337,143"/><area shape="rect" id="node23" href="namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="1395,139,1533,168"/><area shape="rect" id="node25" href="class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="1193,217,1337,247"/><area shape="rect" id="node27" href="class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1399,204,1529,233"/><area shape="rect" id="node29" href="class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1387,257,1541,287"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b5453756849136d617e21ac9172973d"></a><!-- doxytag: member="Q1::QuadrupedSyncToDev" ref="a6b5453756849136d617e21ac9172973d" args="(Quadruped *q)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="namespace_q1.html#a6b5453756849136d617e21ac9172973d">Q1::QuadrupedSyncToDev</a> </td>
+          <td>(</td>
+          <td class="paramtype">Quadruped *&#160;</td>
+          <td class="paramname"><em>q</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>send all local pivot angles to the connected device </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespace_q1_a6b5453756849136d617e21ac9172973d_cgraph.png" border="0" usemap="#namespace_q1_a6b5453756849136d617e21ac9172973d_cgraph" alt=""/></div>
+<map name="namespace_q1_a6b5453756849136d617e21ac9172973d_cgraph" id="namespace_q1_a6b5453756849136d617e21ac9172973d_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="233,59,436,88"/><area shape="rect" id="node5" href="class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot" alt="" coords="512,19,672,48"/><area shape="rect" id="node9" href="class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device" alt="" coords="487,99,697,128"/><area shape="rect" id="node7" href="class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor" alt="" coords="748,5,863,35"/><area shape="rect" id="node11" href="group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="768,59,843,88"/><area shape="rect" id="node13" href="group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="769,112,841,141"/><area shape="rect" id="node15" href="group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="771,165,840,195"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="ad2bc9f6cfe3ff3a755d4ee901cc800a4"></a><!-- doxytag: member="Q1::VectorDotProduct" ref="ad2bc9f6cfe3ff3a755d4ee901cc800a4" args="(const double *v1, const double *v2, int element_count)" -->
 <div class="memitem">
 <div class="memproto">
@@ -753,7 +860,7 @@ Here is the call graph for this function:</div>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -766,7 +873,7 @@ Here is the call graph for this function:</div>
     <ul>
       <li class="navelem"><a class="el" href="namespace_q1.html">Q1</a>      </li>
 
-    <li class="footer">Generated on Wed May 14 2014 20:55:50 for quadruped Q1 by
+    <li class="footer">Generated on Wed May 28 2014 14:50:57 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

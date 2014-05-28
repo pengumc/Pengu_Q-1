@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_q1_1_1_usb_com.html#af45ba5d6432e64f4339dde6233e83eba" title="connect to the first device with vid_ pid_" alt="" coords="236,32,391,61"/>
+<area shape="rect" id="node5" href="$group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="447,5,508,35"/>
+<area shape="rect" id="node7" href="$group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="440,59,515,88"/>
+</map>

@@ -6,10 +6,12 @@
 #define QUADRUPED_INCLUDE_QUADRUPED_H_
 
 #include <stdint.h>
+
 #include <cstddef>
 
 #include "include/leg.h"
 #include "include/hmatrix.h"
+#include "include/usbcom.h"
 
 namespace Q1 {
 
@@ -35,10 +37,16 @@ class Quadruped {
                          double angle);
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
-  
+  bool SetFootPos(int leg_index, double x, double y, double z);
+  int ConnectDevice(uint16_t vid, uint16_t pid);
+  const double* GetDeviceAngles();
+  bool SyncToDevice();
+  bool SyncFromDevice();
+
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
+  UsbCom usb_;/**< @brief usb communications*/
 };
 
 }  // namespace Q1

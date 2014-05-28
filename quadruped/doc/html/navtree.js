@@ -2,6 +2,7 @@ var NAVTREE =
 [
   [ "quadruped Q1", "index.html", [
     [ "figures", "index.html", null ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -26,6 +27,8 @@ var NAVTREE =
       [ "File List", "files.html", "files" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
         [ "Defines", "globals_defs.html", null ]
       ] ]
     ] ]

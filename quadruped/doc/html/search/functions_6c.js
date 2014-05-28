@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['last_5ferror',['last_error',['../class_q1_1_1_usb_com.html#a737049c69ef87d30fbeb082b3e5a5fb8',1,'Q1::UsbCom']]],
   ['leg',['Leg',['../class_q1_1_1_leg.html#a464ca742ec7367f1b77d8511e683c4f2',1,'Q1::Leg']]],
   ['logger',['Logger',['../class_q1_1_1_logger.html#a7bca86322fa55c902015b519435d578e',1,'Q1::Logger']]],
   ['logmatrix',['LogMatrix',['../class_q1_1_1_h_matrix.html#a0a3a54303b527a42579045986ad69043',1,'Q1::HMatrix']]],

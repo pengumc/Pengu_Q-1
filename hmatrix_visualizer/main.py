@@ -10,6 +10,13 @@ from platform import system
 
 class KeyboardThread (threading.Thread):
 
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.queue = Queue.Queue()
@@ -22,18 +29,35 @@ class KeyboardThread (threading.Thread):
         self.Q = quadruped.Quadruped(libpath)
         #configfile
         self.config = configuration.Configuration("config.xml")
+        self.connected = False
 
     def run(self):
         import keyboard
         self.apply_config()
+        c = self.Q.connect(0x16c0, 0x05df) 
+        if c == 0:
+          print self.OKGREEN + "connected " + self.ENDC
+          self.connected = True
+          res = self.Q.sync_from_device()
+          print "sync from dev: {}".format(res)
+        else:
+          print (self.FAIL + "could not connect {}" + self.ENDC).format(c)
+          self.connected = False
         x = 5.0
-        print("usage:\n\t'q' quit\n\t'p' plot")
-        print("\t'a' foot0 z + 0.3\n\t'z' foot0 z - 0.3\n")
+        print("usage:\n\tq quit\n\tp plot")
+        #print("\t1..4 select leg")
+        print("\ta foot z + 0.3\n\tz foot z - 0.3")
+        print("\ts servo 0 + 0.1\n\tx servo 0 - 0.3")
+        print("\t` sync from dev")
+        print("\t~ sync to dev")
+        leg = 0
+        pivot = 0
         while True:
             c = keyboard.getch()
             if c == 'q':
                 #if the keyboard thread dies, we all die
                 print("Waiting for plot to close...")
+                self.queue.put(None)
                 self.queue.put(None)
                 break
             elif c == 'p':
@@ -45,12 +69,73 @@ class KeyboardThread (threading.Thread):
                             self.Q.get_relative_hmatrix(leg, pivot))
                 self.queue.put(raw_pivots[0:16])
                 print("plot requested")
+            elif c == '!':
+              pivot = 0
+              print "pivot 0 selected"
+            elif c == '@':
+              pivot = 1
+              print "pivot 1 selected"
+            elif c == '#':
+              pivot = 2
+              print "pivot 2 selected"
+            elif c == '$':
+              pivot = 3
+              print "pivot 3 selected"
+            elif c == '1':
+              leg = 0
+              print "leg 0 selected"
+            elif c == '2':
+              leg = 1
+              print "leg 1 selected"
+            elif c == '3':
+              leg = 2
+              print "leg 2 selected"
+            elif c == '4':
+              leg = 3
+              print "leg 3 selected"
             elif c == 'a':
-              self.Q.change_foot_pos(0, 0, 0, 0.3, 0)
-              print("foot0 z + 0.3")
+                self.Q.change_foot_pos(leg, 0, 0, 0.3, 0)
+                print("foot0 z + 0.3")
+                self.commit()
             elif c == 'z':
-              self.Q.change_foot_pos(0, 0, 0, -0.3, 0)
-              print("foot0 z - 0.3")
+                self.Q.change_foot_pos(leg, 0, 0, -0.3, 0)
+                print("foot0 z - 0.3")
+                self.commit()
+            elif c == 's':
+                self.Q.change_pivot_angle(leg, pivot, 0.1)
+                self.commit()
+            elif c == 'x':
+                self.Q.change_pivot_angle(leg, pivot, -0.1)
+                self.commit()
+            elif c == '`':
+                res = self.Q.sync_from_device()
+                print "sync from dev: {}".format(res)
+            elif c == '~':
+                self.commit()
+            elif c == 'r':
+                d = math.cos(math.pi/4) * (3.6+6.8) +5.37
+                print "all feet at {}, -10".format(d) 
+                self.Q.set_foot_pos(0, d, d, -10) 
+                self.Q.set_foot_pos(1, -d, d, -10) 
+                self.Q.set_foot_pos(2, -d, -d, -10) 
+                self.Q.set_foot_pos(3, d, -d, -10) 
+            elif c == '-':
+                self.Q.change_foot_pos(0, 0, 0, -0.1, 0)
+                self.Q.change_foot_pos(1, 0, 0, -0.1, 0)
+                self.Q.change_foot_pos(2, 0, 0, -0.1, 0)
+                self.Q.change_foot_pos(3, 0, 0, -0.1, 0)
+                self.commit()
+            elif c == '+':
+                self.Q.change_foot_pos(0, 0, 0, +0.1, 0)
+                self.Q.change_foot_pos(1, 0, 0, +0.1, 0)
+                self.Q.change_foot_pos(2, 0, 0, +0.1, 0)
+                self.Q.change_foot_pos(3, 0, 0, +0.1, 0)
+                self.commit()
+                
+    def commit(self):
+        res = self.Q.sync_to_device()
+        print "sync to dev: {}".format(res)
+
     def apply_config(self):
         for leg in self.config.legs:
             for pivot in leg.pivots:
