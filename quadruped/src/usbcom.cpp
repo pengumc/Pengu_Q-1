@@ -12,8 +12,6 @@ const uint8_t UsbCom::kUsbSuccess[UsbCom::kUsbReadBufferSize] =
 /** @brief constructor
  *
  * pid and vid are stored, no connection is made at this time.
- * @param vid the vendor id of the usb device to use
- * @param pid the product id
  */
 UsbCom::UsbCom() {
   handle_ = NULL;
@@ -54,6 +52,8 @@ const double* UsbCom::device_servo_angles() {
 // ----------------------------------------------------------------------Connect
 /** @brief connect to the first device with \ref vid_ \ref pid_
  *
+ * @param vid the vendor id of the usb device to use
+ * @param pid the product id
  * @retval 0 on success
  * @retval 1 if hid_init failed
  * @retval 2 if device couldn't be opened

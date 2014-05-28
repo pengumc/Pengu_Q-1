@@ -141,19 +141,25 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change a pivots angle, false on out of bounds  <a href="#aeb5e2843c9f8d835f1f6698d7e46baac"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f">ChangeFootPos</a> (int leg_index, double dx, double dy, double dz)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change the position of a foot, false if IK fails  <a href="#ae9ad6623e21a8e919a1f9b3949e95c4f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12">ConnectDevice</a> (uint16_t vid, uint16_t pid)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">connect to usb device, see <a class="el" href="class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa">UsbCom::Connect</a> for return values  <a href="#acf08a0cbd663d214dca7f26f12f0dc12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912">GetDeviceAngles</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">read device servo angles  <a href="#a857cfcdede41228f027ae00601c96912"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335">SyncToDevice</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">update everything on the device to match the local data  <a href="#abca4144765d003cc55b89d9d73329335"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02">SyncFromDevice</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">update everything to match the currect device data*  <a href="#a1a2d082db1ee1d7009fdbd67ff06cb02"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">kLegCount</a> = 4</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a69fb5cd8a9c4449568d6df0ab5fcb4b5">kUsbVid</a> = 0x16c0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a9ef2cc03986f4b9647a499e298df0fdd">kUsbPid</a> = 0x05df</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q1_1_1_leg.html">Leg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a736443495d5bbe612d13f620a1262068">legs_</a> [<a class="el" href="class_q1_1_1_quadruped.html#a6f567fe80a8a9290352ba3ad69a0b926">kLegCount</a>]</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">leg pointers  <a href="#a736443495d5bbe612d13f620a1262068"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q1_1_1_h_matrix.html">HMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#aef7dba7490b3869a0ddebe3a74fe07e5">H_cob_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_q1_1_1_h_matrix.html" title="Holds a 4x4 Homogeneous matrix.">HMatrix</a> for Center of body.  <a href="#aef7dba7490b3869a0ddebe3a74fe07e5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q1_1_1_usb_com.html">UsbCom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a3b7edfde41280d2bd062ea2a6a9d7db5">usb_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">usb communications  <a href="#a3b7edfde41280d2bd062ea2a6a9d7db5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q1_1_1_usb_com.html">UsbCom</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_quadruped.html#a9fe1b14b5e599035f020de5aed8f310f">usb_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">usb communications  <a href="#a9fe1b14b5e599035f020de5aed8f310f"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>the main quadruped class </p>
@@ -173,15 +179,6 @@ Private Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Constructor. </p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_q1_1_1_quadruped_a68080e72d9d95a005545b468fa62ac71_cgraph.png" border="0" usemap="#class_q1_1_1_quadruped_a68080e72d9d95a005545b468fa62ac71_cgraph" alt=""/></div>
-<map name="class_q1_1_1_quadruped_a68080e72d9d95a005545b468fa62ac71_cgraph" id="class_q1_1_1_quadruped_a68080e72d9d95a005545b468fa62ac71_cgraph">
-<area shape="rect" id="node3" href="class_q1_1_1_usb_com.html#af45ba5d6432e64f4339dde6233e83eba" title="connect to the first device with vid_ pid_" alt="" coords="236,32,391,61"/><area shape="rect" id="node5" href="group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="447,5,508,35"/><area shape="rect" id="node7" href="group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="440,59,515,88"/></map>
-</div>
-</p>
 
 </div>
 </div>
@@ -370,6 +367,80 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_q1_1_1_quadruped_a5d1fdb53c6f1644ece45f2b1a77ebc62_icgraph.png" border="0" usemap="#class_q1_1_1_quadruped_a5d1fdb53c6f1644ece45f2b1a77ebc62_icgraph" alt=""/></div>
 <map name="class_q1_1_1_quadruped_a5d1fdb53c6f1644ece45f2b1a77ebc62_icgraph" id="class_q1_1_1_quadruped_a5d1fdb53c6f1644ece45f2b1a77ebc62_icgraph">
 <area shape="rect" id="node3" href="namespace_q1.html#a80014718b9c9d306a28150d5843f774e" title="configure the base rotation of a pivot. see Quadruped::ConfigurePivotRot" alt="" coords="281,5,497,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="acf08a0cbd663d214dca7f26f12f0dc12"></a><!-- doxytag: member="Q1::Quadruped::ConnectDevice" ref="acf08a0cbd663d214dca7f26f12f0dc12" args="(uint16_t vid, uint16_t pid)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12">Q1::Quadruped::ConnectDevice</a> </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>vid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>pid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>connect to usb device, see <a class="el" href="class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa">UsbCom::Connect</a> for return values </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_cgraph.png" border="0" usemap="#class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_cgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_cgraph" id="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_" alt="" coords="263,32,417,61"/><area shape="rect" id="node5" href="group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="473,5,535,35"/><area shape="rect" id="node7" href="group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="467,59,541,88"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_icgraph.png" border="0" usemap="#class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_icgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_icgraph" id="class_q1_1_1_quadruped_acf08a0cbd663d214dca7f26f12f0dc12_icgraph">
+<area shape="rect" id="node3" href="namespace_q1.html#a10d778a9d07f2ed87edc8e23e2ee0cc2" title="Q1::QuadrupedConnectDev" alt="" coords="263,5,444,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a857cfcdede41228f027ae00601c96912"></a><!-- doxytag: member="Q1::Quadruped::GetDeviceAngles" ref="a857cfcdede41228f027ae00601c96912" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double * <a class="el" href="class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912">Q1::Quadruped::GetDeviceAngles</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>read device servo angles </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_a857cfcdede41228f027ae00601c96912_cgraph.png" border="0" usemap="#class_q1_1_1_quadruped_a857cfcdede41228f027ae00601c96912_cgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_a857cfcdede41228f027ae00601c96912_cgraph" id="class_q1_1_1_quadruped_a857cfcdede41228f027ae00601c96912_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device" alt="" coords="284,59,495,88"/><area shape="rect" id="node11" href="class_q1_1_1_usb_com.html#ae18f4b71ee539643beafa4ac7e057e34" title="accessor for device_servo_angles_" alt="" coords="275,112,504,141"/><area shape="rect" id="node5" href="group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="552,5,627,35"/><area shape="rect" id="node7" href="group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="553,59,625,88"/><area shape="rect" id="node9" href="group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="555,112,624,141"/></map>
 </div>
 </p>
 
@@ -627,6 +698,79 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="a1a2d082db1ee1d7009fdbd67ff06cb02"></a><!-- doxytag: member="Q1::Quadruped::SyncFromDevice" ref="a1a2d082db1ee1d7009fdbd67ff06cb02" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02">Q1::Quadruped::SyncFromDevice</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>update everything to match the currect device data* </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>1 on failure, 0 on success </dd></dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_cgraph.png" border="0" usemap="#class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_cgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_cgraph" id="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device" alt="" coords="281,59,492,88"/><area shape="rect" id="node11" href="class_q1_1_1_usb_com.html#ae18f4b71ee539643beafa4ac7e057e34" title="accessor for device_servo_angles_" alt="" coords="272,112,501,141"/><area shape="rect" id="node13" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a" title="set the angle of a pivot, false on out of bounds" alt="" coords="308,165,465,195"/><area shape="rect" id="node5" href="group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="583,5,657,35"/><area shape="rect" id="node7" href="group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="584,59,656,88"/><area shape="rect" id="node9" href="group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="585,112,655,141"/><area shape="rect" id="node15" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="549,165,691,195"/><area shape="rect" id="node17" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="739,165,901,195"/><area shape="rect" id="node19" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="951,113,1095,143"/><area shape="rect" id="node21" href="namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="1152,139,1291,168"/><area shape="rect" id="node23" href="class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="951,217,1095,247"/><area shape="rect" id="node25" href="class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1156,204,1287,233"/><area shape="rect" id="node27" href="class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="1144,257,1299,287"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_icgraph.png" border="0" usemap="#class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_icgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_icgraph" id="class_q1_1_1_quadruped_a1a2d082db1ee1d7009fdbd67ff06cb02_icgraph">
+<area shape="rect" id="node3" href="namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="272,5,467,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abca4144765d003cc55b89d9d73329335"></a><!-- doxytag: member="Q1::Quadruped::SyncToDevice" ref="abca4144765d003cc55b89d9d73329335" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335">Q1::Quadruped::SyncToDevice</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>update everything on the device to match the local data </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_cgraph.png" border="0" usemap="#class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_cgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_cgraph" id="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot" alt="" coords="285,19,445,48"/><area shape="rect" id="node7" href="class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device" alt="" coords="260,99,471,128"/><area shape="rect" id="node5" href="class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor" alt="" coords="521,5,636,35"/><area shape="rect" id="node9" href="group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="541,59,616,88"/><area shape="rect" id="node11" href="group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="543,112,615,141"/><area shape="rect" id="node13" href="group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="544,165,613,195"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_icgraph.png" border="0" usemap="#class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_icgraph" alt=""/></div>
+<map name="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_icgraph" id="class_q1_1_1_quadruped_abca4144765d003cc55b89d9d73329335_icgraph">
+<area shape="rect" id="node3" href="namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device" alt="" coords="259,5,437,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <hr/><h2>Member Data Documentation</h2>
 <a class="anchor" id="aef7dba7490b3869a0ddebe3a74fe07e5"></a><!-- doxytag: member="Q1::Quadruped::H_cob_" ref="aef7dba7490b3869a0ddebe3a74fe07e5" args="" -->
 <div class="memitem">
@@ -656,32 +800,6 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a9ef2cc03986f4b9647a499e298df0fdd"></a><!-- doxytag: member="Q1::Quadruped::kUsbPid" ref="a9ef2cc03986f4b9647a499e298df0fdd" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_q1_1_1_quadruped.html#a9ef2cc03986f4b9647a499e298df0fdd">Q1::Quadruped::kUsbPid</a> = 0x05df<code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a69fb5cd8a9c4449568d6df0ab5fcb4b5"></a><!-- doxytag: member="Q1::Quadruped::kUsbVid" ref="a69fb5cd8a9c4449568d6df0ab5fcb4b5" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_q1_1_1_quadruped.html#a69fb5cd8a9c4449568d6df0ab5fcb4b5">Q1::Quadruped::kUsbVid</a> = 0x16c0<code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a736443495d5bbe612d13f620a1262068"></a><!-- doxytag: member="Q1::Quadruped::legs_" ref="a736443495d5bbe612d13f620a1262068" args="[kLegCount]" -->
 <div class="memitem">
 <div class="memproto">
@@ -697,12 +815,12 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a3b7edfde41280d2bd062ea2a6a9d7db5"></a><!-- doxytag: member="Q1::Quadruped::usb_" ref="a3b7edfde41280d2bd062ea2a6a9d7db5" args="" -->
+<a class="anchor" id="a9fe1b14b5e599035f020de5aed8f310f"></a><!-- doxytag: member="Q1::Quadruped::usb_" ref="a9fe1b14b5e599035f020de5aed8f310f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_q1_1_1_usb_com.html">UsbCom</a>* <a class="el" href="class_q1_1_1_quadruped.html#a3b7edfde41280d2bd062ea2a6a9d7db5">Q1::Quadruped::usb_</a><code> [private]</code></td>
+          <td class="memname"><a class="el" href="class_q1_1_1_usb_com.html">UsbCom</a> <a class="el" href="class_q1_1_1_quadruped.html#a9fe1b14b5e599035f020de5aed8f310f">Q1::Quadruped::usb_</a><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -737,7 +855,7 @@ Here is the caller graph for this function:</div>
       <li class="navelem"><a class="el" href="namespace_q1.html">Q1</a>      </li>
       <li class="navelem"><a class="el" href="class_q1_1_1_quadruped.html">Quadruped</a>      </li>
 
-    <li class="footer">Generated on Mon May 26 2014 22:13:53 for quadruped Q1 by
+    <li class="footer">Generated on Wed May 28 2014 14:50:57 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

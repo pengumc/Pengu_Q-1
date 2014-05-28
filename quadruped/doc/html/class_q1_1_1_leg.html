@@ -137,6 +137,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">configure <b>R</b> of a pivot without touching <a class="el" href="class_q1_1_1_pivot.html#adac8beaa0cf9eeae1160747f3c75e52a" title="the current angle">Pivot::angle_</a>  <a href="#a7ee22062817af1379121dd5f1d71bfb2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae">ChangePivotAngle</a> (int index, double angle)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change the angle of a pivot, false on out of bounds  <a href="#a727c825c15bcec6bba78b32a8846f1ae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a">SetPivotAngle</a> (int index, double angle)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">set the angle of a pivot, false on out of bounds  <a href="#a8e7f2ca18e2a374b361b902d3197ec3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839">GetPivotAngle</a> (int index)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">get the <a class="el" href="class_q1_1_1_pivot.html#adac8beaa0cf9eeae1160747f3c75e52a">Pivot::angle_</a> of a pivot  <a href="#ad9e1068c5bf1cb4501e6b88f9a9ac839"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7">ChangeFootPos</a> (double dx, double dy, double dz)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">change the position of a foot (relative to Origin)  <a href="#a7a136590fd15991b09a9e4b82a29e2b7"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
@@ -412,6 +416,49 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="ad9e1068c5bf1cb4501e6b88f9a9ac839"></a><!-- doxytag: member="Q1::Leg::GetPivotAngle" ref="ad9e1068c5bf1cb4501e6b88f9a9ac839" args="(int index)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839">Q1::Leg::GetPivotAngle</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>get the <a class="el" href="class_q1_1_1_pivot.html#adac8beaa0cf9eeae1160747f3c75e52a">Pivot::angle_</a> of a pivot </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>the index of the pivot </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_cgraph.png" border="0" usemap="#class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_cgraph" alt=""/></div>
+<map name="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_cgraph" id="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor" alt="" coords="215,5,329,35"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_icgraph.png" border="0" usemap="#class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_icgraph" alt=""/></div>
+<map name="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_icgraph" id="class_q1_1_1_leg_ad9e1068c5bf1cb4501e6b88f9a9ac839_icgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="215,5,417,35"/><area shape="rect" id="node5" href="namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device" alt="" coords="467,5,645,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a10de105055ca4bf95a7e05be66b88dec"></a><!-- doxytag: member="Q1::Leg::GetRelativeHMatrixArray" ref="a10de105055ca4bf95a7e05be66b88dec" args="(int index)" -->
 <div class="memitem">
 <div class="memproto">
@@ -444,6 +491,54 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_q1_1_1_leg_a10de105055ca4bf95a7e05be66b88dec_icgraph.png" border="0" usemap="#class_q1_1_1_leg_a10de105055ca4bf95a7e05be66b88dec_icgraph" alt=""/></div>
 <map name="class_q1_1_1_leg_a10de105055ca4bf95a7e05be66b88dec_icgraph" id="class_q1_1_1_leg_a10de105055ca4bf95a7e05be66b88dec_icgraph">
 <area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob." alt="" coords="277,5,541,35"/><area shape="rect" id="node5" href="namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob" alt="" coords="591,5,815,35"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8e7f2ca18e2a374b361b902d3197ec3a"></a><!-- doxytag: member="Q1::Leg::SetPivotAngle" ref="a8e7f2ca18e2a374b361b902d3197ec3a" args="(int index, double angle)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a">Q1::Leg::SetPivotAngle</a> </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>angle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>set the angle of a pivot, false on out of bounds </p>
+<p>index &gt; kPivotCount returns always false </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_cgraph.png" border="0" usemap="#class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_cgraph" alt=""/></div>
+<map name="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_cgraph" id="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_cgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c" title="mutator for angle_. false if angle is out of range" alt="" coords="213,57,355,87"/><area shape="rect" id="node5" href="class_q1_1_1_pivot.html#a1790e45b7969211a147e0a57c4d57151" title="change the angle of rotation. false if new angle is out of range" alt="" coords="403,57,565,87"/><area shape="rect" id="node7" href="class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc" title="true if angle is within the range specified by the offset and max" alt="" coords="615,5,759,35"/><area shape="rect" id="node9" href="namespace_q1.html#a9a3ee03155d7b6a0ee91e8bab4931fe2" title="normalize an angle so it&#39;s in the (&#45;pi, pi) range" alt="" coords="816,31,955,60"/><area shape="rect" id="node11" href="class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="615,109,759,139"/><area shape="rect" id="node13" href="class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="820,96,951,125"/><area shape="rect" id="node15" href="class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="808,149,963,179"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_icgraph.png" border="0" usemap="#class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_icgraph" alt=""/></div>
+<map name="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_icgraph" id="class_q1_1_1_leg_a8e7f2ca18e2a374b361b902d3197ec3a_icgraph">
+<area shape="rect" id="node3" href="class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="213,5,432,35"/><area shape="rect" id="node5" href="namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="480,5,675,35"/></map>
 </div>
 </p>
 
@@ -685,7 +780,7 @@ Here is the caller graph for this function:</div>
       <li class="navelem"><a class="el" href="namespace_q1.html">Q1</a>      </li>
       <li class="navelem"><a class="el" href="class_q1_1_1_leg.html">Leg</a>      </li>
 
-    <li class="footer">Generated on Mon May 26 2014 22:13:53 for quadruped Q1 by
+    <li class="footer">Generated on Wed May 28 2014 14:50:57 for quadruped Q1 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

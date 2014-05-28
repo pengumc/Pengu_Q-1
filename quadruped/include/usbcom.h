@@ -38,7 +38,6 @@ class UsbCom {
   static const uint8_t kUsbCustomGetPosH = 0x06;
   static const uint8_t kUsbCustomSetData = 0x03;
   static const uint8_t kUsbSuccess[kUsbReadBufferSize];
-  /**< {'s', 'u', 'c', 'c', 'e', 's', 's', ' '}; in .cpp*/
   // constructor, destructor
   UsbCom();
   ~UsbCom();
