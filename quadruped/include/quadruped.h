@@ -22,8 +22,6 @@ class Quadruped {
  public:
   // constants
   static const int kLegCount = 4;
-  static const uint16_t kUsbVid = 0x16c0;
-  static const uint16_t kUsbPid = 0x05df;
   // con/destructors
   Quadruped();
   ~Quadruped();
@@ -39,11 +37,15 @@ class Quadruped {
                          double angle);
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
+  int ConnectDevice(uint16_t vid, uint16_t pid);
+  const double* GetDeviceAngles();
+  bool SyncToDevice();
+  bool SyncFromDevice();
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
-  UsbCom* usb_;/**< @brief usb communications*/
+  UsbCom usb_;/**< @brief usb communications*/
 };
 
 }  // namespace Q1

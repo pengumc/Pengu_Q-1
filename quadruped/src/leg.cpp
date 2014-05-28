@@ -106,6 +106,30 @@ bool Leg::ChangePivotAngle(int index, double angle) {
   }
 }
 
+// -------------------------------------------------------------SetPivotAngle
+/** @brief set the angle of a pivot, false on out of bounds
+ * 
+ * index > kPivotCount returns always false
+ */
+bool Leg::SetPivotAngle(int index, double angle) {
+  if (index < kPivotCount) {
+    pivots_[index]->set_angle(angle);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+// ----------------------------------------------------------------GetPivotAngle
+/** @brief get the \ref Pivot::angle_ of a pivot
+ * 
+ * @param index the index of the pivot
+ */
+double Leg::GetPivotAngle(int index) {
+  return pivots_[index]->angle();
+}
+
 // ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot (relative to Origin) */
 bool Leg::ChangeFootPos(double dx, double dy, double dz) {

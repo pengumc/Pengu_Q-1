@@ -12,8 +12,6 @@ Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
     legs_[i] = new Leg(i, &H_cob_);
   }
-  usb_ = new UsbCom(kUsbVid, kUsbPid);
-  usb_->Connect();
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -22,7 +20,6 @@ Quadruped::~Quadruped() {
   for (int i = 0; i < kLegCount; ++i) {
     delete legs_[i];
   }
-  delete usb_;
 }
 
 // -------------------------------------------------------GetHMatrixArrayByIndex
@@ -93,6 +90,55 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
   return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
+// ----------------------------------------------------------------ConnectDevice
+/** @brief connect to usb device, see \ref UsbCom::Connect for return values*/
+int Quadruped::ConnectDevice(uint16_t vid, uint16_t pid) {
+  return usb_.Connect(vid, pid);
+}
+
+// --------------------------------------------------------------GetDeviceAngles
+/** @brief read device servo angles*/
+const double* Quadruped::GetDeviceAngles() {
+  if (usb_.ReadServoAngles() == 0) {
+    return usb_.device_servo_angles();
+  } else {
+    return NULL;
+  }
+}
+
+// ---------------------------------------------------------------SyncFromDevice
+/** @brief update everything to match the currect device data*
+ * 
+ * @return 1 on failure, 0 on success
+ */
+bool Quadruped::SyncFromDevice() {
+  if (usb_.ReadServoAngles()) {
+    return false;
+  }
+  const double* angles = usb_.device_servo_angles();
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      legs_[l]->SetPivotAngle(i, angles[l*Leg::kPivotCount + i]);
+    }
+  }
+  return true;
+}
+
+// -----------------------------------------------------------------SyncToDevice
+/** @brief update everything on the device to match the local data*/
+bool Quadruped::SyncToDevice() {
+    double angles[UsbCom::kDeviceServoCount];
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
+    }
+  }
+  if (usb_.WriteServoAngles(angles)) {
+    return false;
+  }
+  return true;
 }
 
 }  // namespace Q1

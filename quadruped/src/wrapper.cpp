@@ -124,5 +124,22 @@ extern "C" bool QuadrupedChangeFootPos(Quadruped* q, int leg_index,
   return false;
 }
 
+// ----------------------------------------------------------QuadrupedConnectDev
+/** Connect to the usb device with vid, pid*/
+extern "C" int QuadrupedConnectDev(Quadruped* q, uint16_t vid, uint16_t pid) {
+  return q->ConnectDevice(vid, pid);
+}
+
+// -----------------------------------------------------------QuadrupedSyncToDev
+/** @brief send all local pivot angles to the connected device*/
+extern "C" bool QuadrupedSyncToDev(Quadruped* q) {
+  return q->SyncToDevice();
+}
+
+// ---------------------------------------------------------QuadrupedSyncFromDev
+/** @brief send all local pivot angles to the connected device*/
+extern "C" bool QuadrupedSyncFromDev(Quadruped* q) {
+  return q->SyncFromDevice();
+}
 
 }  // namespace Q1
