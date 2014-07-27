@@ -46,8 +46,11 @@ class KeyboardThread (threading.Thread):
         x = 5.0
         print("usage:\n\tq quit\n\tp plot")
         #print("\t1..4 select leg")
-        print("\ta foot z + 0.3\n\tz foot z - 0.3")
-        print("\ts servo 0 + 0.1\n\tx servo 0 - 0.3")
+        print("\t1..4 select leg 1..4")
+        print("\t!..$ select pivot 0..3")
+        print("\ta foot +0.3\n\tz foot -0.3")
+        print("\ts servo +0.1\n\tx servo -0.3")
+        print("\t- all legs z -0.1\n\t+ all legs z +0.1")
         print("\t` sync from dev")
         print("\t~ sync to dev")
         leg = 0
@@ -95,11 +98,11 @@ class KeyboardThread (threading.Thread):
               print "leg 3 selected"
             elif c == 'a':
                 self.Q.change_foot_pos(leg, 0, 0, 0.3, 0)
-                print("foot0 z + 0.3")
+                print("foot{} z + 0.3".format(leg))
                 self.commit()
             elif c == 'z':
                 self.Q.change_foot_pos(leg, 0, 0, -0.3, 0)
-                print("foot0 z - 0.3")
+                print("foot {} z - 0.3".format(leg))
                 self.commit()
             elif c == 's':
                 self.Q.change_pivot_angle(leg, pivot, 0.1)

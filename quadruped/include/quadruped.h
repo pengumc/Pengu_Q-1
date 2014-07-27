@@ -29,6 +29,7 @@ class Quadruped {
   const double* GetHMatrixArrayByIndex(int index);
   const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
+  const double* GetCoM();
   void SetPivotPos(int leg_index, int pivot_index, double x, double y,
                    double z);
   void SetPivotConfig(int leg_index, int pivot_index, double offset,
@@ -46,6 +47,7 @@ class Quadruped {
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
+  HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
 };
 

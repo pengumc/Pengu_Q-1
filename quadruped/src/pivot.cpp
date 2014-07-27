@@ -12,6 +12,7 @@ Pivot::Pivot() {
   abs_max_angle_ = 30 * M_PI/180;  // 30 degrees
   angle_ = 0.0;
   offset_angle_ = 0.0;
+  mass_ = 1.0;
 }
 
 // -----------------------------------------------------------------Constructor2
@@ -38,7 +39,7 @@ HMatrix* Pivot::H_framep() {
 }
 
 // ------------------------------------------------------------------updateH_rel
-/** @brief accessor for \ref H_rel_ (update H_rel as well)*/
+/** @brief accessor for \ref H_rel_ (updates H_rel as well)*/
 void Pivot::UpdateH_rel() {
   // first update rel by traversing the tranform tree till we find a matrix
   // with parent NULL
@@ -184,6 +185,18 @@ void Pivot::ConfigureRot(Axis axis, double angle) {
   set_offset_angle(0.0);
   set_angle(0.0);
   H_frame_.SelfDot(HMatrix(axis, angle));
+}
+
+// ---------------------------------------------------------------------set_mass
+/** mutator for \ref mass_ */
+void Pivot::set_mass(double mass) {
+  if (mass  > 0.0) mass_ = mass;
+}
+
+// ----------------------------------------------------------------mass accessor
+/** Accessor for \ref mass_ */
+double Pivot::mass() {
+  return mass_;
 }
 
 }  // namespace Q1

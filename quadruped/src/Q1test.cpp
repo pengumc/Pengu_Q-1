@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
       printf("%.2f\n", angles[i]);
     }
   }
-  
+
   delete aap;
 
 
