@@ -169,8 +169,8 @@ void Leg::UpdateCoM() {
     m_i = pivots_[i]->mass();
     H = GetRelativeHMatrixArray(i);  // everything in 0 frame
     x = x + H[HMatrix::kX] * m_i;
-    y = y + H[HMatrix::kX] * m_i;
-    z = z + H[HMatrix::kX] * m_i;  // TODO(michiel): Z axis is not needed?
+    y = y + H[HMatrix::kY] * m_i;
+    z = z + H[HMatrix::kZ] * m_i;  // TODO(michiel): Z axis is not needed?
     total_mass_ = total_mass_ + m_i;
   }
   H_com_ = HMatrix(x / total_mass_, y / total_mass_, z / total_mass_);

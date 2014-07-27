@@ -24,6 +24,7 @@ Pivot::Pivot(HMatrix* parent) {
   offset_angle_ = 0.0;
   // just add parent
   H_frame_.set_parent(parent);
+  mass_ = 1.0;
 }
 
 // ----------------------------------------------------------------------H_frame

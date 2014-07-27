@@ -161,12 +161,14 @@ bool Quadruped::SyncToDevice() {
 const double* Quadruped::GetCoM() {
   double total_mass = 0.0;
   double m_l;
-  H_com_.Clear();
+  HMatrix unwweighted;
   for (int l = 0; l < kLegCount; ++l) {
     m_l = legs_[l]->get_total_mass();
     total_mass = total_mass + m_l;
-    H_com_.SelfDotScaled(legs_[l]->GetCoM(), m_l);
+    unwweighted.SelfDotScaled(legs_[l]->GetCoM(), m_l);
   }
+  H_com_.Clear();
+  H_com_.SelfDotScaled(unwweighted, 1.0 / total_mass);
   return H_com_.array();
 }
 
