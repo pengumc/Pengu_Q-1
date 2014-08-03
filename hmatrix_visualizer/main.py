@@ -48,9 +48,11 @@ class KeyboardThread (threading.Thread):
         #print("\t1..4 select leg")
         print("\t1..4 select leg 1..4")
         print("\t!..$ select pivot 0..3")
-        print("\ta foot +0.3\n\tz foot -0.3")
-        print("\ts servo +0.1\n\tx servo -0.3")
-        print("\t- all legs z -0.1\n\t+ all legs z +0.1")
+        # wasd move body on xyplane
+        # +- raise lower body
+        # rt move foot 5 cm forward in nice transfer
+        print("\tz servo +0.1\n\tx servo -0.1")
+        print("\tx all legs z -0.1\n\t+ all legs z +0.1")
         print("\t` sync from dev")
         print("\t~ sync to dev")
         leg = 0
@@ -70,8 +72,11 @@ class KeyboardThread (threading.Thread):
                     for pivot in range(4):
                         raw_pivots.append(
                             self.Q.get_relative_hmatrix(leg, pivot))
-                self.queue.put(raw_pivots[0:16])
+                raw_pivots.append(self.Q.get_com());
+                self.Q.print_hmatrix(raw_pivots[16])
+                self.queue.put(raw_pivots[0:17])
                 print("plot requested")
+            #selection
             elif c == '!':
               pivot = 0
               print "pivot 0 selected"
@@ -96,19 +101,40 @@ class KeyboardThread (threading.Thread):
             elif c == '4':
               leg = 3
               print "leg 3 selected"
-            elif c == 'a':
-                self.Q.change_foot_pos(leg, 0, 0, 0.3, 0)
-                print("foot{} z + 0.3".format(leg))
+            #wasd
+            elif c == 'w':
+              # + y
+                self.Q.change_foot_pos(0, 0, 0.1, 0, 0)
+                self.Q.change_foot_pos(1, 0, 0.1, 0, 0)
+                self.Q.change_foot_pos(2, 0, 0.1, 0, 0)
+                self.Q.change_foot_pos(3, 0, 0.1, 0, 0)
                 self.commit()
-            elif c == 'z':
-                self.Q.change_foot_pos(leg, 0, 0, -0.3, 0)
-                print("foot {} z - 0.3".format(leg))
+            elif c == 'a':
+                # - x
+                self.Q.change_foot_pos(0, -0.1, 0, 0, 0)
+                self.Q.change_foot_pos(1, -0.1, 0, 0, 0)
+                self.Q.change_foot_pos(2, -0.1, 0, 0, 0)
+                self.Q.change_foot_pos(3, -0.1, 0, 0, 0)
                 self.commit()
             elif c == 's':
-                self.Q.change_pivot_angle(leg, pivot, 0.1)
+                # - y
+                self.Q.change_foot_pos(0, 0, -0.1, 0, 0)
+                self.Q.change_foot_pos(1, 0, -0.1, 0, 0)
+                self.Q.change_foot_pos(2, 0, -0.1, 0, 0)
+                self.Q.change_foot_pos(3, 0, -0.1, 0, 0)
+                self.commit()
+            elif c == 'd':
+                + x
+                self.Q.change_foot_pos(0, 0.1, 0, 0, 0)
+                self.Q.change_foot_pos(1, 0.1, 0, 0, 0)
+                self.Q.change_foot_pos(2, 0.1, 0, 0, 0)
+                self.Q.change_foot_pos(3, 0.1, 0, 0, 0)
+                self.commit()
+            elif c == 'z':
+                self.Q.change_pivot_angle(leg, pivot, -0.1)
                 self.commit()
             elif c == 'x':
-                self.Q.change_pivot_angle(leg, pivot, -0.1)
+                self.Q.change_pivot_angle(leg, pivot, 0.1)
                 self.commit()
             elif c == '`':
                 res = self.Q.sync_from_device()
