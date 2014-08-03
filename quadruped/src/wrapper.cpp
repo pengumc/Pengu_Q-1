@@ -103,7 +103,7 @@ extern "C" bool QuadrupedChangePivotAngle(Quadruped* q, int leg_index,
 }
 
 // -------------------------------------------------------QuadrupedChangeFootPos
-/** @brief change the foot position of a leg. coords relative to cob*
+/** @brief change the foot position of a leg. coords relative to cob
  *
  * @param q pointer to a quadruped
  * @param leg_index index of the leg

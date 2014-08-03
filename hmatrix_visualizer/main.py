@@ -6,6 +6,7 @@ import Queue
 import math
 import quadruped
 import configuration
+import time
 from platform import system
 
 class KeyboardThread (threading.Thread):
@@ -34,7 +35,7 @@ class KeyboardThread (threading.Thread):
     def run(self):
         import keyboard
         self.apply_config()
-        c = self.Q.connect(0x16c0, 0x05df) 
+        c = self.Q.connect(0x16c0, 0x05df)
         if c == 0:
           print self.OKGREEN + "connected " + self.ENDC
           self.connected = True
@@ -104,32 +105,16 @@ class KeyboardThread (threading.Thread):
             #wasd
             elif c == 'w':
               # + y
-                self.Q.change_foot_pos(0, 0, 0.1, 0, 0)
-                self.Q.change_foot_pos(1, 0, 0.1, 0, 0)
-                self.Q.change_foot_pos(2, 0, 0.1, 0, 0)
-                self.Q.change_foot_pos(3, 0, 0.1, 0, 0)
-                self.commit()
+                self.safe_change_all_feet(0, 0.1, 0)
             elif c == 'a':
                 # - x
-                self.Q.change_foot_pos(0, -0.1, 0, 0, 0)
-                self.Q.change_foot_pos(1, -0.1, 0, 0, 0)
-                self.Q.change_foot_pos(2, -0.1, 0, 0, 0)
-                self.Q.change_foot_pos(3, -0.1, 0, 0, 0)
-                self.commit()
+                self.safe_change_all_feet(-0.1, 0, 0)
             elif c == 's':
                 # - y
-                self.Q.change_foot_pos(0, 0, -0.1, 0, 0)
-                self.Q.change_foot_pos(1, 0, -0.1, 0, 0)
-                self.Q.change_foot_pos(2, 0, -0.1, 0, 0)
-                self.Q.change_foot_pos(3, 0, -0.1, 0, 0)
-                self.commit()
+                self.safe_change_all_feet(0, -0.1, 0)
             elif c == 'd':
-                + x
-                self.Q.change_foot_pos(0, 0.1, 0, 0, 0)
-                self.Q.change_foot_pos(1, 0.1, 0, 0, 0)
-                self.Q.change_foot_pos(2, 0.1, 0, 0, 0)
-                self.Q.change_foot_pos(3, 0.1, 0, 0, 0)
-                self.commit()
+                #+ x
+                self.safe_change_all_feet(+0.1, 0, 0)
             elif c == 'z':
                 self.Q.change_pivot_angle(leg, pivot, -0.1)
                 self.commit()
@@ -143,27 +128,106 @@ class KeyboardThread (threading.Thread):
                 self.commit()
             elif c == 'r':
                 d = math.cos(math.pi/4) * (3.6+6.8) +5.37
-                print "all feet at {}, -10".format(d) 
-                self.Q.set_foot_pos(0, d, d, -10) 
-                self.Q.set_foot_pos(1, -d, d, -10) 
-                self.Q.set_foot_pos(2, -d, -d, -10) 
-                self.Q.set_foot_pos(3, d, -d, -10) 
+                print "all feet at {}, -10".format(d)
+                self.Q.set_foot_pos(0, d, d, -11)
+                self.Q.set_foot_pos(1, -d, d, -11)
+                self.Q.set_foot_pos(2, -d, -d, -11)
+                self.Q.set_foot_pos(3, d, -d, -11)
             elif c == '-':
-                self.Q.change_foot_pos(0, 0, 0, -0.1, 0)
-                self.Q.change_foot_pos(1, 0, 0, -0.1, 0)
-                self.Q.change_foot_pos(2, 0, 0, -0.1, 0)
-                self.Q.change_foot_pos(3, 0, 0, -0.1, 0)
-                self.commit()
+                self.safe_change_all_feet(0, 0, -0.1)
             elif c == '+':
-                self.Q.change_foot_pos(0, 0, 0, +0.1, 0)
-                self.Q.change_foot_pos(1, 0, 0, +0.1, 0)
-                self.Q.change_foot_pos(2, 0, 0, +0.1, 0)
-                self.Q.change_foot_pos(3, 0, 0, +0.1, 0)
-                self.commit()
+                self.safe_change_all_feet(0, 0, +0.1)
+            elif c == 'f':
+                self.transfer_leg(leg, -2)
+            elif c == 'g':
+                size = 0.5
+                t = 0
+                #move 0.5 
+                moved = self.safe_change_all_feet(0, size, 0)
+                time.sleep(t)
+                #change leg 0
+                self.transfer_leg(0, -size*4)
+                time.sleep(t)
+                if not moved: self.safe_change_all_feet(0, size, 0)
+                #move 0.5 
+                moved = self.safe_change_all_feet(0, 5, 0)
+                time.sleep(t)
+                #change leg 3
+                self.transfer_leg(3, -size*4)
+                time.sleep(t)
+                if not moved: self.safe_change_all_feet(0, size, 0)
+                #move 0.5 
+                moved = self.safe_change_all_feet(0, size, 0)
+                time.sleep(t)
+                #change leg 1
+                self.transfer_leg(1, -size*4)
+                time.sleep(t)
+                if not moved: self.safe_change_all_feet(0, size, 0)                
+                #move 0.5 
+                moved = self.safe_change_all_feet(0, size, 0)
+                time.sleep(t)
+                #change leg 2
+                self.transfer_leg(2, -size*4)
+                time.sleep(t)
+                if not moved: self.safe_change_all_feet(0, size, 0)
                 
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
+
+    def transfer_leg(self, leg, y):
+        t = 0.2
+        #first check each point
+        if self.Q.change_foot_pos(leg, 0, 0, 2, 0): #up 2
+            if self.Q.change_foot_pos(leg, 0, y, 0, 0): #forwards y
+                if self.Q.change_foot_pos(leg, 0, 0, -2, 0): #down 2
+                    #back to start
+                    self.Q.change_foot_pos(leg, 0, -y, 0, 0);
+                    self.commit()
+                    #now start transfer
+                    self.Q.change_foot_pos(leg, 0, 0, 2, 0)
+                    self.commit()
+                    time.sleep(t)
+                    self.Q.change_foot_pos(leg, 0, y, 0, 0)
+                    self.commit()
+                    time.sleep(t)
+                    self.Q.change_foot_pos(leg, 0, 0, -2, 0)
+                    self.commit()
+                else:
+                    print("{} down failed".format(leg))
+                    self.Q.change_foot_pos(leg, 0, -y, -2, 0) #revert
+            else:
+                print("{} forward failed".format(leg))
+                self.Q.change_foot_pos(leg, 0, 0, -2, 0); #revert
+        else:
+            print("{} up failed".format(leg))
+            
+    def safe_change_all_feet(self, x, y, z):
+        print("change all: x({}) y({}) z({})".format(x,y,z))
+        if self.Q.change_foot_pos(0, x, y, z, 0):
+            if self.Q.change_foot_pos(1, x, y, z, 0):
+                if self.Q.change_foot_pos(2, x, y, z, 0):
+                    if self.Q.change_foot_pos(3, x, y, z, 0):
+                        self.commit();
+                        return True
+                    else:
+                        print("leg 3 failed")
+                        self.Q.change_foot_pos(2, -x, -y, -z, 0)
+                        self.Q.change_foot_pos(1, -x, -y, -z, 0)
+                        self.Q.change_foot_pos(0, -x, -y, -z, 0)
+                        return False
+                else:
+                    print("leg 2 failed")
+                    self.Q.change_foot_pos(1, -x, -y, -z, 0)
+                    self.Q.change_foot_pos(0, -x, -y, -z, 0)
+                    return False
+            else:
+                print("leg 1 failed")
+                self.Q.change_foot_pos(0, -x, -y, -z, 0)
+                return False
+        else:
+            print("leg 0 failed")
+            return False
 
     def apply_config(self):
         for leg in self.config.legs:
@@ -173,5 +237,5 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 0, pivot.rotx)
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 1, pivot.roty)
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
-                self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset, 
+                self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)

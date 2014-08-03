@@ -108,7 +108,7 @@ bool Leg::ChangePivotAngle(int index, double angle) {
   }
 }
 
-// -------------------------------------------------------------SetPivotAngle
+// ----------------------------------------------------------------SetPivotAngle
 /** @brief set the angle of a pivot, false on out of bounds
  *
  * index > kPivotCount returns always false
@@ -145,7 +145,7 @@ bool Leg::ChangeFootPos(double dx, double dy, double dz) {
   UpdateCoM();
   if (r == kMaxIter) {
     return false;
-  } else if (ik_engine_->flag() != InvKinematic::NOTHING_WRONG) {
+  } else if (ik_engine_->flag() == InvKinematic::NOTHING_WRONG) {
     return true;
   } else {
     return false;
