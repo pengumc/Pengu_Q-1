@@ -1,7 +1,7 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device" alt="" coords="284,59,495,88"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_usb_com.html#ae18f4b71ee539643beafa4ac7e057e34" title="accessor for device_servo_angles_" alt="" coords="275,112,504,141"/>
-<area shape="rect" id="node5" href="$group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="552,5,627,35"/>
-<area shape="rect" id="node7" href="$group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="553,59,625,88"/>
-<area shape="rect" id="node9" href="$group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="555,112,624,141"/>
+<map id="Q1::Quadruped::GetDeviceAngles" name="Q1::Quadruped::GetDeviceAngles">
+<area shape="rect" id="node2" href="$class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device " alt="" coords="231,56,437,83"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_usb_com.html#ae18f4b71ee539643beafa4ac7e057e34" title="accessor for device_servo_angles_ " alt="" coords="263,107,405,149"/>
+<area shape="rect" id="node3" href="$group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device. " alt="" coords="485,5,559,32"/>
+<area shape="rect" id="node4" href="$group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred. " alt="" coords="486,56,558,83"/>
+<area shape="rect" id="node5" href="$group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device. " alt="" coords="487,107,557,133"/>
 </map>

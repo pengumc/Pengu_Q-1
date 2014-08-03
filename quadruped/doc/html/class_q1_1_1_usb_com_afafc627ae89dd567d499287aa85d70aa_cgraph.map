@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="217,5,279,35"/>
-<area shape="rect" id="node5" href="$group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="211,59,285,88"/>
+<map id="Q1::UsbCom::Connect" name="Q1::UsbCom::Connect">
+<area shape="rect" id="node2" href="$group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library. " alt="" coords="213,5,275,32"/>
+<area shape="rect" id="node3" href="$group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="207,56,281,83"/>
 </map>

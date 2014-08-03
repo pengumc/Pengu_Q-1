@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_" alt="" coords="119,5,273,35"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12" title="connect to usb device, see UsbCom::Connect for return values" alt="" coords="323,5,531,35"/>
-<area shape="rect" id="node7" href="$namespace_q1.html#a10d778a9d07f2ed87edc8e23e2ee0cc2" title="Q1::QuadrupedConnectDev" alt="" coords="580,5,761,35"/>
+<map id="hid_init" name="hid_init">
+<area shape="rect" id="node2" href="$class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_ " alt="" coords="116,5,269,32"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12" title="connect to usb device, see UsbCom::Connect for return values " alt="" coords="317,5,521,32"/>
+<area shape="rect" id="node4" href="$namespace_q1.html#a10d778a9d07f2ed87edc8e23e2ee0cc2" title="Q1::QuadrupedConnectDev" alt="" coords="569,5,748,32"/>
 </map>

@@ -1,9 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device" alt="" coords="129,59,340,88"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device" alt="" coords="129,112,340,141"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912" title="read device servo angles" alt="" coords="391,5,609,35"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="391,59,609,88"/>
-<area shape="rect" id="node9" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="659,59,853,88"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="399,112,601,141"/>
-<area shape="rect" id="node15" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device" alt="" coords="667,112,845,141"/>
+<map id="hid_write" name="hid_write">
+<area shape="rect" id="node2" href="$class_q1_1_1_usb_com.html#a223a2e49d60e7b815f2a290221c7eaa8" title="read the servo angles from the connected device " alt="" coords="127,71,334,98"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device " alt="" coords="127,122,335,149"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912" title="read device servo angles " alt="" coords="402,5,579,47"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data* " alt="" coords="383,71,599,98"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device " alt="" coords="647,71,837,98"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data " alt="" coords="391,122,591,149"/>
+<area shape="rect" id="node8" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device " alt="" coords="655,122,829,149"/>
 </map>

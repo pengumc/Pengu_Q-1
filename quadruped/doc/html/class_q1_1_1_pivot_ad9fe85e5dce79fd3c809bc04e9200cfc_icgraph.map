@@ -1,9 +1,11 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="256,5,424,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot" alt="" coords="259,59,421,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="491,5,661,35"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="729,5,940,35"/>
-<area shape="rect" id="node9" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="991,5,1193,35"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot" alt="" coords="473,59,679,88"/>
-<area shape="rect" id="node15" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot" alt="" coords="736,59,933,88"/>
+<map id="Q1::Pivot::set_abs_max_angle" name="Q1::Pivot::set_abs_max_angle">
+<area shape="rect" id="node2" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error. " alt="" coords="183,31,347,57"/>
+<area shape="rect" id="node8" href="$class_q1_1_1_leg.html#aa33521b3d85cb50ee85f14d3494abaa5" title="set the offset and rotational angle of a pivot " alt="" coords="185,81,345,108"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin) " alt="" coords="411,31,581,57"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails. COB frame " alt="" coords="645,31,856,57"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#afe7f42bcac629ebe9f6cd9b34f46acf8" title="set x y z for foot. false if IK fails. COB frame " alt="" coords="912,5,1099,32"/>
+<area shape="rect" id="node7" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob* " alt="" coords="904,56,1107,83"/>
+<area shape="rect" id="node6" href="$namespace_q1.html#a230d852197aa359aa3dd7e592952ba45" title="change the foot position of a leg. coords relative to cob* " alt="" coords="1155,5,1333,32"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_quadruped.html#aa70e6aa3a0424a7fbce97b6ba5599e50" title="set the axis, offset and max of a pivot " alt="" coords="395,81,597,108"/>
+<area shape="rect" id="node10" href="$namespace_q1.html#af136515a76262ab305fce6aedc82f07d" title="set the offset and axis of a pivot " alt="" coords="653,81,848,108"/>
 </map>

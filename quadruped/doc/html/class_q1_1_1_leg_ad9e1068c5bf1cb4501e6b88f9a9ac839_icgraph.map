@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="215,5,417,35"/>
-<area shape="rect" id="node5" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device" alt="" coords="467,5,645,35"/>
+<map id="Q1::Leg::GetPivotAngle" name="Q1::Leg::GetPivotAngle">
+<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data " alt="" coords="212,5,412,32"/>
+<area shape="rect" id="node3" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device " alt="" coords="460,5,635,32"/>
 </map>

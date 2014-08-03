@@ -1,9 +1,9 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="233,59,436,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot" alt="" coords="512,19,672,48"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device" alt="" coords="487,99,697,128"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor" alt="" coords="748,5,863,35"/>
-<area shape="rect" id="node11" href="$group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device." alt="" coords="768,59,843,88"/>
-<area shape="rect" id="node13" href="$group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred." alt="" coords="769,112,841,141"/>
-<area shape="rect" id="node15" href="$group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device." alt="" coords="771,165,840,195"/>
+<map id="Q1::QuadrupedSyncToDev" name="Q1::QuadrupedSyncToDev">
+<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data " alt="" coords="228,57,428,84"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot " alt="" coords="501,19,659,45"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_usb_com.html#a6afb0637a0b0ae7656275d3ba18ba6f7" title="write the local servo angles to the device " alt="" coords="476,95,684,121"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_pivot.html#ad4e39b0331dbce046d616ed56cf50f37" title="angle_ accessor " alt="" coords="732,5,847,32"/>
+<area shape="rect" id="node6" href="$group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device. " alt="" coords="753,56,826,83"/>
+<area shape="rect" id="node7" href="$group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred. " alt="" coords="753,107,825,133"/>
+<area shape="rect" id="node8" href="$group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device. " alt="" coords="754,157,825,184"/>
 </map>

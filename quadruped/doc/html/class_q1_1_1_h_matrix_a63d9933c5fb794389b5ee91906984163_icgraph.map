@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_pivot.html#a477a28f847282f5859577d106742cdec" title="Set x y z relative to previous pivot or COB." alt="" coords="184,5,336,35"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#ac9c88deaf1d284e4ffb50a78c2edadfc" title="set the x,y,z coordinates of a pivot h&#45;matrix" alt="" coords="384,5,533,35"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5" title="set the x,y,z coordinates of a pivot of a leg" alt="" coords="583,5,772,35"/>
-<area shape="rect" id="node9" href="$namespace_q1.html#ae8ddde9238ad1f4adeb7d3feb6cdebb6" title="set x y and z coordinates of a pivot" alt="" coords="823,5,1004,35"/>
+<map id="Q1::HMatrix::SetY" name="Q1::HMatrix::SetY">
+<area shape="rect" id="node2" href="$class_q1_1_1_pivot.html#a477a28f847282f5859577d106742cdec" title="Set x y z relative to previous pivot or COB. " alt="" coords="183,5,333,32"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#ac9c88deaf1d284e4ffb50a78c2edadfc" title="set the x,y,z coordinates of a pivot h&#45;matrix " alt="" coords="381,5,528,32"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5" title="set the x,y,z coordinates of a pivot of a leg " alt="" coords="576,5,765,32"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#ae8ddde9238ad1f4adeb7d3feb6cdebb6" title="set x y and z coordinates of a pivot " alt="" coords="813,5,995,32"/>
 </map>

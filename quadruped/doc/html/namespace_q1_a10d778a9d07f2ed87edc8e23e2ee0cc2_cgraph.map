@@ -1,6 +1,6 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12" title="connect to usb device, see UsbCom::Connect for return values" alt="" coords="237,32,445,61"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_" alt="" coords="495,32,649,61"/>
-<area shape="rect" id="node7" href="$group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library." alt="" coords="705,5,767,35"/>
-<area shape="rect" id="node9" href="$group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="699,59,773,88"/>
+<map id="Q1::QuadrupedConnectDev" name="Q1::QuadrupedConnectDev">
+<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#acf08a0cbd663d214dca7f26f12f0dc12" title="connect to usb device, see UsbCom::Connect for return values " alt="" coords="232,31,436,57"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_usb_com.html#afafc627ae89dd567d499287aa85d70aa" title="connect to the first device with vid_ pid_ " alt="" coords="484,31,637,57"/>
+<area shape="rect" id="node4" href="$group___a_p_i.html#ga142ffc1b0b7a7fa412d3862b2a17164b" title="Initialize the HIDAPI library. " alt="" coords="691,5,754,32"/>
+<area shape="rect" id="node5" href="$group___a_p_i.html#gae6910ed9f01c4a99d25539b16800e90c" title="Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally a serial number..." alt="" coords="685,56,760,83"/>
 </map>

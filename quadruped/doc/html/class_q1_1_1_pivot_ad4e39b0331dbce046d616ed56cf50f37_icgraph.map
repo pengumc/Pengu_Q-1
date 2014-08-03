@@ -1,9 +1,11 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error." alt="" coords="171,5,339,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot" alt="" coords="175,59,335,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin)" alt="" coords="404,5,575,35"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails" alt="" coords="641,5,852,35"/>
-<area shape="rect" id="node9" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob*" alt="" coords="903,5,1105,35"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data" alt="" coords="388,59,591,88"/>
-<area shape="rect" id="node15" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device" alt="" coords="657,59,836,88"/>
+<map id="Q1::Pivot::angle" name="Q1::Pivot::angle">
+<area shape="rect" id="node2" href="$class_q1_1_1_inv_kinematic.html#afb0f48a7491e27ec98f4150732019aa5" title="perform steps until error &lt;= max_allowed_error. " alt="" coords="168,31,332,57"/>
+<area shape="rect" id="node8" href="$class_q1_1_1_leg.html#ad9e1068c5bf1cb4501e6b88f9a9ac839" title="get the Pivot::angle_ of a pivot " alt="" coords="171,81,329,108"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin) " alt="" coords="395,31,565,57"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails. COB frame " alt="" coords="628,31,839,57"/>
+<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#afe7f42bcac629ebe9f6cd9b34f46acf8" title="set x y z for foot. false if IK fails. COB frame " alt="" coords="895,5,1081,32"/>
+<area shape="rect" id="node7" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob* " alt="" coords="887,56,1089,83"/>
+<area shape="rect" id="node6" href="$namespace_q1.html#a230d852197aa359aa3dd7e592952ba45" title="change the foot position of a leg. coords relative to cob* " alt="" coords="1137,5,1316,32"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data " alt="" coords="380,81,580,108"/>
+<area shape="rect" id="node10" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device " alt="" coords="646,81,821,108"/>
 </map>

@@ -1,0 +1,3 @@
+<map id="Q1::Quadruped::SetFootPos" name="Q1::Quadruped::SetFootPos">
+<area shape="rect" id="node2" href="$namespace_q1.html#a230d852197aa359aa3dd7e592952ba45" title="change the foot position of a leg. coords relative to cob* " alt="" coords="240,5,419,32"/>
+</map>

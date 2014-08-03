@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$usbcom_8h.html" title="include/usbcom.h" alt="" coords="113,83,236,112"/>
-<area shape="rect" id="node13" href="$hidapi_8h.html" title="include/hidapi.h" alt="" coords="317,160,429,189"/>
+<map id="src/usbcom.cpp" name="src/usbcom.cpp">
+<area shape="rect" id="node2" href="$usbcom_8h.html" title="include/usbcom.h" alt="" coords="115,80,239,107"/>
+<area shape="rect" id="node7" href="$hidapi_8h.html" title="include/hidapi.h" alt="" coords="322,155,434,181"/>
 </map>

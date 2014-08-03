@@ -18,6 +18,7 @@ var class_q1_1_1_h_matrix =
     [ "parent", "class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c", null ],
     [ "RotateVector", "class_q1_1_1_h_matrix.html#abb08d23d043fc373b0cca8231e872739", null ],
     [ "SelfDot", "class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab", null ],
+    [ "SelfDotScaled", "class_q1_1_1_h_matrix.html#a8ea0638a225b67cef09917d7df937cb9", null ],
     [ "set_array", "class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516", null ],
     [ "set_parent", "class_q1_1_1_h_matrix.html#ad3b15380e0bee5f4167676006e4749b7", null ],
     [ "SetX", "class_q1_1_1_h_matrix.html#afd59639799e92c0f173a992e764c193d", null ],

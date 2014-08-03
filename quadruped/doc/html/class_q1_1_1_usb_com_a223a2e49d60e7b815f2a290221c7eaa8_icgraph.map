@@ -1,5 +1,5 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912" title="read device servo angles" alt="" coords="268,5,487,35"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data*" alt="" coords="268,59,487,88"/>
-<area shape="rect" id="node7" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device" alt="" coords="536,59,731,88"/>
+<map id="Q1::UsbCom::ReadServoAngles" name="Q1::UsbCom::ReadServoAngles">
+<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#a857cfcdede41228f027ae00601c96912" title="read device servo angles " alt="" coords="279,5,457,47"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data* " alt="" coords="260,71,476,98"/>
+<area shape="rect" id="node4" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device " alt="" coords="524,71,715,98"/>
 </map>

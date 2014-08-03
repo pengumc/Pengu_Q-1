@@ -1,4 +1,19 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob." alt="" coords="277,5,541,35"/>
-<area shape="rect" id="node5" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob" alt="" coords="591,5,815,35"/>
+<map id="Q1::Leg::GetRelativeHMatrixArray" name="Q1::Leg::GetRelativeHMatrixArray">
+<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#acfbdcdf0b2166cad207206fb747e1b97" title="combined mass of the pivots (relative) " alt="" coords="260,123,404,149"/>
+<area shape="rect" id="node14" href="$class_q1_1_1_quadruped.html#afe7f42bcac629ebe9f6cd9b34f46acf8" title="set x y z for foot. false if IK fails. COB frame " alt="" coords="973,224,1160,251"/>
+<area shape="rect" id="node17" href="$class_q1_1_1_quadruped.html#ab0073c01152200c60b40a95d47a6211d" title="return the hmatrix values for a hmatrix (pivot or foot) of a leg relative to cob. ..." alt="" coords="240,275,424,317"/>
+<area shape="rect" id="node3" href="$class_q1_1_1_leg.html#ac9c88deaf1d284e4ffb50a78c2edadfc" title="set the x,y,z coordinates of a pivot h&#45;matrix " alt="" coords="489,12,636,39"/>
+<area shape="rect" id="node6" href="$class_q1_1_1_leg.html#a727c825c15bcec6bba78b32a8846f1ae" title="change the angle of a pivot, false on out of bounds " alt="" coords="472,68,653,95"/>
+<area shape="rect" id="node9" href="$class_q1_1_1_leg.html#a8e7f2ca18e2a374b361b902d3197ec3a" title="set the angle of a pivot, false on out of bounds " alt="" coords="484,123,641,149"/>
+<area shape="rect" id="node12" href="$class_q1_1_1_leg.html#a7a136590fd15991b09a9e4b82a29e2b7" title="change the position of a foot (relative to Origin) " alt="" coords="478,173,647,200"/>
+<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#a63202be9738aa453d810c919af9421a5" title="set the x,y,z coordinates of a pivot of a leg " alt="" coords="715,5,904,32"/>
+<area shape="rect" id="node5" href="$namespace_q1.html#ae8ddde9238ad1f4adeb7d3feb6cdebb6" title="set x y and z coordinates of a pivot " alt="" coords="976,5,1157,32"/>
+<area shape="rect" id="node7" href="$class_q1_1_1_quadruped.html#aeb5e2843c9f8d835f1f6698d7e46baac" title="change a pivots angle, false on out of bounds " alt="" coords="714,57,905,98"/>
+<area shape="rect" id="node8" href="$namespace_q1.html#a314ba6190999333b7f2aa7ced38f5d52" title="change the angle of a pivot, false on out of range " alt="" coords="975,57,1158,98"/>
+<area shape="rect" id="node10" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data* " alt="" coords="701,123,917,149"/>
+<area shape="rect" id="node11" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device " alt="" coords="971,123,1162,149"/>
+<area shape="rect" id="node13" href="$class_q1_1_1_quadruped.html#ae9ad6623e21a8e919a1f9b3949e95c4f" title="change the position of a foot, false if IK fails. COB frame " alt="" coords="704,173,915,200"/>
+<area shape="rect" id="node16" href="$namespace_q1.html#aa3e929f2a0ba798ecef95057525ff5fb" title="change the foot position of a leg. coords relative to cob* " alt="" coords="965,173,1168,200"/>
+<area shape="rect" id="node15" href="$namespace_q1.html#a230d852197aa359aa3dd7e592952ba45" title="change the foot position of a leg. coords relative to cob* " alt="" coords="1216,224,1395,251"/>
+<area shape="rect" id="node18" href="$namespace_q1.html#ab768d94065e7368ab00f8b479a9a5682" title="get the values of a hmatrix relative to the cob " alt="" coords="475,275,651,317"/>
 </map>

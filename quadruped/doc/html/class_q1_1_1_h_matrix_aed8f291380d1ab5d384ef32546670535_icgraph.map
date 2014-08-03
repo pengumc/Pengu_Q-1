@@ -1,0 +1,4 @@
+<map id="Q1::HMatrix::Clear" name="Q1::HMatrix::Clear">
+<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#aa2d9f78760b9eb38af80d638c8727c58" title="returns the center of mass position as HMatrix relative to world? " alt="" coords="184,5,351,32"/>
+<area shape="rect" id="node3" href="$namespace_q1.html#a6cbb1ff8028030fc64604f5bac96738d" title="returns the CoM as hmatrix values " alt="" coords="399,5,557,32"/>
+</map>

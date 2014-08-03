@@ -12,8 +12,10 @@ var class_q1_1_1_pivot =
     [ "H_frame", "class_q1_1_1_pivot.html#aaefb0b7082ce2b0527853c7134b3e1a8", null ],
     [ "H_framep", "class_q1_1_1_pivot.html#a8b91bfdf3ea8c4bc5bfbd5ff5cb4d832", null ],
     [ "IsInRange", "class_q1_1_1_pivot.html#a16a5314d845a70cd987ebf355d9129fc", null ],
+    [ "mass", "class_q1_1_1_pivot.html#a9b67c7ba64af38757906fc23e8cab0a6", null ],
     [ "set_abs_max_angle", "class_q1_1_1_pivot.html#ad9fe85e5dce79fd3c809bc04e9200cfc", null ],
     [ "set_angle", "class_q1_1_1_pivot.html#a60d55a74803580e06286054136baca7c", null ],
+    [ "set_mass", "class_q1_1_1_pivot.html#aeca1f2b3efe4eeb2e6543e4ede8632c1", null ],
     [ "set_offset_angle", "class_q1_1_1_pivot.html#a3fae57fbaad804ed78c1ee1655980839", null ],
     [ "set_parent", "class_q1_1_1_pivot.html#ac9fbac905dff9a2126be535a5a8b6275", null ],
     [ "SetPosition", "class_q1_1_1_pivot.html#a477a28f847282f5859577d106742cdec", null ],
@@ -22,5 +24,6 @@ var class_q1_1_1_pivot =
     [ "angle_", "class_q1_1_1_pivot.html#adac8beaa0cf9eeae1160747f3c75e52a", null ],
     [ "H_frame_", "class_q1_1_1_pivot.html#ade866b561bf0d99bf4439cb5b4b7477d", null ],
     [ "H_rel_", "class_q1_1_1_pivot.html#a6d9a3e8e9140fd2bb9b43fda4ba3c976", null ],
+    [ "mass_", "class_q1_1_1_pivot.html#ab72ad906eb4900b1383c8ef3eda7bb97", null ],
     [ "offset_angle_", "class_q1_1_1_pivot.html#a92403c8a3019e211d424aca86d7e6edb", null ]
 ];

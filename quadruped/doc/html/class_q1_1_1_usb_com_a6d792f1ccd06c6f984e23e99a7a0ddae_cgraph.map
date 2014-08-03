@@ -1,4 +1,4 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$group___a_p_i.html#ga9b64828273b8dd052731e79ba9e1a516" title="Close a HID device." alt="" coords="221,5,299,35"/>
-<area shape="rect" id="node5" href="$group___a_p_i.html#gacf5da9ce37132eba69fc259f17f13023" title="Finalize the HIDAPI library." alt="" coords="227,59,293,88"/>
+<map id="Q1::UsbCom::~UsbCom" name="Q1::UsbCom::~UsbCom">
+<area shape="rect" id="node2" href="$group___a_p_i.html#ga9b64828273b8dd052731e79ba9e1a516" title="Close a HID device. " alt="" coords="216,5,293,32"/>
+<area shape="rect" id="node3" href="$group___a_p_i.html#gacf5da9ce37132eba69fc259f17f13023" title="Finalize the HIDAPI library. " alt="" coords="221,56,288,83"/>
 </map>
