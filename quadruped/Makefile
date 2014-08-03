@@ -10,13 +10,13 @@ TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 LIBNAME = $(NAME).dll
 EXT = .exe
-CLIBS = -L$(TARGETDIR) -lhidapi
+CLIBS = -L$(TARGETDIR) -lhidapi -static-libgcc -static-libstdc++
 CLIBS_TEST = $(CLIBS) -l$(NAME)
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
 	LIBNAME = lib$(NAME).so
 	EXT = 
-	CLIBS = -L$(TARGETDIR) -lhidapi-libusb -lusb-1.0
+	CLIBS = -L$(TARGETDIR) -lhidapi-libusb -lusb-1.0 -static-libgcc -static-libstdc++
 	CLIBS_TEST = $(CLIBS) -l$(NAME)
 endif
 CC = gcc

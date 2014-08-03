@@ -156,4 +156,10 @@ extern "C" bool QuadrupedSyncFromDev(Quadruped* q) {
   return q->SyncFromDevice();
 }
 
+// --------------------------------------------------------------QuadrupedGetCoM
+/** @brief returns the CoM as hmatrix values*/
+extern "C" const double* QuadrupedGetCoM(Quadruped* q) {
+  return q->GetCoM();
+}
+
 }  // namespace Q1

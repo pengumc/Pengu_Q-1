@@ -65,6 +65,7 @@ class HMatrix {
   void Copy(HMatrix src);
   HMatrix Dot(HMatrix right);
   void SelfDot(HMatrix right);
+  void SelfDotScaled(HMatrix right, double factor);
   HMatrix Inverse();
   void CounterRotateVector(const double* vector, double* vector_out);
   void RotateVector(const double* vector, double* vector_out);

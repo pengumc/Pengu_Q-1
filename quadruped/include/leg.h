@@ -13,7 +13,7 @@
 namespace Q1 {
 
 /** @brief represents a leg of the quadruped
- * 
+ *
  * transform tree:<br>
  * H_0_cob -- pivots_[0] -- pivots_[1] -- pivots_[2] -- foot_<br>
  */
@@ -26,6 +26,7 @@ class Leg {
   explicit Leg(uint8_t index, HMatrix* H_cob);
   ~Leg();
   // functions
+  double get_total_mass();
   const double* GetHMatrixArray(int index);
   const double* GetRelativeHMatrixArray(int index);
   void SetPivotPos(int index, double x, double y, double z);
@@ -35,12 +36,17 @@ class Leg {
   bool SetPivotAngle(int index, double angle);
   double GetPivotAngle(int index);
   bool ChangeFootPos(double dx, double dy, double dz);
+  HMatrix GetCoM();
 
  private:
   uint8_t index_;/**< @brief index of the leg (0..3)*/
   Pivot* pivots_[kPivotCount];/**< @brief pivots in the leg (excl foot)*/
   Pivot* foot_;/**< @brief pivot for the foot*/
   InvKinematic* ik_engine_;/**< @brief the inverse kinematics engine*/
+  HMatrix H_com_;/**<@brief (absolute) position of center of mass of the leg*/
+  double total_mass_;/**@brief combined mass of the pivots (relative)*/
+  // functions
+  void UpdateCoM();
 };
 
 }  // namespace Q1

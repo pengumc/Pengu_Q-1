@@ -64,7 +64,7 @@ void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
-/** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg 
+/** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg
  * relative to cob.*/
 const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
                                                  int pivot_index) {
@@ -121,7 +121,7 @@ const double* Quadruped::GetDeviceAngles() {
 
 // ---------------------------------------------------------------SyncFromDevice
 /** @brief update everything to match the currect device data*
- * 
+ *
  * @return 1 on failure, 0 on success
  */
 bool Quadruped::SyncFromDevice() {
@@ -141,7 +141,7 @@ bool Quadruped::SyncFromDevice() {
 // -----------------------------------------------------------------SyncToDevice
 /** @brief update everything on the device to match the local data*/
 bool Quadruped::SyncToDevice() {
-    double angles[UsbCom::kDeviceServoCount];
+  double angles[UsbCom::kDeviceServoCount];
   for (int l = 0; l < kLegCount; ++l) {
     for (int i = 0; i < Leg::kPivotCount; ++i) {
       angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
@@ -151,6 +151,25 @@ bool Quadruped::SyncToDevice() {
     return false;
   }
   return true;
+}
+
+// -----------------------------------------------------------------------GetCoM
+/** @brief returns the center of mass position as HMatrix relative to world?
+ *
+ * The xy-plane (of the origin frame) is assumed to be normal to gravity
+ */
+const double* Quadruped::GetCoM() {
+  double total_mass = 0.0;
+  double m_l;
+  HMatrix unwweighted;
+  for (int l = 0; l < kLegCount; ++l) {
+    m_l = legs_[l]->get_total_mass();
+    total_mass = total_mass + m_l;
+    unwweighted.SelfDotScaled(legs_[l]->GetCoM(), m_l);
+  }
+  H_com_.Clear();
+  H_com_.SelfDotScaled(unwweighted, 1.0 / total_mass);
+  return H_com_.array();
 }
 
 }  // namespace Q1

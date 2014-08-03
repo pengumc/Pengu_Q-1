@@ -54,6 +54,7 @@ void Leg::SetPivotPos(int index, double x, double y, double z) {
   } else if (index == kPivotCount) {
     foot_->SetPosition(x, y, z);
   }
+  UpdateCoM();
 }
 
 // ------------------------------------------------------------ConfigurePivotRot
@@ -94,12 +95,13 @@ void Leg::SetPivotConfig(int index, double offset, double abs_max) {
 
 // -------------------------------------------------------------ChangePivotAngle
 /** @brief change the angle of a pivot, false on out of bounds
- * 
+ *
  * index > kPivotCount returns always false
  */
 bool Leg::ChangePivotAngle(int index, double angle) {
   if (index < kPivotCount) {
     pivots_[index]->ChangeAngle(angle);
+    UpdateCoM();
     return true;
   } else {
     return false;
@@ -108,12 +110,13 @@ bool Leg::ChangePivotAngle(int index, double angle) {
 
 // -------------------------------------------------------------SetPivotAngle
 /** @brief set the angle of a pivot, false on out of bounds
- * 
+ *
  * index > kPivotCount returns always false
  */
 bool Leg::SetPivotAngle(int index, double angle) {
   if (index < kPivotCount) {
     pivots_[index]->set_angle(angle);
+    UpdateCoM();
     return true;
   } else {
     return false;
@@ -123,7 +126,7 @@ bool Leg::SetPivotAngle(int index, double angle) {
 
 // ----------------------------------------------------------------GetPivotAngle
 /** @brief get the \ref Pivot::angle_ of a pivot
- * 
+ *
  * @param index the index of the pivot
  */
 double Leg::GetPivotAngle(int index) {
@@ -139,6 +142,7 @@ bool Leg::ChangeFootPos(double dx, double dy, double dz) {
     dy + H_0_s[HMatrix::kY],
     dz + H_0_s[HMatrix::kZ]);
   int r = ik_engine_->Iterate(kMaxIter);
+  UpdateCoM();
   if (r == kMaxIter) {
     return false;
   } else if (ik_engine_->flag() != InvKinematic::NOTHING_WRONG) {
@@ -146,6 +150,45 @@ bool Leg::ChangeFootPos(double dx, double dy, double dz) {
   } else {
     return false;
   }
+}
+
+// --------------------------------------------------------------------UpdateCoM
+/** @brief recalculates the center of mass and updates \ref H_com_ 
+ *
+ */
+void Leg::UpdateCoM() {
+  // position of center of mass = 1 / total_mass * sum(position[i] * mass[i])
+  double m_i;
+  const double* H;
+  double x = 0.0;
+  double y = 0.0;
+  double z = 0.0;
+  total_mass_ = 0.0;
+
+  for (int i = 0; i < kPivotCount; ++i) {
+    m_i = pivots_[i]->mass();
+    H = GetRelativeHMatrixArray(i);  // everything in 0 frame
+    x = x + H[HMatrix::kX] * m_i;
+    y = y + H[HMatrix::kY] * m_i;
+    z = z + H[HMatrix::kZ] * m_i;  // TODO(michiel): Z axis is not needed?
+    total_mass_ = total_mass_ + m_i;
+  }
+  H_com_ = HMatrix(x / total_mass_, y / total_mass_, z / total_mass_);
+}
+
+
+// -----------------------------------------------------------------------GetCoM
+/** @brief Get the latest \ref H_cob_com for this leg. use \ref UpdateCoM to
+ *  recalculte.
+ */
+HMatrix Leg::GetCoM() {
+  return H_com_;
+}
+
+// ---------------------------------------------------------------get_total_mass
+/** @brief accessor for \ref total_mass_ */
+double Leg::get_total_mass() {
+  return total_mass_;
 }
 
 }  // namespace Q1
