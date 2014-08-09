@@ -127,12 +127,12 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = math.cos(math.pi/4) * (3.6+6.8) +5.37
-                print "all feet at {}, -10".format(d)
-                self.Q.set_foot_pos(0, d, d, -11)
-                self.Q.set_foot_pos(1, -d, d, -11)
-                self.Q.set_foot_pos(2, -d, -d, -11)
-                self.Q.set_foot_pos(3, d, -d, -11)
+                d = math.cos(math.pi/4) * (3.6+6.8) +4
+                print "all feet at {}, -11".format(d)
+                self.Q.set_foot_pos(0, d, d+2, -11)
+                self.Q.set_foot_pos(1, -d, d+2, -11)
+                self.Q.set_foot_pos(2, -d, -d-2, -11)
+                self.Q.set_foot_pos(3, d, -d-2, -11)
             elif c == '-':
                 self.safe_change_all_feet(0, 0, -0.1)
             elif c == '+':

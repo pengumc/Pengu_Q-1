@@ -1,7 +1,7 @@
 <quadruped>
     <leg id="0">
         <pivot id="0" rotx="0" roty="0" rotz=".78539816339" offset="0.0" abs_max="0.52359877559">
-            <pos x="5.37" y="5.37" z="0.0"/>
+            <pos x="3.8" y="5.8" z="0.0"/>
         </pivot>
         <!-- pivot one is defined mirrored in its own z because its frame is the horn instead of the servo body -->
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="-0.11" abs_max="0.52359877559">
@@ -16,7 +16,7 @@
     </leg>
     <leg id="1">
         <pivot id="0" rotx="0" roty="0" rotz="2.35619449019" offset="0.0" abs_max="0.52359877559">
-            <pos x="-5.37" y="5.37" z="0.0"/>
+            <pos x="-3.8" y="5.8" z="0.0"/>
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="0.06" abs_max="0.52359877559">
             <pos x="3.6" y="0" z="0"/>
@@ -30,7 +30,7 @@
     </leg>
     <leg id="2">
         <pivot id="0" rotx="0" roty="0" rotz="-2.35619449019" offset="0.0" abs_max="0.52359877559">
-            <pos x="-5.37" y="-5.37" z="0.0"/>
+            <pos x="-3.8" y="-5.8" z="0.0"/>
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="0.03" abs_max="0.52359877559">
             <pos x="3.6" y="0" z="0"/>
@@ -44,7 +44,7 @@
     </leg>
     <leg id="3">
         <pivot id="0" rotx="0" roty="0" rotz="-.78539816339" offset="0.0" abs_max="0.52359877559">
-            <pos x="5.37" y="-5.37" z="0.0"/>
+            <pos x="3.8" y="-5.8" z="0.0"/>
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="-0.08" abs_max="0.52359877559">
             <pos x="3.6" y="0" z="0"/>
