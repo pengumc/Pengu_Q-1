@@ -24,6 +24,12 @@ Quadruped::~Quadruped() {
   delete gaitgenerator_;
 }
 
+// --------------------------------------------------------------set_gg_velocity
+/** @brief set the CoB velocity for the gaitgenerator*/
+void Quadruped::set_gg_velocity(const double* velocity_vector) {
+  gaitgenerator_->set_velocity(velocity_vector);
+}
+
 // ----------------------------------------------------------------set_gg_config
 /** @brief mutator for \ref gg_config 
  *
@@ -35,6 +41,7 @@ void Quadruped::set_gg_config(gaitgenerator_configuration config) {
   gaitgenerator_->set_transfer_speeds(gg_config_.transfer_speeds);
   gaitgenerator_->set_ASM_min(gg_config_.ASM_min);
   gaitgenerator_->set_ground_clearance(gg_config_.ground_clearance);
+  gaitgenerator_->set_search_width(gg_config_.search_width);
 }
 
 
@@ -255,6 +262,12 @@ const double* Quadruped::GetCoM() {
   gaitgenerator_->set_H_cob_com(H_cob_com.array());
   
   return H_com_.array();
+}
+
+// ------------------------------------------------------------------------GetKM
+/** @brief returns the kinematic margin of a leg*/
+double Quadruped::GetKM(int leg_index) {
+  return gaitgenerator_->CalculateKMForLeg(leg_index+1);
 }
 
 }  // namespace Q1

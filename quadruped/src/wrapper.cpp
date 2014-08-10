@@ -164,13 +164,14 @@ extern "C" const double* QuadrupedGetCoM(Quadruped* q) {
 
 // ---------------------------------------------------------QuadrupedSetGGConfig
 /** @brief calls \ref Quadruped::set_gg_config with the supplied values*/
-extern "C" void QuadrupedSetReacableSectorRadius(Quadruped* q, 
+extern "C" void QuadrupedSetGGConfig(Quadruped* q, 
                                                  double reachable_sector_radius,
                                                  double transfer_speed1,
                                                  double transfer_speed2,
                                                  double transfer_speed3,
                                                  double ASM_min,
-                                                 double ground_clearance) {
+                                                 double ground_clearance,
+                                                 double search_width) {
   Quadruped::gaitgenerator_configuration config;
   config.reachable_sector_radius = reachable_sector_radius;
   config.transfer_speeds[0] = transfer_speed1;
@@ -178,7 +179,14 @@ extern "C" void QuadrupedSetReacableSectorRadius(Quadruped* q,
   config.transfer_speeds[2] = transfer_speed3;
   config.ASM_min = ASM_min;
   config.ground_clearance = ground_clearance;
+  config.search_width = search_width;
   q->set_gg_config(config);
+}
+
+// ---------------------------------------------------------------QuadrupedGetKM
+/** @brief calls \ref Quadruped::GetKM */
+extern "C" double QuadrupedGetKM(Quadruped* q, int leg_index) {
+  return q->GetKM(leg_index);
 }
 
 }  // namespace Q1

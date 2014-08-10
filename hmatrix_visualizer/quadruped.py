@@ -9,11 +9,12 @@ class Quadruped:
         self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetCoM.restype = POINTER(c_double)
-        self.lib.QuadrupedChangePivotAngle.restype = c_bool;
-        self.lib.QuadrupedChangeFootPos.restype = c_bool;
-        self.lib.QuadrupedSetFootPos.restype = c_bool;
-        self.lib.QuadrupedSyncToDev.restype = c_bool;
-        self.lib.QuadrupedSyncFromDev.restype = c_bool;
+        self.lib.QuadrupedChangePivotAngle.restype = c_bool
+        self.lib.QuadrupedChangeFootPos.restype = c_bool
+        self.lib.QuadrupedSetFootPos.restype = c_bool
+        self.lib.QuadrupedSyncToDev.restype = c_bool
+        self.lib.QuadrupedSyncFromDev.restype = c_bool
+        self.lib.QuadrupedGetKM.restype = c_double
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -78,3 +79,14 @@ class Quadruped:
 
     def sync_to_device(self):
         return self.lib.QuadrupedSyncToDev(self.q)
+
+    def get_KM(self, leg):
+        return self.lib.QuadrupedGetKM(self.q, leg)
+        
+    def set_gg_config(self, HLlength, speed1, speed2, speed3, ASM_min,
+                      ground_clearance, search_width):
+        self.lib.QuadrupedSetGGConfig(self.q, c_double(HLlength),
+                                      c_double(speed1), c_double(speed2),
+                                      c_double(speed3),
+                                      c_double(ground_clearance),
+                                      c_double(search_width))

@@ -139,7 +139,7 @@ class KeyboardThread (threading.Thread):
             elif c == '+':
                 self.safe_change_all_feet(0, 0, +0.1)
             elif c == 'f':
-                self.transfer_leg(leg, -2)
+                print("KM 1: {}".format(self.Q.get_KM(0)))
             elif c == 'g':
                 size = 0.5
                 t = 0
@@ -231,6 +231,16 @@ class KeyboardThread (threading.Thread):
             return False
 
     def apply_config(self):
+        #gaitgenerator
+        self.Q.set_gg_config(
+            self.config.reachable_sector_radius,
+            self.config.transfer_speeds[0],
+            self.config.transfer_speeds[1],
+            self.config.transfer_speeds[2],
+            self.config.ASM_min,
+            self.config.ground_clearance,
+            self.config.search_width)
+        #mechanical
         for leg in self.config.legs:
             for pivot in leg.pivots:
                 self.Q.set_pivot_pos(leg.id, pivot.id, pivot.x, pivot.y,

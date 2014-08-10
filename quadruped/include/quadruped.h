@@ -29,6 +29,7 @@ class Quadruped {
     double transfer_speeds[3];
     double ASM_min;
     double ground_clearance;
+    double search_width;
   } gaitgenerator_configuration;
   // con/destructors
   Quadruped();
@@ -36,6 +37,7 @@ class Quadruped {
   // functions
   void set_reachable_sector_radius(double value);
   void set_gg_config(gaitgenerator_configuration config);
+  void set_gg_velocity(const double* velocity_vector);
   const double* GetHMatrixArrayByIndex(int index);
   const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
@@ -53,6 +55,7 @@ class Quadruped {
   const double* GetDeviceAngles();
   bool SyncToDevice();
   bool SyncFromDevice();
+  double GetKM(int leg_index);
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
