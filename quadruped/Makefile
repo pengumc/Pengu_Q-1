@@ -10,7 +10,7 @@ TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 LIBNAME = $(NAME).dll
 EXT = .exe
-CLIBS = -L$(TARGETDIR) -lhidapi -static-libgcc -static-libstdc++
+CLIBS = -L$(TARGETDIR) -lhidapi -lrose_gait_generator -static-libgcc -static-libstdc++
 CLIBS_TEST = $(CLIBS) -l$(NAME)
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC

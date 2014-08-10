@@ -29,6 +29,7 @@ class KeyboardThread (threading.Thread):
         print("Using library: {}".format(libpath))
         self.Q = quadruped.Quadruped(libpath)
         #configfile
+        print("configuring...")
         self.config = configuration.Configuration("config.xml")
         self.connected = False
 

@@ -12,6 +12,7 @@ Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
     legs_[i] = new Leg(i, &H_cob_);
   }
+  gaitgenerator_ = new ROGG::GaitGenerator();
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -20,7 +21,22 @@ Quadruped::~Quadruped() {
   for (int i = 0; i < kLegCount; ++i) {
     delete legs_[i];
   }
+  delete gaitgenerator_;
 }
+
+// ----------------------------------------------------------------set_gg_config
+/** @brief mutator for \ref gg_config 
+ *
+ * 
+ */
+void Quadruped::set_gg_config(gaitgenerator_configuration config) {
+  gg_config_ = config;
+  SetGaitgeneratorHL(legs_[0]->GetPivotAbsMaxAngle(0)); // HL should update
+  gaitgenerator_->set_transfer_speeds(gg_config_.transfer_speeds);
+  gaitgenerator_->set_ASM_min(gg_config_.ASM_min);
+  gaitgenerator_->set_ground_clearance(gg_config_.ground_clearance);
+}
+
 
 // -------------------------------------------------------GetHMatrixArrayByIndex
 /** @brief returns the \ref HMatrix::array_ of the HMatrix at index
@@ -54,13 +70,43 @@ const double* Quadruped::GetEndpoint(int index) {
 void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
                             double z) {
   legs_[leg_index]->SetPivotPos(pivot_index, x, y, z);
+  // if it's the foot, update the gaitgenerator as well
+  if (pivot_index == Leg::kPivotCount) {
+    SetGaitgeneratorFoot(leg_index);
+  }
+  //if it's pivot 0:
+  if (pivot_index == 0) {
+    HMatrix H_cob_pivot0 = H_cob_.Dot(
+      HMatrix(legs_[leg_index]->GetRelativeHMatrixArray(0)));
+    gaitgenerator_->SetLegPivot0(leg_index+1, H_cob_pivot0.array());
+  }
 }
+
+
+// ---------------------------------------------------------SetGaitgeneratorFoot
+/** @brief update the foot position in the gaitgenerator*/
+void Quadruped::SetGaitgeneratorFoot(int index) {
+  // gaitgenerator takes H_pivot0_P#
+  gaitgenerator_->SetLegP(
+    index+1,
+    legs_[index]->GetRelativeHMatrix(0, Leg::kPivotCount).array()
+  );
+}
+
 
 // ------------------------------------------------------------ConfigurePivotRot
 /** @brief modify R of a pivot while keeping Pivot::angle_ the same*/
 void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
                                   double angle) {
   legs_[leg_index]->ConfigurePivotRot(pivot_index, axis, angle);
+  if (pivot_index == 0) {
+    // if it's pivot 0, the gaitgenerator also needs to be in on it
+    HMatrix H_cob_pivot0 = H_cob_.Dot(
+      HMatrix(legs_[leg_index]->GetRelativeHMatrixArray(0)));
+    gaitgenerator_->SetLegPivot0(leg_index+1, H_cob_pivot0.array());
+  }
+  // TODO(michiel): technically if the foot changes, the gaitgenerator
+  // also needs to know
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
@@ -76,20 +122,47 @@ const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
 void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
                                double abs_max) {
   legs_[leg_index]->SetPivotConfig(pivot_index, offset, abs_max);
+  if (pivot_index == 0) {
+    // TODO(michiel): update gaitgenerator HL on pivot 0
+    // if it's pivot 0, then the gaitgenerator needs HL updated
+    SetGaitgeneratorHL(abs_max);
+  }
 }
+
+// -----------------------------------------------------------SetGaitgeneratorHL
+/** @brief set HL in the gaitgenerator*/
+void Quadruped::SetGaitgeneratorHL(double abs_max) {
+  // HL1 is at angle -abs_max, HL2 with +abs_max
+  HMatrix HL(gg_config_.reachable_sector_radius, 0.0, 0.0);
+  gaitgenerator_->set_HL1(
+    HL.Dot(HMatrix(Z_AXIS, -abs_max)).array());
+  gaitgenerator_->set_HL2(
+    HL.Dot(HMatrix(Z_AXIS, +abs_max)).array());
+}
+
 
 // -------------------------------------------------------------ChangePivotAngle
 /** @brief change a pivots angle, false on out of bounds*/
 bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
                                   double angle) {
-  return legs_[leg_index]->ChangePivotAngle(pivot_index, angle);
+  if (legs_[leg_index]->ChangePivotAngle(pivot_index, angle)) {
+    SetGaitgeneratorFoot(leg_index);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
-  return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+  if (legs_[leg_index]->ChangeFootPos(dx, dy, dz)) {
+    SetGaitgeneratorFoot(leg_index);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // -------------------------------------------------------------------SetFootPos
@@ -100,7 +173,12 @@ bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   const double dx = x - H[HMatrix::kX];
   const double dy = y - H[HMatrix::kY];
   const double dz = z - H[HMatrix::kZ];
-  return ChangeFootPos(leg_index, dx, dy, dz);
+  if (ChangeFootPos(leg_index, dx, dy, dz)) {
+    SetGaitgeneratorFoot(leg_index);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // ----------------------------------------------------------------ConnectDevice
@@ -134,6 +212,7 @@ bool Quadruped::SyncFromDevice() {
       legs_[l]->SetPivotAngle(i, angles[l*Leg::kPivotCount + i]);
       printf("%.3f\n", angles[l*Leg::kPivotCount + i]);
     }
+    SetGaitgeneratorFoot(l);
   }
   return true;
 }
@@ -154,9 +233,10 @@ bool Quadruped::SyncToDevice() {
 }
 
 // -----------------------------------------------------------------------GetCoM
-/** @brief returns the center of mass position as HMatrix relative to world?
+/** @brief returns the center of mass position as HMatrix relative to world
  *
- * The xy-plane (of the origin frame) is assumed to be normal to gravity
+ * The xy-plane (of the origin frame) is assumed to be normal to gravity\n
+ * Also updates the CoM in the gaitgenerator
  */
 const double* Quadruped::GetCoM() {
   double total_mass = 0.0;
@@ -169,6 +249,11 @@ const double* Quadruped::GetCoM() {
   }
   H_com_.Clear();
   H_com_.SelfDotScaled(unwweighted, 1.0 / total_mass);
+  // gaitgenerator uses H_cob_com = H_cob_0 * H_0_com
+  HMatrix H_cob_com = H_cob_.Inverse();
+  H_cob_com.SelfDot(H_com_);
+  gaitgenerator_->set_H_cob_com(H_cob_com.array());
+  
   return H_com_.array();
 }
 

@@ -157,9 +157,28 @@ extern "C" bool QuadrupedSyncFromDev(Quadruped* q) {
 }
 
 // --------------------------------------------------------------QuadrupedGetCoM
-/** @brief returns the CoM as hmatrix values*/
+/** @brief calls \ref Quadruped::GetCoM */
 extern "C" const double* QuadrupedGetCoM(Quadruped* q) {
   return q->GetCoM();
+}
+
+// ---------------------------------------------------------QuadrupedSetGGConfig
+/** @brief calls \ref Quadruped::set_gg_config with the supplied values*/
+extern "C" void QuadrupedSetReacableSectorRadius(Quadruped* q, 
+                                                 double reachable_sector_radius,
+                                                 double transfer_speed1,
+                                                 double transfer_speed2,
+                                                 double transfer_speed3,
+                                                 double ASM_min,
+                                                 double ground_clearance) {
+  Quadruped::gaitgenerator_configuration config;
+  config.reachable_sector_radius = reachable_sector_radius;
+  config.transfer_speeds[0] = transfer_speed1;
+  config.transfer_speeds[1] = transfer_speed2;
+  config.transfer_speeds[2] = transfer_speed3;
+  config.ASM_min = ASM_min;
+  config.ground_clearance = ground_clearance;
+  q->set_gg_config(config);
 }
 
 }  // namespace Q1

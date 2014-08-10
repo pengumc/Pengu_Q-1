@@ -9,6 +9,7 @@
 
 #include <cstddef>
 
+#include "include/rogg/gaitgenerator.h"
 #include "include/leg.h"
 #include "include/hmatrix.h"
 #include "include/usbcom.h"
@@ -22,10 +23,19 @@ class Quadruped {
  public:
   // constants
   static const int kLegCount = 4;
+  // typedefs
+  typedef struct {
+    double reachable_sector_radius;///< length of HL in gaitgenerator.
+    double transfer_speeds[3];
+    double ASM_min;
+    double ground_clearance;
+  } gaitgenerator_configuration;
   // con/destructors
   Quadruped();
   ~Quadruped();
   // functions
+  void set_reachable_sector_radius(double value);
+  void set_gg_config(gaitgenerator_configuration config);
   const double* GetHMatrixArrayByIndex(int index);
   const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
@@ -49,6 +59,10 @@ class Quadruped {
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
   HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
+  ROGG::GaitGenerator* gaitgenerator_;
+  gaitgenerator_configuration gg_config_;
+  void SetGaitgeneratorHL(double abs_max);
+  void SetGaitgeneratorFoot(int index);
 };
 
 }  // namespace Q1
