@@ -183,6 +183,14 @@ extern "C" void QuadrupedSetGGConfig(Quadruped* q,
   q->set_gg_config(config);
 }
 
+// -------------------------------------------------------QuadrupedSetGGVelocity
+/** @brief calls \ref Quadruped::SetGGVelocity */
+extern "C" void QuadrupedSetGGVelocity(Quadruped* q, double x, double y, 
+                                       double z) {
+  const double vector[3] = {x, y, z};
+  q->SetGGVelocity(vector);
+}
+
 // ---------------------------------------------------------------QuadrupedGetKM
 /** @brief calls \ref Quadruped::GetKM */
 extern "C" double QuadrupedGetKM(Quadruped* q, int leg_index) {

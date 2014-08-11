@@ -90,3 +90,7 @@ class Quadruped:
                                       c_double(speed3),
                                       c_double(ground_clearance),
                                       c_double(search_width))
+    
+    def set_gg_velocity(self, x, y, z):
+        self.lib.QuadrupedSetGGVelocity(self.q, c_double(x), c_double(y),
+                                        c_double(z))

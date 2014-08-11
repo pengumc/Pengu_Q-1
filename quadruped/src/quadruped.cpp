@@ -24,9 +24,9 @@ Quadruped::~Quadruped() {
   delete gaitgenerator_;
 }
 
-// --------------------------------------------------------------set_gg_velocity
+// ----------------------------------------------------------------SetGGVelocity
 /** @brief set the CoB velocity for the gaitgenerator*/
-void Quadruped::set_gg_velocity(const double* velocity_vector) {
+void Quadruped::SetGGVelocity(const double* velocity_vector) {
   gaitgenerator_->set_velocity(velocity_vector);
 }
 
@@ -142,9 +142,9 @@ void Quadruped::SetGaitgeneratorHL(double abs_max) {
   // HL1 is at angle -abs_max, HL2 with +abs_max
   HMatrix HL(gg_config_.reachable_sector_radius, 0.0, 0.0);
   gaitgenerator_->set_HL1(
-    HL.Dot(HMatrix(Z_AXIS, -abs_max)).array());
+    HMatrix(Z_AXIS, -abs_max).Dot(HL).array());
   gaitgenerator_->set_HL2(
-    HL.Dot(HMatrix(Z_AXIS, +abs_max)).array());
+    HMatrix(Z_AXIS, +abs_max).Dot(HL).array());
 }
 
 

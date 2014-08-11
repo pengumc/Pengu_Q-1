@@ -250,3 +250,5 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
+        #move y dir
+        self.Q.set_gg_velocity(0, 0.01, 0)
