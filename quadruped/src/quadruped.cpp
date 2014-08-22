@@ -81,6 +81,7 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
   if (pivot_index == Leg::kPivotCount) {
     SetGaitgeneratorFoot(leg_index);
   }
+  // TODO(Michiel): shouldn't this go for any pos change?
   //if it's pivot 0:
   if (pivot_index == 0) {
     HMatrix H_cob_pivot0 = H_cob_.Dot(
@@ -140,11 +141,18 @@ void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
 /** @brief set HL in the gaitgenerator*/
 void Quadruped::SetGaitgeneratorHL(double abs_max) {
   // HL1 is at angle -abs_max, HL2 with +abs_max
-  HMatrix HL(gg_config_.reachable_sector_radius, 0.0, 0.0);
+  const double HL[3] = {gg_config_.reachable_sector_radius, 0.0, 0.0};
+  double rotated_HL[3];
+  // a hmatrix with our needed R
+  HMatrix R(Z_AXIS, abs_max);
+  R.RotateVector(HL, rotated_HL);
   gaitgenerator_->set_HL1(
-    HMatrix(Z_AXIS, -abs_max).Dot(HL).array());
+    HMatrix(rotated_HL[0], rotated_HL[1], rotated_HL[2]).array());
+  R.CounterRotateVector(HL, rotated_HL);
   gaitgenerator_->set_HL2(
-    HMatrix(Z_AXIS, +abs_max).Dot(HL).array());
+    HMatrix(rotated_HL[0], rotated_HL[1], rotated_HL[2]).array());
+  printf("DEBUG: HL: %.3f, %.2f, %.3f\n", 
+    HL[0], HL[1], HL[2]);
 }
 
 
@@ -267,6 +275,7 @@ const double* Quadruped::GetCoM() {
 // ------------------------------------------------------------------------GetKM
 /** @brief returns the kinematic margin of a leg*/
 double Quadruped::GetKM(int leg_index) {
+  gaitgenerator_->ClearCacheFor(ROGG::TRANSFER);
   return gaitgenerator_->CalculateKMForLeg(leg_index+1);
 }
 

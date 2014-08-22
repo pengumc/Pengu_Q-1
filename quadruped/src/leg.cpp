@@ -98,7 +98,7 @@ HMatrix Leg::GetRelativeHMatrix(int start_index, int end_index) {
           A.SelfDot(pivots_[i]->H_frame());
         }
         // are we not done yet?
-        if (i < end_index) {
+        if (i-1 < end_index) {
           //also add foot
           A.SelfDot(foot_->H_frame());
         }

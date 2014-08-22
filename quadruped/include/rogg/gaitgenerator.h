@@ -23,6 +23,20 @@
 
 namespace ROGG {
 
+  enum StepResults {
+    TRANSFERRING = 0,/**< @brief 0: did nothing*/
+    NO_LIFTABLE_LEGS = 1,/**< @brief 1: legliftingCheck failed*/
+    NEWFOOTHOLD = 2,/**< @brief 2: a new foothold was calculated*/
+    CALCULATE_FAILED = 3,/**< @brief 3: no valid footholds found*/
+    END_OF_STATEMACHINE = 4/**< @brief 4: ERROR end of statemachine*/
+  };
+  enum StateMachineStates {
+    WAIT = 2, ///< 2
+    TRANSFER = 1, ///< 1
+    CALCULATE = 0 ///< 0
+  };/**< @brief States available for the statemachine*/
+
+
 /** @brief The main gait-generator class.
  *
  * useful notes:<br>
@@ -77,19 +91,6 @@ class GaitGenerator {
     double B;
     double F;
   } LASM_struct;/**< @brief struct for transferring both F and B values*/
-  // enumerators
-  enum StepResults {
-    TRANSFERRING = 0,/**< @brief 0: did nothing*/
-    NO_LIFTABLE_LEGS = 1,/**< @brief 1: legliftingCheck failed*/
-    NEWFOOTHOLD = 2,/**< @brief 2: a new foothold was calculated*/
-    CALCULATE_FAILED = 3,/**< @brief 3: no valid footholds found*/
-    END_OF_STATEMACHINE = 4/**< @brief 4: ERROR end of statemachine*/
-  };
-  enum StateMachineStates {
-    WAIT = 2,
-    TRANSFER = 1,
-    CALCULATE = 0
-  };/**< @brief States available for the statemachine*/
   // constants
   static const int kNumLegs = 4;
   /**< @brief Number of legs on a quadruped.*/
@@ -134,6 +135,7 @@ class GaitGenerator {
   void CopyFullKMArea(double* area_array);
   double GetLastStepTime();
   void DisableLog();
+  void ClearCacheFor(StateMachineStates state);
 
  private:
   // members
@@ -213,7 +215,6 @@ class GaitGenerator {
   void UpdateUVW();
   void UpdateKM_min();  // call this when LT changes
   bool GenerateCombined(int leg_index, bool leg_index_was_NLT);
-  void ClearCacheFor(StateMachineStates state);
   void LogKM_array();
   void LogTD_array();
   void LogELD_array(int leg_index);

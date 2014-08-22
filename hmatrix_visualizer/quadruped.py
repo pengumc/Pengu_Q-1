@@ -88,9 +88,18 @@ class Quadruped:
         self.lib.QuadrupedSetGGConfig(self.q, c_double(HLlength),
                                       c_double(speed1), c_double(speed2),
                                       c_double(speed3),
+                                      c_double(ASM_min),
                                       c_double(ground_clearance),
                                       c_double(search_width))
-    
+        print "HLlength : {}".format(HLlength)
+        print "transfer speeds : {}, {}, {}".format(speed1, speed2, speed3)
+        print "ASM_min: {}".format(ASM_min)
+        print "ground_clearance: {}".format(ground_clearance)
+        print "search_width: {}".format(search_width)
+        
     def set_gg_velocity(self, x, y, z):
         self.lib.QuadrupedSetGGVelocity(self.q, c_double(x), c_double(y),
                                         c_double(z))
+    
+    # def step(self, time=0):
+        # self.lib.QuadrupedStep(self.q, c_double(time))

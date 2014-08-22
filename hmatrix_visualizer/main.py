@@ -105,17 +105,17 @@ class KeyboardThread (threading.Thread):
               print "leg 3 selected"
             #wasd
             elif c == 'w':
-              # + y
-                self.safe_change_all_feet(0, 0.1, 0)
-            elif c == 'a':
-                # - x
-                self.safe_change_all_feet(-0.1, 0, 0)
-            elif c == 's':
-                # - y
+              # - y
                 self.safe_change_all_feet(0, -0.1, 0)
+            elif c == 'a':
+                # + x
+                self.safe_change_all_feet(0.1, 0, 0)
+            elif c == 's':
+                # + y
+                self.safe_change_all_feet(0, 0.1, 0)
             elif c == 'd':
-                #+ x
-                self.safe_change_all_feet(+0.1, 0, 0)
+                #- x
+                self.safe_change_all_feet(-0.1, 0, 0)
             elif c == 'z':
                 self.Q.change_pivot_angle(leg, pivot, -0.1)
                 self.commit()
@@ -139,7 +139,10 @@ class KeyboardThread (threading.Thread):
             elif c == '+':
                 self.safe_change_all_feet(0, 0, +0.1)
             elif c == 'f':
-                print("KM 1: {}".format(self.Q.get_KM(0)))
+                print("KM 0: {}".format(self.Q.get_KM(0)))
+                print("KM 1: {}".format(self.Q.get_KM(1)))
+                print("KM 2: {}".format(self.Q.get_KM(2)))
+                print("KM 3: {}".format(self.Q.get_KM(3)))
             elif c == 'g':
                 size = 0.5
                 t = 0

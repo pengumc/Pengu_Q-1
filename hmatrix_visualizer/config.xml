@@ -57,12 +57,12 @@
         </pivot>
     </leg>
     <gaitgenerator 
-      HLlength="15.0"
+      HLlength="12.0"
       transfer_speed1="1"
       transfer_speed2="1"
       transfer_speed3="1"
       ASM_min="0.0"
       ground_clearance="0.1"
-      search_width="15"
+      search_width="12.0"
     />
 </quadruped>
