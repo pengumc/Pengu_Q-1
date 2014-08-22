@@ -56,6 +56,8 @@ class Quadruped {
   bool SyncToDevice();
   bool SyncFromDevice();
   double GetKM(int leg_index);
+  double GetLASMF(int leg_index);
+  double GetLASMB(int leg_index);
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/

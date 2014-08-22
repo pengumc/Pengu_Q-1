@@ -139,10 +139,12 @@ class KeyboardThread (threading.Thread):
             elif c == '+':
                 self.safe_change_all_feet(0, 0, +0.1)
             elif c == 'f':
-                print("KM 0: {}".format(self.Q.get_KM(0)))
-                print("KM 1: {}".format(self.Q.get_KM(1)))
-                print("KM 2: {}".format(self.Q.get_KM(2)))
-                print("KM 3: {}".format(self.Q.get_KM(3)))
+                print "KM 0: {}".format(self.Q.get_KM(0))
+                print "KM 1: {}".format(self.Q.get_KM(1))
+                print "KM 2: {}".format(self.Q.get_KM(2))
+                print "KM 3: {}".format(self.Q.get_KM(3))
+                print "LASMBF {}: {}, {}".format(leg,
+                    self.Q.get_LASMB(leg), self.Q.get_LASMF(leg))
             elif c == 'g':
                 size = 0.5
                 t = 0

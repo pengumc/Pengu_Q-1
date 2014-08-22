@@ -273,10 +273,33 @@ const double* Quadruped::GetCoM() {
 }
 
 // ------------------------------------------------------------------------GetKM
-/** @brief returns the kinematic margin of a leg*/
+/** @brief returns the kinematic margin of a leg
+ *
+ * value is recalculated for each call
+ */
 double Quadruped::GetKM(int leg_index) {
   gaitgenerator_->ClearCacheFor(ROGG::TRANSFER);
   return gaitgenerator_->CalculateKMForLeg(leg_index+1);
+}
+
+// ---------------------------------------------------------------------GetLASMF
+/** @brief returns the LASMF with the specified leg in the air
+ *
+ * The value is recalculated for each call
+ */
+double Quadruped::GetLASMF(int leg_index) {
+  gaitgenerator_->ClearCacheFor(ROGG::TRANSFER);
+  return gaitgenerator_->GetLASMF(leg_index+1);
+}
+
+// ---------------------------------------------------------------------GetLASMB
+/** @brief returns the LASMB with the specified leg in the air
+ *
+ * The value is recalculated for each call
+ */
+double Quadruped::GetLASMB(int leg_index) {
+  gaitgenerator_->ClearCacheFor(ROGG::TRANSFER);
+  return gaitgenerator_->GetLASMB(leg_index+1);
 }
 
 }  // namespace Q1

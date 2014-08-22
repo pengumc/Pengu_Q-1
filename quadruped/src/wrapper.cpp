@@ -197,4 +197,16 @@ extern "C" double QuadrupedGetKM(Quadruped* q, int leg_index) {
   return q->GetKM(leg_index);
 }
 
+// ------------------------------------------------------------QuadrupedGetLASMF
+/** @brief calls \ref Quadruped::GetLASMF */
+extern "C" double QuadrupedGetLASMF(Quadruped* q, int leg_index) {
+  return q->GetLASMF(leg_index);
+}
+
+// ------------------------------------------------------------QuadrupedGetLASMB
+/** @brief calls \ref Quadruped::GetLASMB */
+extern "C" double QuadrupedGetLASMB(Quadruped* q, int leg_index) {
+  return q->GetLASMB(leg_index);
+}
+
 }  // namespace Q1

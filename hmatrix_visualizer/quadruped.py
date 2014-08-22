@@ -15,6 +15,8 @@ class Quadruped:
         self.lib.QuadrupedSyncToDev.restype = c_bool
         self.lib.QuadrupedSyncFromDev.restype = c_bool
         self.lib.QuadrupedGetKM.restype = c_double
+        self.lib.QuadrupedGetLASMB.restype = c_double
+        self.lib.QuadrupedGetLASMF.restype = c_double
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -101,5 +103,8 @@ class Quadruped:
         self.lib.QuadrupedSetGGVelocity(self.q, c_double(x), c_double(y),
                                         c_double(z))
     
-    # def step(self, time=0):
-        # self.lib.QuadrupedStep(self.q, c_double(time))
+    def get_LASMB(self, leg):
+        return self.lib.QuadrupedGetLASMB(self.q, leg)
+
+    def get_LASMF(self, leg):
+        return self.lib.QuadrupedGetLASMF(self.q, leg)        
