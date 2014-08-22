@@ -1,4 +1,0 @@
-<map id="Q1::UsbCom::WriteServoAngles" name="Q1::UsbCom::WriteServoAngles">
-<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#abca4144765d003cc55b89d9d73329335" title="update everything on the device to match the local data " alt="" coords="261,5,461,32"/>
-<area shape="rect" id="node3" href="$namespace_q1.html#a6b5453756849136d617e21ac9172973d" title="send all local pivot angles to the connected device " alt="" coords="509,5,684,32"/>
-</map>

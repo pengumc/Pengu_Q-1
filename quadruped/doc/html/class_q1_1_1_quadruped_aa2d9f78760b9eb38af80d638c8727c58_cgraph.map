@@ -1,7 +1,0 @@
-<map id="Q1::Quadruped::GetCoM" name="Q1::Quadruped::GetCoM">
-<area shape="rect" id="node2" href="$class_q1_1_1_leg.html#a344d00ffc8b412b88ef620fa830021fd" title="accessor for total_mass_ " alt="" coords="229,5,394,32"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#a8ea0638a225b67cef09917d7df937cb9" title="this = this dot right&#39; " alt="" coords="220,107,403,133"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="463,56,593,83"/>
-<area shape="rect" id="node6" href="$class_q1_1_1_h_matrix.html#aed8f291380d1ab5d384ef32546670535" title="set to I, does not clear parent " alt="" coords="246,157,377,184"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="451,107,605,133"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="Q1::UsbCom::WriteServoAngles" name="Q1::UsbCom::WriteServoAngles">
-<area shape="rect" id="node2" href="$group___a_p_i.html#gad14ea48e440cf5066df87cc6488493af" title="Write an Output report to a HID device. " alt="" coords="261,5,335,32"/>
-<area shape="rect" id="node3" href="$group___a_p_i.html#ga1b5c0ca1c785b8024f5eb46750a8f606" title="Get a string describing the last error which occurred. " alt="" coords="262,56,334,83"/>
-<area shape="rect" id="node4" href="$group___a_p_i.html#ga6b820f3e72097cf7f994e33715dc7af1" title="Read an Input report from a HID device. " alt="" coords="263,107,333,133"/>
-</map>
