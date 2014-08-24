@@ -17,6 +17,15 @@ ax3d.set_ylim((-20,20))
 ax3d.set_zlim((-20,20))
 ax3d_lines = [ax3d.plot([1,1], [2,2], [3,3], c="b")[0] for i in range(17*12)]
 ax3d_scatters = [ax3d.scatter(0,0) for i in range(17)]
+# setup 2d axis
+ax_flat = fig.add_subplot(1, 2, 2)
+ax_flat.set_xlim([-17,17])
+ax_flat.set_ylim([-17,17])
+ax_flat.set_xlabel("X")
+ax_flat.set_ylabel("Y")
+ax_flat.grid()
+ax_flat_scatters = [ax_flat.scatter(0,0) for i in range(2)]
+ax_flat_lines = [ax_flat.plot([],[],c="b")[0] for i in range(3)]
 
 BASE_CUBE_POINTS = np.array(
     [[-1, -1, -1],
@@ -55,7 +64,8 @@ def run_ani(data):
         transformed_points = np.round(np.delete(transformed_points, 3, 1),2)
         add_cube(transformed_points, i)
         i = i + 1
-    time.sleep(0.5)
+    if len(data) == 17:
+        plot_topdown(data)
 
 def add_cube(points, i):
     global ax3d_scatters, ax3d
@@ -73,14 +83,35 @@ def add_cube(points, i):
             ax3d_lines[index].set_3d_properties([s[2], e[2]])
             index = index + 1
             
-    
+def plot_topdown(hmatrices):
+    #plot xy of com
+    global ax_flat_scatters
+    ax_flat_scatters[0].remove()
+    ax_flat_scatters[0] = ax_flat.scatter(
+        hmatrices[16][3], hmatrices[16][7], s=200, c='r')
+    #plot xy of cob (aka 0,0)
+    ax_flat_scatters[1].remove()
+    ax_flat_scatters[1] = ax_flat.scatter(0,0, s=100, c='g')
+    #plot crosslines
+    ax_flat_lines[0].set_data(
+        [hmatrices[3][3], hmatrices[11][3]],
+        [hmatrices[3][7], hmatrices[11][7]])
+    ax_flat_lines[1].set_data(
+        [hmatrices[7][3], hmatrices[15][3]],
+        [hmatrices[7][7], hmatrices[15][7]])
+    ax_flat_lines[2].set_data(
+        [hmatrices[3][3], hmatrices[7][3],
+        hmatrices[11][3], hmatrices[15][3],
+        hmatrices[3][3]],
+        [hmatrices[3][7], hmatrices[7][7],
+        hmatrices[11][7], hmatrices[15][7],
+        hmatrices[3][7]])
+
+            
 if __name__ == "__main__":
     # start keyboard thread
     # TODO(michiel): give a more appropriate name to this thread
     kbt = KeyboardThread()
     kbt.start()
-    #main thread has pyplot
-    #plot everything at 500ms intervals
-    #data_gen can grab data from queue if there's any
-    a = ani.FuncAnimation(fig, run_ani, data_gen, blit=False, interval=200)
+    a = ani.FuncAnimation(fig, run_ani, data_gen, blit=False, interval=300)
     plt.show()
