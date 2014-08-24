@@ -94,12 +94,12 @@ HMatrix Leg::GetRelativeHMatrix(int start_index, int end_index) {
         HMatrix A(pivots_[start_index+1]->H_framep()->array());
         // rest, starting from start_index + 2
         int i = 0;
-        for ( i = start_index + 2; i < kPivotCount; ++i) {
+        for (i = start_index + 2; i < kPivotCount; ++i) {
           A.SelfDot(pivots_[i]->H_frame());
         }
         // are we not done yet?
         if (i-1 < end_index) {
-          //also add foot
+          // also add foot
           A.SelfDot(foot_->H_frame());
         }
         return A;

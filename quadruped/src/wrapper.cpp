@@ -164,7 +164,7 @@ extern "C" const double* QuadrupedGetCoM(Quadruped* q) {
 
 // ---------------------------------------------------------QuadrupedSetGGConfig
 /** @brief calls \ref Quadruped::set_gg_config with the supplied values*/
-extern "C" void QuadrupedSetGGConfig(Quadruped* q, 
+extern "C" void QuadrupedSetGGConfig(Quadruped* q,
                                                  double reachable_sector_radius,
                                                  double transfer_speed1,
                                                  double transfer_speed2,
@@ -185,7 +185,7 @@ extern "C" void QuadrupedSetGGConfig(Quadruped* q,
 
 // -------------------------------------------------------QuadrupedSetGGVelocity
 /** @brief calls \ref Quadruped::SetGGVelocity */
-extern "C" void QuadrupedSetGGVelocity(Quadruped* q, double x, double y, 
+extern "C" void QuadrupedSetGGVelocity(Quadruped* q, double x, double y,
                                        double z) {
   const double vector[3] = {x, y, z};
   q->SetGGVelocity(vector);
@@ -207,6 +207,24 @@ extern "C" double QuadrupedGetLASMF(Quadruped* q, int leg_index) {
 /** @brief calls \ref Quadruped::GetLASMB */
 extern "C" double QuadrupedGetLASMB(Quadruped* q, int leg_index) {
   return q->GetLASMB(leg_index);
+}
+
+// --------------------------------------------------------------QuadrupedGGStep
+/** @brief calls \ref Quadruped::GGStep */
+extern "C" ROGG::StepResults QuadrupedGGStep(Quadruped* q) {
+  return q->GGStep();
+}
+
+// ---------------------------------------------------------------QuadrupedGetLT
+/** @brief calls \ref Quadruped::GetLT */
+extern "C" int QuadrupedGetLT(Quadruped* q) {
+  return q->GetLT();
+}
+
+// ---------------------------------------------------QuadrupedGetTargetFoothold
+/** @brief returns the gaitgenerator's last calculated target as H_0_PLT*/
+extern "C" const double* QuadrupedGetTargetFoothold(Quadruped* q) {
+  return q->GetH_0_PLT();
 }
 
 }  // namespace Q1

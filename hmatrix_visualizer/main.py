@@ -67,17 +67,6 @@ class KeyboardThread (threading.Thread):
                 self.queue.put(None)
                 self.queue.put(None)
                 break
-            elif c == 'p':
-                #raw_pivot00 = self.Q.get_hmatrix(0)
-                raw_pivots = []
-                for leg in range(4):
-                    for pivot in range(4):
-                        raw_pivots.append(
-                            self.Q.get_relative_hmatrix(leg, pivot))
-                raw_pivots.append(self.Q.get_com());
-                self.Q.print_hmatrix(raw_pivots[16])
-                self.queue.put(raw_pivots[0:17])
-                print("plot requested")
             #selection
             elif c == '!':
               pivot = 0
@@ -176,6 +165,22 @@ class KeyboardThread (threading.Thread):
                 self.transfer_leg(2, -size*4)
                 time.sleep(t)
                 if not moved: self.safe_change_all_feet(0, size, 0)
+            self.put_on_queue()
+                
+    def put_on_queue(self):
+        raw_pivots = []
+        for leg in range(4):
+            for pivot in range(4):
+                raw_pivots.append(
+                    self.Q.get_relative_hmatrix(leg, pivot))
+        raw_pivots.append(self.Q.get_com());
+        #empty queue
+        try:
+            while True:
+                self.queue.get(False)
+        except:
+            self.queue.put(raw_pivots[0:17])
+    
                 
     def commit(self):
         res = self.Q.sync_to_device()
@@ -256,4 +261,4 @@ class KeyboardThread (threading.Thread):
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
         #move y dir
-        self.Q.set_gg_velocity(0, 0.01, 0)
+        self.Q.set_gg_velocity(0.01, 0.0, 0)

@@ -6,11 +6,11 @@ if __name__ == "__main__":
     kbt.start()
     while True:
         if kbt.is_alive():
-            hmatrices = kbt.queue.get(True, None)
+            data = kbt.queue.get(True, None)
             while not kbt.queue.empty():
                 kbt.queue.get(True, None)
-            if hmatrices:
-                pt = hmatrixplot.PlotThread(hmatrices)
+            if data:
+                pt = hmatrixplot.PlotThread(data)
                 pt.run()
             else:
               break

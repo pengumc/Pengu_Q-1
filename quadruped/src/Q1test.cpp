@@ -6,8 +6,8 @@
 
 
 int main(int argc, char** argv) {
-  //Q1::Quadruped* aap = new Q1::Quadruped();
-  //ROGG::GaitGenerator* aap = new ROGG::GaitGenerator();
+  // Q1::Quadruped* aap = new Q1::Quadruped();
+  // ROGG::GaitGenerator* aap = new ROGG::GaitGenerator();
   ROGG::GaitGenerator aap;
   printf("%d\n", &aap);
 

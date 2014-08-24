@@ -30,14 +30,24 @@ void Quadruped::SetGGVelocity(const double* velocity_vector) {
   gaitgenerator_->set_velocity(velocity_vector);
 }
 
-// ----------------------------------------------------------------set_gg_config
-/** @brief mutator for \ref gg_config 
+// -------------------------------------------------------------last_step_result
+/** @brief accessor for \ref last_step_result_
  *
- * 
+ * \ref last_step_result_ is filled when \ref GGStep is called
+ */
+ROGG::StepResults Quadruped::last_step_result() {
+  return last_step_result_;
+}
+
+
+// ----------------------------------------------------------------set_gg_config
+/** @brief mutator for \ref gg_config
+ *
+ *
  */
 void Quadruped::set_gg_config(gaitgenerator_configuration config) {
   gg_config_ = config;
-  SetGaitgeneratorHL(legs_[0]->GetPivotAbsMaxAngle(0)); // HL should update
+  SetGaitgeneratorHL(legs_[0]->GetPivotAbsMaxAngle(0));  // HL should update
   gaitgenerator_->set_transfer_speeds(gg_config_.transfer_speeds);
   gaitgenerator_->set_ASM_min(gg_config_.ASM_min);
   gaitgenerator_->set_ground_clearance(gg_config_.ground_clearance);
@@ -82,7 +92,7 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
     SetGaitgeneratorFoot(leg_index);
   }
   // TODO(Michiel): shouldn't this go for any pos change?
-  //if it's pivot 0:
+  // if it's pivot 0:
   if (pivot_index == 0) {
     HMatrix H_cob_pivot0 = H_cob_.Dot(
       HMatrix(legs_[leg_index]->GetRelativeHMatrixArray(0)));
@@ -95,10 +105,8 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
 /** @brief update the foot position in the gaitgenerator*/
 void Quadruped::SetGaitgeneratorFoot(int index) {
   // gaitgenerator takes H_pivot0_P#
-  gaitgenerator_->SetLegP(
-    index+1,
-    legs_[index]->GetRelativeHMatrix(0, Leg::kPivotCount).array()
-  );
+  gaitgenerator_->SetLegP(index+1,
+    legs_[index]->GetRelativeHMatrix(0, Leg::kPivotCount).array());
 }
 
 
@@ -151,7 +159,7 @@ void Quadruped::SetGaitgeneratorHL(double abs_max) {
   R.CounterRotateVector(HL, rotated_HL);
   gaitgenerator_->set_HL2(
     HMatrix(rotated_HL[0], rotated_HL[1], rotated_HL[2]).array());
-  printf("DEBUG: HL: %.3f, %.2f, %.3f\n", 
+  printf("DEBUG: HL: %.3f, %.2f, %.3f\n",
     HL[0], HL[1], HL[2]);
 }
 
@@ -268,7 +276,7 @@ const double* Quadruped::GetCoM() {
   HMatrix H_cob_com = H_cob_.Inverse();
   H_cob_com.SelfDot(H_com_);
   gaitgenerator_->set_H_cob_com(H_cob_com.array());
-  
+
   return H_com_.array();
 }
 
@@ -300,6 +308,40 @@ double Quadruped::GetLASMF(int leg_index) {
 double Quadruped::GetLASMB(int leg_index) {
   gaitgenerator_->ClearCacheFor(ROGG::TRANSFER);
   return gaitgenerator_->GetLASMB(leg_index+1);
+}
+
+// -----------------------------------------------------------------------GGStep
+/** @brief perfrom a gaitgenerator step. store result*/
+ROGG::StepResults Quadruped::GGStep() {
+  last_step_result_ = gaitgenerator_->Step();
+  if (last_step_result_ == ROGG::NEWFOOTHOLD) {
+    // H_0_PLT = H_0_cob * H_cob_PLT
+    H_0_PLT_.Copy(H_cob_);
+    double target_foothold_values[16];
+    gaitgenerator_->CopyH_cob_PLT(target_foothold_values);
+    H_0_PLT_.SelfDot(HMatrix(target_foothold_values));
+  }
+  return last_step_result_;
+}
+
+// ------------------------------------------------------------------------GetLT
+/** @brief returns LT as 0-based leg index
+ *
+ * Only valid when the last GGStep result
+ * was 2 (\ref ROGG::StepResults)
+ */
+int Quadruped::GetLT() {
+  return gaitgenerator_->LT();
+}
+
+// -------------------------------------------------------------------GetH_0_PLT
+/** returns the hmatrix values of the last calculated foothold relative to 0
+ *
+ * Only valid when the last GGStep result
+ * was 2 (\ref ROGG::StepResults)
+ */
+const double* Quadruped::GetH_0_PLT() {
+  return H_0_PLT_.array();
 }
 
 }  // namespace Q1

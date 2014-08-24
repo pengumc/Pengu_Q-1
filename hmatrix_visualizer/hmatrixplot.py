@@ -26,8 +26,8 @@ class PlotThread (threading.Thread):
     def run(self):
         from mpl_toolkits.mplot3d import Axes3D
         import matplotlib.pyplot as plt
-        self.fig = plt.figure(1)
-        self.ax = self.fig.gca(projection='3d')
+        self.fig = plt.figure(figsize=plt.figaspect(.5))
+        self.ax = self.fig.add_subplot(1, 2, 1, projection='3d')
         self.ax.set_aspect("equal")
         self.ax.set_xlabel("X")
         self.ax.set_ylabel("Y")
@@ -38,6 +38,50 @@ class PlotThread (threading.Thread):
         self.ax.set_xlim((-20,20))
         self.ax.set_ylim((-20,20))
         self.ax.set_zlim((-20,20))
+        ax_flat = self.fig.add_subplot(1, 2, 2)
+        #assume all hmatrices are there
+        #plot xy of feet
+        feetx = [
+            self.hmatrices[3][3], 
+            self.hmatrices[7][3], 
+            self.hmatrices[11][3], 
+            self.hmatrices[15][3]]
+        feety = [
+            self.hmatrices[3][7], 
+            self.hmatrices[7][7], 
+            self.hmatrices[11][7], 
+            self.hmatrices[15][7]]
+        ax_flat.scatter(feetx, feety, s=40)
+        ax_flat.text(feetx[0]+2, feety[0], '1')
+        ax_flat.text(feetx[1]+2, feety[1], '2')
+        ax_flat.text(feetx[2]+2, feety[2], '3')
+        ax_flat.text(feetx[3]+2, feety[3], '4')
+        #plot xy of com and cob
+        ax_flat.scatter(
+            self.hmatrices[16][3], self.hmatrices[16][7], s=200, c='r')
+        ax_flat.scatter(0,0, s=100, c='g')
+        #plot x and y line
+        ax_flat.plot([-15, 15], [0, 0], c='r')
+        ax_flat.plot([0,0],[-15, 15], c='r')
+        #plot crossline
+        ax_flat.plot(
+            [self.hmatrices[3][3], self.hmatrices[11][3]],
+            [self.hmatrices[3][7], self.hmatrices[11][7]], c="b")
+        ax_flat.plot(
+            [self.hmatrices[7][3], self.hmatrices[15][3]],
+            [self.hmatrices[7][7], self.hmatrices[15][7]], c="b")
+        ax_flat.plot([
+            self.hmatrices[3][3], self.hmatrices[7][3],
+            self.hmatrices[11][3], self.hmatrices[15][3],
+            self.hmatrices[3][3]], [self.hmatrices[3][7], self.hmatrices[7][7],
+            self.hmatrices[11][7], self.hmatrices[15][7],
+            self.hmatrices[3][7]])
+
+        #plot line of KM
+        #plot line of LASMBF
+        
+        ax_flat.set_xlim([-17,17])
+        ax_flat.set_ylim([-17,17])
         plt.show()
         plt.close('all')
     
