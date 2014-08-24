@@ -59,6 +59,7 @@ class KeyboardThread (threading.Thread):
         print("\t~ sync to dev")
         leg = 0
         pivot = 0
+        self.put_on_queue()
         while True:
             c = keyboard.getch()
             if c == 'q':
