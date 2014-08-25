@@ -9,6 +9,7 @@ class Quadruped:
         self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetCoM.restype = POINTER(c_double)
+        self.lib.QuadrupedGetTargetFoothold.restype = POINTER(c_double)
         self.lib.QuadrupedChangePivotAngle.restype = c_bool
         self.lib.QuadrupedChangeFootPos.restype = c_bool
         self.lib.QuadrupedSetFootPos.restype = c_bool
@@ -107,4 +108,25 @@ class Quadruped:
         return self.lib.QuadrupedGetLASMB(self.q, leg)
 
     def get_LASMF(self, leg):
-        return self.lib.QuadrupedGetLASMF(self.q, leg)        
+        return self.lib.QuadrupedGetLASMF(self.q, leg)
+        
+    def gg_step(self):
+        r = self.lib.QuadrupedGGStep(self.q)
+        if r == 0:
+            print "stepresult: transferring"
+        elif r == 1:
+            print "stepresult: no liftable legs"
+        elif r == 2:
+            print "stepresult: new foothold for leg {}".format(self.get_LT())
+            #self.print_hmatrix(self.get_target_foothold())
+        elif r == 3:
+            print "stepresult: calculate failed"
+        elif r == 4:
+            print "stepresult: AAAARGH!"
+        return r
+        
+    def get_target_foothold(self):
+        return self.lib.QuadrupedGetTargetFoothold(self.q)
+        
+    def get_LT(self):
+        return self.lib.QuadrupedGetLT(self.q)

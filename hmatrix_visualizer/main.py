@@ -57,8 +57,8 @@ class KeyboardThread (threading.Thread):
         print("\tx all legs z -0.1\n\t+ all legs z +0.1")
         print("\t` sync from dev")
         print("\t~ sync to dev")
-        leg = 0
-        pivot = 0
+        self.leg = 0
+        self.pivot = 0
         self.put_on_queue()
         while True:
             c = keyboard.getch()
@@ -70,28 +70,28 @@ class KeyboardThread (threading.Thread):
                 break
             #selection
             elif c == '!':
-              pivot = 0
+              self.pivot = 0
               print "pivot 0 selected"
             elif c == '@':
-              pivot = 1
+              self.pivot = 1
               print "pivot 1 selected"
             elif c == '#':
-              pivot = 2
+              self.pivot = 2
               print "pivot 2 selected"
             elif c == '$':
-              pivot = 3
+              self.pivot = 3
               print "pivot 3 selected"
             elif c == '1':
-              leg = 0
+              self.leg = 0
               print "leg 0 selected"
             elif c == '2':
-              leg = 1
+              self.leg = 1
               print "leg 1 selected"
             elif c == '3':
-              leg = 2
+              self.leg = 2
               print "leg 2 selected"
             elif c == '4':
-              leg = 3
+              self.leg = 3
               print "leg 3 selected"
             #wasd
             elif c == 'w':
@@ -107,10 +107,10 @@ class KeyboardThread (threading.Thread):
                 #- x
                 self.safe_change_all_feet(-0.1, 0, 0)
             elif c == 'z':
-                self.Q.change_pivot_angle(leg, pivot, -0.1)
+                self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
                 self.commit()
             elif c == 'x':
-                self.Q.change_pivot_angle(leg, pivot, 0.1)
+                self.Q.change_pivot_angle(self.leg, self.pivot, 0.1)
                 self.commit()
             elif c == '`':
                 res = self.Q.sync_from_device()
@@ -118,7 +118,7 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = math.cos(math.pi/4) * (3.6+6.8) +4
+                d = 11.35#math.cos(math.pi/4) * (3.6+6.8) +4
                 print "all feet at {}, -11".format(d)
                 self.Q.set_foot_pos(0, d, d+2, -11)
                 self.Q.set_foot_pos(1, -d, d+2, -11)
@@ -129,85 +129,73 @@ class KeyboardThread (threading.Thread):
             elif c == '+':
                 self.safe_change_all_feet(0, 0, +0.1)
             elif c == 'f':
-                print "KM 0: {}".format(self.Q.get_KM(0))
-                print "KM 1: {}".format(self.Q.get_KM(1))
-                print "KM 2: {}".format(self.Q.get_KM(2))
-                print "KM 3: {}".format(self.Q.get_KM(3))
-                print "LASMBF {}: {}, {}".format(leg,
-                    self.Q.get_LASMB(leg), self.Q.get_LASMF(leg))
-            elif c == 'g':
-                size = 0.5
-                t = 0
-                #move 0.5 
-                moved = self.safe_change_all_feet(0, size, 0)
-                time.sleep(t)
-                #change leg 0
-                self.transfer_leg(0, -size*4)
-                time.sleep(t)
-                if not moved: self.safe_change_all_feet(0, size, 0)
-                #move 0.5 
-                moved = self.safe_change_all_feet(0, 5, 0)
-                time.sleep(t)
-                #change leg 3
-                self.transfer_leg(3, -size*4)
-                time.sleep(t)
-                if not moved: self.safe_change_all_feet(0, size, 0)
-                #move 0.5 
-                moved = self.safe_change_all_feet(0, size, 0)
-                time.sleep(t)
-                #change leg 1
-                self.transfer_leg(1, -size*4)
-                time.sleep(t)
-                if not moved: self.safe_change_all_feet(0, size, 0)                
-                #move 0.5 
-                moved = self.safe_change_all_feet(0, size, 0)
-                time.sleep(t)
-                #change leg 2
-                self.transfer_leg(2, -size*4)
-                time.sleep(t)
-                if not moved: self.safe_change_all_feet(0, size, 0)
+                self.Q.set_gg_velocity(0.01, 0.0, 0)
+                if self.Q.gg_step() == 2:
+                    T = self.Q.get_target_foothold()
+                    l = self.Q.get_LT()
+                    #cob is at 0
+                    H = self.Q.get_relative_hmatrix(l, 3)
+                    dx = T[3] - H[3]
+                    dy = T[7] - H[7]
+                    self.transfer_leg(l, dx, dy)
+            elif c == 'p':
+                print "LASMBF 0: {}, {}".format(
+                    self.Q.get_LASMB(0), self.Q.get_LASMF(0))
+                print "LASMBF 1: {}, {}".format(
+                    self.Q.get_LASMB(1), self.Q.get_LASMF(1))
+                print "LASMBF 2: {}, {}".format(
+                    self.Q.get_LASMB(2), self.Q.get_LASMF(2))
+                print "LASMBF 3: {}, {}".format(
+                    self.Q.get_LASMB(3), self.Q.get_LASMF(3))
             self.put_on_queue()
                 
     def put_on_queue(self):
         raw_pivots = []
-        for leg in range(4):
+        for i in range(4):
             for pivot in range(4):
                 raw_pivots.append(
-                    self.Q.get_relative_hmatrix(leg, pivot))
+                    self.Q.get_relative_hmatrix(i, pivot))
         raw_pivots.append(self.Q.get_com());
+        raw_pivots.append(self.Q.get_KM(0))
+        raw_pivots.append(self.Q.get_KM(1))
+        raw_pivots.append(self.Q.get_KM(2))
+        raw_pivots.append(self.Q.get_KM(3))
+        raw_pivots.append(self.Q.get_LASMB(self.leg))
+        raw_pivots.append(self.Q.get_LASMF(self.leg))
         #empty queue
         try:
             while True:
                 self.queue.get(False)
         except:
-            self.queue.put(raw_pivots[0:17])
+            self.queue.put(raw_pivots)
     
                 
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
 
-    def transfer_leg(self, leg, y):
+    def transfer_leg(self, leg, x, y):
+        print "leg {}: {}, {}".format(leg,x,y)
         t = 0.2
         #first check each point
         if self.Q.change_foot_pos(leg, 0, 0, 2, 0): #up 2
-            if self.Q.change_foot_pos(leg, 0, y, 0, 0): #forwards y
+            if self.Q.change_foot_pos(leg, x, y, 0, 0): #move xy
                 if self.Q.change_foot_pos(leg, 0, 0, -2, 0): #down 2
                     #back to start
-                    self.Q.change_foot_pos(leg, 0, -y, 0, 0);
+                    self.Q.change_foot_pos(leg, -x, -y, 0, 0);
                     self.commit()
                     #now start transfer
                     self.Q.change_foot_pos(leg, 0, 0, 2, 0)
                     self.commit()
                     time.sleep(t)
-                    self.Q.change_foot_pos(leg, 0, y, 0, 0)
+                    self.Q.change_foot_pos(leg, x, y, 0, 0)
                     self.commit()
                     time.sleep(t)
                     self.Q.change_foot_pos(leg, 0, 0, -2, 0)
                     self.commit()
                 else:
                     print("{} down failed".format(leg))
-                    self.Q.change_foot_pos(leg, 0, -y, -2, 0) #revert
+                    self.Q.change_foot_pos(leg, -x, -y, -2, 0) #revert
             else:
                 print("{} forward failed".format(leg))
                 self.Q.change_foot_pos(leg, 0, 0, -2, 0); #revert
@@ -262,4 +250,4 @@ class KeyboardThread (threading.Thread):
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
         #move y dir
-        self.Q.set_gg_velocity(0.01, 0.0, 0)
+        self.Q.set_gg_velocity(0.0001, 0.0, 0)

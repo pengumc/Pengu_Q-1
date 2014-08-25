@@ -31,9 +31,9 @@ namespace ROGG {
     END_OF_STATEMACHINE = 4/**< @brief 4: ERROR end of statemachine*/
   };
   enum StateMachineStates {
-    WAIT = 2, ///< 2
-    TRANSFER = 1, ///< 1
-    CALCULATE = 0 ///< 0
+    WAIT = 2,  ///< 2
+    TRANSFER = 1,  ///< 1
+    CALCULATE = 0  ///< 0
   };/**< @brief States available for the statemachine*/
 
 

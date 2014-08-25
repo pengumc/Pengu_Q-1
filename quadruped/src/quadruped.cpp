@@ -13,6 +13,8 @@ Quadruped::Quadruped() {
     legs_[i] = new Leg(i, &H_cob_);
   }
   gaitgenerator_ = new ROGG::GaitGenerator();
+  gaitgenerator_->set_use_enforce_wavegait(false);
+  gaitgenerator_->set_H_cob_com(HMatrix().array());
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -91,7 +93,6 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
   if (pivot_index == Leg::kPivotCount) {
     SetGaitgeneratorFoot(leg_index);
   }
-  // TODO(Michiel): shouldn't this go for any pos change?
   // if it's pivot 0:
   if (pivot_index == 0) {
     HMatrix H_cob_pivot0 = H_cob_.Dot(
@@ -105,10 +106,26 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
 /** @brief update the foot position in the gaitgenerator*/
 void Quadruped::SetGaitgeneratorFoot(int index) {
   // gaitgenerator takes H_pivot0_P#
-  gaitgenerator_->SetLegP(index+1,
-    legs_[index]->GetRelativeHMatrix(0, Leg::kPivotCount).array());
+  // but we're using pivot0 as actual actuator so let's do some MAGIC!
+  
+  // copy H_cob_pivot0
+  HMatrix magic(legs_[index]->GetHMatrixArray(0));
+  // rotate to original 0 angle
+  magic.SelfDot(HMatrix(Z_AXIS, -legs_[index]->GetPivotAngle(0)));
+  // inverse magic dot H_0_P
+  HMatrix gg_H_pivot0_P = magic.Inverse().Dot(
+    HMatrix(legs_[index]->GetRelativeHMatrixArray(Leg::kPivotCount)));
+    
+  gaitgenerator_->SetLegP(index+1,  gg_H_pivot0_P.array());
+  // HMatrix H_0_pivot0 = HMatrix(legs_[index]->GetRelativeHMatrixArray(0));
+  // HMatrix H_0_P = HMatrix(legs_[index]->GetRelativeHMatrixArray(3));
+  // HMatrix H_pivot0_P = H_0_pivot0.Inverse().Dot(H_0_P);
+  // printf("LEG[%i]:\n", index);
+  // printf("just sent relative x = %f to gg\n", gg_H_pivot0_P.array()[3]);
+  // printf("H_0_P.x = %f\n", H_0_P.array()[3]);
+  
+  // inverse(H_0_pivot)*h_0_p
 }
-
 
 // ------------------------------------------------------------ConfigurePivotRot
 /** @brief modify R of a pivot while keeping Pivot::angle_ the same*/
@@ -313,6 +330,8 @@ double Quadruped::GetLASMB(int leg_index) {
 // -----------------------------------------------------------------------GGStep
 /** @brief perfrom a gaitgenerator step. store result*/
 ROGG::StepResults Quadruped::GGStep() {
+  // always not transferring
+  gaitgenerator_->set_transferring(false);
   last_step_result_ = gaitgenerator_->Step();
   if (last_step_result_ == ROGG::NEWFOOTHOLD) {
     // H_0_PLT = H_0_cob * H_cob_PLT
@@ -331,7 +350,7 @@ ROGG::StepResults Quadruped::GGStep() {
  * was 2 (\ref ROGG::StepResults)
  */
 int Quadruped::GetLT() {
-  return gaitgenerator_->LT();
+  return gaitgenerator_->LT() - 1;
 }
 
 // -------------------------------------------------------------------GetH_0_PLT
