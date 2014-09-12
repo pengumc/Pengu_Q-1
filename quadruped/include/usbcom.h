@@ -19,14 +19,16 @@ class UsbCom {
  public:
   // constants
   static const double kDefaultK = -0.034;/**< default value for \ref K_*/
-  static const double kMidPW = 72;
+  static const uint16_t kMidPW = 331;  ///< 1.5 ms
+  static const uint16_t kMaxPW = 0x03A0; ///< 2.1 ms
+  static const double kSCFull = 2107e-6;
   static const int kDeviceServoCount =12;
   /**< number of servos. Should match \ref Quadruped::kLegCount * \ref 
    * Leg::kPivotCount */
-  static const int kUsbWriteBufferSize = kDeviceServoCount + 2;
+  static const int kUsbWriteBufferSize = kDeviceServoCount*2 + 2;
   /**< should correspond to the <b>input</b> report size (in bytes) +1 of the
    *  usbmaster https://github.com/pengumc/usbtoi2c <br>
-   * the assumption is made that the write buffer size = 2 + number of pivots 
+   * the assumption is made that the write buffer size = 2 + number of pivots*2
    * in the robot
    */
   static const int kUsbReadBufferSize = 8;
@@ -34,8 +36,9 @@ class UsbCom {
    *  usbmaster href"https://github.com/pengumc/usbtoi2c">UsbToI2C*/
   static const int kHighPosCount = kDeviceServoCount - kUsbReadBufferSize;
   /**< number of bytes to use from the result of reading pos high*/
-  static const uint8_t kUsbCustomGetPosL = 0x05;
-  static const uint8_t kUsbCustomGetPosH = 0x06;
+  static const uint8_t kUsbCustomGetPos0To3 = 0x05;
+  static const uint8_t kUsbCustomGetPos4To7 = 0x06;
+  static const uint8_t kUsbCustomGetPos8To11 = 0x07;
   static const uint8_t kUsbCustomSetData = 0x03;
   static const uint8_t kUsbSuccess[kUsbReadBufferSize];
   // constructor, destructor
@@ -50,7 +53,6 @@ class UsbCom {
   int ReadServoAngles();
   int WriteServoAngles(const double* servo_angles);
 
-
  private:
   hid_device* handle_;/**< @brief usb device handle*/
   uint16_t vid_;/**< @brief vendor id*/
@@ -62,7 +64,10 @@ class UsbCom {
   double K_;
   /**< @brief K factor
    *
-   * angle = K * (PW - PW<sub>mid</sub>)
+   * old: angle = K * (PW - PW<sub>mid</sub>)<br>
+   * new:<br>
+   * pw = 2107e-6 - x*22/12e6<br>
+   * x = 1500e-6 - (angle/full_range * 1000e-6)<br>
    */
 };
 
