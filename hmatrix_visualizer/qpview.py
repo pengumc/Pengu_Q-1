@@ -7,6 +7,7 @@ import matplotlib.animation as ani
 from itertools import product, combinations
 
 fig = plt.figure(figsize=plt.figaspect(.5))
+
 # setup 3d axis
 ax3d = fig.add_subplot(1, 2, 1, projection='3d')
 ax3d.set_xlabel("X")
@@ -37,6 +38,20 @@ BASE_CUBE_POINTS = np.array(
     [ 1,  1, -1],
     [ 1,  1,  1]])
 BASE_CUBE_POINTS = np.transpose(np.insert(BASE_CUBE_POINTS, 3, 1, axis=1))
+
+def on_click(event):
+    global ax_flat
+    if event.inaxes == ax_flat:
+        print "x: {}, y: {}".format(event.xdata, event.ydata)
+        #clear kbt xyq
+        try:
+            while True:
+                kbt.xyq.get(False)
+        except:
+            #put (x,y) on there
+            kbt.xyq.put((event.xdata, event.ydata))
+
+fig.canvas.mpl_connect('button_press_event', on_click)
 
 def np_conv_hmatrix16(ar16):
     return np.array([ar16[0:4], ar16[4:8], ar16[8:12], ar16[12:16]])
@@ -87,12 +102,12 @@ def add_cube(points, i):
 def plot_topdown(hmatrices, km_and_lasmbf):
     #plot xy of com
     global ax_flat_scatters
-    #ax_flat_scatters[0].remove()
-    #ax_flat_scatters[0] = ax_flat.scatter(
-    #    hmatrices[16][3], hmatrices[16][7], s=200, c='r')
+    ax_flat_scatters[0].remove()
+    ax_flat_scatters[0] = ax_flat.scatter(
+        hmatrices[16][3], hmatrices[16][7], s=200, c='r')
     #plot xy of cob (aka 0,0)
-    #ax_flat_scatters[1].remove()
-    #ax_flat_scatters[1] = ax_flat.scatter(0,0, s=100, c='g')
+    ax_flat_scatters[1].remove()
+    ax_flat_scatters[1] = ax_flat.scatter(0,0, s=100, c='g')
     #plot crosslines
     ax_flat_lines[0].set_data(
         [hmatrices[3][3], hmatrices[11][3]],
@@ -108,10 +123,10 @@ def plot_topdown(hmatrices, km_and_lasmbf):
         hmatrices[11][7], hmatrices[15][7],
         hmatrices[3][7]])
     #lasmbf lines (assuming v in x dir)
-    ax_flat_lines[3].set_data([0, km_and_lasmbf[4]], [2,2])
+    ax_flat_lines[3].set_data([0, km_and_lasmbf[4]], [0,0])
     print km_and_lasmbf[4]
     ax_flat_lines[3].set_color("r")
-    ax_flat_lines[4].set_data([0, km_and_lasmbf[5]], [-2,-2])
+    ax_flat_lines[4].set_data([0, km_and_lasmbf[5]], [0,0])
     ax_flat_lines[4].set_color("g")
 
             

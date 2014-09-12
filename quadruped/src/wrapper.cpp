@@ -171,13 +171,15 @@ extern "C" void QuadrupedSetGGConfig(Quadruped* q,
                                                  double transfer_speed3,
                                                  double ASM_min,
                                                  double ground_clearance,
-                                                 double search_width) {
+                                                 double search_width,
+                                                 double L_min) {
   Quadruped::gaitgenerator_configuration config;
   config.reachable_sector_radius = reachable_sector_radius;
   config.transfer_speeds[0] = transfer_speed1;
   config.transfer_speeds[1] = transfer_speed2;
   config.transfer_speeds[2] = transfer_speed3;
   config.ASM_min = ASM_min;
+  config.L_min = L_min;
   config.ground_clearance = ground_clearance;
   config.search_width = search_width;
   q->set_gg_config(config);

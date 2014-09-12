@@ -30,6 +30,7 @@ class Quadruped {
     double ASM_min;
     double ground_clearance;
     double search_width;
+    double L_min;
   } gaitgenerator_configuration;
   // con/destructors
   Quadruped();

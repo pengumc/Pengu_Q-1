@@ -41,7 +41,6 @@ ROGG::StepResults Quadruped::last_step_result() {
   return last_step_result_;
 }
 
-
 // ----------------------------------------------------------------set_gg_config
 /** @brief mutator for \ref gg_config
  *

@@ -23,6 +23,7 @@ class Leg {
   Leg(int id, Logger* logger);
   // methods
   void set_H_pivot0_P(const double* array);
+  void set_L_min(double min_value);
   void SetLegParams(const double* HL1, const double* HL2, const double* pivot0);
   HMatrix H_pivot0_P();
   HMatrix H_cob_pivot0();

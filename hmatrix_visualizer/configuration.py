@@ -27,6 +27,7 @@ class Configuration:
         self.ASM_min = float(gg.attrib["ASM_min"])
         self.ground_clearance = float(gg.attrib["ground_clearance"])
         self.search_width = float(gg.attrib["search_width"])
+        self.L_min = float(gg.attrib["L_min"])
         #mechanical config
         legs = xml.findall("leg")
         for leg in legs:

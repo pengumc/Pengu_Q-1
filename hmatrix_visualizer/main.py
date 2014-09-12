@@ -21,6 +21,7 @@ class KeyboardThread (threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.queue = Queue.Queue()
+        self.xyq = Queue.Queue()
         #quadruped
         if system() == 'Linux':
             libpath = "../quadruped/bin/libquadruped.so"
@@ -38,13 +39,13 @@ class KeyboardThread (threading.Thread):
         self.apply_config()
         c = self.Q.connect(0x16c0, 0x05df)
         if c == 0:
-          print self.OKGREEN + "connected " + self.ENDC
-          self.connected = True
-          res = self.Q.sync_from_device()
-          print "sync from dev: {}".format(res)
+              print self.OKGREEN + "connected " + self.ENDC
+              self.connected = True
+              res = self.Q.sync_from_device()
+              print "sync from dev: {}".format(res)
         else:
-          print (self.FAIL + "could not connect {}" + self.ENDC).format(c)
-          self.connected = False
+              print (self.FAIL + "could not connect {}" + self.ENDC).format(c)
+              self.connected = False
         x = 5.0
         print("usage:\n\tq quit\n\tp plot")
         #print("\t1..4 select leg")
@@ -59,6 +60,7 @@ class KeyboardThread (threading.Thread):
         print("\t~ sync to dev")
         self.leg = 0
         self.pivot = 0
+        self.cob_selected = True
         self.put_on_queue()
         while True:
             c = keyboard.getch()
@@ -70,42 +72,75 @@ class KeyboardThread (threading.Thread):
                 break
             #selection
             elif c == '!':
-              self.pivot = 0
-              print "pivot 0 selected"
+                self.pivot = 0
+                self.cob_selected = False
+                print "pivot 0 selected"
             elif c == '@':
-              self.pivot = 1
-              print "pivot 1 selected"
+                self.pivot = 1
+                self.cob_selected = False
+                print "pivot 1 selected"
             elif c == '#':
-              self.pivot = 2
-              print "pivot 2 selected"
+                self.pivot = 2
+                self.cob_selected = False
+                print "pivot 2 selected"
             elif c == '$':
-              self.pivot = 3
-              print "pivot 3 selected"
+                self.pivot = 3
+                self.cob_selected = False
+                print "pivot 3 selected"
             elif c == '1':
-              self.leg = 0
-              print "leg 0 selected"
+                self.leg = 0
+                self.cob_selected = False
+                print "leg 0 selected"
             elif c == '2':
-              self.leg = 1
-              print "leg 1 selected"
+                self.leg = 1
+                self.cob_selected = False
+                print "leg 1 selected"
             elif c == '3':
-              self.leg = 2
-              print "leg 2 selected"
+                self.leg = 2
+                self.cob_selected = False
+                print "leg 2 selected"
             elif c == '4':
-              self.leg = 3
-              print "leg 3 selected"
+                self.leg = 3
+                self.cob_selected = False
+                print "leg 3 selected"
+            elif c == '0':
+                self.cob_selected = True
+                print "CoB selected"
             #wasd
             elif c == 'w':
-              # - y
-                self.safe_change_all_feet(0, -0.1, 0)
+                if self.cob_selected:
+                    # - y
+                    self.safe_change_all_feet(0, -0.1, 0)
+                else:
+                    self.safe_change_single_foot(self.leg, 0, 0.1, 0)
             elif c == 'a':
-                # + x
-                self.safe_change_all_feet(0.1, 0, 0)
+                if self.cob_selected:
+                    # + x
+                    self.safe_change_all_feet(0.1, 0, 0)
+                else:
+                    self.safe_change_single_foot(self.leg, -0.1, 0, 0)
             elif c == 's':
-                # + y
-                self.safe_change_all_feet(0, 0.1, 0)
+                if self.cob_selected:
+                    # + y
+                    self.safe_change_all_feet(0, 0.1, 0)
+                else:
+                    self.safe_change_single_foot(self.leg, 0, -0.1, 0)
             elif c == 'd':
-                #- x
-                self.safe_change_all_feet(-0.1, 0, 0)
+                if self.cob_selected:
+                    #- x
+                    self.safe_change_all_feet(-0.1, 0, 0)
+                else:
+                    self.safe_change_single_foot(self.leg, 0.1, 0, 0)
+            elif c == '-':
+                if self.cob_selected:
+                    self.safe_change_all_feet(0, 0, -0.1)
+                else:
+                    self.safe_change_single_foot(self.leg, 0, 0, 0.1)
+            elif c == '+':
+                if self.cob_selected:
+                    self.safe_change_all_feet(0, 0, +0.1)
+                else:
+                    self.safe_change_single_foot(self.leg, 0, 0, -0.1)
             elif c == 'z':
                 self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
                 self.commit()
@@ -118,18 +153,14 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = 11.35#math.cos(math.pi/4) * (3.6+6.8) +4
+                d = 10#11.35#math.cos(math.pi/4) * (3.6+6.8) +4
+                h = 11
                 print "all feet at {}, -11".format(d)
-                self.Q.set_foot_pos(0, d, d+2, -11)
-                self.Q.set_foot_pos(1, -d, d+2, -11)
-                self.Q.set_foot_pos(2, -d, -d-2, -11)
-                self.Q.set_foot_pos(3, d, -d-2, -11)
-            elif c == '-':
-                self.safe_change_all_feet(0, 0, -0.1)
-            elif c == '+':
-                self.safe_change_all_feet(0, 0, +0.1)
+                self.Q.set_foot_pos(0, d, d+2, -h)
+                self.Q.set_foot_pos(1, -d, d+2, -h)
+                self.Q.set_foot_pos(2, -d, -d-2, -h)
+                self.Q.set_foot_pos(3, d, -d-2, -h)
             elif c == 'f':
-                self.Q.set_gg_velocity(0.01, 0.0, 0)
                 if self.Q.gg_step() == 2:
                     T = self.Q.get_target_foothold()
                     l = self.Q.get_LT()
@@ -147,8 +178,14 @@ class KeyboardThread (threading.Thread):
                     self.Q.get_LASMB(2), self.Q.get_LASMF(2))
                 print "LASMBF 3: {}, {}".format(
                     self.Q.get_LASMB(3), self.Q.get_LASMF(3))
+            elif c == 't':
+                try:
+                    x, y = self.xyq.get(False)
+                except:
+                    print "failed to grab data from xyq"
+                self.safe_change_all_feet(-x, -y, 0)
             self.put_on_queue()
-                
+
     def put_on_queue(self):
         raw_pivots = []
         for i in range(4):
@@ -168,8 +205,8 @@ class KeyboardThread (threading.Thread):
                 self.queue.get(False)
         except:
             self.queue.put(raw_pivots)
-    
-                
+
+
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
@@ -201,7 +238,13 @@ class KeyboardThread (threading.Thread):
                 self.Q.change_foot_pos(leg, 0, 0, -2, 0); #revert
         else:
             print("{} up failed".format(leg))
-            
+
+    def safe_change_single_foot(self, leg, x, y, z):
+        if self.Q.change_foot_pos(leg, x, y, z, 0):
+            self.commit()
+        else:
+            print "leg {} change {}, {}, {} failed".format(leg, x, y, z)
+
     def safe_change_all_feet(self, x, y, z):
         print("change all: x({}) y({}) z({})".format(x,y,z))
         if self.Q.change_foot_pos(0, x, y, z, 0):
@@ -238,7 +281,8 @@ class KeyboardThread (threading.Thread):
             self.config.transfer_speeds[2],
             self.config.ASM_min,
             self.config.ground_clearance,
-            self.config.search_width)
+            self.config.search_width,
+            self.config.L_min)
         #mechanical
         for leg in self.config.legs:
             for pivot in leg.pivots:
@@ -250,4 +294,4 @@ class KeyboardThread (threading.Thread):
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
         #move y dir
-        self.Q.set_gg_velocity(0.0001, 0.0, 0)
+        self.Q.set_gg_velocity(0.0000, 0.0001, 0)

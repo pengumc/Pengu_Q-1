@@ -105,6 +105,7 @@ class GaitGenerator {
   int LT();
   int state();
   Logger* logger();
+  void SetMinPivotFeetDistance(double min_value);
   void set_HL1(const double *array);
   void set_HL2(const double *array);
   void set_H_cob_com(const double *array);
