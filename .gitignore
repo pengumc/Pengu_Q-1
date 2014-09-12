@@ -12,3 +12,6 @@
 *.csv
 *.s#*
 *.b#*
+/quadruped/doc
+/quadruped/log.txt
+/hmatrix_visualizer/log.txt

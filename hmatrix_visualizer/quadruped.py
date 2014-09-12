@@ -9,11 +9,15 @@ class Quadruped:
         self.lib.QuadrupedGetHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetRelativeHMatrix.restype = POINTER(c_double)
         self.lib.QuadrupedGetCoM.restype = POINTER(c_double)
-        self.lib.QuadrupedChangePivotAngle.restype = c_bool;
-        self.lib.QuadrupedChangeFootPos.restype = c_bool;
-        self.lib.QuadrupedSetFootPos.restype = c_bool;
-        self.lib.QuadrupedSyncToDev.restype = c_bool;
-        self.lib.QuadrupedSyncFromDev.restype = c_bool;
+        self.lib.QuadrupedGetTargetFoothold.restype = POINTER(c_double)
+        self.lib.QuadrupedChangePivotAngle.restype = c_bool
+        self.lib.QuadrupedChangeFootPos.restype = c_bool
+        self.lib.QuadrupedSetFootPos.restype = c_bool
+        self.lib.QuadrupedSyncToDev.restype = c_bool
+        self.lib.QuadrupedSyncFromDev.restype = c_bool
+        self.lib.QuadrupedGetKM.restype = c_double
+        self.lib.QuadrupedGetLASMB.restype = c_double
+        self.lib.QuadrupedGetLASMF.restype = c_double
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -78,3 +82,53 @@ class Quadruped:
 
     def sync_to_device(self):
         return self.lib.QuadrupedSyncToDev(self.q)
+
+    def get_KM(self, leg):
+        return self.lib.QuadrupedGetKM(self.q, leg)
+        
+    def set_gg_config(self, HLlength, speed1, speed2, speed3, ASM_min,
+                      ground_clearance, search_width, L_min):
+        self.lib.QuadrupedSetGGConfig(self.q, c_double(HLlength),
+                                      c_double(speed1), c_double(speed2),
+                                      c_double(speed3),
+                                      c_double(ASM_min),
+                                      c_double(ground_clearance),
+                                      c_double(search_width),
+                                      c_double(L_min))
+        print "HLlength : {}".format(HLlength)
+        print "transfer speeds : {}, {}, {}".format(speed1, speed2, speed3)
+        print "ASM_min: {}".format(ASM_min)
+        print "ground_clearance: {}".format(ground_clearance)
+        print "search_width: {}".format(search_width)
+        print "L_min: {}".format(L_min)
+        
+    def set_gg_velocity(self, x, y, z):
+        self.lib.QuadrupedSetGGVelocity(self.q, c_double(x), c_double(y),
+                                        c_double(z))
+    
+    def get_LASMB(self, leg):
+        return self.lib.QuadrupedGetLASMB(self.q, leg)
+
+    def get_LASMF(self, leg):
+        return self.lib.QuadrupedGetLASMF(self.q, leg)
+        
+    def gg_step(self):
+        r = self.lib.QuadrupedGGStep(self.q)
+        if r == 0:
+            print "stepresult: transferring"
+        elif r == 1:
+            print "stepresult: no liftable legs"
+        elif r == 2:
+            print "stepresult: new foothold for leg {}".format(self.get_LT())
+            #self.print_hmatrix(self.get_target_foothold())
+        elif r == 3:
+            print "stepresult: calculate failed"
+        elif r == 4:
+            print "stepresult: AAAARGH!"
+        return r
+        
+    def get_target_foothold(self):
+        return self.lib.QuadrupedGetTargetFoothold(self.q)
+        
+    def get_LT(self):
+        return self.lib.QuadrupedGetLT(self.q)

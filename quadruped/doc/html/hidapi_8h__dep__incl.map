@@ -1,7 +1,0 @@
-<map id="include/hidapi.h" name="include/hidapi.h">
-<area shape="rect" id="node2" href="$usbcom_8h.html" title="include/usbcom.h" alt="" coords="156,80,280,107"/>
-<area shape="rect" id="node3" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="74,155,213,181"/>
-<area shape="rect" id="node6" href="$usbcom_8cpp.html" title="src/usbcom.cpp" alt="" coords="237,155,351,181"/>
-<area shape="rect" id="node4" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="5,229,135,256"/>
-<area shape="rect" id="node5" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="159,229,274,256"/>
-</map>

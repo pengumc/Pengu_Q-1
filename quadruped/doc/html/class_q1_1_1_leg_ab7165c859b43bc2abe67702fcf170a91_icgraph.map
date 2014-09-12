@@ -1,5 +1,0 @@
-<map id="Q1::Leg::GetHMatrixArray" name="Q1::Leg::GetHMatrixArray">
-<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#a307c899d40a9f58dd54279c4c4856a30" title="returns the HMatrix::array_ of the HMatrix at index " alt="" coords="230,5,414,47"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7" title="returns the HMatrix::array_ of the foot of leg index " alt="" coords="227,71,417,98"/>
-<area shape="rect" id="node3" href="$namespace_q1.html#a9515d2667d92a9431234103726eeb410" title="return a pointer to the values of a hmatrix (pivots and feet) " alt="" coords="465,42,641,69"/>
-</map>

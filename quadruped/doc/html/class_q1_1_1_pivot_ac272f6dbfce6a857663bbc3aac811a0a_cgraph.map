@@ -1,8 +1,0 @@
-<map id="Q1::Pivot::UpdateH_rel" name="Q1::Pivot::UpdateH_rel">
-<area shape="rect" id="node2" href="$class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c" title="returns parent_ " alt="" coords="211,5,347,32"/>
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#aac09c206d0c196b34ddb984a706b9c5e" title="Copy data from another HMatrix. " alt="" coords="214,56,345,83"/>
-<area shape="rect" id="node4" href="$class_q1_1_1_h_matrix.html#ac330aaec9a75631f57c797b88d015264" title="Invert a HMatrix. " alt="" coords="209,107,349,133"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right " alt="" coords="208,157,351,184"/>
-<area shape="rect" id="node6" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_. " alt="" coords="411,132,541,159"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values. " alt="" coords="399,183,553,209"/>
-</map>

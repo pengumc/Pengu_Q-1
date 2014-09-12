@@ -1,4 +1,0 @@
-<map id="Q1::Leg::SetPivotAngle" name="Q1::Leg::SetPivotAngle">
-<area shape="rect" id="node2" href="$class_q1_1_1_quadruped.html#a1a2d082db1ee1d7009fdbd67ff06cb02" title="update everything to match the currect device data* " alt="" coords="211,5,427,32"/>
-<area shape="rect" id="node3" href="$namespace_q1.html#a9f7c4e580f1df908d5750b788575d094" title="send all local pivot angles to the connected device " alt="" coords="475,5,665,32"/>
-</map>

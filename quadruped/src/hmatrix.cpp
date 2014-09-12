@@ -144,7 +144,10 @@ void HMatrix::Clear() {
 }
 
 // -------------------------------------------------------------------------Copy
-/** @brief Copy data from another HMatrix*/
+/** @brief Copy data from another HMatrix
+ *
+ * Doesn't copy parent.
+ */
 void HMatrix::Copy(const HMatrix src) {
   for (int i = 0; i < kMagic16; ++i) {
     array_[i] = src.array_[i];
