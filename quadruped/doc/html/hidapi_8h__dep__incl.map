@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$usbcom_8h.html" title="include/usbcom.h" alt="" coords="155,83,277,112"/>
-<area shape="rect" id="node5" href="$quadruped_8h.html" title="include/quadruped.h" alt="" coords="72,160,211,189"/>
-<area shape="rect" id="node11" href="$usbcom_8cpp.html" title="src/usbcom.cpp" alt="" coords="235,160,349,189"/>
-<area shape="rect" id="node7" href="$quadruped_8cpp.html" title="src/quadruped.cpp" alt="" coords="5,237,133,267"/>
-<area shape="rect" id="node9" href="$wrapper_8cpp.html" title="src/wrapper.cpp" alt="" coords="157,237,272,267"/>
-</map>

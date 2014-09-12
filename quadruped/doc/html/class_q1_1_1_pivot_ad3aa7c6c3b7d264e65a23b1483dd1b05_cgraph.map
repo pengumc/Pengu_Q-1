@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_h_matrix.html#a4c11a07ab11ecc3902c65a765db81f5c" title="returns parent_" alt="" coords="436,14,572,43"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_h_matrix.html#ac330aaec9a75631f57c797b88d015264" title="Invert a HMatrix." alt="" coords="225,26,369,55"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_h_matrix.html#aba2ff65fbc746da252035e2cae34deab" title="this = this dot right" alt="" coords="225,132,369,162"/>
-<area shape="rect" id="node13" href="$class_q1_1_1_h_matrix.html#ad3b15380e0bee5f4167676006e4749b7" title="set the parent" alt="" coords="216,79,379,108"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="439,106,569,135"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_h_matrix.html#ac599eb7b476a2205a557cb72098c5516" title="Mutator function for the Hmatrix values." alt="" coords="427,159,581,188"/>
-</map>

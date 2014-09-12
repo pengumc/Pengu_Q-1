@@ -122,7 +122,7 @@ double InvKinematic::Step() {
   //  }
 
   // calculate e = columnvector(e_x, e_y, e_z)
-  //  printf(" H_0_s: %f, %f, %f\n", H_0_s.GetX(), H_0_s.GetY(), H_0_s.GetZ());
+  // printf("ik H_0_s: %f, %f, %f\n", H_0_s.GetX(), H_0_s.GetY(), H_0_s.GetZ());
   double e[3] = {
     target_[0] - H_0_s.GetX(),
     target_[1] - H_0_s.GetY(),
@@ -224,6 +224,7 @@ int InvKinematic::Iterate(int max_steps) {
       if (success < end) {
         for (int j = 0; j < end; ++j) {
           pivots_[j]->set_angle(original_angles[j]);
+          flag_ = NEW_ANGLE_OUT_OF_REACH;
         }
       }
       return i;

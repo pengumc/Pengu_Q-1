@@ -10,13 +10,14 @@ TESTNAME = Q1test
 CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb
 LIBNAME = $(NAME).dll
 EXT = .exe
-CLIBS = -L$(TARGETDIR) -lhidapi
+TARGETDIR = bin
+CLIBS = -L$(TARGETDIR) -lhidapi -lrose_gait_generator -static-libgcc -static-libstdc++
 CLIBS_TEST = $(CLIBS) -l$(NAME)
 ifeq ($(shell uname), Linux)
 	CFLAGS = -std=c++03 -Isrc -Wall -Wconversion -I. -ggdb -fPIC
 	LIBNAME = lib$(NAME).so
 	EXT = 
-	CLIBS = -L$(TARGETDIR) -lhidapi-libusb -lusb-1.0
+	CLIBS = -L$(TARGETDIR) -lhidapi-libusb -lusb-1.0 -lrose_gait_generator
 	CLIBS_TEST = $(CLIBS) -l$(NAME)
 endif
 CC = gcc
@@ -25,7 +26,6 @@ OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o usbco
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)
-TARGETDIR = bin
 
 
 .PHONY:all library doc stylecheck everything

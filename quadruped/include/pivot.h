@@ -64,6 +64,8 @@ class Pivot {
   void set_abs_max_angle(double angle);
   void set_offset_angle(double angle);
   void set_parent(HMatrix* parent);
+  void set_mass(double mass);
+  double mass();
   bool set_angle(double angle);
   double angle();
   double abs_max_angle();
@@ -83,6 +85,7 @@ class Pivot {
   double abs_max_angle_;/**< @brief the absolute maximum angle*/
   double offset_angle_;/**< @brief the offset angle*/
   double angle_;/**< @brief the current angle*/
+  double mass_;/**<@brief relative mass of pivot (for use in CoM estimate)*/
   HMatrix H_frame_;
   /**< @brief HMatrix for this pivot relative to the previous (or COB)*/
   HMatrix H_rel_;/**< @brief HMatrix relative to 0*/

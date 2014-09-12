@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_q1_1_1_quadruped.html#a4f28556c898b6e4529c3a237c9c97fc7" title="returns the HMatrix::array_ of the foot of leg index" alt="" coords="269,5,459,35"/>
-<area shape="rect" id="node11" href="$class_q1_1_1_quadruped.html#a307c899d40a9f58dd54279c4c4856a30" title="returns the HMatrix::array_ of the HMatrix at index" alt="" coords="232,59,496,88"/>
-<area shape="rect" id="node5" href="$class_q1_1_1_leg.html#ab7165c859b43bc2abe67702fcf170a91" title="returns the HMatrix array of one of the pivots or the foot" alt="" coords="545,32,719,61"/>
-<area shape="rect" id="node7" href="$class_q1_1_1_pivot.html#a52a107a1f820f1d58fa7fd22b06e96e8" title="return a readable 16 value array with the elements of H_frame_" alt="" coords="769,32,951,61"/>
-<area shape="rect" id="node9" href="$class_q1_1_1_h_matrix.html#ade6d39153458f21c22fa3d0c1da14809" title="Accessor function for array_." alt="" coords="1000,32,1131,61"/>
-</map>
