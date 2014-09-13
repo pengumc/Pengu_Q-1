@@ -124,7 +124,6 @@ def plot_topdown(hmatrices, km_and_lasmbf):
         hmatrices[3][7]])
     #lasmbf lines (assuming v in x dir)
     ax_flat_lines[3].set_data([0, km_and_lasmbf[4]], [0,0])
-    print km_and_lasmbf[4]
     ax_flat_lines[3].set_color("r")
     ax_flat_lines[4].set_data([0, km_and_lasmbf[5]], [0,0])
     ax_flat_lines[4].set_color("g")

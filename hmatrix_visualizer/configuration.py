@@ -47,6 +47,11 @@ class Configuration:
                 z = pos.attrib["z"]
                 self.legs[-1].pivots.append(ConfigPivot(
                     id, x, y, z, rotx, roty, rotz, offset, abs_max))
+                #if there's a pw entry, add that as well
+                pw = pivot.find("pw")
+                if pw != None:
+                    self.legs[-1].pivots[-1].pw_0 = float(pw.attrib["zero"])
+                    self.legs[-1].pivots[-1].pw_60 = float(pw.attrib["sixty"])
         return(True)
 
 

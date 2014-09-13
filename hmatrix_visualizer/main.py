@@ -153,8 +153,8 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = 10#11.35#math.cos(math.pi/4) * (3.6+6.8) +4
-                h = 11
+                d = 3.8+7.35#11.35#math.cos(math.pi/4) * (3.6+6.8) +4
+                h = 10
                 print "all feet at {}, -11".format(d)
                 self.Q.set_foot_pos(0, d, d+2, -h)
                 self.Q.set_foot_pos(1, -d, d+2, -h)
@@ -293,5 +293,10 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
+                try:
+                    self.Q.set_pivot_pulsewidth_config(leg.id, pivot.id, 
+                        pivot.pw_0, pivot.pw_60)
+                except AttributeError:
+                    pass
         #move y dir
         self.Q.set_gg_velocity(0.0000, 0.0001, 0)

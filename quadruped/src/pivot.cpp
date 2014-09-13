@@ -13,6 +13,8 @@ Pivot::Pivot() {
   angle_ = 0.0;
   offset_angle_ = 0.0;
   mass_ = 1.0;
+  pw_0_ = 1500e-6;
+  pw_60_ = 1000e-6;
 }
 
 // -----------------------------------------------------------------Constructor2
@@ -25,6 +27,8 @@ Pivot::Pivot(HMatrix* parent) {
   // just add parent
   H_frame_.set_parent(parent);
   mass_ = 1.0;
+  pw_0_ = 1500e-6;
+  pw_60_ = 1000e-6;
 }
 
 // ----------------------------------------------------------------------H_frame
@@ -207,7 +211,27 @@ double Pivot::mass() {
  * pw<sub>min</sub>
  */
 double Pivot::GetServoPulsewidth(double angle) {
-  return 0.0;
+  return pw_0_ + angle / k60Range * (pw_60_ - pw_0_); 
 }
+
+// -----------------------------------------------------------GetServoPulsewidth
+/** @brief calls \ref GetServoPulsewidth with \ref angle_ */
+double Pivot::GetServoPulsewidth() {
+  return GetServoPulsewidth(angle_);
+}
+
+// ----------------------------------------------------------SetPulsewidthConfig
+/** @brief set \ref pw_0_ and \ref pw_60_ */
+void Pivot::SetPulsewidthConfig(double pw_0, double pw_60) {
+  if (pw_0_ > 0.0 ) pw_0_ = pw_0;
+  if (pw_60_ > 0.0 ) pw_60_ = pw_60;
+}
+
+// -------------------------------------------------------GetAngleFromPulsewidth
+/** @brief calculate what angle a given pulsewidth should cause */
+double Pivot::GetAngleFromPulsewidth(double pulsewidth) {
+  return (pulsewidth - pw_0_ ) / (pw_60_ - pw_0_) * k60Range;
+}
+
 
 }  // namespace Q1

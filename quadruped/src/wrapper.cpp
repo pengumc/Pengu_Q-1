@@ -71,6 +71,17 @@ extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
   q->ConfigurePivotRot(leg_index, pivot_index, axis, angle);
 }
 
+// --------------------------------------------QuadrupedSetPivotPulsewidthConfig
+/** @brief set \ref Pivot::pw_0_ and \ref Pivot::pw_60_
+ *
+ *
+ */
+extern "C" void QuadrupedSetPivotPulsewidthConfig(Quadruped* q, int leg_index,
+                                                   int pivot_index,
+                                                   double pw_0, double pw_60) {
+  q->SetPivotPulsewidthConfig(leg_index, pivot_index, pw_0, pw_60);
+}
+
 // --------------------------------------------------QuadrupedGetRelativeHMatrix
 /** @brief get the values of a hmatrix relative to the cob*/
 extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,

@@ -132,3 +132,7 @@ class Quadruped:
         
     def get_LT(self):
         return self.lib.QuadrupedGetLT(self.q)
+        
+    def set_pivot_pulsewidth_config(self, leg, pivot, pw_0, pw_60):
+        self.lib.QuadrupedSetPivotPulsewidthConfig(self.q, leg, pivot,
+            c_double(pw_0), c_double(pw_60))

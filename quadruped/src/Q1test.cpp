@@ -6,29 +6,11 @@
 
 
 int main(int argc, char** argv) {
-  Q1::UsbCom dev;
+  Q1::Quadruped q;
+  int r = q.ConnectDevice(0x16c0, 0x05df);
+  printf("conntect: %i\n", r);
   
-  double pulsewidths[12];
-  for (int i = 0; i<12; ++i) {
-    pulsewidths[i] = atof(argv[1]);
-  }
-  
-  int c = dev.Connect(0x16c0, 0x05df);
-  printf("connect: %i\n", c);
-  
-  c = dev.WriteServoPulsewidths(pulsewidths);
-  printf("write: %i\n", c);
-  
-  c = dev.ReadServoPulsewidths();
-  printf("read: %i\n", c);
-  
-  const double* pw = dev.device_servo_pulsewidths();
-  for(int i = 0; i < 12; ++i) {
-    printf("pw %i : %f\n", i, pw[i]);
-  }
-  
-  
-  hid_close(dev.handle());
-  
+  r = q.SyncFromDevice();
+  printf("sync from dev: %i\n", r);
   return 0;
 }

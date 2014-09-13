@@ -166,6 +166,35 @@ double Leg::GetPivotAngle(int index) {
   return pivots_[index]->angle();
 }
 
+// -----------------------------------------------------SetPivotPulsewidthConfig
+/** @brief sets \ref Pivot::pw_0_ and \ref Pivot::pw_60_ 
+ * @param index 0..kPivotCount-1
+ */
+void Leg::SetPivotPulsewidthConfig(int index, double pw_0, double pw_60) {
+  pivots_[index]->SetPulsewidthConfig(pw_0, pw_60);
+}
+
+// -----------------------------------------------------------GetPivotPulsewidth
+/** @brief return what the pivot at index would need for pulsewidth to 
+  * cause its current angle
+  * 
+  * @param index index of pivot 0..kPivotCount-1
+  */
+double Leg::GetPivotPulsewidth(int index) {
+  return pivots_[index]->GetServoPulsewidth();
+}
+
+// -------------------------------------------------------GetAngleFromPulsewidth
+/** @brief find the angle that a given pulsewidth would cause for the pivot at
+ * index
+  * 
+  * @param index index of pivot 0..kPivotCount-1
+  * @param pulsewidth the value to find the angle for
+ */
+double Leg::GetAngleFromPulsewidth(int index, double pulsewidth) {
+  return pivots_[index]->GetAngleFromPulsewidth(pulsewidth);
+} 
+
 // ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot (relative to Origin) */
 bool Leg::ChangeFootPos(double dx, double dy, double dz) {

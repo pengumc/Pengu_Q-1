@@ -36,6 +36,8 @@ class Quadruped {
   Quadruped();
   ~Quadruped();
   // functions
+  void SetPivotPulsewidthConfig(int leg_index, int pivot_index, double pw_0, 
+                                double pw_60);
   void set_reachable_sector_radius(double value);
   void set_gg_config(gaitgenerator_configuration config);
   ROGG::StepResults last_step_result();
