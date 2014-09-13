@@ -80,6 +80,7 @@ class Pivot {
   const double* GetRelativeHMatrixArray();
   void ConfigureRot(Axis axis, double angle);
   HMatrix GetSpecificH(HMatrix* target);
+  double GetServoPulsewidth(double angle);
 
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/

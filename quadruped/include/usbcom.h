@@ -9,6 +9,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "include/hidapi.h"
 
@@ -19,9 +20,8 @@ class UsbCom {
  public:
   // constants
   static const double kDefaultK = -0.034;/**< default value for \ref K_*/
-  static const uint16_t kMidPW = 331;  ///< 1.5 ms
-  static const uint16_t kMaxPW = 0x03A0; ///< 2.1 ms
-  static const double kSCFull = 2107e-6;
+  static const double kMaxPulsewidth = 2107e-6;
+  static const double kTimeConstant = 12e6/22.0;
   static const int kDeviceServoCount =12;
   /**< number of servos. Should match \ref Quadruped::kLegCount * \ref 
    * Leg::kPivotCount */
@@ -51,7 +51,7 @@ class UsbCom {
   // functions
   int Connect(uint16_t vid, uint16_t pid);
   int ReadServoAngles();
-  int WriteServoAngles(const double* servo_angles);
+  int WriteServoPulsewidths(const double* pulsewidths);
 
  private:
   hid_device* handle_;/**< @brief usb device handle*/

@@ -87,7 +87,7 @@ int UsbCom::ReadServoAngles() {
   if (!handle_) return 2;
   // request pos low
   wbuf_[0] = 0x00;
-  wbuf_[1] = kUsbCustomGetPosL;
+  // wbuf_[1] = kUsbCustomGetPosL;
   int res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);
@@ -100,11 +100,11 @@ int UsbCom::ReadServoAngles() {
     return 1;
   }
   for (int i = 0; i < kUsbReadBufferSize; ++i) {
-    device_servo_angles_[i] = (static_cast<double>(rbuf_[i]) - kMidPW) * K_;
+    // device_servo_angles_[i] = (static_cast<double>(rbuf_[i]) - kMidPW) * K_;
   }
   // request pos high
   wbuf_[0] = 0x00;
-  wbuf_[1] = kUsbCustomGetPosH;
+  // wbuf_[1] = kUsbCustomGetPosH;
   res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);
@@ -117,18 +117,18 @@ int UsbCom::ReadServoAngles() {
     return 1;
   }
   for (int i = 0; i < kHighPosCount; ++i) {
-    device_servo_angles_[i+kUsbReadBufferSize] =
-                                (static_cast<double>(rbuf_[i]) - kMidPW) * K_;
+    // device_servo_angles_[i+kUsbReadBufferSize] =
+                                // (  static_cast<double>(rbuf_[i]) - kMidPW) * K_;
   }
   return 0;
 }
 
 
-// -------------------------------------------------------------WriteServoAngles
-/** @brief write the local servo angles to the device
+// --------------------------------------------------------WriteServoPulsewidths
+/** @brief write a set of servo pulsewidths to the device
  * 
  * On failure the last error can be retrieved with \ref last_error
- * @param servo_angles pointer to 12 (\ref kDeviceServoCount) values to write
+ * @param pulsewidths pointer to 12 (\ref kDeviceServoCount) values to send
  * @retval 0 success
  * @retval 1 write failure
  * @retval 2 no device connected
@@ -136,13 +136,22 @@ int UsbCom::ReadServoAngles() {
  * @retval 4 write succeeded but subsequential read returned something
  * unexpected (nothing in \ref last_error_)
  * */
-int UsbCom::WriteServoAngles(const double* servo_angles) {
+int UsbCom::WriteServoPulsewidths(const double* pulsewidths) {
   if (!handle_) return 2;
   // send write command
   wbuf_[0] = 0x00;
   wbuf_[1] = 0x03;
+  double sc_pw;  // servocontroller pulsewidth value
+  union {
+    uint16_t value;
+    uint8_t buffer_values[2];
+  } pw;
   for (int i = 0; i < kDeviceServoCount; ++i) {
-    wbuf_[i+2] = static_cast<uint8_t>(servo_angles[i] / K_ + kMidPW);
+    // wbuf_[i+2] = static_cast<uint8_t>(servo_angles[i] / K_ + kMidPW);
+    sc_pw = (kMaxPulsewidth - pulsewidths[i]) * kTimeConstant;
+    pw.value = static_cast<uint16_t>(round(sc_pw));
+    wbuf_[i*2+2] = pw.buffer_values[1];
+    wbuf_[i*2+3] = pw.buffer_values[0];
   }
   int res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {

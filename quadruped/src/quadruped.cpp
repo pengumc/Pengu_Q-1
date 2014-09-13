@@ -259,13 +259,14 @@ bool Quadruped::SyncFromDevice() {
 // -----------------------------------------------------------------SyncToDevice
 /** @brief update everything on the device to match the local data*/
 bool Quadruped::SyncToDevice() {
-  double angles[UsbCom::kDeviceServoCount];
+  double pulsewidths[UsbCom::kDeviceServoCount];
   for (int l = 0; l < kLegCount; ++l) {
     for (int i = 0; i < Leg::kPivotCount; ++i) {
-      angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
+    
+      // angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
     }
   }
-  if (usb_.WriteServoAngles(angles)) {
+  if (usb_.WriteServoPulsewidths(pulsewidths)) {
     return false;
   }
   return true;

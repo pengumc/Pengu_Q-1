@@ -200,4 +200,14 @@ double Pivot::mass() {
   return mass_;
 }
 
+// -----------------------------------------------------------GetServoPulsewidth
+/** @brief calculate a proper servo pulsewidth to set a specific angle 
+ *
+ * pw = pw<sub>0</sub> - (angle / full range) * (pw<sub>max</sub -
+ * pw<sub>min</sub>
+ */
+double Pivot::GetServoPulsewidth(double angle) {
+  return 0.0;
+}
+
 }  // namespace Q1
