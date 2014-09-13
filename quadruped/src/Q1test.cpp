@@ -19,6 +19,16 @@ int main(int argc, char** argv) {
   c = dev.WriteServoPulsewidths(pulsewidths);
   printf("write: %i\n", c);
   
+  c = dev.ReadServoPulsewidths();
+  printf("read: %i\n", c);
+  
+  const double* pw = dev.device_servo_pulsewidths();
+  for(int i = 0; i < 12; ++i) {
+    printf("pw %i : %f\n", i, pw[i]);
+  }
+  
+  
+  hid_close(dev.handle());
   
   return 0;
 }

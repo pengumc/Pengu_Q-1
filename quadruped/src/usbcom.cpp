@@ -15,7 +15,6 @@ const uint8_t UsbCom::kUsbSuccess[UsbCom::kUsbReadBufferSize] =
  */
 UsbCom::UsbCom() {
   handle_ = NULL;
-  K_ = kDefaultK;
   last_error_ = NULL;
 }
 
@@ -28,12 +27,6 @@ UsbCom::~UsbCom() {
   hid_exit();
 }
 
-// ------------------------------------------------------------------------set_K
-/** @brief mutator for \ref K_*/
-void UsbCom::set_K(double new_K) {
-  K_ = new_K;
-}
-
 // -------------------------------------------------------------------last_error
 /** @brief get the last usb error or NULL
  *
@@ -43,10 +36,10 @@ const wchar_t* UsbCom::last_error() {
   return last_error_;
 }
 
-// ----------------------------------------------------------device_servo_angles
-/** @brief accessor for \ref device_servo_angles_*/
-const double* UsbCom::device_servo_angles() {
-  return device_servo_angles_;
+// -----------------------------------------------------device_servo_pulsewidths
+/** @brief accessor for \ref device_servo_pulsewidths__*/
+const double* UsbCom::device_servo_pulsewidths() {
+  return device_servo_pulsewidths_;
 }
 
 // ----------------------------------------------------------------------Connect
@@ -74,51 +67,91 @@ int UsbCom::Connect(uint16_t vid, uint16_t pid) {
   return 0;
 }
 
-// --------------------------------------------------------------ReadServoAngles
-/** @brief read the servo angles from the connected device
+// -----------------------------------------------------------------------handle
+/** @brief accessor for \ref handle_ */
+hid_device* UsbCom::handle() {
+  return handle_;
+}
+
+
+// ---------------------------------------------------------ReadServoPulsewidths
+/** @brief read the servo pulsewidths from the connected device
  *
  * On failure the last error is available in \ref last_error <br>
  * @retval 0 read was succesfull, values are stored in
- * \ref device_servo_angles_
+ * \ref device_servo_pulsewidths_
  * @retval 1 read was not successful, device handle is still valid
  * @retval 2 no device connected
  */
-int UsbCom::ReadServoAngles() {
+int UsbCom::ReadServoPulsewidths() {
   if (!handle_) return 2;
-  // request pos low
+  union {
+    uint16_t value;
+    uint8_t bytes[2];
+  } pw;  // temp storage because we'll receive high byte of pw first
+
+  // request pos 0..3
   wbuf_[0] = 0x00;
-  // wbuf_[1] = kUsbCustomGetPosL;
+  wbuf_[1] = kUsbCustomGetPos0To3;
   int res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);
     return 1;
   }
-  // read pos low
+  // read pos 0..3
   res = hid_read(handle_, rbuf_, sizeof(rbuf_));
   if (res < kUsbReadBufferSize) {
     last_error_ = hid_error(handle_);
     return 1;
   }
-  for (int i = 0; i < kUsbReadBufferSize; ++i) {
-    // device_servo_angles_[i] = (static_cast<double>(rbuf_[i]) - kMidPW) * K_;
+  // store them in device_servo_pulsewidths_
+  for (int i = 0; i < kUsbReadBufferSize; i += 2) {
+    pw.bytes[1] = rbuf_[i];
+    pw.bytes[0] = rbuf_[i+1];
+    device_servo_pulsewidths_[i>>1] = 
+      -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
   }
-  // request pos high
+  
+  // request pos 4..7
   wbuf_[0] = 0x00;
-  // wbuf_[1] = kUsbCustomGetPosH;
+  wbuf_[1] = kUsbCustomGetPos4To7;
   res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);
     return 1;
   }
-  // read pos high
+  // read pos 4..7
   res = hid_read(handle_, rbuf_, sizeof(rbuf_));
-  if (res < kHighPosCount) {
+  if (res < kUsbReadBufferSize) {
     last_error_ = hid_error(handle_);
     return 1;
   }
-  for (int i = 0; i < kHighPosCount; ++i) {
-    // device_servo_angles_[i+kUsbReadBufferSize] =
-                                // (  static_cast<double>(rbuf_[i]) - kMidPW) * K_;
+  for (int i = 0; i < kUsbReadBufferSize; i += 2) {
+    pw.bytes[1] = rbuf_[i];
+    pw.bytes[0] = rbuf_[i+1];
+    device_servo_pulsewidths_[(i>>1)+4] = 
+      -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
+  }
+  
+  // request pos 8..11
+  wbuf_[0] = 0x00;
+  wbuf_[1] = kUsbCustomGetPos8To11;
+  res = hid_write(handle_, wbuf_, sizeof(wbuf_));
+  if (res < 0) {
+    last_error_ = hid_error(handle_);
+    return 1;
+  }
+  // read pos 8..11
+  res = hid_read(handle_, rbuf_, sizeof(rbuf_));
+  if (res < kUsbReadBufferSize) {
+    last_error_ = hid_error(handle_);
+    return 1;
+  }
+  for (int i = 0; i < kUsbReadBufferSize; i += 2) {
+    pw.bytes[1] = rbuf_[i];
+    pw.bytes[0] = rbuf_[i+1];
+    device_servo_pulsewidths_[(i>>1)+8] = 
+      -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
   }
   return 0;
 }
