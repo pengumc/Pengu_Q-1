@@ -201,7 +201,6 @@ int UsbCom::WriteServoPulsewidths(const double* pulsewidths) {
     // readbuffer should containt  "success "
     return 4;
   }
-
   return 0;
 }
 

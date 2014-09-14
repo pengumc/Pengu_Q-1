@@ -57,7 +57,6 @@ class Quadruped {
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   int ConnectDevice(uint16_t vid, uint16_t pid);
-  const double* GetDeviceAngles();
   bool SyncToDevice();
   bool SyncFromDevice();
   double GetKM(int leg_index);
@@ -65,6 +64,7 @@ class Quadruped {
   double GetLASMB(int leg_index);
   ROGG::StepResults GGStep();
   int GetLT();
+  void SetAllAnglesTo0();
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/

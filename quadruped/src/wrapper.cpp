@@ -240,4 +240,10 @@ extern "C" const double* QuadrupedGetTargetFoothold(Quadruped* q) {
   return q->GetH_0_PLT();
 }
 
+// -----------------------------------------------------QuadrupedSetAllAnglesTo0
+/** @brief calls \ref Quadruped::SetAllAnglesTo0 */
+extern "C" void QuadrupedSetAllAnglesTo0(Quadruped* q) {
+  q->SetAllAnglesTo0();
+}
+
 }  // namespace Q1

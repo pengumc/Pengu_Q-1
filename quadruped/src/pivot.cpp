@@ -121,8 +121,8 @@ void Pivot::set_abs_max_angle(double angle) {
  * \image html offsetchange.png
  */
 void Pivot::set_offset_angle(double angle) {
-  const double diff = angle - offset_angle_;
-  H_frame_.SelfDot(HMatrix(Z_AXIS, diff));
+  // const double diff = angle - offset_angle_;
+  // H_frame_.SelfDot(HMatrix(Z_AXIS, diff));
   offset_angle_ = NormalizeAngle(angle);
 }
 
@@ -148,7 +148,8 @@ void Pivot::SetPosition(double x, double y, double z) {
  * \ref angle_ is kept up to date
  */
 bool Pivot::ChangeAngle(double delta_angle) {
-  const double a = offset_angle_ + angle_ + delta_angle;  // target true angle
+// const double a = offset_angle_ + angle_ + delta_angle;  // target true angle
+  const double a = angle_ + delta_angle;  // target angle
   if (!IsInRange(a)) {
     return false;
   } else {

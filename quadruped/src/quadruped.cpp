@@ -228,21 +228,19 @@ bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   }
 }
 
+// --------------------------------------------------------------SetAllAnglesTo0
+void Quadruped::SetAllAnglesTo0() {
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      legs_[l]->SetPivotAngle(i, 0.0);
+    }
+  }
+}
+
 // ----------------------------------------------------------------ConnectDevice
 /** @brief connect to usb device, see \ref UsbCom::Connect for return values*/
 int Quadruped::ConnectDevice(uint16_t vid, uint16_t pid) {
   return usb_.Connect(vid, pid);
-}
-
-// --------------------------------------------------------------GetDeviceAngles
-/** @brief read device servo angles*/
-const double* Quadruped::GetDeviceAngles() {
-  if (usb_.ReadServoPulsewidths() == 0) {
-    // return usb_.device_servo_angles();
-    return NULL;
-  } else {
-    return NULL;
-  }
 }
 
 // ---------------------------------------------------------------SyncFromDevice

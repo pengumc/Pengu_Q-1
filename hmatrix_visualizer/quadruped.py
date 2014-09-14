@@ -136,3 +136,6 @@ class Quadruped:
     def set_pivot_pulsewidth_config(self, leg, pivot, pw_0, pw_60):
         self.lib.QuadrupedSetPivotPulsewidthConfig(self.q, leg, pivot,
             c_double(pw_0), c_double(pw_60))
+    
+    def set_all_angles_to_0(self):
+        self.lib.QuadrupedSetAllAnglesTo0(self.q);
