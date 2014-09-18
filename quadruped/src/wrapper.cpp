@@ -71,6 +71,17 @@ extern "C" void QuadrupedConfigurePivotRot(Quadruped* q, int leg_index,
   q->ConfigurePivotRot(leg_index, pivot_index, axis, angle);
 }
 
+// --------------------------------------------QuadrupedSetPivotPulsewidthConfig
+/** @brief set \ref Pivot::pw_0_ and \ref Pivot::pw_60_
+ *
+ *
+ */
+extern "C" void QuadrupedSetPivotPulsewidthConfig(Quadruped* q, int leg_index,
+                                                   int pivot_index,
+                                                   double pw_0, double pw_60) {
+  q->SetPivotPulsewidthConfig(leg_index, pivot_index, pw_0, pw_60);
+}
+
 // --------------------------------------------------QuadrupedGetRelativeHMatrix
 /** @brief get the values of a hmatrix relative to the cob*/
 extern "C" const double* QuadrupedGetRelativeHMatrix(Quadruped* q,
@@ -227,6 +238,12 @@ extern "C" int QuadrupedGetLT(Quadruped* q) {
 /** @brief returns the gaitgenerator's last calculated target as H_0_PLT*/
 extern "C" const double* QuadrupedGetTargetFoothold(Quadruped* q) {
   return q->GetH_0_PLT();
+}
+
+// -----------------------------------------------------QuadrupedSetAllAnglesTo0
+/** @brief calls \ref Quadruped::SetAllAnglesTo0 */
+extern "C" void QuadrupedSetAllAnglesTo0(Quadruped* q) {
+  q->SetAllAnglesTo0();
 }
 
 }  // namespace Q1

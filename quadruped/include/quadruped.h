@@ -36,6 +36,8 @@ class Quadruped {
   Quadruped();
   ~Quadruped();
   // functions
+  void SetPivotPulsewidthConfig(int leg_index, int pivot_index, double pw_0, 
+                                double pw_60);
   void set_reachable_sector_radius(double value);
   void set_gg_config(gaitgenerator_configuration config);
   ROGG::StepResults last_step_result();
@@ -55,7 +57,6 @@ class Quadruped {
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   int ConnectDevice(uint16_t vid, uint16_t pid);
-  const double* GetDeviceAngles();
   bool SyncToDevice();
   bool SyncFromDevice();
   double GetKM(int leg_index);
@@ -63,6 +64,7 @@ class Quadruped {
   double GetLASMB(int leg_index);
   ROGG::StepResults GGStep();
   int GetLT();
+  void SetAllAnglesTo0();
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/

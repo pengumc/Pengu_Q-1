@@ -57,6 +57,8 @@ namespace Q1 {
  */
 class Pivot {
  public:
+  // constants
+  static const double k60Range = 60.0 / 180.0 * M_PI;
   // constructors
   Pivot();
   explicit Pivot(HMatrix* parent);
@@ -72,6 +74,7 @@ class Pivot {
   HMatrix H_frame();
   HMatrix* H_framep();
   // functions
+  void SetPulsewidthConfig(double pw_0, double pw_60);
   void UpdateH_rel();
   bool ChangeAngle(double delta_angle);
   void SetPosition(double x, double y, double z);
@@ -80,7 +83,10 @@ class Pivot {
   const double* GetRelativeHMatrixArray();
   void ConfigureRot(Axis axis, double angle);
   HMatrix GetSpecificH(HMatrix* target);
-
+  double GetServoPulsewidth(double angle);
+  double GetServoPulsewidth();
+  double GetAngleFromPulsewidth(double pulsewidth);
+  
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/
   double offset_angle_;/**< @brief the offset angle*/
@@ -89,6 +95,8 @@ class Pivot {
   HMatrix H_frame_;
   /**< @brief HMatrix for this pivot relative to the previous (or COB)*/
   HMatrix H_rel_;/**< @brief HMatrix relative to 0*/
+  double pw_0_;
+  double pw_60_;
 };
 
 }  // namespace Q1

@@ -9,6 +9,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "include/hidapi.h"
 
@@ -18,38 +19,36 @@ namespace Q1 {
 class UsbCom {
  public:
   // constants
-  static const double kDefaultK = -0.034;/**< default value for \ref K_*/
-  static const double kMidPW = 72;
-  static const int kDeviceServoCount =12;
+  static const double kMaxPulsewidth = 2107e-6;
+  static const double kTimeConstant = 12e6/22.0;
+  static const int kDeviceServoCount = 12;
   /**< number of servos. Should match \ref Quadruped::kLegCount * \ref 
    * Leg::kPivotCount */
-  static const int kUsbWriteBufferSize = kDeviceServoCount + 2;
+  static const int kUsbWriteBufferSize = kDeviceServoCount*2 + 2;
   /**< should correspond to the <b>input</b> report size (in bytes) +1 of the
    *  usbmaster https://github.com/pengumc/usbtoi2c <br>
-   * the assumption is made that the write buffer size = 2 + number of pivots 
+   * the assumption is made that the write buffer size = 2 + number of pivots*2
    * in the robot
    */
   static const int kUsbReadBufferSize = 8;
   /**< should correspond to the <b>output</b> report size (in bytes) of the
    *  usbmaster href"https://github.com/pengumc/usbtoi2c">UsbToI2C*/
-  static const int kHighPosCount = kDeviceServoCount - kUsbReadBufferSize;
-  /**< number of bytes to use from the result of reading pos high*/
-  static const uint8_t kUsbCustomGetPosL = 0x05;
-  static const uint8_t kUsbCustomGetPosH = 0x06;
+  static const uint8_t kUsbCustomGetPos0To3 = 0x05;
+  static const uint8_t kUsbCustomGetPos4To7 = 0x06;
+  static const uint8_t kUsbCustomGetPos8To11 = 0x07;
   static const uint8_t kUsbCustomSetData = 0x03;
   static const uint8_t kUsbSuccess[kUsbReadBufferSize];
   // constructor, destructor
   UsbCom();
   ~UsbCom();
   // accessors, mutators
-  void set_K(double new_K);
   const wchar_t* last_error();
-  const double* device_servo_angles();
+  const double* device_servo_pulsewidths();
+  hid_device* handle();
   // functions
   int Connect(uint16_t vid, uint16_t pid);
-  int ReadServoAngles();
-  int WriteServoAngles(const double* servo_angles);
-
+  int ReadServoPulsewidths();
+  int WriteServoPulsewidths(const double* pulsewidths);
 
  private:
   hid_device* handle_;/**< @brief usb device handle*/
@@ -58,11 +57,13 @@ class UsbCom {
   uint8_t wbuf_[kUsbWriteBufferSize];/**< @brief write buffer*/
   uint8_t rbuf_[kUsbReadBufferSize];/**< @brief read buffer*/
   const wchar_t* last_error_;
-  double device_servo_angles_[kDeviceServoCount];/**< last read angles*/
-  double K_;
+  double device_servo_pulsewidths_[kDeviceServoCount];/**< last read pw*/
   /**< @brief K factor
    *
-   * angle = K * (PW - PW<sub>mid</sub>)
+   * old: angle = K * (PW - PW<sub>mid</sub>)<br>
+   * new:<br>
+   * pw = 2107e-6 - x*22/12e6<br>
+   * x = 1500e-6 - (angle/full_range * 1000e-6)<br>
    */
 };
 

@@ -137,8 +137,6 @@ void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
       HMatrix(legs_[leg_index]->GetRelativeHMatrixArray(0)));
     gaitgenerator_->SetLegPivot0(leg_index+1, H_cob_pivot0.array());
   }
-  // TODO(michiel): technically if the foot changes, the gaitgenerator
-  // also needs to know
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
@@ -192,6 +190,16 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
   }
 }
 
+// -----------------------------------------------------SetPivotPulsewidthConfig
+/** @brief calls Leg::SetPivotPulsewidthConfig 
+ *
+ * @param pivot_index 0..kPivotCount-1
+ */
+void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index, 
+                                         double pw_0, double pw_60) {
+  legs_[leg_index]->SetPivotPulsewidthConfig(pivot_index, pw_0, pw_60);
+}
+
 // ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
@@ -220,36 +228,37 @@ bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   }
 }
 
+// --------------------------------------------------------------SetAllAnglesTo0
+void Quadruped::SetAllAnglesTo0() {
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      legs_[l]->SetPivotAngle(i, 0.0);
+    }
+  }
+}
+
 // ----------------------------------------------------------------ConnectDevice
 /** @brief connect to usb device, see \ref UsbCom::Connect for return values*/
 int Quadruped::ConnectDevice(uint16_t vid, uint16_t pid) {
   return usb_.Connect(vid, pid);
 }
 
-// --------------------------------------------------------------GetDeviceAngles
-/** @brief read device servo angles*/
-const double* Quadruped::GetDeviceAngles() {
-  if (usb_.ReadServoAngles() == 0) {
-    return usb_.device_servo_angles();
-  } else {
-    return NULL;
-  }
-}
-
 // ---------------------------------------------------------------SyncFromDevice
 /** @brief update everything to match the currect device data*
  *
- * @return 1 on failure, 0 on success
+ * @return false on failure, true on success
  */
 bool Quadruped::SyncFromDevice() {
-  if (usb_.ReadServoAngles()) {
+  if (usb_.ReadServoPulsewidths()) {
     return false;
   }
-  const double* angles = usb_.device_servo_angles();
+  const double* pulsewidths = usb_.device_servo_pulsewidths();
+  double pw;
   for (int l = 0; l < kLegCount; ++l) {
     for (int i = 0; i < Leg::kPivotCount; ++i) {
-      legs_[l]->SetPivotAngle(i, angles[l*Leg::kPivotCount + i]);
-      printf("%.3f\n", angles[l*Leg::kPivotCount + i]);
+      pw = pulsewidths[l*Leg::kPivotCount+i];
+      legs_[l]->SetPivotAngle(
+        i, legs_[l]->GetAngleFromPulsewidth(i, pw));
     }
     SetGaitgeneratorFoot(l);
   }
@@ -259,13 +268,13 @@ bool Quadruped::SyncFromDevice() {
 // -----------------------------------------------------------------SyncToDevice
 /** @brief update everything on the device to match the local data*/
 bool Quadruped::SyncToDevice() {
-  double angles[UsbCom::kDeviceServoCount];
+  double pulsewidths[UsbCom::kDeviceServoCount];
   for (int l = 0; l < kLegCount; ++l) {
     for (int i = 0; i < Leg::kPivotCount; ++i) {
-      angles[l*Leg::kPivotCount + i] = legs_[l]->GetPivotAngle(i);
+      pulsewidths[l * Leg::kPivotCount + i] = legs_[l]->GetPivotPulsewidth(i);
     }
   }
-  if (usb_.WriteServoAngles(angles)) {
+  if (usb_.WriteServoPulsewidths(pulsewidths)) {
     return false;
   }
   return true;

@@ -13,6 +13,8 @@ Pivot::Pivot() {
   angle_ = 0.0;
   offset_angle_ = 0.0;
   mass_ = 1.0;
+  pw_0_ = 1500e-6;
+  pw_60_ = 1000e-6;
 }
 
 // -----------------------------------------------------------------Constructor2
@@ -25,6 +27,8 @@ Pivot::Pivot(HMatrix* parent) {
   // just add parent
   H_frame_.set_parent(parent);
   mass_ = 1.0;
+  pw_0_ = 1500e-6;
+  pw_60_ = 1000e-6;
 }
 
 // ----------------------------------------------------------------------H_frame
@@ -117,8 +121,8 @@ void Pivot::set_abs_max_angle(double angle) {
  * \image html offsetchange.png
  */
 void Pivot::set_offset_angle(double angle) {
-  const double diff = angle - offset_angle_;
-  H_frame_.SelfDot(HMatrix(Z_AXIS, diff));
+  // const double diff = angle - offset_angle_;
+  // H_frame_.SelfDot(HMatrix(Z_AXIS, diff));
   offset_angle_ = NormalizeAngle(angle);
 }
 
@@ -144,7 +148,8 @@ void Pivot::SetPosition(double x, double y, double z) {
  * \ref angle_ is kept up to date
  */
 bool Pivot::ChangeAngle(double delta_angle) {
-  const double a = offset_angle_ + angle_ + delta_angle;  // target true angle
+// const double a = offset_angle_ + angle_ + delta_angle;  // target true angle
+  const double a = angle_ + delta_angle;  // target angle
   if (!IsInRange(a)) {
     return false;
   } else {
@@ -199,5 +204,35 @@ void Pivot::set_mass(double mass) {
 double Pivot::mass() {
   return mass_;
 }
+
+// -----------------------------------------------------------GetServoPulsewidth
+/** @brief calculate a proper servo pulsewidth to set a specific angle 
+ *
+ * pw = pw<sub>0</sub> - (angle / full range) * (pw<sub>max</sub -
+ * pw<sub>min</sub>
+ */
+double Pivot::GetServoPulsewidth(double angle) {
+  return pw_0_ + angle / k60Range * (pw_60_ - pw_0_); 
+}
+
+// -----------------------------------------------------------GetServoPulsewidth
+/** @brief calls \ref GetServoPulsewidth with \ref angle_ */
+double Pivot::GetServoPulsewidth() {
+  return GetServoPulsewidth(angle_);
+}
+
+// ----------------------------------------------------------SetPulsewidthConfig
+/** @brief set \ref pw_0_ and \ref pw_60_ */
+void Pivot::SetPulsewidthConfig(double pw_0, double pw_60) {
+  if (pw_0_ > 0.0 ) pw_0_ = pw_0;
+  if (pw_60_ > 0.0 ) pw_60_ = pw_60;
+}
+
+// -------------------------------------------------------GetAngleFromPulsewidth
+/** @brief calculate what angle a given pulsewidth should cause */
+double Pivot::GetAngleFromPulsewidth(double pulsewidth) {
+  return (pulsewidth - pw_0_ ) / (pw_60_ - pw_0_) * k60Range;
+}
+
 
 }  // namespace Q1

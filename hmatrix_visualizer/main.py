@@ -54,7 +54,7 @@ class KeyboardThread (threading.Thread):
         # wasd move body on xyplane
         # +- raise lower body
         # rt move foot 5 cm forward in nice transfer
-        print("\tz servo +0.1\n\tx servo -0.1")
+        print("\tz servo -0.1\n\tx servo +0.1")
         print("\tx all legs z -0.1\n\t+ all legs z +0.1")
         print("\t` sync from dev")
         print("\t~ sync to dev")
@@ -142,9 +142,15 @@ class KeyboardThread (threading.Thread):
                 else:
                     self.safe_change_single_foot(self.leg, 0, 0, -0.1)
             elif c == 'z':
-                self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
+                self.Q.change_pivot_angle(self.leg, self.pivot, -0.01)
                 self.commit()
             elif c == 'x':
+                self.Q.change_pivot_angle(self.leg, self.pivot, 0.01)
+                self.commit()
+            elif c == 'Z':
+                self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
+                self.commit()
+            elif c == 'X':
                 self.Q.change_pivot_angle(self.leg, self.pivot, 0.1)
                 self.commit()
             elif c == '`':
@@ -153,13 +159,15 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = 10#11.35#math.cos(math.pi/4) * (3.6+6.8) +4
-                h = 11
+                d = 3.8+7.35
+                h = 10
                 print "all feet at {}, -11".format(d)
                 self.Q.set_foot_pos(0, d, d+2, -h)
                 self.Q.set_foot_pos(1, -d, d+2, -h)
                 self.Q.set_foot_pos(2, -d, -d-2, -h)
                 self.Q.set_foot_pos(3, d, -d-2, -h)
+            elif c == 'R':
+                self.Q.set_all_angles_to_0()
             elif c == 'f':
                 if self.Q.gg_step() == 2:
                     T = self.Q.get_target_foothold()
@@ -293,5 +301,10 @@ class KeyboardThread (threading.Thread):
                 self.Q.configure_pivot_rot(leg.id, pivot.id, 2, pivot.rotz)
                 self.Q.set_pivot_config(leg.id, pivot.id, pivot.offset,
                     pivot.abs_max)
+                try:
+                    self.Q.set_pivot_pulsewidth_config(leg.id, pivot.id, 
+                        pivot.pw_0, pivot.pw_60)
+                except AttributeError:
+                    pass
         #move y dir
         self.Q.set_gg_velocity(0.0000, 0.0001, 0)

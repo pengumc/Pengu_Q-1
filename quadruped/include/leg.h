@@ -37,7 +37,10 @@ class Leg {
   bool ChangePivotAngle(int index, double angle);
   bool SetPivotAngle(int index, double angle);
   double GetPivotAngle(int index);
+  double GetPivotPulsewidth(int index);
+  double GetAngleFromPulsewidth(int index, double pulsewidth);
   bool ChangeFootPos(double dx, double dy, double dz);
+  void SetPivotPulsewidthConfig(int index, double pw_0, double pw_60);
   HMatrix GetCoM();
 
  private:
