@@ -141,6 +141,17 @@ class KeyboardThread (threading.Thread):
                     self.safe_change_all_feet(0, 0, +0.1)
                 else:
                     self.safe_change_single_foot(self.leg, 0, 0, -0.1)
+            elif c == 'n':
+                if not self.cob_selected:
+                    self.Q.change_foot_pos(self.leg, 0, 0, 0.1, 0)
+                    self.Q.change_foot_pos((self.leg+2)%4, 0, 0, 0.1, 0)
+                    self.commit();
+            elif c == 'm':
+                if not self.cob_selected:
+                    self.Q.change_foot_pos(self.leg, 0, 0, -0.1, 0)
+                    self.Q.change_foot_pos((self.leg+2)%4, 0, 0, -0.1, 0)
+                    self.commit();
+                    
             elif c == 'z':
                 self.Q.change_pivot_angle(self.leg, self.pivot, -0.01)
                 self.commit()
@@ -192,6 +203,16 @@ class KeyboardThread (threading.Thread):
                 except:
                     print "failed to grab data from xyq"
                 self.safe_change_all_feet(-x, -y, 0)
+            elif c == 'y':
+                if  not self.cob_selected:
+                    #self.safe_change_single_foot(self.leg, 1, 0, 0)
+                    phi = 0;
+                    for i in range(50):
+                        self.safe_change_all_feet(
+                            math.sin(phi)*0.2 ,math.cos(phi)*0.2, 0)
+                        print phi
+                        phi = phi + math.pi * 2/50.0
+                        #time.sleep(0.05)
             self.put_on_queue()
 
     def put_on_queue(self):

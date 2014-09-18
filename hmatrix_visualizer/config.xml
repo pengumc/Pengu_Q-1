@@ -23,7 +23,7 @@
             <pw zero="1453e-6" sixty="822e-6"/>
             <!-- 980..1927-->
         </pivot>
-        <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="0.00" abs_max="0.7853981633974483">
+        <pivot id="1" rotx="1.57079632679" roty="0" rotz="+0.08" offset="0.00" abs_max="0.7853981633974483">
             <pos x="3.6" y="0" z="0"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
@@ -45,7 +45,7 @@
             <pos x="3.6" y="0" z="0"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
-        <pivot id="2" rotx="0" roty="3.14159" rotz="-0.25" offset="0.0" abs_max="0.52359877559">
+        <pivot id="2" rotx="0" roty="3.14159" rotz="-0.25" offset="0.0" abs_max="0.78539816339">
             <pos x="6.8" y="0" z="0"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
