@@ -108,10 +108,10 @@ int UsbCom::ReadServoPulsewidths() {
   for (int i = 0; i < kUsbReadBufferSize; i += 2) {
     pw.bytes[1] = rbuf_[i];
     pw.bytes[0] = rbuf_[i+1];
-    device_servo_pulsewidths_[i>>1] = 
+    device_servo_pulsewidths_[i>>1] =
       -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
   }
-  
+
   // request pos 4..7
   wbuf_[0] = 0x00;
   wbuf_[1] = kUsbCustomGetPos4To7;
@@ -129,10 +129,10 @@ int UsbCom::ReadServoPulsewidths() {
   for (int i = 0; i < kUsbReadBufferSize; i += 2) {
     pw.bytes[1] = rbuf_[i];
     pw.bytes[0] = rbuf_[i+1];
-    device_servo_pulsewidths_[(i>>1)+4] = 
+    device_servo_pulsewidths_[(i>>1)+4] =
       -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
   }
-  
+
   // request pos 8..11
   wbuf_[0] = 0x00;
   wbuf_[1] = kUsbCustomGetPos8To11;
@@ -150,7 +150,7 @@ int UsbCom::ReadServoPulsewidths() {
   for (int i = 0; i < kUsbReadBufferSize; i += 2) {
     pw.bytes[1] = rbuf_[i];
     pw.bytes[0] = rbuf_[i+1];
-    device_servo_pulsewidths_[(i>>1)+8] = 
+    device_servo_pulsewidths_[(i>>1)+8] =
       -1.0 * static_cast<double>(pw.value) / kTimeConstant + kMaxPulsewidth;
   }
   return 0;
@@ -159,7 +159,7 @@ int UsbCom::ReadServoPulsewidths() {
 
 // --------------------------------------------------------WriteServoPulsewidths
 /** @brief write a set of servo pulsewidths to the device
- * 
+ *
  * On failure the last error can be retrieved with \ref last_error
  * @param pulsewidths pointer to 12 (\ref kDeviceServoCount) values to send
  * @retval 0 success

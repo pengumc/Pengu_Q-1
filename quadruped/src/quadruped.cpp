@@ -106,7 +106,7 @@ void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
 void Quadruped::SetGaitgeneratorFoot(int index) {
   // gaitgenerator takes H_pivot0_P#
   // but we're using pivot0 as actual actuator so let's do some MAGIC!
-  
+
   // copy H_cob_pivot0
   HMatrix magic(legs_[index]->GetHMatrixArray(0));
   // rotate to original 0 angle
@@ -114,7 +114,7 @@ void Quadruped::SetGaitgeneratorFoot(int index) {
   // inverse magic dot H_0_P
   HMatrix gg_H_pivot0_P = magic.Inverse().Dot(
     HMatrix(legs_[index]->GetRelativeHMatrixArray(Leg::kPivotCount)));
-    
+
   gaitgenerator_->SetLegP(index+1,  gg_H_pivot0_P.array());
   // HMatrix H_0_pivot0 = HMatrix(legs_[index]->GetRelativeHMatrixArray(0));
   // HMatrix H_0_P = HMatrix(legs_[index]->GetRelativeHMatrixArray(3));
@@ -122,7 +122,7 @@ void Quadruped::SetGaitgeneratorFoot(int index) {
   // printf("LEG[%i]:\n", index);
   // printf("just sent relative x = %f to gg\n", gg_H_pivot0_P.array()[3]);
   // printf("H_0_P.x = %f\n", H_0_P.array()[3]);
-  
+
   // inverse(H_0_pivot)*h_0_p
 }
 
@@ -191,11 +191,11 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
 }
 
 // -----------------------------------------------------SetPivotPulsewidthConfig
-/** @brief calls Leg::SetPivotPulsewidthConfig 
+/** @brief calls Leg::SetPivotPulsewidthConfig
  *
  * @param pivot_index 0..kPivotCount-1
  */
-void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index, 
+void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index,
                                          double pw_0, double pw_60) {
   legs_[leg_index]->SetPivotPulsewidthConfig(pivot_index, pw_0, pw_60);
 }

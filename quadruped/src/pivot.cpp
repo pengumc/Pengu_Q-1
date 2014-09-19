@@ -76,7 +76,7 @@ double Pivot::abs_max_angle() {
 
 // -----------------------------------------------------------------GetSpecificH
 /** @brief a h-matrix from this to a specified matrix in its upward tree path
- * 
+ *
  * @param target pointer to a target hmatrix. if target is not in the upward
  * path, the parent will not be set.
  * @return H_this_target or a parentless HMatrix if target was not encountered
@@ -108,8 +108,8 @@ void Pivot::set_parent(HMatrix* parent) {
 // ------------------------------------------------------------set_abs_max_angle
 /** @brief mutator for \ref abs_max_angle_
  *
- * \ref angle_ is reset to 0.0 
- */ 
+ * \ref angle_ is reset to 0.0
+ */
 void Pivot::set_abs_max_angle(double angle) {
   abs_max_angle_ = std::abs(NormalizeAngle(angle));
   set_angle(0.0);
@@ -117,7 +117,7 @@ void Pivot::set_abs_max_angle(double angle) {
 
 // -------------------------------------------------------------set_offset_angle
 /** @brief mutator for \ref offset_angle_
- * 
+ *
  * \image html offsetchange.png
  */
 void Pivot::set_offset_angle(double angle) {
@@ -143,7 +143,7 @@ void Pivot::SetPosition(double x, double y, double z) {
 
 // ------------------------------------------------------------------ChangeAngle
 /** @brief change the angle of rotation. false if new angle is out of range
- * 
+ *
  * if false is returned, nothing has changed.<br>
  * \ref angle_ is kept up to date
  */
@@ -161,7 +161,7 @@ bool Pivot::ChangeAngle(double delta_angle) {
 
 // --------------------------------------------------------------------IsInRange
 /** @brief true if angle is within the range specified by the offset and max
- * 
+ *
  * \image html angles.png
  */
 bool Pivot::IsInRange(double angle) {
@@ -184,7 +184,7 @@ const double* Pivot::GetRelativeHMatrixArray() {
 
 // -----------------------------------------------------------------ConfigureRot
 /** @brief configre the base orientation of the pivot
- * 
+ *
  * This resets the offset and the angle back to 0
  */
 void Pivot::ConfigureRot(Axis axis, double angle) {
@@ -206,13 +206,13 @@ double Pivot::mass() {
 }
 
 // -----------------------------------------------------------GetServoPulsewidth
-/** @brief calculate a proper servo pulsewidth to set a specific angle 
+/** @brief calculate a proper servo pulsewidth to set a specific angle
  *
  * pw = pw<sub>0</sub> - (angle / full range) * (pw<sub>max</sub -
  * pw<sub>min</sub>
  */
 double Pivot::GetServoPulsewidth(double angle) {
-  return pw_0_ + angle / k60Range * (pw_60_ - pw_0_); 
+  return pw_0_ + angle / k60Range * (pw_60_ - pw_0_);
 }
 
 // -----------------------------------------------------------GetServoPulsewidth

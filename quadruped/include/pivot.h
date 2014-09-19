@@ -86,7 +86,7 @@ class Pivot {
   double GetServoPulsewidth(double angle);
   double GetServoPulsewidth();
   double GetAngleFromPulsewidth(double pulsewidth);
-  
+
  private:
   double abs_max_angle_;/**< @brief the absolute maximum angle*/
   double offset_angle_;/**< @brief the offset angle*/

@@ -22,7 +22,7 @@ class UsbCom {
   static const double kMaxPulsewidth = 2107e-6;
   static const double kTimeConstant = 12e6/22.0;
   static const int kDeviceServoCount = 12;
-  /**< number of servos. Should match \ref Quadruped::kLegCount * \ref 
+  /**< number of servos. Should match \ref Quadruped::kLegCount * \ref
    * Leg::kPivotCount */
   static const int kUsbWriteBufferSize = kDeviceServoCount*2 + 2;
   /**< should correspond to the <b>input</b> report size (in bytes) +1 of the
