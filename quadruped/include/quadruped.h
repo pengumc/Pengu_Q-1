@@ -10,6 +10,7 @@
 #include <cstddef>
 
 #include "include/rogg/gaitgenerator.h"
+#include "include/springgg.h"
 #include "include/leg.h"
 #include "include/hmatrix.h"
 #include "include/usbcom.h"

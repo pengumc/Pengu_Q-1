@@ -6,11 +6,16 @@
 
 
 int main(int argc, char** argv) {
-  Q1::Quadruped q;
-  int r = q.ConnectDevice(0x16c0, 0x05df);
-  printf("conntect: %i\n", r);
-
-  r = q.SyncFromDevice();
-  printf("sync from dev: %i\n", r);
+  Q1::SpringGG sgg;
+  sgg.SetFootPosition(0, 150, 150);
+  sgg.SetFootPosition(1, -150, 150);
+  sgg.SetFootPosition(2, -150, -150);
+  sgg.SetFootPosition(3, 150, -150);
+  sgg.SetCoMPosition(0, 0);
+  sgg.ZeroForces();
+  sgg.SetFootPosition(1, -100, 150);
+  sgg.CalculateForces();
+  sgg.CalculateForces();
+  sgg.PrintForces();
   return 0;
 }
