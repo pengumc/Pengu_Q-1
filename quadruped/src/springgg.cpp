@@ -155,8 +155,40 @@ int SpringGG::GetLegWithHighestForce(double direction_angle) {
   return leg;
 }
 
-
-
+// ---------------------------------------------------------------GetDeltaVector
+/** @brief find a displacement for foot index so it's force in the 
+ * provided direction angle, is at least F. The foot will only be moved in the
+ * specified direction. vector_out[2] is set to -1 if something goes wrong.
+ */
+void SpringGG::GetDeltaVector(int index, double angle, double F, 
+                              double* vector_out) {
+  double original_x = feet_[index].x();
+  double original_y = feet_[index].y();
+  double cosangle = std::cos(angle);
+  double sinangle = std::sin(angle);
+  double dx = cosangle * 0.1;
+  double dy = sinangle * 0.1;
+  double F_projected = feet_[index].Fx() * cosangle +
+                       feet_[index].Fy() * sinangle;
+  int safeguard = 0;
+  while(F_projected > -F) {
+    feet_[index].ChangePosition(dx, dy);
+    CalculateForces();
+    F_projected = feet_[index].Fx() * cosangle + feet_[index].Fy() * sinangle;
+     // printf("F_projected = %f\n", F_projected);
+    ++safeguard;
+    if (safeguard > 1000) {
+      vector_out[2] = -1.0;
+      break;
+    }
+  }
+  vector_out[0] = feet_[index].x() - original_x;
+  vector_out[1] = feet_[index].y() - original_y;
+  // return feet to original state
+  feet_[index].SetPosition(original_x, original_y);
+  CalculateForces();
+}
+ 
 // ------------------------------------------------------------------constructor
 /** @brief constructor */
 SpringPoint::SpringPoint() {
@@ -185,6 +217,13 @@ void SpringPoint::AddForce(double x, double y) {
 void SpringPoint::SetPosition(double x, double y) {
   x_ = x;
   y_ = y;
+}
+
+// ---------------------------------------------------------------ChangePosition
+/** @brief add x and y to position */
+void SpringPoint::ChangePosition(double x, double y) {
+  x_ += x;
+  y_ += y;
 }
 
 // -------------------------------------------------------------------x accessor

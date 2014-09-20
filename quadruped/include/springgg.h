@@ -21,6 +21,7 @@ class SpringPoint {
   void ClearForce();
   void AddForce(double x, double y);
   void SetPosition(double x, double y);
+  void ChangePosition(double x, double y);
   double x();
   double y();
   double Fx();
@@ -67,6 +68,7 @@ class SpringGG {
   bool CoMInside(int index, double margin);
   void PrintForces();
   int GetLegWithHighestForce(double direction_angle);
+  void GetDeltaVector(int index, double angle, double F, double* vector_out);
  private:
   SpringPoint feet_[4];
   SpringPoint com_;
