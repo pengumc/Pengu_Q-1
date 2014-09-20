@@ -22,6 +22,37 @@ Quadruped::~Quadruped() {
   }
 }
 
+// -----------------------------------------------------SetPivotPulsewidthConfig
+/** @brief calls Leg::SetPivotPulsewidthConfig
+ *
+ * @param pivot_index 0..kPivotCount-1
+ */
+void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index,
+                                         double pw_0, double pw_60) {
+  legs_[leg_index]->SetPivotPulsewidthConfig(pivot_index, pw_0, pw_60);
+}
+
+// ------------------------------------------------------------------SetPivotPos
+/** @brief set the x,y,z coordinates of a pivot of a leg*/
+void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
+                            double z) {
+  legs_[leg_index]->SetPivotPos(pivot_index, x, y, z);
+}
+
+// ---------------------------------------------------------------SetPivotConfig
+/** @brief set the axis, offset and max of a pivot*/
+void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
+                               double abs_max) {
+  legs_[leg_index]->SetPivotConfig(pivot_index, offset, abs_max);
+}
+
+// ------------------------------------------------------------ConfigurePivotRot
+/** @brief modify R of a pivot while keeping Pivot::angle_ the same*/
+void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
+                                  double angle) {
+  legs_[leg_index]->ConfigurePivotRot(pivot_index, axis, angle);
+}
+
 // -------------------------------------------------------GetHMatrixArrayByIndex
 /** @brief returns the \ref HMatrix::array_ of the HMatrix at index
  *
@@ -34,6 +65,14 @@ const double* Quadruped::GetHMatrixArrayByIndex(int index) {
   } else {
     return NULL;
   }
+}
+
+// ------------------------------------------------------GetRelativeHMatrixArray
+/** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg
+ * relative to cob.*/
+const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
+                                                 int pivot_index) {
+  return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
 }
 
 // ------------------------------------------------------------------GetEndpoint
@@ -49,35 +88,26 @@ const double* Quadruped::GetEndpoint(int index) {
   }
 }
 
-// ------------------------------------------------------------------SetPivotPos
-/** @brief set the x,y,z coordinates of a pivot of a leg*/
-void Quadruped::SetPivotPos(int leg_index, int pivot_index, double x, double y,
-                            double z) {
-  legs_[leg_index]->SetPivotPos(pivot_index, x, y, z);
-}
+// -----------------------------------------------------------------------GetCoM
+/** @brief returns the center of mass position as HMatrix relative to world
+ *
+ * The xy-plane (of the origin frame) is assumed to be normal to gravity\n
+ * Also updates the CoM in the gaitgenerator
+ */
+const double* Quadruped::GetCoM() {
+  double total_mass = 0.0;
+  double m_l;
+  HMatrix unwweighted;
+  for (int l = 0; l < kLegCount; ++l) {
+    m_l = legs_[l]->get_total_mass();
+    total_mass = total_mass + m_l;
+    unwweighted.SelfDotScaled(legs_[l]->GetCoM(), m_l);
+  }
+  H_com_.Clear();
+  H_com_.SelfDotScaled(unwweighted, 1.0 / total_mass);
 
-// ------------------------------------------------------------ConfigurePivotRot
-/** @brief modify R of a pivot while keeping Pivot::angle_ the same*/
-void Quadruped::ConfigurePivotRot(int leg_index, int pivot_index, Axis axis,
-                                  double angle) {
-  legs_[leg_index]->ConfigurePivotRot(pivot_index, axis, angle);
+  return H_com_.array();
 }
-
-// ------------------------------------------------------GetRelativeHMatrixArray
-/** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg
- * relative to cob.*/
-const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
-                                                 int pivot_index) {
-  return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
-}
-
-// ---------------------------------------------------------------SetPivotConfig
-/** @brief set the axis, offset and max of a pivot*/
-void Quadruped::SetPivotConfig(int leg_index, int pivot_index, double offset,
-                               double abs_max) {
-  legs_[leg_index]->SetPivotConfig(pivot_index, offset, abs_max);
-}
-
 
 // -------------------------------------------------------------ChangePivotAngle
 /** @brief change a pivots angle, false on out of bounds*/
@@ -88,16 +118,6 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
   } else {
     return false;
   }
-}
-
-// -----------------------------------------------------SetPivotPulsewidthConfig
-/** @brief calls Leg::SetPivotPulsewidthConfig
- *
- * @param pivot_index 0..kPivotCount-1
- */
-void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index,
-                                         double pw_0, double pw_60) {
-  legs_[leg_index]->SetPivotPulsewidthConfig(pivot_index, pw_0, pw_60);
 }
 
 // ----------------------------------------------------------------ChangeFootPos
@@ -141,6 +161,21 @@ int Quadruped::ConnectDevice(uint16_t vid, uint16_t pid) {
   return usb_.Connect(vid, pid);
 }
 
+// -----------------------------------------------------------------SyncToDevice
+/** @brief update everything on the device to match the local data*/
+bool Quadruped::SyncToDevice() {
+  double pulsewidths[UsbCom::kDeviceServoCount];
+  for (int l = 0; l < kLegCount; ++l) {
+    for (int i = 0; i < Leg::kPivotCount; ++i) {
+      pulsewidths[l * Leg::kPivotCount + i] = legs_[l]->GetPivotPulsewidth(i);
+    }
+  }
+  if (usb_.WriteServoPulsewidths(pulsewidths)) {
+    return false;
+  }
+  return true;
+}
+
 // ---------------------------------------------------------------SyncFromDevice
 /** @brief update everything to match the currect device data*
  *
@@ -160,42 +195,6 @@ bool Quadruped::SyncFromDevice() {
     }
   }
   return true;
-}
-
-// -----------------------------------------------------------------SyncToDevice
-/** @brief update everything on the device to match the local data*/
-bool Quadruped::SyncToDevice() {
-  double pulsewidths[UsbCom::kDeviceServoCount];
-  for (int l = 0; l < kLegCount; ++l) {
-    for (int i = 0; i < Leg::kPivotCount; ++i) {
-      pulsewidths[l * Leg::kPivotCount + i] = legs_[l]->GetPivotPulsewidth(i);
-    }
-  }
-  if (usb_.WriteServoPulsewidths(pulsewidths)) {
-    return false;
-  }
-  return true;
-}
-
-// -----------------------------------------------------------------------GetCoM
-/** @brief returns the center of mass position as HMatrix relative to world
- *
- * The xy-plane (of the origin frame) is assumed to be normal to gravity\n
- * Also updates the CoM in the gaitgenerator
- */
-const double* Quadruped::GetCoM() {
-  double total_mass = 0.0;
-  double m_l;
-  HMatrix unwweighted;
-  for (int l = 0; l < kLegCount; ++l) {
-    m_l = legs_[l]->get_total_mass();
-    total_mass = total_mass + m_l;
-    unwweighted.SelfDotScaled(legs_[l]->GetCoM(), m_l);
-  }
-  H_com_.Clear();
-  H_com_.SelfDotScaled(unwweighted, 1.0 / total_mass);
-
-  return H_com_.array();
 }
 
 }  // namespace Q1

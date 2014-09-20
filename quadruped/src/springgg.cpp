@@ -105,8 +105,8 @@ bool SpringGG::IsInside(int index, double x, double y) {
 }
 
 // --------------------------------------------------------------------CoMInside
-/** @brief check if CoM is inside support pattern (see \ref IsInside) with 
- * some margin 
+/** @brief check if CoM is inside support pattern (see \ref IsInside) with
+ * some margin
  */
 bool SpringGG::CoMInside(int index, double margin) {
   if (IsInside(index, com_.x() - margin, com_.y()) &&
@@ -117,7 +117,7 @@ bool SpringGG::CoMInside(int index, double margin) {
   } else {
     return false;
   }
-} 
+}
 
 // ------------------------------------------------------------------PrintForces
 /** @brief dump net forces on feet and com to stdout */
@@ -137,7 +137,7 @@ void SpringGG::PrintForces() {
 // -------------------------------------------------------GetLegWithHighestForce
 /** @brief return the leg-index (0-based) for the foot that has the highest
  * positive net force in the given direction
- * 
+ *
  * @return -1 if no foot has a positive force.
  */
 int SpringGG::GetLegWithHighestForce(double direction_angle) {
