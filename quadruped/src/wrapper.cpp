@@ -179,4 +179,40 @@ extern "C" void QuadrupedSetAllAnglesTo0(Quadruped* q) {
   q->SetAllAnglesTo0();
 }
 
+// ------------------------------------------------------QuadrupedUpdateSpringGG
+/** @brief calls \ref Quadruped::UpdateSpringGG */
+extern "C" void QuadrupedUpdateSpringGG(Quadruped* q) {
+  q->UpdateSpringGG();
+}
+
+// --------------------------------------------------------QuadrupedZeroSpringGG
+/** @brief calls \ref Quadruped::ZeroSpringGG */
+extern "C" void QuadrupedZeroSpringGG(Quadruped* q) {
+  q->ZeroSpringGG();
+}
+
+// ----------------------------------------------QuadrupedGetLegWithHighestForce
+/** @brief calls \ref Quadruped::GetLegWithHighestForce */
+extern "C" int QuadrupedGetLegWithHighestForce(Quadruped* q, double angle) {
+  return q->GetLegWithHighestForce(angle);
+}
+
+// ----------------------------------------------------------QuadrupedCanLiftLeg
+/** @brief calls \ref Quadruped::CanLiftLeg */
+extern "C" bool QuadrupedCanLiftLeg(Quadruped* q, int index, double margin) {
+  return q->CanLiftLeg(index, margin);
+}
+
+// -----------------------------------------------QuadrupedGetLastSpringGGVector
+/** @brief calls \ref Quadruped::CalcSpringGGTarget 
+ * 
+ * when z component of vector <> 0, the result is invalid
+ */
+extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
+                                                        double angle,
+                                                        double F) {
+  q->CalcSpringGGTarget(index, angle, F);
+  return q->get_last_sgg_vector();
+}
+
 }  // namespace Q1

@@ -12,6 +12,7 @@ Quadruped::Quadruped() {
   for (uint8_t i = 0; i< kLegCount; ++i) {
     legs_[i] = new Leg(i, &H_cob_);
   }
+  sgg_.SetCoMPosition(0.0, 0.0);
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -132,7 +133,7 @@ bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
 }
 
 // -------------------------------------------------------------------SetFootPos
-/** @brief set x y  z for foot. false if IK fails. COB frame*/
+/** @brief set x y  z for foot. false if IK fails. 0 frame*/
 bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   const double* H = legs_[leg_index]->GetRelativeHMatrixArray(
                                                               Leg::kPivotCount);
@@ -153,6 +154,20 @@ void Quadruped::SetAllAnglesTo0() {
       legs_[l]->SetPivotAngle(i, 0.0);
     }
   }
+}
+
+// -----------------------------------------------------------EqualizeFeetLevels
+/** @brief set all feet Z */
+// TODO(michiel): very bad function. either add safeguards or remove
+void Quadruped::EqualizeFeetLevels(double z) {
+  const double* p0 = GetRelativeHMatrixArray(0, Leg::kPivotCount);
+  const double* p1 = GetRelativeHMatrixArray(1, Leg::kPivotCount);
+  const double* p2 = GetRelativeHMatrixArray(2, Leg::kPivotCount);
+  const double* p3 = GetRelativeHMatrixArray(3, Leg::kPivotCount);
+  legs_[0]->SetFootPos(0, p0[HMatrix::kX], p0[HMatrix::kY], z);
+  legs_[1]->SetFootPos(1, p0[HMatrix::kX], p0[HMatrix::kY], z);
+  legs_[2]->SetFootPos(2, p0[HMatrix::kX], p0[HMatrix::kY], z);
+  legs_[3]->SetFootPos(3, p0[HMatrix::kX], p0[HMatrix::kY], z);
 }
 
 // ----------------------------------------------------------------ConnectDevice
@@ -195,6 +210,62 @@ bool Quadruped::SyncFromDevice() {
     }
   }
   return true;
+}
+
+// ---------------------------------------------------------------UpdateSpringGG
+/** @brief update the spring gaitgenerator with the current feet positions*/
+void Quadruped::UpdateSpringGG() {
+  const double* p0 = GetRelativeHMatrixArray(0, Leg::kPivotCount);
+  const double* p1 = GetRelativeHMatrixArray(1, Leg::kPivotCount);
+  const double* p2 = GetRelativeHMatrixArray(2, Leg::kPivotCount);
+  const double* p3 = GetRelativeHMatrixArray(3, Leg::kPivotCount);
+  sgg_.SetFootPosition(0, p0[HMatrix::kX], p0[HMatrix::kY]);
+  sgg_.SetFootPosition(1, p1[HMatrix::kX], p1[HMatrix::kY]);
+  sgg_.SetFootPosition(2, p2[HMatrix::kX], p2[HMatrix::kY]);
+  sgg_.SetFootPosition(3, p3[HMatrix::kX], p3[HMatrix::kY]);
+  sgg_.CalculateForces();
+  sgg_.PrintForces();
+}
+
+// -----------------------------------------------------------------ZeroSpringGG
+/** @brief set all spring forces to 0 for the current feet positions*/
+void Quadruped::ZeroSpringGG() {
+  sgg_.ZeroForces();
+}
+
+// -------------------------------------------------------GetLegWithHighestForce
+/** @brief calls \ref SpringGG::GetLegWithHighestForce */
+int Quadruped::GetLegWithHighestForce(double direction_angle) {
+  return sgg_.GetLegWithHighestForce(direction_angle);
+}
+
+// -------------------------------------------------------------------CanLiftLeg
+/** @brief check if a leg can be lifted without losing stability
+ * 
+ * Make sure you have called \ref UpdateSpringGG first
+ */
+bool Quadruped::CanLiftLeg(int index, double margin) {
+  return sgg_.CoMInside(index, margin);
+}
+
+// -----------------------------------------------------------CalcSpringGGTarget
+/** @brief calls \ref SpringGG::GetDeltaVector and stores it in  
+ * \ref last_sgg_vector_
+ */
+bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
+  sgg_.GetDeltaVector(index, angle, F, last_sgg_vector_);
+  if (last_sgg_vector_[2] != 0.0) {
+    return false;
+  } else {
+    return true;
+  }
+  
+} 
+
+// ----------------------------------------------------------get_last_sgg_vector
+/** @brief return the last vector calculated by \ref sgg_ */
+const double* Quadruped::get_last_sgg_vector() {
+  return last_sgg_vector_;
 }
 
 }  // namespace Q1

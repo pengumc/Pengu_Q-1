@@ -51,10 +51,18 @@ class Quadruped {
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   void SetAllAnglesTo0();
+  void EqualizeFeetLevels(int index);
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();
   bool SyncFromDevice();
+  // functions to do gaitgeneration
+  void UpdateSpringGG();
+  void ZeroSpringGG();
+  int GetLegWithHighestForce(double direction_angle);
+  bool CanLiftLeg(int index, double margin);
+  bool CalcSpringGGTarget(int index, double angle, double F);
+  const double* get_last_sgg_vector();
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
@@ -62,6 +70,7 @@ class Quadruped {
   HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
+  double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
 };
 
 }  // namespace Q1

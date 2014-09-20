@@ -171,6 +171,7 @@ void SpringGG::GetDeltaVector(int index, double angle, double F,
   double F_projected = feet_[index].Fx() * cosangle +
                        feet_[index].Fy() * sinangle;
   int safeguard = 0;
+  vector_out[2] = 0.0;
   while(F_projected > -F) {
     feet_[index].ChangePosition(dx, dy);
     CalculateForces();
