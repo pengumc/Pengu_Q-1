@@ -14,8 +14,13 @@ int main(int argc, char** argv) {
   sgg.SetCoMPosition(0, 0);
   sgg.ZeroForces();
   sgg.SetFootPosition(1, -100, 150);
-  sgg.CalculateForces();
+  sgg.SetCoMPosition(10, 0);
   sgg.CalculateForces();
   sgg.PrintForces();
+  printf("com inside 0 = %i\n", sgg.CoMInside(0, 0.0));
+  printf("com inside 1 = %i\n", sgg.CoMInside(1, 0.0));
+  printf("com inside 2 = %i\n", sgg.CoMInside(2, 0.0));
+  printf("com inside 3 = %i\n", sgg.CoMInside(3, 0.0));
+  printf("leg = %i\n", sgg.GetLegWithHighestForce(0.0));
   return 0;
 }

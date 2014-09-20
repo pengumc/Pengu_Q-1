@@ -10,6 +10,8 @@
 
 #include <cmath>
 
+#include "include/utility.h"
+
 namespace Q1 {
 
 /** @brief connection point for a spring */
@@ -50,7 +52,7 @@ class Spring {
 /** @brief spring based gaitgenerator
  *
  * info needed: feet and com location on ground (xy) plane. K for each spring
- *
+ * and base locations (for spring equilibrium)
  *
  */
 class SpringGG {
@@ -61,14 +63,15 @@ class SpringGG {
   void SetCoMPosition(double x, double y);
   void ZeroForces();
   void CalculateForces();
+  bool IsInside(int index, double x, double y);
+  bool CoMInside(int index, double margin);
   void PrintForces();
+  int GetLegWithHighestForce(double direction_angle);
  private:
   SpringPoint feet_[4];
   SpringPoint com_;
   Spring springs[kSpringCount];
 };
-
-
 
 }  // namespace Q1
 

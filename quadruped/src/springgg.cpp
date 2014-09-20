@@ -67,6 +67,58 @@ void SpringGG::CalculateForces() {
   }
 }
 
+// --------------------------------------------------------------------IsInside
+/** @brief check if point at x,y is inside the support pattern that allows
+ * lifting of leg index
+ */
+bool SpringGG::IsInside(int index, double x, double y) {
+  double v0[3], v1[3], v2[3], v3[3], v_p[3], v_com[3];
+  SpringPoint* p1 = &feet_[(index+1)%4];
+  SpringPoint* p2 = &feet_[(index+2)%4];
+  SpringPoint* p3 = &feet_[(index+3)%4];
+
+  v_p[0] = p2->x() - p1->x();
+  v_p[1] = p2->y() - p1->y();
+  v_com[0] = x - p1->x();
+  v_com[1] = y - p1->y();
+  CrossProduct3(v_p, v_com, v0);
+
+  v_p[0] = p3->x() - p1->x();
+  v_p[1] = p3->y() - p1->y();
+  v_com[0] = x - p1->x();
+  v_com[1] = y - p1->y();
+  CrossProduct3(v_p, v_com, v1);
+
+  v_p[0] = p1->x() - p2->x();
+  v_p[1] = p1->y() - p2->y();
+  v_com[0] = x - p2->x();
+  v_com[1] = y - p2->y();
+  CrossProduct3(v_p, v_com, v2);
+
+  v_p[0] = p3->x() - p2->x();
+  v_p[1] = p3->y() - p2->y();
+  v_com[0] = x - p2->x();
+  v_com[1] = y - p2->y();
+  CrossProduct3(v_p, v_com, v3);
+
+  return ((v0[2]*v1[2] < 0) && (v2[2]*v3[2] < 0));
+}
+
+// --------------------------------------------------------------------CoMInside
+/** @brief check if CoM is inside support pattern (see \ref IsInside) with 
+ * some margin 
+ */
+bool SpringGG::CoMInside(int index, double margin) {
+  if (IsInside(index, com_.x() - margin, com_.y()) &&
+      IsInside(index, com_.x() + margin, com_.y()) &&
+      IsInside(index, com_.x(), com_.y() - margin) &&
+      IsInside(index, com_.x(), com_.y() + margin)) {
+    return true;
+  } else {
+    return false;
+  }
+} 
+
 // ------------------------------------------------------------------PrintForces
 /** @brief dump net forces on feet and com to stdout */
 void SpringGG::PrintForces() {
@@ -81,6 +133,28 @@ void SpringGG::PrintForces() {
   printf("com: (%.0f, %.0f)\n Fx = %f\n Fy = %f\n\n",
     com_.x(), com_.y(), com_.Fx(), com_.Fy());
 }
+
+// -------------------------------------------------------GetLegWithHighestForce
+/** @brief return the leg-index (0-based) for the foot that has the highest
+ * positive net force in the given direction
+ * 
+ * @return -1 if no foot has a positive force.
+ */
+int SpringGG::GetLegWithHighestForce(double direction_angle) {
+  double F;
+  double F_high = 0;
+  int leg = -1;
+  for (int i = 0; i < 4; ++i) {
+    F = feet_[i].Fx() * std::cos(direction_angle) +
+            feet_[i].Fy() * std::sin(direction_angle);
+    if (F > F_high) {
+      F_high = F;
+      leg = i;
+    }
+  }
+  return leg;
+}
+
 
 
 // ------------------------------------------------------------------constructor
