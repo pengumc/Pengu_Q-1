@@ -51,7 +51,7 @@ class Quadruped {
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   void SetAllAnglesTo0();
-  void EqualizeFeetLevels(int index);
+  bool EqualizeFeetLevels(double z);
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();

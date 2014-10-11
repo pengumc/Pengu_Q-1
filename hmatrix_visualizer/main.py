@@ -136,6 +136,7 @@ class KeyboardThread (threading.Thread):
                     self.safe_change_all_feet(-0.1, 0, 0)
                 else:
                     self.safe_change_single_foot(self.leg, 0.1, 0, 0)
+            #OTHERS
             elif c == '-':
                 if self.cob_selected:
                     self.safe_change_all_feet(0, 0, -0.1)
@@ -188,15 +189,7 @@ class KeyboardThread (threading.Thread):
                     print "failed to grab data from xyq"
                 self.safe_change_all_feet(-x, -y, 0)
             elif c == 'y':
-                if  not self.cob_selected:
-                    #self.safe_change_single_foot(self.leg, 1, 0, 0)
-                    phi = 0;
-                    for i in range(50):
-                        self.safe_change_all_feet(
-                            math.sin(phi)*0.2 ,math.cos(phi)*0.2, 0)
-                        print phi
-                        phi = phi + math.pi * 2/50.0
-                        #time.sleep(0.05)
+                print "equalize ", self.Q.equalize_feet_levels(-7.5)
             elif c == 'u':
                 self.Q.update_spring_gg()
                 self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)

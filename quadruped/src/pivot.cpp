@@ -176,7 +176,11 @@ const double* Pivot::GetHMatrixArray() {
 }
 
 // ------------------------------------------------------GetRelativeHMatrixArray
-/** @brief return a readable 16 value array with the elements of \ref H_rel_*/
+/** @brief return a readable 16 value array with the elements of \ref H_rel_
+ *
+ * These values can only be considered valid directly after calling this
+ * function.
+ */
 const double* Pivot::GetRelativeHMatrixArray() {
   UpdateH_rel();
   return H_rel_.array();

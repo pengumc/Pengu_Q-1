@@ -16,6 +16,7 @@ class Quadruped:
         self.lib.QuadrupedSyncFromDev.restype = c_bool
         self.lib.QuadrupedCanLiftLeg.restype = c_bool
         self.lib.QuadrupedGetLastSpringGGVector.restype = POINTER(c_double)
+        self.lib.QuadrupedEqualizeFeetLevels.restype = c_bool
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -99,3 +100,6 @@ class Quadruped:
     def get_last_spring_gg_vector(self, index, angle, F):
         return self.lib.QuadrupedGetLastSpringGGVector(self.q, index, 
             c_double(angle), c_double(F))
+
+    def equalize_feet_levels(self, z):
+        return self.lib.QuadrupedEqualizeFeetLevels(self.q, c_double(z))

@@ -215,4 +215,10 @@ extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
   return q->get_last_sgg_vector();
 }
 
+// --------------------------------------------------QuadrupedEqualizeFeetLevels
+/** @brief calls \ref Quadruped::EqualizeFeetLevels */
+extern "C" bool QuadrupedEqualizeFeetLevels(Quadruped* q, double z) {
+  return q->EqualizeFeetLevels(z);
+}
+
 }  // namespace Q1

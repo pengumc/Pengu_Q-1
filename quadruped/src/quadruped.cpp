@@ -157,17 +157,29 @@ void Quadruped::SetAllAnglesTo0() {
 }
 
 // -----------------------------------------------------------EqualizeFeetLevels
-/** @brief set all feet Z */
-// TODO(michiel): very bad function. either add safeguards or remove
-void Quadruped::EqualizeFeetLevels(double z) {
-  const double* p0 = GetRelativeHMatrixArray(0, Leg::kPivotCount);
-  const double* p1 = GetRelativeHMatrixArray(1, Leg::kPivotCount);
-  const double* p2 = GetRelativeHMatrixArray(2, Leg::kPivotCount);
-  const double* p3 = GetRelativeHMatrixArray(3, Leg::kPivotCount);
-  legs_[0]->SetFootPos(0, p0[HMatrix::kX], p0[HMatrix::kY], z);
-  legs_[1]->SetFootPos(1, p0[HMatrix::kX], p0[HMatrix::kY], z);
-  legs_[2]->SetFootPos(2, p0[HMatrix::kX], p0[HMatrix::kY], z);
-  legs_[3]->SetFootPos(3, p0[HMatrix::kX], p0[HMatrix::kY], z);
+/** @brief set all feet Z, 0 frame */
+bool Quadruped::EqualizeFeetLevels(double z) {
+  const double* p[kLegCount];
+  double original_z[kLegCount];
+  int i = 0;
+  for (i = 0; i < kLegCount; ++i) {
+    // try to move leg i
+    p[i] = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    original_z[i] = p[i][HMatrix::kZ];
+    if (!SetFootPos(i, p[i][HMatrix::kX], p[i][HMatrix::kY], z)) {
+      // on fail undo leg i-1 ... 0
+      printf("eq fail at i=%i\n", i);
+      printf("eq target: %.2f, %.2f, %.2f\n", p[i][HMatrix::kX], 
+             p[i][HMatrix::kY], z);
+      while (i > 0) {
+        --i;
+        printf("eq undo %i\n", i);
+        SetFootPos(i, p[i][HMatrix::kX], p[i][HMatrix::kY], original_z[i]);
+      }
+      return false;
+    }
+  }
+  return true;
 }
 
 // ----------------------------------------------------------------ConnectDevice
