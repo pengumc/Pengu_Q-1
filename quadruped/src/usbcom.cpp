@@ -37,7 +37,7 @@ const wchar_t* UsbCom::last_error() {
 }
 
 // -----------------------------------------------------device_servo_pulsewidths
-/** @brief accessor for \ref device_servo_pulsewidths__*/
+/** @brief accessor for \ref device_servo_pulsewidths_ */
 const double* UsbCom::device_servo_pulsewidths() {
   return device_servo_pulsewidths_;
 }

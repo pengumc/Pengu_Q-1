@@ -26,7 +26,7 @@ Quadruped::~Quadruped() {
 // -----------------------------------------------------SetPivotPulsewidthConfig
 /** @brief calls Leg::SetPivotPulsewidthConfig
  *
- * @param pivot_index 0..kPivotCount-1
+ * pivot_index is in range 0..kPivotCount-1
  */
 void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index,
                                          double pw_0, double pw_60) {
@@ -169,7 +169,7 @@ bool Quadruped::EqualizeFeetLevels(double z) {
     if (!SetFootPos(i, p[i][HMatrix::kX], p[i][HMatrix::kY], z)) {
       // on fail undo leg i-1 ... 0
       printf("eq fail at i=%i\n", i);
-      printf("eq target: %.2f, %.2f, %.2f\n", p[i][HMatrix::kX], 
+      printf("eq target: %.2f, %.2f, %.2f\n", p[i][HMatrix::kX],
              p[i][HMatrix::kY], z);
       while (i > 0) {
         --i;
@@ -253,7 +253,7 @@ int Quadruped::GetLegWithHighestForce(double direction_angle) {
 
 // -------------------------------------------------------------------CanLiftLeg
 /** @brief check if a leg can be lifted without losing stability
- * 
+ *
  * Make sure you have called \ref UpdateSpringGG first
  */
 bool Quadruped::CanLiftLeg(int index, double margin) {
@@ -261,7 +261,7 @@ bool Quadruped::CanLiftLeg(int index, double margin) {
 }
 
 // -----------------------------------------------------------CalcSpringGGTarget
-/** @brief calls \ref SpringGG::GetDeltaVector and stores it in  
+/** @brief calls \ref SpringGG::GetDeltaVector and stores it in
  * \ref last_sgg_vector_
  */
 bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
@@ -271,8 +271,7 @@ bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
   } else {
     return true;
   }
-  
-} 
+}
 
 // ----------------------------------------------------------get_last_sgg_vector
 /** @brief return the last vector calculated by \ref sgg_ */
