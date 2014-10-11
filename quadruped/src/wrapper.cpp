@@ -221,4 +221,16 @@ extern "C" bool QuadrupedEqualizeFeetLevels(Quadruped* q, double z) {
   return q->EqualizeFeetLevels(z);
 }
 
+// ----------------------------------------------------------QuadrupedRotateBody
+/** @brief calls \ref Quadruped::RotateBody */
+extern "C" bool QuadrupedRotateBody(Quadruped* q, Axis axis, double angle) {
+  return q->RotateBody(axis, angle);
+}
+
+// -----------------------------------------------------------QuadrupedResetBody
+/** @brief calls \ref Quadruped::ResetBody */
+extern "C" void QuadrupedResetBody(Quadruped* q) {
+  q->ResetBody();
+}
+
 }  // namespace Q1

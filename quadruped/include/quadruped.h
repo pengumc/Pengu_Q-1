@@ -49,9 +49,12 @@ class Quadruped {
   // functions to change pivot states
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
+  bool ChangeAllFeetPos(double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   void SetAllAnglesTo0();
   bool EqualizeFeetLevels(double z);
+  bool RotateBody(Axis axis, double angle);
+  void ResetBody();
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();
@@ -67,6 +70,7 @@ class Quadruped {
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
+  
   HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/

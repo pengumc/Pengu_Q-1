@@ -174,6 +174,7 @@ class KeyboardThread (threading.Thread):
                 d = 3.8+7.35-1
                 h = 11
                 print "all feet at {}, -11".format(d)
+                self.Q.reset_body()
                 self.Q.set_foot_pos(0, d, d+2, -h)
                 self.Q.set_foot_pos(1, -d, d+2, -h)
                 self.Q.set_foot_pos(2, -d, -d-2, -h)
@@ -190,6 +191,27 @@ class KeyboardThread (threading.Thread):
                 self.safe_change_all_feet(-x, -y, 0)
             elif c == 'y':
                 print "equalize ", self.Q.equalize_feet_levels(-7.5)
+            #Body rotation [ ] { } ; '
+            elif c == '[':
+                print "body, z-axis  +0.005 ", self.Q.rotate_body(2, 0.005);
+                self.commit()
+            elif c == ']':
+                print "body, z-axis  -0.005 ", self.Q.rotate_body(2, -0.005);
+                self.commit()
+            elif c == '{':
+                print "body, y-axis  +0.005", self.Q.rotate_body(1, 0.005);
+                self.commit()
+            elif c == '}':
+                print "body, y-axis  -0.005", self.Q.rotate_body(1, -0.005);
+                self.commit()
+            elif c == ';':
+                print "body, x-axis  +0.005", self.Q.rotate_body(0, 0.005);
+                self.commit()
+            elif c == "'":
+                print "body, x-axis  -0.005", self.Q.rotate_body(0, -0.005);
+                self.commit()
+                
+            # U I O P springgg commands
             elif c == 'u':
                 self.Q.update_spring_gg()
                 self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)

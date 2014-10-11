@@ -125,11 +125,25 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
 /** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
-  if (legs_[leg_index]->ChangeFootPos(dx, dy, dz)) {
-    return true;
-  } else {
-    return false;
+  return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
+// -------------------------------------------------------------ChangeAllFeetPos
+/** @brief change the position of all feet by dx, dy, dz. frame 0*/
+bool Quadruped::ChangeAllFeetPos(double dx, double dy, double dz) {
+  int i;
+  for (i = 0; i < kLegCount; ++i) {
+    // try to move a leg
+    if (!ChangeFootPos(i, dx, dy, dz)) {
+      // on fail undo all changed legs
+      while (i > 0) {
+        --i;
+        ChangeFootPos(i, -dx, -dy, -dz);
+      }
+      return false;
+    }
   }
+  return true;
 }
 
 // -------------------------------------------------------------------SetFootPos
@@ -140,11 +154,7 @@ bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   const double dx = x - H[HMatrix::kX];
   const double dy = y - H[HMatrix::kY];
   const double dz = z - H[HMatrix::kZ];
-  if (ChangeFootPos(leg_index, dx, dy, dz)) {
-    return true;
-  } else {
-    return false;
-  }
+  return ChangeFootPos(leg_index, dx, dy, dz);
 }
 
 // --------------------------------------------------------------SetAllAnglesTo0
@@ -180,6 +190,51 @@ bool Quadruped::EqualizeFeetLevels(double z) {
     }
   }
   return true;
+}
+
+// -------------------------------------------------------------------RotateBody
+/** Rotate the robot's body while keeping all feet at the same frame 0 pos */
+bool Quadruped::RotateBody(Axis axis, double angle) {
+  // grab xyz of each feet in frame 0.
+  double deltas[kLegCount][3];
+  int i;
+  for (i = 0; i < kLegCount; ++i) {
+    const double* p = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    deltas[i][0] = -p[HMatrix::kX];
+    deltas[i][1] = -p[HMatrix::kY];
+    deltas[i][2] = -p[HMatrix::kZ];
+  }
+  // rotate cob
+  HMatrix R = HMatrix(axis, angle);
+  H_cob_.SelfDot(R);
+  // diff feet pos in frame 0. delta = new - old
+  for (i = 0; i < kLegCount; ++i) {
+    const double* p = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    deltas[i][0] += p[HMatrix::kX];
+    deltas[i][1] += p[HMatrix::kY];
+    deltas[i][2] += p[HMatrix::kZ];
+  }
+  // set new feet pos to -delta
+  for (i = 0; i < kLegCount; ++i) {
+    if(!ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2])) {
+      // on fail simply rotate cob back, and undo any changed legs
+      while (i > 0) {
+        ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2]);
+      }
+      H_cob_.SelfDot(R.Inverse());
+      return false;
+    }
+  }
+  return true;
+}
+
+// --------------------------------------------------------------------ResetBody
+/** @brief restore H_cob_ to I(4) while keeping all feet pos 
+ * 
+ * This doesn't change the robot pose
+ */
+void Quadruped::ResetBody() {
+  H_cob_.Clear();
 }
 
 // ----------------------------------------------------------------ConnectDevice
