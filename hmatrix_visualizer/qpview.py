@@ -61,16 +61,16 @@ def data_gen():
     try:
         queue_data = kbt.queue.get(False) # don't block, [throw empty exception]
         if queue_data:
-            yield queue_data[:17], queue_data[17:]
+            yield queue_data
         else:
-            yield [], []
+            yield []
     except:
-        yield [], []
+        yield []
     
 def run_ani(data):
     #draw stuff
     i = 0
-    raw_hmatrices, km_and_lasmbf = data
+    raw_hmatrices = data
     for raw_H in raw_hmatrices:
         hmatrix = np_conv_hmatrix16(raw_H)
         #multiply each point with the hmatrix
@@ -80,8 +80,8 @@ def run_ani(data):
         transformed_points = np.round(np.delete(transformed_points, 3, 1),2)
         add_cube(transformed_points, i)
         i = i + 1
-    if len(raw_hmatrices) == 17 and len(km_and_lasmbf) == 6:
-        plot_topdown(raw_hmatrices, km_and_lasmbf)
+    if len(raw_hmatrices) == 17:
+        plot_topdown(raw_hmatrices)
 
 def add_cube(points, i):
     global ax3d_scatters, ax3d
@@ -99,7 +99,7 @@ def add_cube(points, i):
             ax3d_lines[index].set_3d_properties([s[2], e[2]])
             index = index + 1
             
-def plot_topdown(hmatrices, km_and_lasmbf):
+def plot_topdown(hmatrices):
     #plot xy of com
     global ax_flat_scatters
     ax_flat_scatters[0].remove()
@@ -107,7 +107,7 @@ def plot_topdown(hmatrices, km_and_lasmbf):
         hmatrices[16][3], hmatrices[16][7], s=200, c='r')
     #plot xy of cob (aka 0,0)
     ax_flat_scatters[1].remove()
-    ax_flat_scatters[1] = ax_flat.scatter(0,0, s=100, c='g')
+    ax_flat_scatters[1] = ax_flat.scatter(0,0, s=30, c='g')
     #plot crosslines
     ax_flat_lines[0].set_data(
         [hmatrices[3][3], hmatrices[11][3]],
@@ -122,12 +122,6 @@ def plot_topdown(hmatrices, km_and_lasmbf):
         [hmatrices[3][7], hmatrices[7][7],
         hmatrices[11][7], hmatrices[15][7],
         hmatrices[3][7]])
-    #lasmbf lines (assuming v in x dir)
-    ax_flat_lines[3].set_data([0, km_and_lasmbf[4]], [0,0])
-    ax_flat_lines[3].set_color("r")
-    ax_flat_lines[4].set_data([0, km_and_lasmbf[5]], [0,0])
-    ax_flat_lines[4].set_color("g")
-
             
 if __name__ == "__main__":
     # start keyboard thread

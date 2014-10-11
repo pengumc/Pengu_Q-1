@@ -2,7 +2,7 @@
 /quadruped/*.o
 /quadruped/bin/*.exe
 /quadruped/bin/*.so
-/stream.txt
+/stream.ini
 /quadruped/session
 /quadruped/tags
 /quadruped/bin

@@ -60,6 +60,10 @@ class KeyboardThread (threading.Thread):
         print("\t~ sync to dev")
         self.leg = 0
         self.pivot = 0
+        self.sgg_leg = -1
+        self.sgg_target = None
+        self.sgg_liftable = False
+        self.sgg_last = -1
         self.cob_selected = True
         self.put_on_queue()
         while True:
@@ -111,6 +115,7 @@ class KeyboardThread (threading.Thread):
                 if self.cob_selected:
                     # - y
                     self.safe_change_all_feet(0, -0.1, 0)
+                    self.cycle()
                 else:
                     self.safe_change_single_foot(self.leg, 0, 0.1, 0)
             elif c == 'a':
@@ -131,6 +136,7 @@ class KeyboardThread (threading.Thread):
                     self.safe_change_all_feet(-0.1, 0, 0)
                 else:
                     self.safe_change_single_foot(self.leg, 0.1, 0, 0)
+            #OTHERS
             elif c == '-':
                 if self.cob_selected:
                     self.safe_change_all_feet(0, 0, -0.1)
@@ -143,15 +149,10 @@ class KeyboardThread (threading.Thread):
                     self.safe_change_single_foot(self.leg, 0, 0, -0.1)
             elif c == 'n':
                 if not self.cob_selected:
-                    self.Q.change_foot_pos(self.leg, 0, 0, 0.1, 0)
-                    self.Q.change_foot_pos((self.leg+2)%4, 0, 0, 0.1, 0)
-                    self.commit();
+                    self.stable_up(self.leg)
             elif c == 'm':
                 if not self.cob_selected:
-                    self.Q.change_foot_pos(self.leg, 0, 0, -0.1, 0)
-                    self.Q.change_foot_pos((self.leg+2)%4, 0, 0, -0.1, 0)
-                    self.commit();
-                    
+                    self.stable_down(self.leg)
             elif c == 'z':
                 self.Q.change_pivot_angle(self.leg, self.pivot, -0.01)
                 self.commit()
@@ -170,33 +171,17 @@ class KeyboardThread (threading.Thread):
             elif c == '~':
                 self.commit()
             elif c == 'r':
-                d = 3.8+7.35
-                h = 10
+                d = 3.8+7.35-1
+                h = 11
                 print "all feet at {}, -11".format(d)
                 self.Q.set_foot_pos(0, d, d+2, -h)
                 self.Q.set_foot_pos(1, -d, d+2, -h)
                 self.Q.set_foot_pos(2, -d, -d-2, -h)
                 self.Q.set_foot_pos(3, d, -d-2, -h)
+                self.Q.update_spring_gg()
+                self.Q.zero_spring_gg()
             elif c == 'R':
                 self.Q.set_all_angles_to_0()
-            elif c == 'f':
-                if self.Q.gg_step() == 2:
-                    T = self.Q.get_target_foothold()
-                    l = self.Q.get_LT()
-                    #cob is at 0
-                    H = self.Q.get_relative_hmatrix(l, 3)
-                    dx = T[3] - H[3]
-                    dy = T[7] - H[7]
-                    self.transfer_leg(l, dx, dy)
-            elif c == 'p':
-                print "LASMBF 0: {}, {}".format(
-                    self.Q.get_LASMB(0), self.Q.get_LASMF(0))
-                print "LASMBF 1: {}, {}".format(
-                    self.Q.get_LASMB(1), self.Q.get_LASMF(1))
-                print "LASMBF 2: {}, {}".format(
-                    self.Q.get_LASMB(2), self.Q.get_LASMF(2))
-                print "LASMBF 3: {}, {}".format(
-                    self.Q.get_LASMB(3), self.Q.get_LASMF(3))
             elif c == 't':
                 try:
                     x, y = self.xyq.get(False)
@@ -204,15 +189,43 @@ class KeyboardThread (threading.Thread):
                     print "failed to grab data from xyq"
                 self.safe_change_all_feet(-x, -y, 0)
             elif c == 'y':
-                if  not self.cob_selected:
-                    #self.safe_change_single_foot(self.leg, 1, 0, 0)
-                    phi = 0;
-                    for i in range(50):
-                        self.safe_change_all_feet(
-                            math.sin(phi)*0.2 ,math.cos(phi)*0.2, 0)
-                        print phi
-                        phi = phi + math.pi * 2/50.0
-                        #time.sleep(0.05)
+                print "equalize ", self.Q.equalize_feet_levels(-7.5)
+            elif c == 'u':
+                self.Q.update_spring_gg()
+                self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
+                print "HF leg (0-based): {}".format(self.sgg_leg)
+            elif c == 'i':
+                if 0 <= self.sgg_leg <= 3:
+                    self.sgg_liftable = self.Q.can_lift_leg(self.sgg_leg, 1.0)
+                    print "leg {} can be lifted? {}".format(
+                        self.sgg_leg, self.sgg_liftable)
+                else:
+                    print "sgg_leg = {}".format(self.sgg_leg)
+            elif c == 'o':
+                if 0 <= self.sgg_leg <= 3:
+                    F = 11
+                    if self.sgg_leg == 0 or self.sgg_leg == 1: F = 7
+                    self.sgg_target = self.Q.get_last_spring_gg_vector(
+                        self.sgg_leg, math.pi/2, F)
+                    print "sgg target {}, {}, {}".format(
+                        self.sgg_target[0], self.sgg_target[1],
+                        self.sgg_target[2])
+                    if self.sgg_target[2] <> 0.0:
+                        self.sgg_target = None
+                        print "sgg failed to find target"
+                else:
+                    print "sgg_leg = {}".format(self.sgg_leg)
+            elif c == 'p':
+                if (0 <= self.sgg_leg <= 3 and self.sgg_liftable and 
+                self.sgg_target[2] == 0.0):
+                    print "changing foot {} by {}, {}".format(
+                        self.sgg_leg, self.sgg_target[0], self.sgg_target[1])
+                    self.transfer_leg(self.sgg_leg, self.sgg_target[0],
+                        self.sgg_target[1])
+                else:
+                    print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
+            elif c == '[':
+                self.cycle()
             self.put_on_queue()
 
     def put_on_queue(self):
@@ -222,51 +235,103 @@ class KeyboardThread (threading.Thread):
                 raw_pivots.append(
                     self.Q.get_relative_hmatrix(i, pivot))
         raw_pivots.append(self.Q.get_com());
-        raw_pivots.append(self.Q.get_KM(0))
-        raw_pivots.append(self.Q.get_KM(1))
-        raw_pivots.append(self.Q.get_KM(2))
-        raw_pivots.append(self.Q.get_KM(3))
-        raw_pivots.append(self.Q.get_LASMB(self.leg))
-        raw_pivots.append(self.Q.get_LASMF(self.leg))
-        #empty queue
         try:
             while True:
                 self.queue.get(False)
         except:
             self.queue.put(raw_pivots)
 
-
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
 
+    def cycle(self):
+        self.Q.update_spring_gg()
+        self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
+        print "HF leg (0-based): {}".format(self.sgg_leg)
+        if 0 <= self.sgg_leg <= 3:
+            #don't bother with contralateral front
+            if (self.sgg_leg == 1 and self.sgg_last == 0) or (
+            self.sgg_leg == 0 and self.sgg_last == 1): return
+            self.sgg_liftable = self.Q.can_lift_leg(self.sgg_leg, 1.0)
+            print "leg {} can be lifted? {}".format(
+                self.sgg_leg, self.sgg_liftable)
+        else:
+            print "sgg_leg = {}".format(self.sgg_leg)
+            return
+        if not self.sgg_liftable: return
+        F = 10
+        if self.sgg_leg == 0 or self.sgg_leg == 1: F = 13
+        transferred = False
+        while not transferred:
+            self.sgg_target = self.Q.get_last_spring_gg_vector(
+                self.sgg_leg, math.pi/2, F)
+            print "sgg target {}, {}, {}".format(
+                self.sgg_target[0], self.sgg_target[1],
+                self.sgg_target[2])
+            if self.sgg_target[2] <> 0.0:
+                self.sgg_target = None
+                print "sgg failed to find target"
+                return
+            if self.sgg_target[2] == 0.0:
+                print "changing foot {} by {}, {}".format(
+                    self.sgg_leg, self.sgg_target[0], self.sgg_target[1])
+                if self.transfer_leg(self.sgg_leg, self.sgg_target[0],
+                self.sgg_target[1]): 
+                    self.sgg_last = self.sgg_leg
+                    return
+                else:
+                    F = F - 1
+                    
+        else:
+            print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
+    
+    def stable_up(self, leg):
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.5, 0)
+        self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.25, 0)
+        self.Q.change_foot_pos((leg+1)%4, 0, 0, -0.25, 0)
+        self.commit();
+        self.Q.change_foot_pos(leg, 0, 0, 1.7, 0)
+        self.commit();
+
+    def stable_down(self, leg):
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.5, 0)
+        self.Q.change_foot_pos((leg+3)%4, 0, 0, 0.25, 0)
+        self.Q.change_foot_pos((leg+1)%4, 0, 0, 0.25, 0)
+        self.commit();
+        self.Q.change_foot_pos(leg, 0, 0, -1.7, 0)
+        self.commit();
+
+        
     def transfer_leg(self, leg, x, y):
         print "leg {}: {}, {}".format(leg,x,y)
-        t = 0.2
+        t = 0.3
         #first check each point
-        if self.Q.change_foot_pos(leg, 0, 0, 2, 0): #up 2
-            if self.Q.change_foot_pos(leg, x, y, 0, 0): #move xy
-                if self.Q.change_foot_pos(leg, 0, 0, -2, 0): #down 2
-                    #back to start
-                    self.Q.change_foot_pos(leg, -x, -y, 0, 0);
-                    self.commit()
-                    #now start transfer
-                    self.Q.change_foot_pos(leg, 0, 0, 2, 0)
-                    self.commit()
-                    time.sleep(t)
-                    self.Q.change_foot_pos(leg, x, y, 0, 0)
-                    self.commit()
-                    time.sleep(t)
-                    self.Q.change_foot_pos(leg, 0, 0, -2, 0)
-                    self.commit()
-                else:
-                    print("{} down failed".format(leg))
-                    self.Q.change_foot_pos(leg, -x, -y, -2, 0) #revert
-            else:
-                print("{} forward failed".format(leg))
-                self.Q.change_foot_pos(leg, 0, 0, -2, 0); #revert
+        L1 = self.Q.change_foot_pos(leg, 0, 0 ,1.7, 0)
+        print L1
+        L2 = self.Q.change_foot_pos(leg, x, y, 0, 0)
+        print L2
+        if not L2:
+            self.Q.change_foot_pos(leg, 0, 0, -1.7, 0)
+            return False
+        L3 = self.Q.change_foot_pos(leg, 0, 0, -1.7, 0)
+        print L3
+        if not L3:
+            self.Q.change_foot_pos(leg, -x, -y, -1.7, 0)
+            return False
+        if L1 and L2 and L3:
+            self.Q.change_foot_pos(leg, -x, -y, 0, 0)
+            self.stable_up(leg)
+            time.sleep(t)
+            self.Q.change_foot_pos(leg, x, y, 0, 0)
+            self.commit()
+            time.sleep(t)
+            self.stable_down(leg)
+            time.sleep(t)
+            return True
         else:
-            print("{} up failed".format(leg))
+            print "transfer leg {} failed: {}, {}".format(leg, x, y)
+            return False
 
     def safe_change_single_foot(self, leg, x, y, z):
         if self.Q.change_foot_pos(leg, x, y, z, 0):
@@ -302,16 +367,6 @@ class KeyboardThread (threading.Thread):
             return False
 
     def apply_config(self):
-        #gaitgenerator
-        self.Q.set_gg_config(
-            self.config.reachable_sector_radius,
-            self.config.transfer_speeds[0],
-            self.config.transfer_speeds[1],
-            self.config.transfer_speeds[2],
-            self.config.ASM_min,
-            self.config.ground_clearance,
-            self.config.search_width,
-            self.config.L_min)
         #mechanical
         for leg in self.config.legs:
             for pivot in leg.pivots:
@@ -327,5 +382,5 @@ class KeyboardThread (threading.Thread):
                         pivot.pw_0, pivot.pw_60)
                 except AttributeError:
                     pass
-        #move y dir
-        self.Q.set_gg_velocity(0.0000, 0.0001, 0)
+        self.Q.update_spring_gg()
+        

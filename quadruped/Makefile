@@ -22,7 +22,7 @@ ifeq ($(shell uname), Linux)
 endif
 CC = gcc
 CPPC = g++
-OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o usbcom.o
+OBJECTS = utility.o log.o hmatrix.o pivot.o leg.o wrapper.o invkinematic.o usbcom.o springgg.o
 OBJECTS_DLL = $(OBJECTS) $(NAME).o
 OBJECTS_TEST = $(TESTNAME).o
 OBJECTS_ALL = $(OBJECTS_DLL) $(OBJECTS_TEST)

@@ -173,77 +173,52 @@ extern "C" const double* QuadrupedGetCoM(Quadruped* q) {
   return q->GetCoM();
 }
 
-// ---------------------------------------------------------QuadrupedSetGGConfig
-/** @brief calls \ref Quadruped::set_gg_config with the supplied values*/
-extern "C" void QuadrupedSetGGConfig(Quadruped* q,
-                                                 double reachable_sector_radius,
-                                                 double transfer_speed1,
-                                                 double transfer_speed2,
-                                                 double transfer_speed3,
-                                                 double ASM_min,
-                                                 double ground_clearance,
-                                                 double search_width,
-                                                 double L_min) {
-  Quadruped::gaitgenerator_configuration config;
-  config.reachable_sector_radius = reachable_sector_radius;
-  config.transfer_speeds[0] = transfer_speed1;
-  config.transfer_speeds[1] = transfer_speed2;
-  config.transfer_speeds[2] = transfer_speed3;
-  config.ASM_min = ASM_min;
-  config.L_min = L_min;
-  config.ground_clearance = ground_clearance;
-  config.search_width = search_width;
-  q->set_gg_config(config);
-}
-
-// -------------------------------------------------------QuadrupedSetGGVelocity
-/** @brief calls \ref Quadruped::SetGGVelocity */
-extern "C" void QuadrupedSetGGVelocity(Quadruped* q, double x, double y,
-                                       double z) {
-  const double vector[3] = {x, y, z};
-  q->SetGGVelocity(vector);
-}
-
-// ---------------------------------------------------------------QuadrupedGetKM
-/** @brief calls \ref Quadruped::GetKM */
-extern "C" double QuadrupedGetKM(Quadruped* q, int leg_index) {
-  return q->GetKM(leg_index);
-}
-
-// ------------------------------------------------------------QuadrupedGetLASMF
-/** @brief calls \ref Quadruped::GetLASMF */
-extern "C" double QuadrupedGetLASMF(Quadruped* q, int leg_index) {
-  return q->GetLASMF(leg_index);
-}
-
-// ------------------------------------------------------------QuadrupedGetLASMB
-/** @brief calls \ref Quadruped::GetLASMB */
-extern "C" double QuadrupedGetLASMB(Quadruped* q, int leg_index) {
-  return q->GetLASMB(leg_index);
-}
-
-// --------------------------------------------------------------QuadrupedGGStep
-/** @brief calls \ref Quadruped::GGStep */
-extern "C" ROGG::StepResults QuadrupedGGStep(Quadruped* q) {
-  return q->GGStep();
-}
-
-// ---------------------------------------------------------------QuadrupedGetLT
-/** @brief calls \ref Quadruped::GetLT */
-extern "C" int QuadrupedGetLT(Quadruped* q) {
-  return q->GetLT();
-}
-
-// ---------------------------------------------------QuadrupedGetTargetFoothold
-/** @brief returns the gaitgenerator's last calculated target as H_0_PLT*/
-extern "C" const double* QuadrupedGetTargetFoothold(Quadruped* q) {
-  return q->GetH_0_PLT();
-}
-
 // -----------------------------------------------------QuadrupedSetAllAnglesTo0
 /** @brief calls \ref Quadruped::SetAllAnglesTo0 */
 extern "C" void QuadrupedSetAllAnglesTo0(Quadruped* q) {
   q->SetAllAnglesTo0();
+}
+
+// ------------------------------------------------------QuadrupedUpdateSpringGG
+/** @brief calls \ref Quadruped::UpdateSpringGG */
+extern "C" void QuadrupedUpdateSpringGG(Quadruped* q) {
+  q->UpdateSpringGG();
+}
+
+// --------------------------------------------------------QuadrupedZeroSpringGG
+/** @brief calls \ref Quadruped::ZeroSpringGG */
+extern "C" void QuadrupedZeroSpringGG(Quadruped* q) {
+  q->ZeroSpringGG();
+}
+
+// ----------------------------------------------QuadrupedGetLegWithHighestForce
+/** @brief calls \ref Quadruped::GetLegWithHighestForce */
+extern "C" int QuadrupedGetLegWithHighestForce(Quadruped* q, double angle) {
+  return q->GetLegWithHighestForce(angle);
+}
+
+// ----------------------------------------------------------QuadrupedCanLiftLeg
+/** @brief calls \ref Quadruped::CanLiftLeg */
+extern "C" bool QuadrupedCanLiftLeg(Quadruped* q, int index, double margin) {
+  return q->CanLiftLeg(index, margin);
+}
+
+// -----------------------------------------------QuadrupedGetLastSpringGGVector
+/** @brief calls \ref Quadruped::CalcSpringGGTarget 
+ * 
+ * when z component of vector <> 0, the result is invalid
+ */
+extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
+                                                        double angle,
+                                                        double F) {
+  q->CalcSpringGGTarget(index, angle, F);
+  return q->get_last_sgg_vector();
+}
+
+// --------------------------------------------------QuadrupedEqualizeFeetLevels
+/** @brief calls \ref Quadruped::EqualizeFeetLevels */
+extern "C" bool QuadrupedEqualizeFeetLevels(Quadruped* q, double z) {
+  return q->EqualizeFeetLevels(z);
 }
 
 }  // namespace Q1

@@ -49,7 +49,7 @@ const double* Leg::GetHMatrixArray(int index) {
 // ------------------------------------------------------------------SetPivotPos
 /** @brief set the x,y,z coordinates of a pivot or foot h-matrix
  *
- * index \ref kPivotCount will be the \ref foot_ 
+ * index \ref kPivotCount will be the \ref foot_
  */
 void Leg::SetPivotPos(int index, double x, double y, double z) {
   if (index < kPivotCount) {
@@ -167,7 +167,7 @@ double Leg::GetPivotAngle(int index) {
 }
 
 // -----------------------------------------------------SetPivotPulsewidthConfig
-/** @brief sets \ref Pivot::pw_0_ and \ref Pivot::pw_60_ 
+/** @brief sets \ref Pivot::pw_0_ and \ref Pivot::pw_60_
  * @param index 0..kPivotCount-1
  */
 void Leg::SetPivotPulsewidthConfig(int index, double pw_0, double pw_60) {
@@ -175,9 +175,9 @@ void Leg::SetPivotPulsewidthConfig(int index, double pw_0, double pw_60) {
 }
 
 // -----------------------------------------------------------GetPivotPulsewidth
-/** @brief return what the pivot at index would need for pulsewidth to 
+/** @brief return what the pivot at index would need for pulsewidth to
   * cause its current angle
-  * 
+  *
   * @param index index of pivot 0..kPivotCount-1
   */
 double Leg::GetPivotPulsewidth(int index) {
@@ -187,13 +187,13 @@ double Leg::GetPivotPulsewidth(int index) {
 // -------------------------------------------------------GetAngleFromPulsewidth
 /** @brief find the angle that a given pulsewidth would cause for the pivot at
  * index
-  * 
+  *
   * @param index index of pivot 0..kPivotCount-1
   * @param pulsewidth the value to find the angle for
  */
 double Leg::GetAngleFromPulsewidth(int index, double pulsewidth) {
   return pivots_[index]->GetAngleFromPulsewidth(pulsewidth);
-} 
+}
 
 // ----------------------------------------------------------------ChangeFootPos
 /** @brief change the position of a foot (relative to Origin) */
@@ -215,7 +215,7 @@ bool Leg::ChangeFootPos(double dx, double dy, double dz) {
 }
 
 // --------------------------------------------------------------------UpdateCoM
-/** @brief recalculates the center of mass and updates \ref H_com_ 
+/** @brief recalculates the center of mass and updates \ref H_com_
  *
  */
 void Leg::UpdateCoM() {
