@@ -67,6 +67,7 @@ class KeyboardThread (threading.Thread):
         self.cob_selected = True
         self.put_on_queue()
         self.input_mode = 0
+        self.speed  = 0.3
         while True:
             if self.input_mode == 0:
                 c = keyboard.getch()
@@ -116,28 +117,28 @@ class KeyboardThread (threading.Thread):
                 elif c == 'w':
                     if self.cob_selected:
                         # - y
-                        self.safe_change_all_feet(0, -0.1, 0)
-                        self.cycle()
+                        self.safe_change_all_feet(0, -self.speed, 0)
+                        #self.cycle()
                     else:
-                        self.safe_change_single_foot(self.leg, 0, 0.1, 0)
+                        self.safe_change_single_foot(self.leg, 0, self.speed, 0)
                 elif c == 'a':
                     if self.cob_selected:
                         # + x
-                        self.safe_change_all_feet(0.1, 0, 0)
+                        self.safe_change_all_feet(self.speed, 0, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, -0.1, 0, 0)
+                        self.safe_change_single_foot(self.leg, -self.speed, 0, 0)
                 elif c == 's':
                     if self.cob_selected:
                         # + y
-                        self.safe_change_all_feet(0, 0.1, 0)
+                        self.safe_change_all_feet(0, self.speed, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, 0, -0.1, 0)
+                        self.safe_change_single_foot(self.leg, 0, -self.speed, 0)
                 elif c == 'd':
                     if self.cob_selected:
                         #- x
-                        self.safe_change_all_feet(-0.1, 0, 0)
+                        self.safe_change_all_feet(-self.speed, 0, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, 0.1, 0, 0)
+                        self.safe_change_single_foot(self.leg, self.speed, 0, 0)
                 #OTHERS
                 elif c == '-':
                     if self.cob_selected:
@@ -173,16 +174,7 @@ class KeyboardThread (threading.Thread):
                 elif c == '~':
                     self.commit()
                 elif c == 'r':
-                    d = 3.8+7.35-1
-                    h = 11
-                    print "all feet at {}, -11".format(d)
-                    self.Q.reset_body()
-                    self.Q.set_foot_pos(0, d, d+2, -h)
-                    self.Q.set_foot_pos(1, -d, d+2, -h)
-                    self.Q.set_foot_pos(2, -d, -d-2, -h)
-                    self.Q.set_foot_pos(3, d, -d-2, -h)
-                    self.Q.update_spring_gg()
-                    self.Q.zero_spring_gg()
+                    self.startpos()
                 elif c == 'R':
                     self.Q.set_all_angles_to_0()
                 elif c == 't':
@@ -191,26 +183,33 @@ class KeyboardThread (threading.Thread):
                     except:
                         print "failed to grab data from xyq"
                     self.safe_change_all_feet(-x, -y, 0)
+                # TEST BUTTON Y
                 elif c == 'y':
-                  self.input_mode = 1
+                  self.body_rotation_seq(0.1, False)
+                  self.body_rotation_seq(0.1, True)
+                  self.body_rotation_seq(0.1, False)
+                elif c == 'Y':
+                  self.body_rotation_seq(0.01, False)
+                  self.body_rotation_seq(0.01, True)
+                  self.body_rotation_seq(0.01, False)
                 #Body rotation [ ] { } ; '
                 elif c == '[':
-                    print "body z +.005 ", self.Q.change_body_rotation(2, 0.005)
+                    print "body z + ", self.Q.change_body_rotation(2, 0.1*self.speed)
                     self.commit()
                 elif c == ']':
-                    print "body z -.005 ", self.Q.change_body_rotation(2, -.005)
+                    print "body z - ", self.Q.change_body_rotation(2, -0.1*self.speed)
                     self.commit()
                 elif c == '{':
-                    print "body y +.005", self.Q.change_body_rotation(1, .005)
+                    print "body y +", self.Q.change_body_rotation(1, 0.1*self.speed)
                     self.commit()
                 elif c == '}':
-                    print "body y -.005", self.Q.change_body_rotation(1, -.005)
+                    print "body y -", self.Q.change_body_rotation(1, -0.1*self.speed)
                     self.commit()
                 elif c == ';':
-                    print "body x +.005", self.Q.change_body_rotation(0, .005)
+                    print "body x +", self.Q.change_body_rotation(0, 0.1*self.speed)
                     self.commit()
                 elif c == "'":
-                    print "body x -.005", self.Q.change_body_rotation(0, -.005)
+                    print "body x -", self.Q.change_body_rotation(0, -0.1*self.speed)
                     self.commit()
                 elif c == '?':
                     print "set rot 0, 0.1, 0 " , self.Q.set_body_rotation(0, 0.1, 0);
@@ -254,6 +253,7 @@ class KeyboardThread (threading.Thread):
                     self.cycle()
                 self.put_on_queue()
             else: 
+                #TODO (michiel): something breaks usb packet order
                 #input mode 1
                 time.sleep(0.2)
                 misc_data = self.Q.get_misc_data()
@@ -289,6 +289,19 @@ class KeyboardThread (threading.Thread):
         except:
             self.queue.put(raw_pivots)
 
+    def startpos(self):
+        d = 3.8+7.35-1
+        h = 11
+        print "all feet at {}, -11".format(d)
+        self.Q.reset_body()
+        self.Q.set_foot_pos(0, d, d+2, -h)
+        self.Q.set_foot_pos(1, -d, d+2, -h)
+        self.Q.set_foot_pos(2, -d, -d-2, -h)
+        self.Q.set_foot_pos(3, d, -d-2, -h)
+        self.Q.update_spring_gg()
+        self.Q.zero_spring_gg()
+        
+            
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
@@ -381,6 +394,39 @@ class KeyboardThread (threading.Thread):
             print "transfer leg {} failed: {}, {}".format(leg, x, y)
             return False
 
+    def body_rotation_seq(self, t, inverted):
+        self.startpos()
+        sign = 1.0
+        if inverted:
+            sign = -1.0
+        for i in range(10):
+            xrot = math.sin(i/10.0 * 0.5 * math.pi) * 0.15 * sign
+            self.Q.set_body_rotation(xrot, 0, 0)
+            self.commit()
+            time.sleep(t)
+        count = 25 #don't increase above 45
+        for i in range(count):
+            xrot = math.cos(i/float(count) * 2 * math.pi) * 0.15 * sign
+            yrot = math.sin(i/float(count) * 2 * math.pi) * 0.15 * sign
+            print "start rot ", i
+            if self.Q.set_body_rotation(xrot, yrot, 0):
+                self.commit()
+                #self.put_on_queue()
+                time.sleep(t)
+                if i % 10 == 0:
+                    self.put_on_queue()
+            else: 
+                self.commit()
+                #break;
+        for i in range(10):
+            xrot = math.cos(i/10.0 * 0.5 * math.pi) * 0.15 * sign
+            self.Q.set_body_rotation(xrot, 0, 0)
+            self.commit()
+            time.sleep(t)
+        self.startpos()
+        self.commit()
+
+            
     def safe_change_single_foot(self, leg, x, y, z):
         if self.Q.change_foot_pos(leg, x, y, z, 0):
             self.commit()

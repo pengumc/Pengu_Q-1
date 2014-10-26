@@ -218,7 +218,8 @@ bool Quadruped::ChangeBodyRotation(HMatrix R) {
     if(!ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2])) {
       // on fail simply rotate cob back, and undo any changed legs
       while (i > 0) {
-        ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2]);
+        --i;
+        ChangeFootPos(i, deltas[i][0], deltas[i][1], deltas[i][2]);
       }
       H_cob_.SelfDot(R.Inverse());
       return false;
