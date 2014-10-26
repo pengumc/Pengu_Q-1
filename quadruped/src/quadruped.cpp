@@ -192,10 +192,10 @@ bool Quadruped::EqualizeFeetLevels(double z) {
   return true;
 }
 
-// -------------------------------------------------------------------RotateBody
-/** Rotate the robot's body while keeping all feet at the same frame 0 pos */
-bool Quadruped::RotateBody(Axis axis, double angle) {
-  // grab xyz of each feet in frame 0.
+// -----------------------------------------------------------ChangeBodyRotation
+/** @brief rotate body with hmatrix, keep frame 0 feet pos */
+bool Quadruped::ChangeBodyRotation(HMatrix R) {
+  // grab xyz of each feet in frame 0. (for rollback among others)
   double deltas[kLegCount][3];
   int i;
   for (i = 0; i < kLegCount; ++i) {
@@ -205,7 +205,6 @@ bool Quadruped::RotateBody(Axis axis, double angle) {
     deltas[i][2] = -p[HMatrix::kZ];
   }
   // rotate cob
-  HMatrix R = HMatrix(axis, angle);
   H_cob_.SelfDot(R);
   // diff feet pos in frame 0. delta = new - old
   for (i = 0; i < kLegCount; ++i) {
@@ -226,6 +225,15 @@ bool Quadruped::RotateBody(Axis axis, double angle) {
     }
   }
   return true;
+}
+
+// --------------------------------------------------------------SetBodyRotation
+/** @brief rotate body with angles. updates feet pos*/
+bool Quadruped::SetBodyRotation(HMatrix R) {
+  // rotate back to I, then to R
+  HMatrix R2 = H_cob_.Inverse();
+  R2.SelfDot(R);
+  return ChangeBodyRotation(R2);
 }
 
 // --------------------------------------------------------------------ResetBody
@@ -277,6 +285,12 @@ bool Quadruped::SyncFromDevice() {
     }
   }
   return true;
+}
+
+// --------------------------------------------------------GetMiscDataFromDevice
+/** @brief calls UsbCom::ReadMiscData */
+const uint8_t* Quadruped::GetMiscDataFromDevice() {
+  return usb_.ReadMiscData();
 }
 
 // ---------------------------------------------------------------UpdateSpringGG

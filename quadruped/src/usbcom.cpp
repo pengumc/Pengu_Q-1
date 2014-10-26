@@ -204,4 +204,33 @@ int UsbCom::WriteServoPulsewidths(const double* pulsewidths) {
   return 0;
 }
 
+// -----------------------------------------------------------------ReadMiscData
+/** @brief read misc data from device, returns pointer to \ref misc_buf_ 
+ * or NULL on error
+ */
+const uint8_t* UsbCom::ReadMiscData() {
+  if (!handle_) return NULL;
+  // send getdata command
+  wbuf_[0] = 0x00;
+  wbuf_[1] = 0x02;
+  int res = hid_write(handle_, wbuf_, sizeof(wbuf_));
+  if (res < 0) {
+    last_error_ = hid_error(handle_);
+    return NULL;
+  }
+  //read the result
+  res = hid_read(handle_, rbuf_, sizeof(rbuf_));
+  if (res < 0) {
+    last_error_ = hid_error(handle_);
+    return NULL;
+  }
+  if (memcmp(kUsbSuccess, rbuf_, kUsbReadBufferSize / sizeof(uint8_t))) {
+    memcpy(misc_buf_, rbuf_, sizeof(rbuf_));
+    return misc_buf_;
+  } else {
+    printf("usbcom: received success after data req\n");
+    return NULL;  // ReadMiscData();
+  }
+}
+
 }  // namespace Q1

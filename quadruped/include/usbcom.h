@@ -49,6 +49,7 @@ class UsbCom {
   int Connect(uint16_t vid, uint16_t pid);
   int ReadServoPulsewidths();
   int WriteServoPulsewidths(const double* pulsewidths);
+  const uint8_t* ReadMiscData();
 
  private:
   hid_device* handle_;/**< @brief usb device handle*/
@@ -56,8 +57,9 @@ class UsbCom {
   uint16_t pid_;/**< @brief product id*/
   uint8_t wbuf_[kUsbWriteBufferSize];/**< @brief write buffer*/
   uint8_t rbuf_[kUsbReadBufferSize];/**< @brief read buffer*/
+  uint8_t misc_buf_[kUsbReadBufferSize];  ///< last read data
   const wchar_t* last_error_;
-  double device_servo_pulsewidths_[kDeviceServoCount];/**< last read pw*/
+  double device_servo_pulsewidths_[kDeviceServoCount];  ///< last read pw
   /**< @brief K factor
    *
    * old: angle = K * (PW - PW<sub>mid</sub>)<br>

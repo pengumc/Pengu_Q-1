@@ -223,14 +223,34 @@ extern "C" bool QuadrupedEqualizeFeetLevels(Quadruped* q, double z) {
 
 // ----------------------------------------------------------QuadrupedRotateBody
 /** @brief calls \ref Quadruped::RotateBody */
-extern "C" bool QuadrupedRotateBody(Quadruped* q, Axis axis, double angle) {
-  return q->RotateBody(axis, angle);
+extern "C" bool QuadrupedChangeBodyRotation(Quadruped* q, Axis axis,
+                                            double angle) {
+  return q->ChangeBodyRotation(HMatrix(axis, angle));
 }
+
+// -----------------------------------------------------QuadrupedSetBodyRotation
+/** @brief calls \ref Quadruped::SetBodyRotation with angles */
+extern "C" bool QuadrupedSetBodyRotation(Quadruped* q, double xrot,
+                                            double yrot, double zrot) {
+  HMatrix R(X_AXIS, xrot);
+  R.SelfDot(HMatrix(Y_AXIS, yrot));
+  R.SelfDot(HMatrix(Z_AXIS, zrot));
+  return q->SetBodyRotation(R);
+}
+
+// ------------------------------------------------------QuadrupedC
 
 // -----------------------------------------------------------QuadrupedResetBody
 /** @brief calls \ref Quadruped::ResetBody */
 extern "C" void QuadrupedResetBody(Quadruped* q) {
   q->ResetBody();
 }
+
+// ---------------------------------------------------------QuadrupedGetMiscData
+/** @brief calls \ref UsbCom::ReadMiscData */
+extern "C" const uint8_t* QuadrupedGetMiscData(Quadruped* q) {
+  return q->GetMiscDataFromDevice();
+}
+
 
 }  // namespace Q1

@@ -17,7 +17,9 @@ class Quadruped:
         self.lib.QuadrupedCanLiftLeg.restype = c_bool
         self.lib.QuadrupedGetLastSpringGGVector.restype = POINTER(c_double)
         self.lib.QuadrupedEqualizeFeetLevels.restype = c_bool
-        self.lib.QuadrupedRotateBody.restype = c_bool
+        self.lib.QuadrupedSetBodyRotation.restype = c_bool
+        self.lib.QuadrupedChangeBodyRotation.restype = c_bool
+        self.lib.QuadrupedGetMiscData.restype = POINTER(c_uint8)
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -105,8 +107,20 @@ class Quadruped:
     def equalize_feet_levels(self, z):
         return self.lib.QuadrupedEqualizeFeetLevels(self.q, c_double(z))
         
-    def rotate_body(self, axis, angle):
-        return self.lib.QuadrupedRotateBody(self.q, int(axis), c_double(angle))
+    def change_body_rotation(self, axis, angle):
+        return self.lib.QuadrupedChangeBodyRotation(self.q, int(axis),
+            c_double(angle))
+        
+    def set_body_rotation(self, xrot, yrot, zrot):
+        return self.lib.QuadrupedSetBodyRotation(self.q, c_double(xrot),
+            c_double(yrot), c_double(zrot))
         
     def reset_body(self):
         self.lib.QuadrupedResetBody(self.q)
+        
+    def get_misc_data(self):
+        r = self.lib.QuadrupedGetMiscData(self.q)
+        if r:
+            return r
+        else:
+            return None

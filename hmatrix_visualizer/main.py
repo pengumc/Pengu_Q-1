@@ -66,189 +66,215 @@ class KeyboardThread (threading.Thread):
         self.sgg_last = -1
         self.cob_selected = True
         self.put_on_queue()
+        self.input_mode = 0
         while True:
-            c = keyboard.getch()
-            if c == 'q':
-                #if the keyboard thread dies, we all die
-                print("Waiting for plot to close...")
-                self.queue.put(None)
-                self.queue.put(None)
-                break
-            #selection
-            elif c == '!':
-                self.pivot = 0
-                self.cob_selected = False
-                print "pivot 0 selected"
-            elif c == '@':
-                self.pivot = 1
-                self.cob_selected = False
-                print "pivot 1 selected"
-            elif c == '#':
-                self.pivot = 2
-                self.cob_selected = False
-                print "pivot 2 selected"
-            elif c == '$':
-                self.pivot = 3
-                self.cob_selected = False
-                print "pivot 3 selected"
-            elif c == '1':
-                self.leg = 0
-                self.cob_selected = False
-                print "leg 0 selected"
-            elif c == '2':
-                self.leg = 1
-                self.cob_selected = False
-                print "leg 1 selected"
-            elif c == '3':
-                self.leg = 2
-                self.cob_selected = False
-                print "leg 2 selected"
-            elif c == '4':
-                self.leg = 3
-                self.cob_selected = False
-                print "leg 3 selected"
-            elif c == '0':
-                self.cob_selected = True
-                print "CoB selected"
-            #wasd
-            elif c == 'w':
-                if self.cob_selected:
-                    # - y
-                    self.safe_change_all_feet(0, -0.1, 0)
+            if self.input_mode == 0:
+                c = keyboard.getch()
+                if c == 'q':
+                    #if the keyboard thread dies, we all die
+                    print("Waiting for plot to close...")
+                    self.queue.put(None)
+                    self.queue.put(None)
+                    break
+                #selection
+                elif c == '!':
+                    self.pivot = 0
+                    self.cob_selected = False
+                    print "pivot 0 selected"
+                elif c == '@':
+                    self.pivot = 1
+                    self.cob_selected = False
+                    print "pivot 1 selected"
+                elif c == '#':
+                    self.pivot = 2
+                    self.cob_selected = False
+                    print "pivot 2 selected"
+                elif c == '$':
+                    self.pivot = 3
+                    self.cob_selected = False
+                    print "pivot 3 selected"
+                elif c == '1':
+                    self.leg = 0
+                    self.cob_selected = False
+                    print "leg 0 selected"
+                elif c == '2':
+                    self.leg = 1
+                    self.cob_selected = False
+                    print "leg 1 selected"
+                elif c == '3':
+                    self.leg = 2
+                    self.cob_selected = False
+                    print "leg 2 selected"
+                elif c == '4':
+                    self.leg = 3
+                    self.cob_selected = False
+                    print "leg 3 selected"
+                elif c == '0':
+                    self.cob_selected = True
+                    print "CoB selected"
+                #wasd
+                elif c == 'w':
+                    if self.cob_selected:
+                        # - y
+                        self.safe_change_all_feet(0, -0.1, 0)
+                        self.cycle()
+                    else:
+                        self.safe_change_single_foot(self.leg, 0, 0.1, 0)
+                elif c == 'a':
+                    if self.cob_selected:
+                        # + x
+                        self.safe_change_all_feet(0.1, 0, 0)
+                    else:
+                        self.safe_change_single_foot(self.leg, -0.1, 0, 0)
+                elif c == 's':
+                    if self.cob_selected:
+                        # + y
+                        self.safe_change_all_feet(0, 0.1, 0)
+                    else:
+                        self.safe_change_single_foot(self.leg, 0, -0.1, 0)
+                elif c == 'd':
+                    if self.cob_selected:
+                        #- x
+                        self.safe_change_all_feet(-0.1, 0, 0)
+                    else:
+                        self.safe_change_single_foot(self.leg, 0.1, 0, 0)
+                #OTHERS
+                elif c == '-':
+                    if self.cob_selected:
+                        self.safe_change_all_feet(0, 0, -0.1)
+                    else:
+                        self.safe_change_single_foot(self.leg, 0, 0, 0.1)
+                elif c == '+':
+                    if self.cob_selected:
+                        self.safe_change_all_feet(0, 0, +0.1)
+                    else:
+                        self.safe_change_single_foot(self.leg, 0, 0, -0.1)
+                elif c == 'n':
+                    if not self.cob_selected:
+                        self.stable_up(self.leg)
+                elif c == 'm':
+                    if not self.cob_selected:
+                        self.stable_down(self.leg)
+                elif c == 'z':
+                    self.Q.change_pivot_angle(self.leg, self.pivot, -0.01)
+                    self.commit()
+                elif c == 'x':
+                    self.Q.change_pivot_angle(self.leg, self.pivot, 0.01)
+                    self.commit()
+                elif c == 'Z':
+                    self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
+                    self.commit()
+                elif c == 'X':
+                    self.Q.change_pivot_angle(self.leg, self.pivot, 0.1)
+                    self.commit()
+                elif c == '`':
+                    res = self.Q.sync_from_device()
+                    print "sync from dev: {}".format(res)
+                elif c == '~':
+                    self.commit()
+                elif c == 'r':
+                    d = 3.8+7.35-1
+                    h = 11
+                    print "all feet at {}, -11".format(d)
+                    self.Q.reset_body()
+                    self.Q.set_foot_pos(0, d, d+2, -h)
+                    self.Q.set_foot_pos(1, -d, d+2, -h)
+                    self.Q.set_foot_pos(2, -d, -d-2, -h)
+                    self.Q.set_foot_pos(3, d, -d-2, -h)
+                    self.Q.update_spring_gg()
+                    self.Q.zero_spring_gg()
+                elif c == 'R':
+                    self.Q.set_all_angles_to_0()
+                elif c == 't':
+                    try:
+                        x, y = self.xyq.get(False)
+                    except:
+                        print "failed to grab data from xyq"
+                    self.safe_change_all_feet(-x, -y, 0)
+                elif c == 'y':
+                  self.input_mode = 1
+                #Body rotation [ ] { } ; '
+                elif c == '[':
+                    print "body z +.005 ", self.Q.change_body_rotation(2, 0.005)
+                    self.commit()
+                elif c == ']':
+                    print "body z -.005 ", self.Q.change_body_rotation(2, -.005)
+                    self.commit()
+                elif c == '{':
+                    print "body y +.005", self.Q.change_body_rotation(1, .005)
+                    self.commit()
+                elif c == '}':
+                    print "body y -.005", self.Q.change_body_rotation(1, -.005)
+                    self.commit()
+                elif c == ';':
+                    print "body x +.005", self.Q.change_body_rotation(0, .005)
+                    self.commit()
+                elif c == "'":
+                    print "body x -.005", self.Q.change_body_rotation(0, -.005)
+                    self.commit()
+                elif c == '?':
+                    print "set rot 0, 0.1, 0 " , self.Q.set_body_rotation(0, 0.1, 0);
+                    self.commit()
+                # U I O P springgg commands
+                elif c == 'u':
+                    self.Q.update_spring_gg()
+                    self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
+                    print "HF leg (0-based): {}".format(self.sgg_leg)
+                elif c == 'i':
+                    if 0 <= self.sgg_leg <= 3:
+                        self.sgg_liftable = self.Q.can_lift_leg(self.sgg_leg, 1.0)
+                        print "leg {} can be lifted? {}".format(
+                            self.sgg_leg, self.sgg_liftable)
+                    else:
+                        print "sgg_leg = {}".format(self.sgg_leg)
+                elif c == 'o':
+                    if 0 <= self.sgg_leg <= 3:
+                        F = 11
+                        if self.sgg_leg == 0 or self.sgg_leg == 1: F = 7
+                        self.sgg_target = self.Q.get_last_spring_gg_vector(
+                            self.sgg_leg, math.pi/2, F)
+                        print "sgg target {}, {}, {}".format(
+                            self.sgg_target[0], self.sgg_target[1],
+                            self.sgg_target[2])
+                        if self.sgg_target[2] <> 0.0:
+                            self.sgg_target = None
+                            print "sgg failed to find target"
+                    else:
+                        print "sgg_leg = {}".format(self.sgg_leg)
+                elif c == 'p':
+                    if (0 <= self.sgg_leg <= 3 and self.sgg_liftable and 
+                    self.sgg_target[2] == 0.0):
+                        print "changing foot {} by {}, {}".format(
+                            self.sgg_leg, self.sgg_target[0], self.sgg_target[1])
+                        self.transfer_leg(self.sgg_leg, self.sgg_target[0],
+                            self.sgg_target[1])
+                    else:
+                        print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
+                elif c == '[':
                     self.cycle()
+                self.put_on_queue()
+            else: 
+                #input mode 1
+                time.sleep(0.2)
+                misc_data = self.Q.get_misc_data()
+                if misc_data:
+                  print misc_data[0:8]
+                  if (misc_data[0] & (1<<3)) == 0:
+                      #start pressed
+                      self.input_mode = 0
+                      print "switch back to keyboard"
+                  xrot = 0 # (float(misc_data[5])-128)/128.0 * 0.1
+                  yrot = (float(misc_data[4])-128)/128.0 * 0.1
+                  if self.Q.set_body_rotation(xrot, yrot, 0):
+                    self.commit()
+                    time.sleep(0.2)
+                  #self.put_on_queue()
+                  else:
+                    print "rotate failed"
                 else:
-                    self.safe_change_single_foot(self.leg, 0, 0.1, 0)
-            elif c == 'a':
-                if self.cob_selected:
-                    # + x
-                    self.safe_change_all_feet(0.1, 0, 0)
-                else:
-                    self.safe_change_single_foot(self.leg, -0.1, 0, 0)
-            elif c == 's':
-                if self.cob_selected:
-                    # + y
-                    self.safe_change_all_feet(0, 0.1, 0)
-                else:
-                    self.safe_change_single_foot(self.leg, 0, -0.1, 0)
-            elif c == 'd':
-                if self.cob_selected:
-                    #- x
-                    self.safe_change_all_feet(-0.1, 0, 0)
-                else:
-                    self.safe_change_single_foot(self.leg, 0.1, 0, 0)
-            #OTHERS
-            elif c == '-':
-                if self.cob_selected:
-                    self.safe_change_all_feet(0, 0, -0.1)
-                else:
-                    self.safe_change_single_foot(self.leg, 0, 0, 0.1)
-            elif c == '+':
-                if self.cob_selected:
-                    self.safe_change_all_feet(0, 0, +0.1)
-                else:
-                    self.safe_change_single_foot(self.leg, 0, 0, -0.1)
-            elif c == 'n':
-                if not self.cob_selected:
-                    self.stable_up(self.leg)
-            elif c == 'm':
-                if not self.cob_selected:
-                    self.stable_down(self.leg)
-            elif c == 'z':
-                self.Q.change_pivot_angle(self.leg, self.pivot, -0.01)
-                self.commit()
-            elif c == 'x':
-                self.Q.change_pivot_angle(self.leg, self.pivot, 0.01)
-                self.commit()
-            elif c == 'Z':
-                self.Q.change_pivot_angle(self.leg, self.pivot, -0.1)
-                self.commit()
-            elif c == 'X':
-                self.Q.change_pivot_angle(self.leg, self.pivot, 0.1)
-                self.commit()
-            elif c == '`':
-                res = self.Q.sync_from_device()
-                print "sync from dev: {}".format(res)
-            elif c == '~':
-                self.commit()
-            elif c == 'r':
-                d = 3.8+7.35-1
-                h = 11
-                print "all feet at {}, -11".format(d)
-                self.Q.reset_body()
-                self.Q.set_foot_pos(0, d, d+2, -h)
-                self.Q.set_foot_pos(1, -d, d+2, -h)
-                self.Q.set_foot_pos(2, -d, -d-2, -h)
-                self.Q.set_foot_pos(3, d, -d-2, -h)
-                self.Q.update_spring_gg()
-                self.Q.zero_spring_gg()
-            elif c == 'R':
-                self.Q.set_all_angles_to_0()
-            elif c == 't':
-                try:
-                    x, y = self.xyq.get(False)
-                except:
-                    print "failed to grab data from xyq"
-                self.safe_change_all_feet(-x, -y, 0)
-            elif c == 'y':
-                print "equalize ", self.Q.equalize_feet_levels(-7.5)
-            #Body rotation [ ] { } ; '
-            elif c == '[':
-                print "body, z-axis  +0.005 ", self.Q.rotate_body(2, 0.005);
-                self.commit()
-            elif c == ']':
-                print "body, z-axis  -0.005 ", self.Q.rotate_body(2, -0.005);
-                self.commit()
-            elif c == '{':
-                print "body, y-axis  +0.005", self.Q.rotate_body(1, 0.005);
-                self.commit()
-            elif c == '}':
-                print "body, y-axis  -0.005", self.Q.rotate_body(1, -0.005);
-                self.commit()
-            elif c == ';':
-                print "body, x-axis  +0.005", self.Q.rotate_body(0, 0.005);
-                self.commit()
-            elif c == "'":
-                print "body, x-axis  -0.005", self.Q.rotate_body(0, -0.005);
-                self.commit()
-                
-            # U I O P springgg commands
-            elif c == 'u':
-                self.Q.update_spring_gg()
-                self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
-                print "HF leg (0-based): {}".format(self.sgg_leg)
-            elif c == 'i':
-                if 0 <= self.sgg_leg <= 3:
-                    self.sgg_liftable = self.Q.can_lift_leg(self.sgg_leg, 1.0)
-                    print "leg {} can be lifted? {}".format(
-                        self.sgg_leg, self.sgg_liftable)
-                else:
-                    print "sgg_leg = {}".format(self.sgg_leg)
-            elif c == 'o':
-                if 0 <= self.sgg_leg <= 3:
-                    F = 11
-                    if self.sgg_leg == 0 or self.sgg_leg == 1: F = 7
-                    self.sgg_target = self.Q.get_last_spring_gg_vector(
-                        self.sgg_leg, math.pi/2, F)
-                    print "sgg target {}, {}, {}".format(
-                        self.sgg_target[0], self.sgg_target[1],
-                        self.sgg_target[2])
-                    if self.sgg_target[2] <> 0.0:
-                        self.sgg_target = None
-                        print "sgg failed to find target"
-                else:
-                    print "sgg_leg = {}".format(self.sgg_leg)
-            elif c == 'p':
-                if (0 <= self.sgg_leg <= 3 and self.sgg_liftable and 
-                self.sgg_target[2] == 0.0):
-                    print "changing foot {} by {}, {}".format(
-                        self.sgg_leg, self.sgg_target[0], self.sgg_target[1])
-                    self.transfer_leg(self.sgg_leg, self.sgg_target[0],
-                        self.sgg_target[1])
-                else:
-                    print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
-            elif c == '[':
-                self.cycle()
-            self.put_on_queue()
+                  print "data was none"
+                  self.input_mode = 0
+                  
 
     def put_on_queue(self):
         raw_pivots = []
