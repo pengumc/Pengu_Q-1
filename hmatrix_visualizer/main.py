@@ -185,9 +185,7 @@ class KeyboardThread (threading.Thread):
                     self.safe_change_all_feet(-x, -y, 0)
                 # TEST BUTTON Y
                 elif c == 'y':
-                  self.body_rotation_seq(0.1, False)
-                  self.body_rotation_seq(0.1, True)
-                  self.body_rotation_seq(0.1, False)
+                    self.body_circle(0.05, 3)
                 elif c == 'Y':
                   self.body_rotation_seq(0.01, False)
                   self.body_rotation_seq(0.01, True)
@@ -426,7 +424,20 @@ class KeyboardThread (threading.Thread):
         self.startpos()
         self.commit()
 
-            
+    def body_circle(self, t, R):
+        self.startpos()
+        for i in range(10):
+            print self.Q.change_all_feet_pos(R/10.0, 0, 0)
+            self.commit()
+            time.sleep(t)
+        for i in range(45):
+            dx = -math.sin(i/44.0 * 2 * math.pi)* R * (2*math.pi)/45
+            dy = math.cos(i/44.0 * 2 * math.pi) * R * (2*math.pi)/45
+            print self.Q.change_all_feet_pos(dx, dy, 0)
+            self.commit()
+            time.sleep(t)
+            if i % 5: self.put_on_queue()
+
     def safe_change_single_foot(self, leg, x, y, z):
         if self.Q.change_foot_pos(leg, x, y, z, 0):
             self.commit()

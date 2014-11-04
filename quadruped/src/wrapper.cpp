@@ -238,7 +238,12 @@ extern "C" bool QuadrupedSetBodyRotation(Quadruped* q, double xrot,
   return q->SetBodyRotation(R);
 }
 
-// ------------------------------------------------------QuadrupedC
+// -----------------------------------------------------QuadrupedChangeAllFeetPos
+/** @brief calls \ref Quadruped::ChangeAllFeetPos */
+extern "C" bool QuadrupedChangeAllFeetPos(Quadruped* q, double dx, double dy,
+                                           double dz) {
+  return q->ChangeAllFeetPos(dx, dy, dz);
+}
 
 // -----------------------------------------------------------QuadrupedResetBody
 /** @brief calls \ref Quadruped::ResetBody */

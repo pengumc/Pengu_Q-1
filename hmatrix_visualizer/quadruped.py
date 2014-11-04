@@ -11,6 +11,7 @@ class Quadruped:
         self.lib.QuadrupedGetCoM.restype = POINTER(c_double)
         self.lib.QuadrupedChangePivotAngle.restype = c_bool
         self.lib.QuadrupedChangeFootPos.restype = c_bool
+        self.lib.QuadrupedChangeAllFeetPos.restype = c_bool
         self.lib.QuadrupedSetFootPos.restype = c_bool
         self.lib.QuadrupedSyncToDev.restype = c_bool
         self.lib.QuadrupedSyncFromDev.restype = c_bool
@@ -71,6 +72,11 @@ class Quadruped:
     def change_foot_pos(self, leg, dx, dy, dz, mode):
         return self.lib.QuadrupedChangeFootPos(self.q, int(leg), c_double(dx),
             c_double(dy), c_double(dz), int(mode))
+            
+    def change_all_feet_pos(self, dx, dy, dz):
+        return self.lib.QuadrupedChangeAllFeetPos(self.q, c_double(dx),
+            c_double(dy), c_double(dz))
+
     def set_foot_pos(self, leg, x, y, z):
         return self.lib.QuadrupedSetFootPos(self.q, int(leg), c_double(x),
             c_double(y), c_double(z))
