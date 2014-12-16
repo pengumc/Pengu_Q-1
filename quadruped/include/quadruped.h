@@ -68,6 +68,8 @@ class Quadruped {
   bool CanLiftLeg(int index, double margin);
   bool CalcSpringGGTarget(int index, double angle, double F);
   const double* get_last_sgg_vector();
+  const double* FindVectorToDiagonal(int diagonal_index1,
+                                     int diagonal_index2);
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
@@ -77,6 +79,7 @@ class Quadruped {
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
   double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
+  double last_sp_vector_[3];  ///< x,y,range to diagonal for support pattern*/
 };
 
 }  // namespace Q1

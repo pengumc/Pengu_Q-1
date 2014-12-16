@@ -70,7 +70,7 @@ const double* Quadruped::GetHMatrixArrayByIndex(int index) {
 
 // ------------------------------------------------------GetRelativeHMatrixArray
 /** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg
- * relative to cob.*/
+ * relative to origin.*/
 const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
                                                  int pivot_index) {
   return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
@@ -347,6 +347,31 @@ bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
 /** @brief return the last vector calculated by \ref sgg_ */
 const double* Quadruped::get_last_sgg_vector() {
   return last_sgg_vector_;
+}
+
+// ---------------------------------------------------------FindVectorToDiagonal
+/** @brief return a 3d vector to the diagonal between two feet */
+// TODO(michiel): this can be done without knowledge of diagonal indices
+const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
+                                              int diagonal_index2) {
+  // grab hmatrices for diagonally opposed feet
+  // TODO(michiel): shouldn't this be relative to com?
+  HMatrix footA  = H_cob_.Dot(HMatrix(
+                   GetRelativeHMatrixArray(diagonal_index1, Leg::kPivotCount)));
+  HMatrix footB  = H_cob_.Dot(HMatrix(
+                   GetRelativeHMatrixArray(diagonal_index2, Leg::kPivotCount)));
+  // find angle of line from A to B
+  double angleAB = Get2DAngle(footA.GetX(), footB.GetX(), 
+                              footA.GetY(), footB.GetY());
+  // create a new transform matrix to rotate footA and B so the line is 
+  // horizontal, and the distance to the line is the y coordinate of both
+  HMatrix T(Z_AXIS, -angleAB);
+  // apply transform
+  footA.SelfDot(T);
+  // grab vector to line
+  double v[3] = {0.0, footA.GetY(), 0.0};
+  T.CounterRotateVector(v, last_sp_vector_);
+  return last_sp_vector_;
 }
 
 }  // namespace Q1

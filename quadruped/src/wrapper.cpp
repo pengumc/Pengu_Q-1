@@ -257,5 +257,12 @@ extern "C" const uint8_t* QuadrupedGetMiscData(Quadruped* q) {
   return q->GetMiscDataFromDevice();
 }
 
+// ------------------------------------------------QuadrupedFindVectorToDiagonal
+/** @brief calls \ref Quadruped::FindVectorToDiagonal */
+extern "C" const double* QuadrupedFindVectorToDiagonal(Quadruped* q,
+                                                       int diagonal_index1,
+                                                       int diagonal_index2) {
+  return q->FindVectorToDiagonal(diagonal_index1, diagonal_index2);
+}
 
 }  // namespace Q1
