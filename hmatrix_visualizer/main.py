@@ -68,6 +68,9 @@ class KeyboardThread (threading.Thread):
         self.put_on_queue()
         self.input_mode = 0
         self.speed  = 0.3
+        self.rest_distance = 3.8 + 7.35 - 1
+        self.rest_h = 11
+        
         while True:
             if self.input_mode == 0:
                 c = keyboard.getch()
@@ -117,39 +120,45 @@ class KeyboardThread (threading.Thread):
                 elif c == 'w':
                     if self.cob_selected:
                         # - y
-                        self.safe_change_all_feet(0, -self.speed, 0)
+                        self.Q.change_all_feet_pos(0, -self.speed, 0)
                         #self.cycle()
                     else:
-                        self.safe_change_single_foot(self.leg, 0, self.speed, 0)
+                        self.Q.change_foot_pos(self.leg, 0, self.speed, 0, 0)
+                    self.commit()
                 elif c == 'a':
                     if self.cob_selected:
                         # + x
-                        self.safe_change_all_feet(self.speed, 0, 0)
+                        self.Q.change_all_feet_pos(self.speed, 0, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, -self.speed, 0, 0)
+                        self.Q.change_foot_pos(self.leg, -self.speed, 0, 0, 0)
+                    self.commit()
                 elif c == 's':
                     if self.cob_selected:
                         # + y
-                        self.safe_change_all_feet(0, self.speed, 0)
+                        self.Q.change_all_feet_pos(0, self.speed, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, 0, -self.speed, 0)
+                        self.Q.change_foot_pos(self.leg, 0, -self.speed, 0, 0)
+                    self.commit()
                 elif c == 'd':
                     if self.cob_selected:
                         #- x
-                        self.safe_change_all_feet(-self.speed, 0, 0)
+                        self.Q.change_all_feet_pos(-self.speed, 0, 0)
                     else:
-                        self.safe_change_single_foot(self.leg, self.speed, 0, 0)
+                        self.Q.change_foot_pos(self.leg, self.speed, 0, 0, 0)
+                    self.commit()
                 #OTHERS
                 elif c == '-':
                     if self.cob_selected:
-                        self.safe_change_all_feet(0, 0, -0.1)
+                        self.Q.change_all_feet_pos(0, 0, -0.1)
                     else:
-                        self.safe_change_single_foot(self.leg, 0, 0, 0.1)
+                        self.Q.change_foot_pos(self.leg, 0, 0, 0.1, 0)
+                    self.commit()
                 elif c == '+':
                     if self.cob_selected:
-                        self.safe_change_all_feet(0, 0, +0.1)
+                        self.Q.change_all_feet_pos(0, 0, +0.1)
                     else:
-                        self.safe_change_single_foot(self.leg, 0, 0, -0.1)
+                        self.Q.change_foot_pos(self.leg, 0, 0, -0.1, 0)
+                    self.commit()
                 elif c == 'n':
                     if not self.cob_selected:
                         self.stable_up(self.leg)
@@ -182,14 +191,12 @@ class KeyboardThread (threading.Thread):
                         x, y = self.xyq.get(False)
                     except:
                         print "failed to grab data from xyq"
-                    self.safe_change_all_feet(-x, -y, 0)
+                    self.Q.change_all_feet_pos(-x, -y, 0)
                 # TEST BUTTON Y
                 elif c == 'y':
-                    self.body_circle(0.05, 3)
+                    self.move_to_lift(self.leg, 2)
                 elif c == 'Y':
-                  self.body_rotation_seq(0.01, False)
-                  self.body_rotation_seq(0.01, True)
-                  self.body_rotation_seq(0.01, False)
+                    pass
                 #Body rotation [ ] { } ; '
                 elif c == '[':
                     print "body z + ", self.Q.change_body_rotation(2, 0.1*self.speed)
@@ -249,6 +256,7 @@ class KeyboardThread (threading.Thread):
                         print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
                 elif c == '[':
                     self.cycle()
+                # end keyboard character cases
                 self.put_on_queue()
             else: 
                 #TODO (michiel): something breaks usb packet order
@@ -288,14 +296,16 @@ class KeyboardThread (threading.Thread):
             self.queue.put(raw_pivots)
 
     def startpos(self):
-        d = 3.8+7.35-1
-        h = 11
-        print "all feet at {}, -11".format(d)
+        print "all feet at {}, -11".format(self.rest_distance)
         self.Q.reset_body()
-        self.Q.set_foot_pos(0, d, d+2, -h)
-        self.Q.set_foot_pos(1, -d, d+2, -h)
-        self.Q.set_foot_pos(2, -d, -d-2, -h)
-        self.Q.set_foot_pos(3, d, -d-2, -h)
+        self.Q.set_foot_pos(0, self.rest_distance, self.rest_distance+2,
+          -self.rest_h)
+        self.Q.set_foot_pos(1, -self.rest_distance, self.rest_distance+2,
+          -self.rest_h)
+        self.Q.set_foot_pos(2, -self.rest_distance, -self.rest_distance-2,
+          -self.rest_h)
+        self.Q.set_foot_pos(3, self.rest_distance, -self.rest_distance-2,
+          -self.rest_h)
         self.Q.update_spring_gg()
         self.Q.zero_spring_gg()
         
@@ -304,6 +314,52 @@ class KeyboardThread (threading.Thread):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
 
+    def move_to_lift(self, index, margin):
+      # move to a support pattern that allows lifting of index
+      l1 = (index - 1)%4
+      l2 = (index + 1)%4
+      xyz = self.Q.find_vector_to_diagonal(l1, l2)
+      distance = xyz[2]
+      print "distance to diagonal: ", distance
+      stable = xyz[3]
+      if stable == index:
+          if distance >= margin*0.9:
+              # selected leg is stable
+              print "move to lift: already there"
+              return True
+          else:
+              print "moving to lift leg ", index
+              angle = math.atan2(xyz[1], xyz[0])
+              if not self.move_body_in_steps(
+                  math.cos(angle) * (margin - distance),
+                  math.sin(angle) * (margin - distance),
+                  0, 10):
+                  print "leg ", index, " can't be lifted now"
+      else:
+          print "moving to lift leg ", index, " (opposite dir)"
+          angle = math.atan2(xyz[1], xyz[0]) + math.pi
+          if not self.move_body_in_steps(
+              math.cos(angle) * (distance + margin),
+              math.sin(angle) * (distance + margin),
+              0, 10):
+              print "leg ", index, " can't be lifted now"
+          
+    def move_body_in_steps(self, x, y, z, stepcount):
+        if stepcount > 20: stepcount = 20
+        dx = float(x) / stepcount
+        dy = float(y) / stepcount
+        dz = float(z) / stepcount
+        if self.Q.change_all_feet_pos(x, y, z):
+            self.Q.change_all_feet_pos(-x, -y, -z)
+        else:
+          print "move body in steps: end position unreachable"
+          return False
+        for i in range(stepcount):
+            self.Q.change_all_feet_pos(dx, dy, dz)
+            self.commit()
+            time.sleep(0.1)
+        return True
+        
     def cycle(self):
         self.Q.update_spring_gg()
         self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
@@ -346,7 +402,7 @@ class KeyboardThread (threading.Thread):
             print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
     
     def stable_up(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.5, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.55, 0)
         self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.25, 0)
         self.Q.change_foot_pos((leg+1)%4, 0, 0, -0.25, 0)
         self.commit();
@@ -354,7 +410,7 @@ class KeyboardThread (threading.Thread):
         self.commit();
 
     def stable_down(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.5, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.55, 0)
         self.Q.change_foot_pos((leg+3)%4, 0, 0, 0.25, 0)
         self.Q.change_foot_pos((leg+1)%4, 0, 0, 0.25, 0)
         self.commit();
@@ -392,6 +448,12 @@ class KeyboardThread (threading.Thread):
             print "transfer leg {} failed: {}, {}".format(leg, x, y)
             return False
 
+    def transfer_leg_to_rest(self, leg):
+      H = self.Q.get_relative_hmatrix(leg, 3)
+      dx = self.rest_distance # or something
+
+
+      
     def body_rotation_seq(self, t, inverted):
         self.startpos()
         sign = 1.0
@@ -437,39 +499,6 @@ class KeyboardThread (threading.Thread):
             self.commit()
             time.sleep(t)
             if i % 5: self.put_on_queue()
-
-    def safe_change_single_foot(self, leg, x, y, z):
-        if self.Q.change_foot_pos(leg, x, y, z, 0):
-            self.commit()
-        else:
-            print "leg {} change {}, {}, {} failed".format(leg, x, y, z)
-
-    def safe_change_all_feet(self, x, y, z):
-        print("change all: x({}) y({}) z({})".format(x,y,z))
-        if self.Q.change_foot_pos(0, x, y, z, 0):
-            if self.Q.change_foot_pos(1, x, y, z, 0):
-                if self.Q.change_foot_pos(2, x, y, z, 0):
-                    if self.Q.change_foot_pos(3, x, y, z, 0):
-                        self.commit();
-                        return True
-                    else:
-                        print("leg 3 failed")
-                        self.Q.change_foot_pos(2, -x, -y, -z, 0)
-                        self.Q.change_foot_pos(1, -x, -y, -z, 0)
-                        self.Q.change_foot_pos(0, -x, -y, -z, 0)
-                        return False
-                else:
-                    print("leg 2 failed")
-                    self.Q.change_foot_pos(1, -x, -y, -z, 0)
-                    self.Q.change_foot_pos(0, -x, -y, -z, 0)
-                    return False
-            else:
-                print("leg 1 failed")
-                self.Q.change_foot_pos(0, -x, -y, -z, 0)
-                return False
-        else:
-            print("leg 0 failed")
-            return False
 
     def apply_config(self):
         #mechanical

@@ -350,15 +350,14 @@ const double* Quadruped::get_last_sgg_vector() {
 }
 
 // ---------------------------------------------------------FindVectorToDiagonal
-/** @brief return a 3d vector to the diagonal between two feet */
+/** @brief return a 2d vector to the diagonal between two feet + more values */
 // TODO(michiel): this can be done without knowledge of diagonal indices
 const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
                                               int diagonal_index2) {
   // grab hmatrices for diagonally opposed feet
-  // TODO(michiel): shouldn't this be relative to com?
-  HMatrix footA  = H_cob_.Dot(HMatrix(
+  HMatrix footA  = H_cob_.Inverse().Dot(HMatrix(
                    GetRelativeHMatrixArray(diagonal_index1, Leg::kPivotCount)));
-  HMatrix footB  = H_cob_.Dot(HMatrix(
+  HMatrix footB  = H_cob_.Inverse().Dot(HMatrix(
                    GetRelativeHMatrixArray(diagonal_index2, Leg::kPivotCount)));
   // find angle of line from A to B
   double angleAB = Get2DAngle(footA.GetX(), footB.GetX(), 
@@ -367,10 +366,40 @@ const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
   // horizontal, and the distance to the line is the y coordinate of both
   HMatrix T(Z_AXIS, -angleAB);
   // apply transform
-  footA.SelfDot(T);
+  footA = T.Dot(footA);
   // grab vector to line
   double v[3] = {0.0, footA.GetY(), 0.0};
   T.CounterRotateVector(v, last_sp_vector_);
+  last_sp_vector_[2] = std::sqrt(std::pow(last_sp_vector_[0], 2) +
+                                 std::pow(last_sp_vector_[1], 2));
+  // determine leg index for the foot on the other side of the diagonal
+  // which is likely the leg that makes the most similar angle to com
+  // grab candidate indices
+  int candidates[kLegCount - 2];
+  int i;
+  int j = 0;
+  for (i = 0; i < kLegCount; ++i) {
+    if (i == diagonal_index1 || i == diagonal_index2) continue;
+    candidates[j] = i;
+    ++j;
+  }
+  // compare angles to cob with the angle of our vector
+  double vector_angle = Get2DAngle(0, last_sp_vector_[0],
+                                   0, last_sp_vector_[1]);
+  double difference_angle;
+  double lowest_diff = 10.0;
+  for (i = 0; i < kLegCount - 2; ++i) {
+    // reusing footA
+    footA = H_cob_.Inverse().Dot(HMatrix(
+             GetRelativeHMatrixArray(candidates[i], Leg::kPivotCount)));
+    difference_angle = std::abs(NormalizeAngle(
+      Get2DAngle(0, footA.GetX(), 0, footA.GetY()) - vector_angle));
+    if (difference_angle < lowest_diff) {
+      lowest_diff = difference_angle;
+      last_sp_vector_[3] = candidates[i];
+    }
+  }
+  
   return last_sp_vector_;
 }
 

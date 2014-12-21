@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <cstddef>
+#include <cmath>
 
 #include "include/springgg.h"
 #include "include/leg.h"
@@ -79,7 +80,7 @@ class Quadruped {
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
   double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
-  double last_sp_vector_[3];  ///< x,y,range to diagonal for support pattern*/
+  double last_sp_vector_[4];  ///< x,y,range,opposite leg index */
 };
 
 }  // namespace Q1
