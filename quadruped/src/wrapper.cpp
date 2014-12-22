@@ -204,8 +204,8 @@ extern "C" bool QuadrupedCanLiftLeg(Quadruped* q, int index, double margin) {
 }
 
 // -----------------------------------------------QuadrupedGetLastSpringGGVector
-/** @brief calls \ref Quadruped::CalcSpringGGTarget 
- * 
+/** @brief calls \ref Quadruped::CalcSpringGGTarget
+ *
  * when z component of vector <> 0, the result is invalid
  */
 extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
@@ -238,7 +238,7 @@ extern "C" bool QuadrupedSetBodyRotation(Quadruped* q, double xrot,
   return q->SetBodyRotation(R);
 }
 
-// -----------------------------------------------------QuadrupedChangeAllFeetPos
+// ----------------------------------------------------QuadrupedChangeAllFeetPos
 /** @brief calls \ref Quadruped::ChangeAllFeetPos */
 extern "C" bool QuadrupedChangeAllFeetPos(Quadruped* q, double dx, double dy,
                                            double dz) {

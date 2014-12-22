@@ -218,7 +218,7 @@ const uint8_t* UsbCom::ReadMiscData() {
     last_error_ = hid_error(handle_);
     return NULL;
   }
-  //read the result
+  // read the result
   res = hid_read(handle_, rbuf_, sizeof(rbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);

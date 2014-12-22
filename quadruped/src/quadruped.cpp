@@ -227,7 +227,7 @@ bool Quadruped::ChangeBodyRotation(HMatrix R) {
   }
   // set new feet pos to -delta
   for (i = 0; i < kLegCount; ++i) {
-    if(!ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2])) {
+    if (!ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2])) {
       // on fail simply rotate cob back, and undo any changed legs
       while (i > 0) {
         --i;
@@ -250,8 +250,8 @@ bool Quadruped::SetBodyRotation(HMatrix R) {
 }
 
 // --------------------------------------------------------------------ResetBody
-/** @brief restore H_cob_ to I(4) while keeping all feet pos 
- * 
+/** @brief restore H_cob_ to I(4) while keeping all feet pos
+ *
  * This doesn't change the robot pose
  */
 void Quadruped::ResetBody() {
@@ -263,9 +263,9 @@ void Quadruped::ResetBody() {
 void Quadruped::SetFootRestVector(int leg_index, double x, double y, double z) {
   HMatrix H_cob_pivot0 = HMatrix(legs_[leg_index]->GetHMatrixArray(0));
   HMatrix H_pivot0_foot = H_cob_pivot0.Inverse().Dot(HMatrix(x, y, z));
-  legs_[leg_index]->SetFootRestVector(H_pivot0_foot.GetX(), 
+  legs_[leg_index]->SetFootRestVector(H_pivot0_foot.GetX(),
                                   H_pivot0_foot.GetY(),
-                                  H_pivot0_foot.GetZ()); 
+                                  H_pivot0_foot.GetZ());
 }
 
 // ----------------------------------------------------------------ConnectDevice
@@ -382,9 +382,9 @@ const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
   HMatrix footB  = H_cob_.Inverse().Dot(HMatrix(
                    GetRelativeHMatrixArray(diagonal_index2, Leg::kPivotCount)));
   // find angle of line from A to B
-  double angleAB = Get2DAngle(footA.GetX(), footB.GetX(), 
+  double angleAB = Get2DAngle(footA.GetX(), footB.GetX(),
                               footA.GetY(), footB.GetY());
-  // create a new transform matrix to rotate footA and B so the line is 
+  // create a new transform matrix to rotate footA and B so the line is
   // horizontal, and the distance to the line is the y coordinate of both
   HMatrix T(Z_AXIS, -angleAB);
   // apply transform
@@ -421,7 +421,7 @@ const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
       last_sp_vector_[3] = candidates[i];
     }
   }
-  
+
   return last_sp_vector_;
 }
 

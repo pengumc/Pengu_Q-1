@@ -78,13 +78,13 @@ class Quadruped {
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
   HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
-  
+
   HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
   double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
   double last_sp_vector_[4];  ///< x,y,range,opposite leg index */
-  double last_rest_vector_[3]; ///< 3d vector to rest pos for a foot*/
+  double last_rest_vector_[3];  ///< 3d vector to rest pos for a foot*/
 };
 
 }  // namespace Q1
