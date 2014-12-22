@@ -19,9 +19,6 @@ Leg::Leg(uint8_t index, HMatrix* H_cob) {
   }
   foot_ = new Pivot(pivots_[kPivotCount-1]->H_framep());
   ik_engine_->SetPivot(kPivotCount, foot_);
-  rest_vector_[0] = 0.0;
-  rest_vector_[1] = 0.0;
-  rest_vector_[2] = 0.0;
 }
 
 
@@ -258,24 +255,10 @@ double Leg::get_total_mass() {
   return total_mass_;
 }
 
-// --------------------------------------------------------------get_rest_vector
-/** @brief accessor for \ref rest_vector_ */
-const double* Leg::get_rest_vector() {
-  return rest_vector_;
-}
-
 // ----------------------------------------------------------GetPivotAbsMaxAngle
 /** @brief returns \ref Pivot::abs_max_angle_ for the pivot at index*/
 double Leg::GetPivotAbsMaxAngle(int index) {
   return pivots_[index]->abs_max_angle();
-}
-
-// ------------------------------------------------------------SetFootRestVector
-/** @brief set \ref rest_vector_ for a foot (frame = pivot 0) */
-void Leg::SetFootRestVector(double x, double y, double z) {
-  rest_vector_[0] = x;
-  rest_vector_[1] = y;
-  rest_vector_[2] = z;
 }
 
 }  // namespace Q1

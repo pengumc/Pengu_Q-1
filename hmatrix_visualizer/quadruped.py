@@ -138,9 +138,17 @@ class Quadruped:
             int(index2))
     
     def set_foot_rest_vector(self, leg, x, y, z):
-        self.lib.QuadrupedSetFootRestVector(int(leg), c_double(x), c_double(y),
-            c_double(z))
+        self.lib.QuadrupedSetFootRestVector(self.q, int(leg), c_double(x),
+            c_double(y), c_double(z))
     
     def get_foot_rest_vector(self, leg, axis, angle):
-        return self.lib.QuadrupedGetFootRestVector(int(leg), int(axis), 
+        return self.lib.QuadrupedGetFootRestVector(self.q, int(leg), int(axis), 
             c_double(angle))
+    
+    def get_foot_rest_vector_delta(self, leg, axis, angle):
+        v = self.get_foot_rest_vector(leg, axis, angle)
+        H_0_foot = self.get_relative_hmatrix(leg, 3)
+        return [
+            v[0] - H_0_foot[3],
+            v[1] - H_0_foot[7], 
+            v[2] - H_0_foot[11]]

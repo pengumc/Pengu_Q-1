@@ -13,6 +13,11 @@ Quadruped::Quadruped() {
     legs_[i] = new Leg(i, &H_cob_);
   }
   sgg_.SetCoMPosition(0.0, 0.0);
+  for (uint8_t i = 0; i < kLegCount; ++i) {
+    for (uint8_t j = 0; j < 3; ++j) {
+      rest_vectors_[i][j] = 0.0;
+    }
+  }
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -111,14 +116,18 @@ const double* Quadruped::GetCoM() {
 }
 
 // ------------------------------------------------------------GetFootRestVector
-/** @brief get 3d vector for rest vector with a specific body R, frame 0 */
+/** @brief get 3d vector for rest vector with a specific body R, frame 0 
+ *
+ * warning: this breaks if \ref H_cob_ has non-zero x,y,z
+ */
 const double* Quadruped::GetFootRestVector(int leg_index,
                                            HMatrix body_rotation) {
-  const double* v = legs_[leg_index]->get_rest_vector();
-  HMatrix H_0_pivot0 = H_cob_.Dot(body_rotation);
-  last_rest_vector_[0] = H_0_pivot0.GetX() + v[0];
-  last_rest_vector_[1] = H_0_pivot0.GetY() + v[1];
-  last_rest_vector_[2] = H_0_pivot0.GetZ() + v[2];
+  HMatrix H_cob_foot = H_cob_.Dot(body_rotation).Dot(
+    HMatrix(rest_vectors_[leg_index][0], rest_vectors_[leg_index][1],
+            rest_vectors_[leg_index][2]));
+  last_rest_vector_[0] = H_cob_foot.GetX();
+  last_rest_vector_[1] = H_cob_foot.GetY();
+  last_rest_vector_[2] = H_cob_foot.GetZ();
   return last_rest_vector_;
 }
 
@@ -259,13 +268,15 @@ void Quadruped::ResetBody() {
 }
 
 // ------------------------------------------------------------SetFootRestVector
-/** @brief set \ref Leg::rest_vector_ for a leg, cob frame */
+/** @brief set \ref Leg::rest_vector_ for a leg, 0 frame 
+ * 
+ * stored relative to cob
+ */
 void Quadruped::SetFootRestVector(int leg_index, double x, double y, double z) {
-  HMatrix H_cob_pivot0 = HMatrix(legs_[leg_index]->GetHMatrixArray(0));
-  HMatrix H_pivot0_foot = H_cob_pivot0.Inverse().Dot(HMatrix(x, y, z));
-  legs_[leg_index]->SetFootRestVector(H_pivot0_foot.GetX(),
-                                  H_pivot0_foot.GetY(),
-                                  H_pivot0_foot.GetZ());
+  HMatrix H_cob_foot = H_cob_.Inverse().Dot(HMatrix(x, y, z));
+  rest_vectors_[leg_index][0] = H_cob_foot.GetX();
+  rest_vectors_[leg_index][1] = H_cob_foot.GetY();
+  rest_vectors_[leg_index][2] = H_cob_foot.GetZ();
 }
 
 // ----------------------------------------------------------------ConnectDevice

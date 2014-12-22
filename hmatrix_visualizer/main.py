@@ -68,9 +68,7 @@ class KeyboardThread (threading.Thread):
         self.put_on_queue()
         self.input_mode = 0
         self.speed  = 0.3
-        self.rest_distance = 3.8 + 7.35 - 1
-        self.rest_h = 11
-        
+        self.cob_moved = [0.0, 0.0, 0.0]
         while True:
             if self.input_mode == 0:
                 c = keyboard.getch()
@@ -120,7 +118,8 @@ class KeyboardThread (threading.Thread):
                 elif c == 'w':
                     if self.cob_selected:
                         # - y
-                        self.Q.change_all_feet_pos(0, -self.speed, 0)
+                        if self.Q.change_all_feet_pos(0, -self.speed, 0):
+                            self.cob_moved[1] += self.speed
                         #self.cycle()
                     else:
                         self.Q.change_foot_pos(self.leg, 0, self.speed, 0, 0)
@@ -128,21 +127,25 @@ class KeyboardThread (threading.Thread):
                 elif c == 'a':
                     if self.cob_selected:
                         # + x
-                        self.Q.change_all_feet_pos(self.speed, 0, 0)
+                        if self.Q.change_all_feet_pos(self.speed, 0, 0):
+                            self.cob_moved[0] -= self.speed
                     else:
                         self.Q.change_foot_pos(self.leg, -self.speed, 0, 0, 0)
+                            
                     self.commit()
                 elif c == 's':
                     if self.cob_selected:
                         # + y
-                        self.Q.change_all_feet_pos(0, self.speed, 0)
+                        if self.Q.change_all_feet_pos(0, self.speed, 0):
+                            self.cob_moved[1] -= self.speed 
                     else:
                         self.Q.change_foot_pos(self.leg, 0, -self.speed, 0, 0)
                     self.commit()
                 elif c == 'd':
                     if self.cob_selected:
                         #- x
-                        self.Q.change_all_feet_pos(-self.speed, 0, 0)
+                        if self.Q.change_all_feet_pos(-self.speed, 0, 0):
+                            self.cob_moved[0] += self.speed
                     else:
                         self.Q.change_foot_pos(self.leg, self.speed, 0, 0, 0)
                     self.commit()
@@ -194,9 +197,9 @@ class KeyboardThread (threading.Thread):
                     self.Q.change_all_feet_pos(-x, -y, 0)
                 # TEST BUTTON Y
                 elif c == 'y':
-                    self.move_to_lift(self.leg, 2)
+                    for i in range(5): self.stable_turn(0.1)
                 elif c == 'Y':
-                    pass
+                    for i in range(5): self.stable_turn(-0.1)
                 #Body rotation [ ] { } ; '
                 elif c == '[':
                     print "body z + ", self.Q.change_body_rotation(2, 0.1*self.speed)
@@ -296,53 +299,55 @@ class KeyboardThread (threading.Thread):
             self.queue.put(raw_pivots)
 
     def startpos(self):
-        print "all feet at {}, -11".format(self.rest_distance)
+        print "revert to rest vectors"
         self.Q.reset_body()
-        self.Q.set_foot_pos(0, self.rest_distance, self.rest_distance+2,
-          -self.rest_h)
-        self.Q.set_foot_pos(1, -self.rest_distance, self.rest_distance+2,
-          -self.rest_h)
-        self.Q.set_foot_pos(2, -self.rest_distance, -self.rest_distance-2,
-          -self.rest_h)
-        self.Q.set_foot_pos(3, self.rest_distance, -self.rest_distance-2,
-          -self.rest_h)
+        for i in range(4):
+            v = self.Q.get_foot_rest_vector(i, 0, 0)
+            print v[0], v[1], v[2]
+            print self.Q.set_foot_pos(i, v[0], v[1], v[2]);
         self.Q.update_spring_gg()
         self.Q.zero_spring_gg()
+        self.cob_moved = [0.0, 0.0, 0.0]
         
-            
     def commit(self):
         res = self.Q.sync_to_device()
         print "sync to dev: {}".format(res)
 
-    def move_to_lift(self, index, margin):
-      # move to a support pattern that allows lifting of index
-      l1 = (index - 1)%4
-      l2 = (index + 1)%4
-      xyz = self.Q.find_vector_to_diagonal(l1, l2)
-      distance = xyz[2]
-      print "distance to diagonal: ", distance
-      stable = xyz[3]
-      if stable == index:
-          if distance >= margin*0.9:
-              # selected leg is stable
-              print "move to lift: already there"
-              return True
-          else:
-              print "moving to lift leg ", index
-              angle = math.atan2(xyz[1], xyz[0])
-              if not self.move_body_in_steps(
-                  math.cos(angle) * (margin - distance),
-                  math.sin(angle) * (margin - distance),
-                  0, 10):
-                  print "leg ", index, " can't be lifted now"
-      else:
-          print "moving to lift leg ", index, " (opposite dir)"
-          angle = math.atan2(xyz[1], xyz[0]) + math.pi
-          if not self.move_body_in_steps(
-              math.cos(angle) * (distance + margin),
-              math.sin(angle) * (distance + margin),
-              0, 10):
-              print "leg ", index, " can't be lifted now"
+    def move_to_lift(self, index, margin, stepcount):
+        # move to a support pattern that allows lifting of index
+        l1 = (index - 1)%4
+        l2 = (index + 1)%4
+        xyz = self.Q.find_vector_to_diagonal(l1, l2)
+        distance = xyz[2]
+        print "distance to diagonal: ", distance
+        stable = xyz[3]
+        if stable == index:
+            if distance >= margin*0.9:
+                # selected leg is stable
+                print "move to lift: already there"
+                return True
+            else:
+                print "moving to lift leg ", index
+                angle = math.atan2(xyz[1], xyz[0])
+                if not self.move_body_in_steps(
+                    math.cos(angle) * (margin - distance),
+                    math.sin(angle) * (margin - distance),
+                    0, stepcount):
+                    print "leg ", index, " can't be lifted now"
+                    return False
+                else:
+                    return True
+        else:
+            print "moving to lift leg ", index, " (opposite dir)"
+            angle = math.atan2(xyz[1], xyz[0]) + math.pi
+            if not self.move_body_in_steps(
+                math.cos(angle) * (distance + margin),
+                math.sin(angle) * (distance + margin),
+                0, stepcount):
+                print "leg ", index, " can't be lifted now"
+                return False
+            else:
+                return True
           
     def move_body_in_steps(self, x, y, z, stepcount):
         if stepcount > 20: stepcount = 20
@@ -357,7 +362,60 @@ class KeyboardThread (threading.Thread):
         for i in range(stepcount):
             self.Q.change_all_feet_pos(dx, dy, dz)
             self.commit()
-            time.sleep(0.1)
+            time.sleep(0.05)
+        self.cob_moved[0] -= x;
+        self.cob_moved[1] -= y;
+        self.cob_moved[2] -= z;
+        return True
+    
+    ###############
+    # stable_turn #
+    ###############
+    def stable_turn(self, angle):
+        # |angle| < 0.2 i think should be safe
+        # just do legs in order first
+        
+        # 'turn' a leg = move leg to rest pos for a rotated body
+        turning_leg = -1
+        try:
+            a = angle * len(self.to_turn)/4.0
+            print "a ", a
+            # if to_turn is empty, refill and move body to center
+            if len(self.to_turn) == 0:
+                self.to_turn = range(4)
+                self.turned = []
+                self.move_body_in_steps(self.cob_moved[0], self.cob_moved[1],
+                    self.cob_moved[2], 1)
+                return True
+            # try to move to support any leg in to_turn
+            for i in self.to_turn:
+                if self.move_to_lift(i, 2, 5):
+                    self.to_turn.remove(i) # remove from que
+                    turning_leg = i
+                    print "breaking..."
+                    break
+            if turning_leg == -1:
+                print "failed to move any leg in", self.to_turn
+                return False
+        except AttributeError:
+            self.to_turn = range(4)
+            self.turned = []
+            return self.stable_turn(angle)
+        # we're in a position to lift turning_leg
+        time.sleep(0.1)
+        rest_vector = self.Q.get_foot_rest_vector_delta(turning_leg, 2, a)
+        if not self.transfer_leg(turning_leg,
+            rest_vector[0] - self.cob_moved[0],
+            rest_vector[1] - self.cob_moved[1]):
+            # failed to transfer leg
+            print "failed to transfer leg ", turning_leg
+            self.to_turn.append(turning_leg) # re add to turning que
+            return False
+        # leg has been moved, time to rotate the body
+        if not self.Q.change_body_rotation(2, angle / 4.0):
+            # body rotation failed, but leg was moved
+            print "body rotation failed, but leg ", turning_leg, " was moved"
+            return False
         return True
         
     def cycle(self):
@@ -402,7 +460,7 @@ class KeyboardThread (threading.Thread):
             print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
     
     def stable_up(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.55, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.50, 0)
         self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.25, 0)
         self.Q.change_foot_pos((leg+1)%4, 0, 0, -0.25, 0)
         self.commit();
@@ -410,7 +468,7 @@ class KeyboardThread (threading.Thread):
         self.commit();
 
     def stable_down(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.55, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.50, 0)
         self.Q.change_foot_pos((leg+3)%4, 0, 0, 0.25, 0)
         self.Q.change_foot_pos((leg+1)%4, 0, 0, 0.25, 0)
         self.commit();
@@ -517,4 +575,11 @@ class KeyboardThread (threading.Thread):
                 except AttributeError:
                     pass
         self.Q.update_spring_gg()
+        # rest vector are not updated at any time
+        d = 3.8 + 7.35 - 1
+        h = 11
+        self.Q.set_foot_rest_vector(0, d, d+2, -h);
+        self.Q.set_foot_rest_vector(1, -d, d+2, -h);
+        self.Q.set_foot_rest_vector(2, -d, -d-2, -h);
+        self.Q.set_foot_rest_vector(3, d, -d-2, -h);
         
