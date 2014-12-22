@@ -265,4 +265,18 @@ extern "C" const double* QuadrupedFindVectorToDiagonal(Quadruped* q,
   return q->FindVectorToDiagonal(diagonal_index1, diagonal_index2);
 }
 
+// ---------------------------------------------------QuadrupedSetFootRestVector
+/** @brief calls \ref Quadruped::SetFootRestVector */
+extern "C" void QuadrupedSetFootRestVector(Quadruped* q, int leg_index,
+                                             double x, double y, double z) {
+  q->SetFootRestVector(leg_index, x, y, z);
+}
+
+// ---------------------------------------------------QuadrupedGetFootRestVector
+/** @brief calls \ref Quadruped::GetFootRestVector with specified R */
+extern "C" const double* QuadrupedGetFootRestVector(Quadruped* q, int leg_index,
+                                                    Axis axis, double angle) {
+  return q->GetFootRestVector(leg_index, HMatrix(axis, angle));
+}
+
 }  // namespace Q1

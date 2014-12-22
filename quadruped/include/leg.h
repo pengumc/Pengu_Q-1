@@ -27,6 +27,7 @@ class Leg {
   ~Leg();
   // functions
   double get_total_mass();
+  const double* get_rest_vector();
   double GetPivotAbsMaxAngle(int index);
   const double* GetHMatrixArray(int index);
   const double* GetRelativeHMatrixArray(int index);
@@ -42,6 +43,7 @@ class Leg {
   bool ChangeFootPos(double dx, double dy, double dz);
   void SetPivotPulsewidthConfig(int index, double pw_0, double pw_60);
   HMatrix GetCoM();
+  void SetFootRestVector(double x, double y, double z);
 
  private:
   uint8_t index_;/**< @brief index of the leg (0..3)*/
@@ -50,6 +52,7 @@ class Leg {
   InvKinematic* ik_engine_;/**< @brief the inverse kinematics engine*/
   HMatrix H_com_;/**<@brief (absolute) position of center of mass of the leg*/
   double total_mass_;/**@brief combined mass of the pivots (relative)*/
+  double rest_vector_[3];  ///< rest vector for foot, H_pivot0_foot
   // functions
   void UpdateCoM();
 };

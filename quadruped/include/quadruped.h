@@ -47,6 +47,7 @@ class Quadruped {
   const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
   const double* GetCoM();
+  const double* GetFootRestVector(int leg_index, HMatrix body_rotation);
   // functions to change pivot states
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
@@ -57,6 +58,8 @@ class Quadruped {
   bool ChangeBodyRotation(HMatrix R);
   bool SetBodyRotation(HMatrix R);
   void ResetBody();
+  // functions for oter configuration
+  void SetFootRestVector(int leg_index, double x, double y, double z);
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();
@@ -81,6 +84,7 @@ class Quadruped {
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
   double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
   double last_sp_vector_[4];  ///< x,y,range,opposite leg index */
+  double last_rest_vector_[3]; ///< 3d vector to rest pos for a foot*/
 };
 
 }  // namespace Q1

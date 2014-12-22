@@ -110,6 +110,18 @@ const double* Quadruped::GetCoM() {
   return H_com_.array();
 }
 
+// ------------------------------------------------------------GetFootRestVector
+/** @brief get 3d vector for rest vector with a specific body R, frame 0 */
+const double* Quadruped::GetFootRestVector(int leg_index,
+                                           HMatrix body_rotation) {
+  const double* v = legs_[leg_index]->get_rest_vector();
+  HMatrix H_0_pivot0 = H_cob_.Dot(body_rotation);
+  last_rest_vector_[0] = H_0_pivot0.GetX() + v[0];
+  last_rest_vector_[1] = H_0_pivot0.GetY() + v[1];
+  last_rest_vector_[2] = H_0_pivot0.GetZ() + v[2];
+  return last_rest_vector_;
+}
+
 // -------------------------------------------------------------ChangePivotAngle
 /** @brief change a pivots angle, false on out of bounds*/
 bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
@@ -244,6 +256,16 @@ bool Quadruped::SetBodyRotation(HMatrix R) {
  */
 void Quadruped::ResetBody() {
   H_cob_.Clear();
+}
+
+// ------------------------------------------------------------SetFootRestVector
+/** @brief set \ref Leg::rest_vector_ for a leg, cob frame */
+void Quadruped::SetFootRestVector(int leg_index, double x, double y, double z) {
+  HMatrix H_cob_pivot0 = HMatrix(legs_[leg_index]->GetHMatrixArray(0));
+  HMatrix H_pivot0_foot = H_cob_pivot0.Inverse().Dot(HMatrix(x, y, z));
+  legs_[leg_index]->SetFootRestVector(H_pivot0_foot.GetX(), 
+                                  H_pivot0_foot.GetY(),
+                                  H_pivot0_foot.GetZ()); 
 }
 
 // ----------------------------------------------------------------ConnectDevice
