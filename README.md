@@ -14,6 +14,8 @@ www.youtube.com/watch?v=90h8AxxW2I0
 
 http://pengurobotics.com/projects/Q1
 
+http://hackaday.io/project/3229-pengu-q1-quadruped
+
 3D printer files
 ----------------
 http://www.thingiverse.com/thing:161885
