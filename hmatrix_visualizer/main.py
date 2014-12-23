@@ -197,9 +197,9 @@ class KeyboardThread (threading.Thread):
                     self.Q.change_all_feet_pos(-x, -y, 0)
                 # TEST BUTTON Y
                 elif c == 'y':
-                    for i in range(5): self.stable_turn(0.1)
+                    for i in range(5): self.stable_turn(0.3)
                 elif c == 'Y':
-                    for i in range(5): self.stable_turn(-0.1)
+                    for i in range(5): self.stable_turn(-0.3)
                 #Body rotation [ ] { } ; '
                 elif c == '[':
                     print "body z + ", self.Q.change_body_rotation(2, 0.1*self.speed)
@@ -372,9 +372,6 @@ class KeyboardThread (threading.Thread):
     # stable_turn #
     ###############
     def stable_turn(self, angle):
-        # |angle| < 0.2 i think should be safe
-        # just do legs in order first
-        
         # 'turn' a leg = move leg to rest pos for a rotated body
         turning_leg = -1
         try:
@@ -382,10 +379,9 @@ class KeyboardThread (threading.Thread):
             print "a ", a
             # if to_turn is empty, refill and move body to center
             if len(self.to_turn) == 0:
-                self.to_turn = range(4)
-                self.turned = []
                 self.move_body_in_steps(self.cob_moved[0], self.cob_moved[1],
                     self.cob_moved[2], 1)
+                del self.to_turn
                 return True
             # try to move to support any leg in to_turn
             for i in self.to_turn:
@@ -399,6 +395,7 @@ class KeyboardThread (threading.Thread):
                 return False
         except AttributeError:
             self.to_turn = range(4)
+            if angle < 0: self.to_turn.reverse()
             self.turned = []
             return self.stable_turn(angle)
         # we're in a position to lift turning_leg
@@ -460,17 +457,17 @@ class KeyboardThread (threading.Thread):
             print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
     
     def stable_up(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.50, 0)
-        self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.25, 0)
-        self.Q.change_foot_pos((leg+1)%4, 0, 0, -0.25, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.60, 0)
+        self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.20, 0)
+        self.Q.change_foot_pos((leg+1)%4, 0, 0, -0.20, 0)
         self.commit();
         self.Q.change_foot_pos(leg, 0, 0, 1.7, 0)
         self.commit();
 
     def stable_down(self, leg):
-        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.50, 0)
-        self.Q.change_foot_pos((leg+3)%4, 0, 0, 0.25, 0)
-        self.Q.change_foot_pos((leg+1)%4, 0, 0, 0.25, 0)
+        self.Q.change_foot_pos((leg+2)%4, 0, 0, -0.60, 0)
+        self.Q.change_foot_pos((leg+3)%4, 0, 0, 0.20, 0)
+        self.Q.change_foot_pos((leg+1)%4, 0, 0, 0.20, 0)
         self.commit();
         self.Q.change_foot_pos(leg, 0, 0, -1.7, 0)
         self.commit();
