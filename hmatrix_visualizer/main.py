@@ -120,9 +120,13 @@ class KeyboardThread (threading.Thread):
                         # - y
                         if self.Q.change_all_feet_pos(0, -self.speed, 0):
                             self.cob_moved[1] += self.speed
-                        #self.cycle()
                     else:
                         self.Q.change_foot_pos(self.leg, 0, self.speed, 0, 0)
+                    self.commit()
+                elif c == 'W':
+                    if self.Q.change_all_feet_pos(0, -self.speed, 0):
+                        self.cob_moved[1] += self.speed
+                    self.cycle()
                     self.commit()
                 elif c == 'a':
                     if self.cob_selected:
@@ -195,6 +199,8 @@ class KeyboardThread (threading.Thread):
                     except:
                         print "failed to grab data from xyq"
                     self.Q.change_all_feet_pos(-x, -y, 0)
+                elif c == 'k':
+                    for i in range(5): self.stable_turn(0)
                 # TEST BUTTON Y
                 elif c == 'y':
                     for i in range(5): self.stable_turn(0.3)
@@ -388,15 +394,17 @@ class KeyboardThread (threading.Thread):
                 if self.move_to_lift(i, 2, 5):
                     self.to_turn.remove(i) # remove from que
                     turning_leg = i
-                    print "breaking..."
+                    self.put_on_queue()
                     break
             if turning_leg == -1:
                 print "failed to move any leg in", self.to_turn
                 return False
         except AttributeError:
             self.to_turn = range(4)
+            self.cob_moved[0] = 0.0
+            self.cob_moved[1] = 0.0
+            self.cob_moved[2] = 0.0
             if angle < 0: self.to_turn.reverse()
-            self.turned = []
             return self.stable_turn(angle)
         # we're in a position to lift turning_leg
         time.sleep(0.1)
