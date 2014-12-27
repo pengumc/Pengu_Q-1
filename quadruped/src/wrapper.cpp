@@ -204,8 +204,8 @@ extern "C" bool QuadrupedCanLiftLeg(Quadruped* q, int index, double margin) {
 }
 
 // -----------------------------------------------QuadrupedGetLastSpringGGVector
-/** @brief calls \ref Quadruped::CalcSpringGGTarget 
- * 
+/** @brief calls \ref Quadruped::CalcSpringGGTarget
+ *
  * when z component of vector <> 0, the result is invalid
  */
 extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
@@ -219,6 +219,64 @@ extern "C" const double* QuadrupedGetLastSpringGGVector(Quadruped* q, int index,
 /** @brief calls \ref Quadruped::EqualizeFeetLevels */
 extern "C" bool QuadrupedEqualizeFeetLevels(Quadruped* q, double z) {
   return q->EqualizeFeetLevels(z);
+}
+
+// ----------------------------------------------------------QuadrupedRotateBody
+/** @brief calls \ref Quadruped::RotateBody */
+extern "C" bool QuadrupedChangeBodyRotation(Quadruped* q, Axis axis,
+                                            double angle) {
+  return q->ChangeBodyRotation(HMatrix(axis, angle));
+}
+
+// -----------------------------------------------------QuadrupedSetBodyRotation
+/** @brief calls \ref Quadruped::SetBodyRotation with angles */
+extern "C" bool QuadrupedSetBodyRotation(Quadruped* q, double xrot,
+                                            double yrot, double zrot) {
+  HMatrix R(X_AXIS, xrot);
+  R.SelfDot(HMatrix(Y_AXIS, yrot));
+  R.SelfDot(HMatrix(Z_AXIS, zrot));
+  return q->SetBodyRotation(R);
+}
+
+// ----------------------------------------------------QuadrupedChangeAllFeetPos
+/** @brief calls \ref Quadruped::ChangeAllFeetPos */
+extern "C" bool QuadrupedChangeAllFeetPos(Quadruped* q, double dx, double dy,
+                                           double dz) {
+  return q->ChangeAllFeetPos(dx, dy, dz);
+}
+
+// -----------------------------------------------------------QuadrupedResetBody
+/** @brief calls \ref Quadruped::ResetBody */
+extern "C" void QuadrupedResetBody(Quadruped* q) {
+  q->ResetBody();
+}
+
+// ---------------------------------------------------------QuadrupedGetMiscData
+/** @brief calls \ref UsbCom::ReadMiscData */
+extern "C" const uint8_t* QuadrupedGetMiscData(Quadruped* q) {
+  return q->GetMiscDataFromDevice();
+}
+
+// ------------------------------------------------QuadrupedFindVectorToDiagonal
+/** @brief calls \ref Quadruped::FindVectorToDiagonal */
+extern "C" const double* QuadrupedFindVectorToDiagonal(Quadruped* q,
+                                                       int diagonal_index1,
+                                                       int diagonal_index2) {
+  return q->FindVectorToDiagonal(diagonal_index1, diagonal_index2);
+}
+
+// ---------------------------------------------------QuadrupedSetFootRestVector
+/** @brief calls \ref Quadruped::SetFootRestVector */
+extern "C" void QuadrupedSetFootRestVector(Quadruped* q, int leg_index,
+                                             double x, double y, double z) {
+  q->SetFootRestVector(leg_index, x, y, z);
+}
+
+// ---------------------------------------------------QuadrupedGetFootRestVector
+/** @brief calls \ref Quadruped::GetFootRestVector with specified R */
+extern "C" const double* QuadrupedGetFootRestVector(Quadruped* q, int leg_index,
+                                                    Axis axis, double angle) {
+  return q->GetFootRestVector(leg_index, HMatrix(axis, angle));
 }
 
 }  // namespace Q1

@@ -35,7 +35,7 @@ void SpringGG::ZeroForces() {
 // --------------------------------------------------------------SetFootPosition
 /** @brief set the position (xy) of a foot on the ground plane
  *
- * @param index foot index 0..3
+ * index in range 0..3
  */
 void SpringGG::SetFootPosition(int index, double x, double y) {
   feet_[index].SetPosition(x, y);
@@ -156,11 +156,11 @@ int SpringGG::GetLegWithHighestForce(double direction_angle) {
 }
 
 // ---------------------------------------------------------------GetDeltaVector
-/** @brief find a displacement for foot index so it's force in the 
+/** @brief find a displacement for foot index so it's force in the
  * provided direction angle, is at least F. The foot will only be moved in the
  * specified direction. vector_out[2] is set to -1 if something goes wrong.
  */
-void SpringGG::GetDeltaVector(int index, double angle, double F, 
+void SpringGG::GetDeltaVector(int index, double angle, double F,
                               double* vector_out) {
   double original_x = feet_[index].x();
   double original_y = feet_[index].y();
@@ -172,7 +172,7 @@ void SpringGG::GetDeltaVector(int index, double angle, double F,
                        feet_[index].Fy() * sinangle;
   int safeguard = 0;
   vector_out[2] = 0.0;
-  while(F_projected > -F) {
+  while (F_projected > -F) {
     feet_[index].ChangePosition(dx, dy);
     CalculateForces();
     F_projected = feet_[index].Fx() * cosangle + feet_[index].Fy() * sinangle;
@@ -189,7 +189,7 @@ void SpringGG::GetDeltaVector(int index, double angle, double F,
   feet_[index].SetPosition(original_x, original_y);
   CalculateForces();
 }
- 
+
 // ------------------------------------------------------------------constructor
 /** @brief constructor */
 SpringPoint::SpringPoint() {

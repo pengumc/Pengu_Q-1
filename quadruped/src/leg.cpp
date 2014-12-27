@@ -169,6 +169,8 @@ double Leg::GetPivotAngle(int index) {
 // -----------------------------------------------------SetPivotPulsewidthConfig
 /** @brief sets \ref Pivot::pw_0_ and \ref Pivot::pw_60_
  * @param index 0..kPivotCount-1
+ * @param pw_0 pulsewidth for 0 degree angle
+ * @param pw_60 pulsewidth for 60 degree angle
  */
 void Leg::SetPivotPulsewidthConfig(int index, double pw_0, double pw_60) {
   pivots_[index]->SetPulsewidthConfig(pw_0, pw_60);
@@ -240,7 +242,7 @@ void Leg::UpdateCoM() {
 
 
 // -----------------------------------------------------------------------GetCoM
-/** @brief Get the latest \ref H_cob_com_ for this leg. use \ref UpdateCoM to
+/** @brief Get the latest \ref H_com_ for this leg. use \ref UpdateCoM to
  *  recalculte.
  */
 HMatrix Leg::GetCoM() {

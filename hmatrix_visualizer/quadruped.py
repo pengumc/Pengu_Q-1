@@ -11,12 +11,18 @@ class Quadruped:
         self.lib.QuadrupedGetCoM.restype = POINTER(c_double)
         self.lib.QuadrupedChangePivotAngle.restype = c_bool
         self.lib.QuadrupedChangeFootPos.restype = c_bool
+        self.lib.QuadrupedChangeAllFeetPos.restype = c_bool
         self.lib.QuadrupedSetFootPos.restype = c_bool
         self.lib.QuadrupedSyncToDev.restype = c_bool
         self.lib.QuadrupedSyncFromDev.restype = c_bool
         self.lib.QuadrupedCanLiftLeg.restype = c_bool
         self.lib.QuadrupedGetLastSpringGGVector.restype = POINTER(c_double)
         self.lib.QuadrupedEqualizeFeetLevels.restype = c_bool
+        self.lib.QuadrupedSetBodyRotation.restype = c_bool
+        self.lib.QuadrupedChangeBodyRotation.restype = c_bool
+        self.lib.QuadrupedGetMiscData.restype = POINTER(c_uint8)
+        self.lib.QuadrupedFindVectorToDiagonal.restype = POINTER(c_double)
+        self.lib.QuadrupedGetFootRestVector.restype = POINTER(c_double)
         #startup
         self.q = self.lib.QuadrupedAlloc();
 
@@ -68,6 +74,11 @@ class Quadruped:
     def change_foot_pos(self, leg, dx, dy, dz, mode):
         return self.lib.QuadrupedChangeFootPos(self.q, int(leg), c_double(dx),
             c_double(dy), c_double(dz), int(mode))
+            
+    def change_all_feet_pos(self, dx, dy, dz):
+        return self.lib.QuadrupedChangeAllFeetPos(self.q, c_double(dx),
+            c_double(dy), c_double(dz))
+
     def set_foot_pos(self, leg, x, y, z):
         return self.lib.QuadrupedSetFootPos(self.q, int(leg), c_double(x),
             c_double(y), c_double(z))
@@ -103,3 +114,41 @@ class Quadruped:
 
     def equalize_feet_levels(self, z):
         return self.lib.QuadrupedEqualizeFeetLevels(self.q, c_double(z))
+        
+    def change_body_rotation(self, axis, angle):
+        return self.lib.QuadrupedChangeBodyRotation(self.q, int(axis),
+            c_double(angle))
+        
+    def set_body_rotation(self, xrot, yrot, zrot):
+        return self.lib.QuadrupedSetBodyRotation(self.q, c_double(xrot),
+            c_double(yrot), c_double(zrot))
+        
+    def reset_body(self):
+        self.lib.QuadrupedResetBody(self.q)
+        
+    def get_misc_data(self):
+        r = self.lib.QuadrupedGetMiscData(self.q)
+        if r:
+            return r
+        else:
+            return None
+    
+    def find_vector_to_diagonal(self, index1, index2):
+        return self.lib.QuadrupedFindVectorToDiagonal(self.q, int(index1),
+            int(index2))
+    
+    def set_foot_rest_vector(self, leg, x, y, z):
+        self.lib.QuadrupedSetFootRestVector(self.q, int(leg), c_double(x),
+            c_double(y), c_double(z))
+    
+    def get_foot_rest_vector(self, leg, axis, angle):
+        return self.lib.QuadrupedGetFootRestVector(self.q, int(leg), int(axis), 
+            c_double(angle))
+    
+    def get_foot_rest_vector_delta(self, leg, axis, angle):
+        v = self.get_foot_rest_vector(leg, axis, angle)
+        H_0_foot = self.get_relative_hmatrix(leg, 3)
+        return [
+            v[0] - H_0_foot[3],
+            v[1] - H_0_foot[7], 
+            v[2] - H_0_foot[11]]

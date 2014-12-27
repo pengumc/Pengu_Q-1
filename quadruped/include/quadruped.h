@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <cstddef>
+#include <cmath>
 
 #include "include/springgg.h"
 #include "include/leg.h"
@@ -46,16 +47,24 @@ class Quadruped {
   const double* GetRelativeHMatrixArray(int leg_index, int pivot_index);
   const double* GetEndpoint(int index);
   const double* GetCoM();
+  const double* GetFootRestVector(int leg_index, HMatrix body_rotation);
   // functions to change pivot states
   bool ChangePivotAngle(int leg_index, int pivot_index, double angle);
   bool ChangeFootPos(int leg_index, double dx, double dy, double dz);
+  bool ChangeAllFeetPos(double dx, double dy, double dz);
   bool SetFootPos(int leg_index, double x, double y, double z);
   void SetAllAnglesTo0();
   bool EqualizeFeetLevels(double z);
+  bool ChangeBodyRotation(HMatrix R);
+  bool SetBodyRotation(HMatrix R);
+  void ResetBody();
+  // functions for oter configuration
+  void SetFootRestVector(int leg_index, double x, double y, double z);
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();
   bool SyncFromDevice();
+  const uint8_t* GetMiscDataFromDevice();
   // functions to do gaitgeneration
   void UpdateSpringGG();
   void ZeroSpringGG();
@@ -63,14 +72,20 @@ class Quadruped {
   bool CanLiftLeg(int index, double margin);
   bool CalcSpringGGTarget(int index, double angle, double F);
   const double* get_last_sgg_vector();
+  const double* FindVectorToDiagonal(int diagonal_index1,
+                                     int diagonal_index2);
 
  private:
   Leg* legs_[kLegCount]; /**< @brief leg pointers*/
-  HMatrix H_cob_;/**< @brief HMatrix for Center of body*/
+  HMatrix H_cob_;/**< @brief HMatrix for Center of body, xyz always 0*/
+
   HMatrix H_com_;/**<@brief Hmatrix for center of mass*/
   UsbCom usb_;/**< @brief usb communications*/
   SpringGG sgg_;/**< @brief spring based gaitgenerator*/
   double last_sgg_vector_[3];/**< @brief last calculated vector from sgg*/
+  double last_sp_vector_[4];  ///< x,y,range,opposite leg index */
+  double last_rest_vector_[3];  ///< 3d vector to rest pos for a foot*/
+  double rest_vectors_[kLegCount][3];  ///< rest_vectors relative to cob */
 };
 
 }  // namespace Q1

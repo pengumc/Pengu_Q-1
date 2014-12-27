@@ -13,6 +13,11 @@ Quadruped::Quadruped() {
     legs_[i] = new Leg(i, &H_cob_);
   }
   sgg_.SetCoMPosition(0.0, 0.0);
+  for (uint8_t i = 0; i < kLegCount; ++i) {
+    for (uint8_t j = 0; j < 3; ++j) {
+      rest_vectors_[i][j] = 0.0;
+    }
+  }
 }
 
 // ---------------------------------------------------------Destructor Quadruped
@@ -26,7 +31,7 @@ Quadruped::~Quadruped() {
 // -----------------------------------------------------SetPivotPulsewidthConfig
 /** @brief calls Leg::SetPivotPulsewidthConfig
  *
- * @param pivot_index 0..kPivotCount-1
+ * pivot_index is in range 0..kPivotCount-1
  */
 void Quadruped::SetPivotPulsewidthConfig(int leg_index, int pivot_index,
                                          double pw_0, double pw_60) {
@@ -70,7 +75,7 @@ const double* Quadruped::GetHMatrixArrayByIndex(int index) {
 
 // ------------------------------------------------------GetRelativeHMatrixArray
 /** @brief return the hmatrix values for a hmatrix (pivot or foot) of a leg
- * relative to cob.*/
+ * relative to origin.*/
 const double* Quadruped::GetRelativeHMatrixArray(int leg_index,
                                                  int pivot_index) {
   return legs_[leg_index]->GetRelativeHMatrixArray(pivot_index);
@@ -110,6 +115,22 @@ const double* Quadruped::GetCoM() {
   return H_com_.array();
 }
 
+// ------------------------------------------------------------GetFootRestVector
+/** @brief get 3d vector for rest vector with a specific body R, frame 0 
+ *
+ * warning: this breaks if \ref H_cob_ has non-zero x,y,z
+ */
+const double* Quadruped::GetFootRestVector(int leg_index,
+                                           HMatrix body_rotation) {
+  HMatrix H_cob_foot = H_cob_.Dot(body_rotation).Dot(
+    HMatrix(rest_vectors_[leg_index][0], rest_vectors_[leg_index][1],
+            rest_vectors_[leg_index][2]));
+  last_rest_vector_[0] = H_cob_foot.GetX();
+  last_rest_vector_[1] = H_cob_foot.GetY();
+  last_rest_vector_[2] = H_cob_foot.GetZ();
+  return last_rest_vector_;
+}
+
 // -------------------------------------------------------------ChangePivotAngle
 /** @brief change a pivots angle, false on out of bounds*/
 bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
@@ -125,11 +146,25 @@ bool Quadruped::ChangePivotAngle(int leg_index, int pivot_index,
 /** @brief change the position of a foot, false if IK fails. COB frame*/
 bool Quadruped::ChangeFootPos(int leg_index, double dx, double dy,
                               double dz) {
-  if (legs_[leg_index]->ChangeFootPos(dx, dy, dz)) {
-    return true;
-  } else {
-    return false;
+  return legs_[leg_index]->ChangeFootPos(dx, dy, dz);
+}
+
+// -------------------------------------------------------------ChangeAllFeetPos
+/** @brief change the position of all feet by dx, dy, dz. frame 0*/
+bool Quadruped::ChangeAllFeetPos(double dx, double dy, double dz) {
+  int i;
+  for (i = 0; i < kLegCount; ++i) {
+    // try to move a leg
+    if (!ChangeFootPos(i, dx, dy, dz)) {
+      // on fail undo all changed legs
+      while (i > 0) {
+        --i;
+        ChangeFootPos(i, -dx, -dy, -dz);
+      }
+      return false;
+    }
   }
+  return true;
 }
 
 // -------------------------------------------------------------------SetFootPos
@@ -140,11 +175,7 @@ bool Quadruped::SetFootPos(int leg_index, double x, double y, double z) {
   const double dx = x - H[HMatrix::kX];
   const double dy = y - H[HMatrix::kY];
   const double dz = z - H[HMatrix::kZ];
-  if (ChangeFootPos(leg_index, dx, dy, dz)) {
-    return true;
-  } else {
-    return false;
-  }
+  return ChangeFootPos(leg_index, dx, dy, dz);
 }
 
 // --------------------------------------------------------------SetAllAnglesTo0
@@ -169,7 +200,7 @@ bool Quadruped::EqualizeFeetLevels(double z) {
     if (!SetFootPos(i, p[i][HMatrix::kX], p[i][HMatrix::kY], z)) {
       // on fail undo leg i-1 ... 0
       printf("eq fail at i=%i\n", i);
-      printf("eq target: %.2f, %.2f, %.2f\n", p[i][HMatrix::kX], 
+      printf("eq target: %.2f, %.2f, %.2f\n", p[i][HMatrix::kX],
              p[i][HMatrix::kY], z);
       while (i > 0) {
         --i;
@@ -180,6 +211,72 @@ bool Quadruped::EqualizeFeetLevels(double z) {
     }
   }
   return true;
+}
+
+// -----------------------------------------------------------ChangeBodyRotation
+/** @brief rotate body with hmatrix, keep frame 0 feet pos */
+bool Quadruped::ChangeBodyRotation(HMatrix R) {
+  // grab xyz of each feet in frame 0. (for rollback among others)
+  double deltas[kLegCount][3];
+  int i;
+  for (i = 0; i < kLegCount; ++i) {
+    const double* p = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    deltas[i][0] = -p[HMatrix::kX];
+    deltas[i][1] = -p[HMatrix::kY];
+    deltas[i][2] = -p[HMatrix::kZ];
+  }
+  // rotate cob
+  H_cob_.SelfDot(R);
+  // diff feet pos in frame 0. delta = new - old
+  for (i = 0; i < kLegCount; ++i) {
+    const double* p = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    deltas[i][0] += p[HMatrix::kX];
+    deltas[i][1] += p[HMatrix::kY];
+    deltas[i][2] += p[HMatrix::kZ];
+  }
+  // set new feet pos to -delta
+  for (i = 0; i < kLegCount; ++i) {
+    if (!ChangeFootPos(i, -deltas[i][0], -deltas[i][1], -deltas[i][2])) {
+      // on fail simply rotate cob back, and undo any changed legs
+      while (i > 0) {
+        --i;
+        ChangeFootPos(i, deltas[i][0], deltas[i][1], deltas[i][2]);
+      }
+      H_cob_.SelfDot(R.Inverse());
+      return false;
+    }
+  }
+  return true;
+}
+
+// --------------------------------------------------------------SetBodyRotation
+/** @brief rotate body with angles. updates feet pos*/
+bool Quadruped::SetBodyRotation(HMatrix R) {
+  // rotate back to I, then to R
+  HMatrix R2 = H_cob_.Inverse();
+  R2.SelfDot(R);
+  return ChangeBodyRotation(R2);
+}
+
+// --------------------------------------------------------------------ResetBody
+/** @brief restore H_cob_ to I(4) while keeping all feet pos
+ *
+ * This doesn't change the robot pose
+ */
+void Quadruped::ResetBody() {
+  H_cob_.Clear();
+}
+
+// ------------------------------------------------------------SetFootRestVector
+/** @brief set \ref Leg::rest_vector_ for a leg, 0 frame 
+ * 
+ * stored relative to cob
+ */
+void Quadruped::SetFootRestVector(int leg_index, double x, double y, double z) {
+  HMatrix H_cob_foot = H_cob_.Inverse().Dot(HMatrix(x, y, z));
+  rest_vectors_[leg_index][0] = H_cob_foot.GetX();
+  rest_vectors_[leg_index][1] = H_cob_foot.GetY();
+  rest_vectors_[leg_index][2] = H_cob_foot.GetZ();
 }
 
 // ----------------------------------------------------------------ConnectDevice
@@ -224,6 +321,12 @@ bool Quadruped::SyncFromDevice() {
   return true;
 }
 
+// --------------------------------------------------------GetMiscDataFromDevice
+/** @brief calls UsbCom::ReadMiscData */
+const uint8_t* Quadruped::GetMiscDataFromDevice() {
+  return usb_.ReadMiscData();
+}
+
 // ---------------------------------------------------------------UpdateSpringGG
 /** @brief update the spring gaitgenerator with the current feet positions*/
 void Quadruped::UpdateSpringGG() {
@@ -253,7 +356,7 @@ int Quadruped::GetLegWithHighestForce(double direction_angle) {
 
 // -------------------------------------------------------------------CanLiftLeg
 /** @brief check if a leg can be lifted without losing stability
- * 
+ *
  * Make sure you have called \ref UpdateSpringGG first
  */
 bool Quadruped::CanLiftLeg(int index, double margin) {
@@ -261,7 +364,7 @@ bool Quadruped::CanLiftLeg(int index, double margin) {
 }
 
 // -----------------------------------------------------------CalcSpringGGTarget
-/** @brief calls \ref SpringGG::GetDeltaVector and stores it in  
+/** @brief calls \ref SpringGG::GetDeltaVector and stores it in
  * \ref last_sgg_vector_
  */
 bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
@@ -271,13 +374,66 @@ bool Quadruped::CalcSpringGGTarget(int index, double angle, double F) {
   } else {
     return true;
   }
-  
-} 
+}
 
 // ----------------------------------------------------------get_last_sgg_vector
 /** @brief return the last vector calculated by \ref sgg_ */
 const double* Quadruped::get_last_sgg_vector() {
   return last_sgg_vector_;
+}
+
+// ---------------------------------------------------------FindVectorToDiagonal
+/** @brief return a 2d vector to the diagonal between two feet + more values */
+// TODO(michiel): this can be done without knowledge of diagonal indices
+const double* Quadruped::FindVectorToDiagonal(int diagonal_index1,
+                                              int diagonal_index2) {
+  // grab hmatrices for diagonally opposed feet
+  HMatrix footA  = H_cob_.Inverse().Dot(HMatrix(
+                   GetRelativeHMatrixArray(diagonal_index1, Leg::kPivotCount)));
+  HMatrix footB  = H_cob_.Inverse().Dot(HMatrix(
+                   GetRelativeHMatrixArray(diagonal_index2, Leg::kPivotCount)));
+  // find angle of line from A to B
+  double angleAB = Get2DAngle(footA.GetX(), footB.GetX(),
+                              footA.GetY(), footB.GetY());
+  // create a new transform matrix to rotate footA and B so the line is
+  // horizontal, and the distance to the line is the y coordinate of both
+  HMatrix T(Z_AXIS, -angleAB);
+  // apply transform
+  footA = T.Dot(footA);
+  // grab vector to line
+  double v[3] = {0.0, footA.GetY(), 0.0};
+  T.CounterRotateVector(v, last_sp_vector_);
+  last_sp_vector_[2] = std::sqrt(std::pow(last_sp_vector_[0], 2) +
+                                 std::pow(last_sp_vector_[1], 2));
+  // determine leg index for the foot on the other side of the diagonal
+  // which is likely the leg that makes the most similar angle to com
+  // grab candidate indices
+  int candidates[kLegCount - 2];
+  int i;
+  int j = 0;
+  for (i = 0; i < kLegCount; ++i) {
+    if (i == diagonal_index1 || i == diagonal_index2) continue;
+    candidates[j] = i;
+    ++j;
+  }
+  // compare angles to cob with the angle of our vector
+  double vector_angle = Get2DAngle(0, last_sp_vector_[0],
+                                   0, last_sp_vector_[1]);
+  double difference_angle;
+  double lowest_diff = 10.0;
+  for (i = 0; i < kLegCount - 2; ++i) {
+    // reusing footA
+    footA = H_cob_.Inverse().Dot(HMatrix(
+             GetRelativeHMatrixArray(candidates[i], Leg::kPivotCount)));
+    difference_angle = std::abs(NormalizeAngle(
+      Get2DAngle(0, footA.GetX(), 0, footA.GetY()) - vector_angle));
+    if (difference_angle < lowest_diff) {
+      lowest_diff = difference_angle;
+      last_sp_vector_[3] = candidates[i];
+    }
+  }
+
+  return last_sp_vector_;
 }
 
 }  // namespace Q1

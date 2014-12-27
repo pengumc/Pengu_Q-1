@@ -41,4 +41,10 @@ double VectorDotProduct(const double* v1, const double* v2,
   return out;
 }
 
+// -------------------------------------------------------------------Get2DAngle
+/** @brief return the normalized angle between 2 points*/
+double Get2DAngle(double x1, double x2, double y1, double y2) {
+  return NormalizeAngle(std::atan2(y2 - y1, x2 - x1));
+}
+
 }  // namespace Q1
