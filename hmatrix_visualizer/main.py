@@ -69,6 +69,7 @@ class KeyboardThread (threading.Thread):
         self.input_mode = 0
         self.speed  = 0.3
         self.cob_moved = [0.0, 0.0, 0.0]
+        self.high_force = True
         while True:
             if self.input_mode == 0:
                 c = keyboard.getch()
@@ -124,9 +125,19 @@ class KeyboardThread (threading.Thread):
                         self.Q.change_foot_pos(self.leg, 0, self.speed, 0, 0)
                     self.commit()
                 elif c == 'W':
-                    if self.Q.change_all_feet_pos(0, -self.speed, 0):
-                        self.cob_moved[1] += self.speed
-                    self.cycle()
+                    print "high_force = ", self.high_force
+                    if self.high_force:
+                        if self.cycle(math.pi/2, -11.5):
+                            self.high_force = False
+                        else:
+                            if self.Q.change_all_feet_pos(0, -self.speed, 0):
+                                self.cob_moved[1] += self.speed
+                    else:
+                        if self.cycle(math.pi/2, -7):
+                            self.high_force = True
+                        else:
+                            if self.Q.change_all_feet_pos(0, -self.speed, 0):
+                                self.cob_moved[1] += self.speed
                     self.commit()
                 elif c == 'a':
                     if self.cob_selected:
@@ -137,6 +148,21 @@ class KeyboardThread (threading.Thread):
                         self.Q.change_foot_pos(self.leg, -self.speed, 0, 0, 0)
                             
                     self.commit()
+                elif c == 'A':
+                    print "high_force = ", self.high_force
+                    if self.high_force:
+                        if self.cycle(math.pi, -10):
+                            self.high_force = False
+                        else:
+                            if self.Q.change_all_feet_pos(self.speed, 0, 0):
+                                self.cob_moved[0] -= self.speed
+                    else:
+                        if self.cycle(math.pi, -7):
+                            self.high_force = True
+                        else:
+                            if self.Q.change_all_feet_pos(self.speed, 0, 0):
+                                self.cob_moved[0] -= self.speed
+                    self.commit()
                 elif c == 's':
                     if self.cob_selected:
                         # + y
@@ -144,6 +170,21 @@ class KeyboardThread (threading.Thread):
                             self.cob_moved[1] -= self.speed 
                     else:
                         self.Q.change_foot_pos(self.leg, 0, -self.speed, 0, 0)
+                    self.commit()
+                elif c == 'S':
+                    print "high_force = ", self.high_force
+                    if self.high_force:
+                        if self.cycle(-math.pi/2, -11.5):
+                            self.high_force = False
+                        else:
+                            if self.Q.change_all_feet_pos(0, self.speed, 0):
+                                self.cob_moved[1] -= self.speed
+                    else:
+                        if self.cycle(-math.pi/2, -7):
+                            self.high_force = True
+                        else:
+                            if self.Q.change_all_feet_pos(0, self.speed, 0):
+                                self.cob_moved[1] -= self.speed
                     self.commit()
                 elif c == 'd':
                     if self.cob_selected:
@@ -153,6 +194,22 @@ class KeyboardThread (threading.Thread):
                     else:
                         self.Q.change_foot_pos(self.leg, self.speed, 0, 0, 0)
                     self.commit()
+                elif c == 'D':
+                    print "high_force = ", self.high_force
+                    if self.high_force:
+                        if self.cycle(0, -10):
+                            self.high_force = False
+                        else:
+                            if self.Q.change_all_feet_pos(-self.speed, 0, 0):
+                                self.cob_moved[0] += self.speed
+                    else:
+                        if self.cycle(0, -7):
+                            self.high_force = True
+                        else:
+                            if self.Q.change_all_feet_pos(-self.speed, 0, 0):
+                                self.cob_moved[0] += self.speed
+                    self.commit()
+
                 #OTHERS
                 elif c == '-':
                     if self.cob_selected:
@@ -423,7 +480,7 @@ class KeyboardThread (threading.Thread):
             return False
         return True
         
-    def cycle(self):
+    def old_cycle(self):
         self.Q.update_spring_gg()
         self.sgg_leg = self.Q.get_leg_with_highest_force(math.pi/2)
         print "HF leg (0-based): {}".format(self.sgg_leg)
@@ -463,7 +520,28 @@ class KeyboardThread (threading.Thread):
                     
         else:
             print "leg {} {}".format(self.sgg_leg, self.sgg_liftable)
-    
+  
+    #############
+    # NEW CYCLE #
+    #############
+    def cycle(self, angle, F):
+        # try to transfer the leg with the highest force in specified
+        # direction, to a position where it finds force F
+        # (this means that to move a leg forward, you want negative F)
+        self.Q.update_spring_gg()
+        A = self.Q.get_leg_with_highest_force(angle)
+        if self.Q.can_lift_leg(A, 1.0):
+            v = self.Q.get_last_spring_gg_vector(A, angle, F)
+            if v[2] <> 0.0:
+                # failed
+                print "cycle: couldn't find target for leg ", A
+                return False
+            else:
+                print "cycle: transfer leg ", A, " by ", v[0], v[1]
+                return self.transfer_leg(A, v[0], v[1]);
+        else:
+            print "cycle: couldn't lift leg ", A
+            
     def stable_up(self, leg):
         self.Q.change_foot_pos((leg+2)%4, 0, 0, 0.60, 0)
         self.Q.change_foot_pos((leg+3)%4, 0, 0, -0.20, 0)

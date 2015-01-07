@@ -39,6 +39,7 @@ class Spring {
   Spring();
   void Connect(SpringPoint* A, SpringPoint* B);
   void ZeroForce();
+  void set_K(double new_K);
   SpringPoint* A();
   SpringPoint* B();
   double K();
@@ -53,15 +54,21 @@ class Spring {
 /** @brief spring based gaitgenerator
  *
  * info needed: feet and com location on ground (xy) plane. K for each spring
- * and base locations (for spring equilibrium)
+ * and base locations (for spring equilibrium). Added in this version are the
+ * restpositions for each foot. These have a static relation to the cob but
+ * since the cob is not included in this model, they should be updated at 
+ * the same time as the com.
  *
  */
 class SpringGG {
  public:
-  static const int kSpringCount = 10;
+  static const int kMaxIter = 100;  ///< maximum iterations for MoveToForce
+  static const double kMaxError = 0.1;  ///< maximum error for MoveToForce
+  static const int kSpringCount = 14;  ///< number of springs
   SpringGG();
   void SetFootPosition(int index, double x, double y);
   void SetCoMPosition(double x, double y);
+  void SetRestPosition(int index, double x, double y);
   void ZeroForces();
   void CalculateForces();
   bool IsInside(int index, double x, double y);
@@ -69,9 +76,11 @@ class SpringGG {
   void PrintForces();
   int GetLegWithHighestForce(double direction_angle);
   void GetDeltaVector(int index, double angle, double F, double* vector_out);
+  bool MoveToForce(int index, double Fx, double Fy);
  private:
   SpringPoint feet_[4];
   SpringPoint com_;
+  SpringPoint restpos_[4];
   Spring springs[kSpringCount];
 };
 

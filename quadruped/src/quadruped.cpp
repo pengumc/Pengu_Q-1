@@ -328,18 +328,20 @@ const uint8_t* Quadruped::GetMiscDataFromDevice() {
 }
 
 // ---------------------------------------------------------------UpdateSpringGG
-/** @brief update the spring gaitgenerator with the current feet positions*/
+/** @brief update the spring gaitgenerator with the current feet, com, 
+ * and rest positions
+ */
 void Quadruped::UpdateSpringGG() {
-  const double* p0 = GetRelativeHMatrixArray(0, Leg::kPivotCount);
-  const double* p1 = GetRelativeHMatrixArray(1, Leg::kPivotCount);
-  const double* p2 = GetRelativeHMatrixArray(2, Leg::kPivotCount);
-  const double* p3 = GetRelativeHMatrixArray(3, Leg::kPivotCount);
-  sgg_.SetFootPosition(0, p0[HMatrix::kX], p0[HMatrix::kY]);
-  sgg_.SetFootPosition(1, p1[HMatrix::kX], p1[HMatrix::kY]);
-  sgg_.SetFootPosition(2, p2[HMatrix::kX], p2[HMatrix::kY]);
-  sgg_.SetFootPosition(3, p3[HMatrix::kX], p3[HMatrix::kY]);
+  sgg_.SetCoMPosition(H_com_.GetX(), H_com_.GetY());
+  int i;
+  for (i = 0; i < kLegCount; ++i) {
+    const double* p = GetRelativeHMatrixArray(i, Leg::kPivotCount);
+    sgg_.SetFootPosition(i, p[HMatrix::kX], p[HMatrix::kY]);
+    const double* r = GetFootRestVector(i, HMatrix());
+    sgg_.SetRestPosition(i, r[0], r[1]);
+  }
   sgg_.CalculateForces();
-  sgg_.PrintForces();
+  // sgg_.PrintForces();
 }
 
 // -----------------------------------------------------------------ZeroSpringGG
