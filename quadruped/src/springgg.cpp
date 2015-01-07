@@ -10,24 +10,32 @@ namespace Q1 {
 // ------------------------------------------------------------------Constructor
 /** @brief constructor*/
 SpringGG::SpringGG() {
-  // changes here should also be reflected in SetBasePositions
+  // feet to feet
   springs[0].Connect(&feet_[0], &feet_[1]);
   springs[1].Connect(&feet_[1], &feet_[2]);
   springs[2].Connect(&feet_[2], &feet_[3]);
   springs[3].Connect(&feet_[3], &feet_[0]);
   springs[4].Connect(&feet_[0], &feet_[2]);
   springs[5].Connect(&feet_[1], &feet_[3]);
+  // feet to com
   springs[6].Connect(&feet_[0], &com_);
   springs[7].Connect(&feet_[1], &com_);
   springs[8].Connect(&feet_[2], &com_);
   springs[9].Connect(&feet_[3], &com_);
+  // feet to rest positions
+  springs[10].Connect(&feet_[0], &restpos_[0]);
+  springs[11].Connect(&feet_[1], &restpos_[1]);
+  springs[12].Connect(&feet_[2], &restpos_[2]);
+  springs[13].Connect(&feet_[3], &restpos_[3]);
 }
 
 // -------------------------------------------------------------------ZeroForces
 /** @brief set all the current forces to zero by setting the equilibrium
- * distances of all springs to their current distances*/
+ * distances of all springs to their current distances (except restpos springs)
+ */
 void SpringGG::ZeroForces() {
-  for (int i = 0; i < kSpringCount; ++i) {
+  // restpos_ springs should always have x0 = 0, so skip those ( -4)
+  for (int i = 0; i < kSpringCount - 4; ++i) {
     springs[i].ZeroForce();
   }
 }
@@ -45,6 +53,15 @@ void SpringGG::SetFootPosition(int index, double x, double y) {
 /** @brief set the position (xy) of the CoM on the ground plane*/
 void SpringGG::SetCoMPosition(double x, double y) {
   com_.SetPosition(x, y);
+}
+
+// --------------------------------------------------------------SetRestPosition
+/** @brief set the position (xy) of the ret point for a foot
+ *
+ * index in range 0..3
+ */
+void SpringGG::SetRestPosition(int index, double x, double y) {
+  restpos_[index].SetPosition(x, y);
 }
 
 // --------------------------------------------------------------CalculateForces
@@ -65,6 +82,7 @@ void SpringGG::CalculateForces() {
     springs[i].A()->AddForce(-Fx, -Fy);
     springs[i].B()->AddForce(Fx, Fy);
   }
+  PrintForces();
 }
 
 // --------------------------------------------------------------------IsInside
@@ -157,38 +175,55 @@ int SpringGG::GetLegWithHighestForce(double direction_angle) {
 
 // ---------------------------------------------------------------GetDeltaVector
 /** @brief find a displacement for foot index so it's force in the
- * provided direction angle, is at least F. The foot will only be moved in the
+ * provided direction angle, approximates F. The foot will only be moved in the
  * specified direction. vector_out[2] is set to -1 if something goes wrong.
  */
 void SpringGG::GetDeltaVector(int index, double angle, double F,
                               double* vector_out) {
   double original_x = feet_[index].x();
   double original_y = feet_[index].y();
-  double cosangle = std::cos(angle);
-  double sinangle = std::sin(angle);
-  double dx = cosangle * 0.1;
-  double dy = sinangle * 0.1;
-  double F_projected = feet_[index].Fx() * cosangle +
-                       feet_[index].Fy() * sinangle;
-  int safeguard = 0;
-  vector_out[2] = 0.0;
-  while (F_projected > -F) {
-    feet_[index].ChangePosition(dx, dy);
+  if (MoveToForce(index, F * std::cos(angle), F * std::sin(angle))) {
+    vector_out[0] = feet_[index].x() - original_x;
+    vector_out[1] = feet_[index].y() - original_y;
+    vector_out[2] = 0.0;
+  } else {
+    vector_out[2] = -1.0;
+  }
+  return;
+}
+
+// ------------------------------------------------------------------MoveToForce
+/** Move a foot to a position where it undergoes force Fx, Fy. returns false
+ * if position wasn't reached withing kMaxIter iterations.
+ *
+ * on fail, the foot is returned to its original position
+ */
+bool SpringGG::MoveToForce(int index, double Fx, double Fy) {
+  const double original_x = feet_[index].x();
+  const double original_y = feet_[index].y();
+  const double K = 0.1;
+  double dx;
+  double dy;
+  int i;
+
+  for (i = 0; i < kMaxIter; ++i) {
     CalculateForces();
-    F_projected = feet_[index].Fx() * cosangle + feet_[index].Fy() * sinangle;
-     // printf("F_projected = %f\n", F_projected);
-    ++safeguard;
-    if (safeguard > 1000) {
-      vector_out[2] = -1.0;
-      break;
+    dx = Fx - feet_[index].Fx();
+    dy = Fy - feet_[index].Fy();
+    if (std::abs(dx) < 0.1 && std::abs(dy) < 0.1) {
+      // done
+      return true;
+    } else {
+      // d = std::sqrt(dx*dx + dy*dy);
+      feet_[index].ChangePosition(-dx * K, -dy * K);
     }
   }
-  vector_out[0] = feet_[index].x() - original_x;
-  vector_out[1] = feet_[index].y() - original_y;
-  // return feet to original state
+  // reached max iter, failed. revert original position
   feet_[index].SetPosition(original_x, original_y);
   CalculateForces();
+  return false;
 }
+
 
 // ------------------------------------------------------------------constructor
 /** @brief constructor */
@@ -274,6 +309,12 @@ void Spring::Connect(SpringPoint* A, SpringPoint* B) {
 void Spring::ZeroForce() {
   base_distance_ = std::sqrt(
     std::pow(B_->x() - A_->x(), 2) + std::pow(B_->y() - A_->y(), 2));
+}
+
+// --------------------------------------------------------------------K mutator
+/** @brief mutator for \ref K_ */
+void Spring::set_K(double new_K) {
+  K_ = new_K;
 }
 
 // -------------------------------------------------------------------A accessor
