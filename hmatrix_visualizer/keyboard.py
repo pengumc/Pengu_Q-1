@@ -37,9 +37,7 @@ class _GetchWindows:
         import msvcrt
         return msvcrt.getch()
 
-
 getch = _Getch()
-
 
 # thread to put keyboard chars on a queue
 class KeyboardThread (threading.Thread):

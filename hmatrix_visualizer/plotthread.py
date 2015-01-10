@@ -23,13 +23,13 @@ class PlotThread(threading.Thread):
         self.ax3d.set_xlabel("X")
         self.ax3d.set_ylabel("Y")
         self.ax3d.set_zlabel("Z")
-        self.ax3d.set_xlim((-20,20))
-        self.ax3d.set_ylim((-20,20))
-        self.ax3d.set_zlim((-20,20))
         self.ax3d_lines = [
             self.ax3d.plot([1,1], [2,2], [3,3], c="b")[0] for i in range(17*12)
         ]
         self.ax3d_scatters = [self.ax3d.scatter(0,0) for i in range(17)]
+        self.ax3d.set_xlim((-20,20))
+        self.ax3d.set_ylim((-20,20))
+        self.ax3d.set_zlim((-20,20))
         # setup 2d axis
         self.ax_flat = self.fig.add_subplot(1, 2, 2)
         self.ax_flat.set_xlim([-17,17])

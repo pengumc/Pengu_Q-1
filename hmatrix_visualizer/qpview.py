@@ -19,28 +19,24 @@ if __name__ == "__main__":
     plot_thread.start()
 
     
-    # keyboad thread will listen to the keyboard and put any received chars on
-    # the queue
-    char_queue = Queue.Queue()
-    keyboard_thread = keyboard.KeyboardThread(char_queue)
-    keyboard_thread.start()
     
     # wait for  librarythread to initialize
     try:
         print lib_output.get(timeout=1)
-    except:
+        print ""
+    except Queue.Empty:
         print "failed to initialize in a timely fashion"
         library_thread.thread_call(library_thread.die)
 
     # try to connect quadruped
     actions.act_on_key('c', library_thread)
-        
+
     # listen to keyboard
-    while keyboard_thread.is_alive():
-        try:
-            actions.act_on_key(char_queue.get(timeout=1), library_thread)
-        except Queue.Empty:
-            pass
-    
-    # at the end, kill the library thread (keyboard thread dies on 'q')
+    while True:
+        c = keyboard.getch()
+        actions.act_on_key(c, library_thread)
+        if c == 'q':
+            break;
+        
+    # at the end, kill the library thread
     library_thread.thread_call(library_thread.die)

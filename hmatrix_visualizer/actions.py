@@ -1,6 +1,7 @@
 # actions to perform for each keypress
 import math
 import time
+import sys
 
 connected = False
 leg = 0
@@ -149,8 +150,7 @@ def act_on_key(char, libthread):
                 cob_moved[1] -= speed
         commit(libthread)
         print ""
-        
-        
+    
 def sync_from_device(libthread):
     libthread.thread_call(libthread.Q.sync_from_device)
     result = libthread.qout.get()

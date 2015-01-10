@@ -1,6 +1,5 @@
 import threading
 import Queue
-import quadruped
 from platform import system
 import time
 import configuration
@@ -8,17 +7,13 @@ import configuration
 class LibraryThread(threading.Thread):
 
     def __init__(self, qin, qout, qvis, configfile):
+        import quadruped
         threading.Thread.__init__(self)
         self.qin = qin
         self.qout = qout
         self.qvis = qvis
         self.running = False
         self.configfile = configfile
-
-    def thread_call(self, function, *args, **kwargs):
-        self.qin.put((function, args, kwargs))
-        
-    def run(self):
         # load quadruped
         if system() == 'Linux':
             libpath = "../quadruped/bin/libquadruped.so"
@@ -26,6 +21,12 @@ class LibraryThread(threading.Thread):
           libpath = "../quadruped/bin/quadruped.dll"
         print("Using library: {}".format(libpath))
         self.Q = quadruped.Quadruped(libpath)
+        
+
+    def thread_call(self, function, *args, **kwargs):
+        self.qin.put((function, args, kwargs))
+        
+    def run(self):
         # configure
         print("configuring robot...")
         self.config = configuration.Configuration(self.configfile)
@@ -67,7 +68,6 @@ class LibraryThread(threading.Thread):
         raw_pivots.append(self.Q.get_com());
         self.empty_queue(self.qvis)
         self.qvis.put(raw_pivots)
-        print "new data on qvis"
         
     def apply_config(self):
         #mechanical
