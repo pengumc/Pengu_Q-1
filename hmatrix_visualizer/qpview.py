@@ -2,7 +2,6 @@ import Queue
 import librarythread
 import keyboard
 import actions
-import plotthread
             
 if __name__ == "__main__":
     # start library thread
@@ -14,9 +13,6 @@ if __name__ == "__main__":
                                                  Queue.Queue(), "config.xml")
     library_thread.start()
 
-    # connect plot thread to the visualization queue
-    plot_thread = plotthread.PlotThread(library_thread.qvis)
-    plot_thread.start()
 
     
     

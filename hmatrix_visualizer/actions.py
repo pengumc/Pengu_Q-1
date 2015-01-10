@@ -1,7 +1,7 @@
 # actions to perform for each keypress
 import math
 import time
-import sys
+import plotthread
 
 connected = False
 leg = 0
@@ -10,9 +10,11 @@ cob_selected = True
 cob_moved = [0.0, 0.0, 0.0]
 speed = 0.3
 high_force = True
+plot_thread = None
 
 def act_on_key(char, libthread):
     global connected, leg, pivot, cob_selected, cob_moved, speed, high_force
+    global plot_thread
     if char == 'q': # ---------------------------------------------------- QUIT
         print "'q': quit"
     elif char == 'c': # ----------------------------------------------- CONNECT
@@ -25,6 +27,21 @@ def act_on_key(char, libthread):
         else:
             connected = False
             print "'c': could not connect to device\n"
+    elif char == 'p': # ---------------------------------------- START PLOTTING
+        # connect plot thread to the visualization queue
+        try:
+            if plot_thread.is_alive():
+                print "'p': plot thread is already running"
+            else:
+                print "'p': plot thread is no longer running"
+                raise AttributeError
+        except AttributeError:
+            print "'p': starting plot thread"
+            plot_thread = plotthread.PlotThread(libthread.qvis)
+            plot_thread.start()
+            libthread.thread_call(libthread.queue_visual_data)
+            libthread.qout.get()
+        print ""
     elif char == '1': # ----------------------------------------- LEG SELECTION
         leg = 0
         cob_selected = False

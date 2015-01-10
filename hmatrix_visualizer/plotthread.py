@@ -27,9 +27,6 @@ class PlotThread(threading.Thread):
             self.ax3d.plot([1,1], [2,2], [3,3], c="b")[0] for i in range(17*12)
         ]
         self.ax3d_scatters = [self.ax3d.scatter(0,0) for i in range(17)]
-        self.ax3d.set_xlim((-20,20))
-        self.ax3d.set_ylim((-20,20))
-        self.ax3d.set_zlim((-20,20))
         # setup 2d axis
         self.ax_flat = self.fig.add_subplot(1, 2, 2)
         self.ax_flat.set_xlim([-17,17])
@@ -79,6 +76,10 @@ class PlotThread(threading.Thread):
             i = i + 1
         if len(raw_hmatrices) == 17:
             self.plot_topdown(raw_hmatrices)
+        self.ax3d.set_xlim((-20,20))
+        self.ax3d.set_ylim((-20,20))
+        self.ax3d.set_zlim((-20,20))
+            
 
     def add_cube(self, points, i):
         self.ax3d_scatters[i].remove()
