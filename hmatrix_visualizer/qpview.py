@@ -12,9 +12,6 @@ if __name__ == "__main__":
     library_thread = librarythread.LibraryThread(Queue.Queue(), lib_output,
                                                  Queue.Queue(), "config.xml")
     library_thread.start()
-
-
-    
     
     # wait for  librarythread to initialize
     try:

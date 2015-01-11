@@ -21,7 +21,6 @@ class LibraryThread(threading.Thread):
           libpath = "../quadruped/bin/quadruped.dll"
         print("Using library: {}".format(libpath))
         self.Q = quadruped.Quadruped(libpath)
-        
 
     def thread_call(self, function, *args, **kwargs):
         self.qin.put((function, args, kwargs))
@@ -47,6 +46,8 @@ class LibraryThread(threading.Thread):
                 if self.should_update_visuals:
                     self.queue_visual_data()
                     self.should_update_visuals = False
+                #grab controller data
+                
         print "library thread dying..."
         
     def die(self):

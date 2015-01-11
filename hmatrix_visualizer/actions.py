@@ -9,12 +9,14 @@ pivot = 0
 cob_selected = True
 cob_moved = [0.0, 0.0, 0.0]
 speed = 0.3
+to_turn = range(4)
+walk_counter = 0
 high_force = True
 plot_thread = None
 
 def act_on_key(char, libthread):
     global connected, leg, pivot, cob_selected, cob_moved, speed, high_force
-    global plot_thread
+    global plot_thread, walk_counter, to_turn
     if char == 'q': # ---------------------------------------------------- QUIT
         print "'q': quit"
     elif char == 'c': # ----------------------------------------------- CONNECT
@@ -84,6 +86,7 @@ def act_on_key(char, libthread):
     elif char == 'r': # ----------------------------------------- REST POSITION
         print "'r': rest position\n"
         restpos(libthread)
+        high_force = True
         print ""
     elif char == '`': # -------------------------------------- SYNC FROM DEVICE
         print "'`': sync from device"
@@ -114,7 +117,8 @@ def act_on_key(char, libthread):
         else:
             print "'w': foot ", leg, ", Y+", speed 
             libthread.thread_call(libthread.Q.change_foot_pos,
-                                  leg, speed, 0, 0, 0)
+                                  leg, 0, speed, 0, 0)
+            libthread.qout.get()
         commit(libthread)
         print ""
     elif char == 'W':
@@ -122,7 +126,8 @@ def act_on_key(char, libthread):
         print "'W': walk in Y dir"
         F = -7
         if high_force: F = -11.5
-        if cycle(libthread, math.pi/2, -11.5):
+        print "F = ", F
+        if cycle(libthread, math.pi/2, F):
             # if we could move a leg, we're done, toggle high_force
             high_force = not high_force
         else:
@@ -133,6 +138,7 @@ def act_on_key(char, libthread):
             if result:
                 cob_moved[1] += speed
         commit(libthread)
+        print "walk counter ", walk_counter
         print ""
     elif char == 's': # ---------------------------------------- BACKWARDS (+Y)
         # move selection
@@ -147,7 +153,8 @@ def act_on_key(char, libthread):
         else:
             print "'s': foot ", leg, ", Y-", speed 
             libthread.thread_call(libthread.Q.change_foot_pos,
-                                  leg, -speed, 0, 0, 0)
+                                  leg, 0, -speed, 0, 0)
+            libthread.qout.get()
         commit(libthread)
         print ""
     elif char == 'S':
@@ -155,7 +162,7 @@ def act_on_key(char, libthread):
         print "'S': walk in Y dir (backwards)"
         F = -7
         if high_force: F = -11.5
-        if cycle(libthread, -math.pi/2, -11.5):
+        if cycle(libthread, -math.pi/2, F):
             # if we could move a leg, we're done, toggle high_force
             high_force = not high_force
         else:
@@ -166,6 +173,93 @@ def act_on_key(char, libthread):
             if result:
                 cob_moved[1] -= speed
         commit(libthread)
+        print ""
+    elif char == 'd': # ----------------------------------------- SIDEWAYS (+X)
+        # move selection
+        if cob_selected:
+            print "'d': body X+", speed 
+            libthread.thread_call(libthread.Q.change_all_feet_pos, -speed, 0, 0)
+            result = libthread.qout.get()
+            if result:
+                cob_moved[0] += speed
+            else:
+                print " movement failed"
+        else:
+            print "'w': foot ", leg, ", X+", speed 
+            libthread.thread_call(libthread.Q.change_foot_pos,
+                                  leg, speed, 0, 0, 0)
+            libthread.qout.get()
+        commit(libthread)
+        print ""
+    elif char == 'D':
+        # capital D, walk
+        print "'D': walk in X dir"
+        F = -7
+        if high_force: F = -10
+        if cycle(libthread, 0, F):
+            # if we could move a leg, we're done, toggle high_force
+            high_force = not high_force
+        else:
+            # no leg transfer, just move forwards then
+            libthread.thread_call(libthread.Q.change_all_feet_pos, 
+                                  -speed, 0, 0)
+            result = libthread.qout.get()
+            if result:
+                cob_moved[0] += speed
+        commit(libthread)
+        print ""
+    elif char == 'a': # ----------------------------------------- SIDEWAYS (-X)
+        # move selection
+        if cob_selected:
+            print "'a': body X-", speed 
+            libthread.thread_call(libthread.Q.change_all_feet_pos, speed, 0, 0)
+            result = libthread.qout.get()
+            if result:
+                cob_moved[0] -= speed
+            else:
+                print " movement failed"
+        else:
+            print "'a': foot ", leg, ", X-", speed 
+            libthread.thread_call(libthread.Q.change_foot_pos,
+                                  leg, -speed, 0, 0, 0)
+            libthread.qout.get()
+        commit(libthread)
+        print ""
+    elif char == 'A':
+        # capital A, walk
+        print "'A': walk in X dir (backwards)"
+        F = -7
+        if high_force: F = -10
+        if cycle(libthread, math.pi, F):
+            # if we could move a leg, we're done, toggle high_force
+            high_force = not high_force
+        else:
+            # no leg transfer, just move forwards then
+            libthread.thread_call(libthread.Q.change_all_feet_pos, 
+                                  speed, 0, 0)
+            result = libthread.qout.get()
+            if result:
+                cob_moved[0] -= speed
+        commit(libthread)
+        print ""
+    elif char == 'k': # ---------------------------------------------- TURNING
+        print "'k': rebalance"
+        walk_counter = 0
+        to_turn = None
+        high_force = True
+        for i in range(5): stable_turn(libthread, 0)
+        print ""
+    elif char == 'y':
+        print "'y': turning 0.3 radians"
+        to_turn = None
+        high_force = True
+        for i in range(5): stable_turn(libthread, 0.3)
+        print ""
+    elif char == 'Y':
+        print "'Y': turning -0.3 radians"
+        to_turn = None
+        high_force = True
+        for i in range(5): stable_turn(libthread, -0.3)
         print ""
     
 def sync_from_device(libthread):
@@ -197,6 +291,7 @@ def restpos(libthread):
     cob_moved = [0.0, 0.0, 0.0]
 
 def cycle(libthread, angle, force):
+    global walk_counter
     libthread.thread_call(libthread.Q.update_spring_gg)
     libthread.qout.get()
     libthread.thread_call(libthread.Q.get_leg_with_highest_force, angle)
@@ -213,12 +308,19 @@ def cycle(libthread, angle, force):
             return False
         else:
             print " transferring leg ", A, "by ", v[0], v[1]
-            return transfer_leg(libthread, A, v[0], v[1])
+            if transfer_leg(libthread, A, v[0], v[1]):
+                walk_counter = walk_counter + 1
+                libthread.thread_call(libthread.Q.equalize_feet_levels, -11)
+                libthread.qout.get()
+                return True
+            else:
+                return False
     else:
         print " cycle couldn't lift leg ", A
         return False
     
 def transfer_leg(libthread, leg, x, y):
+    print "legtransfer ", leg, x, y
     t = 0.3
     dz = 1.7
     # lift
@@ -255,30 +357,141 @@ def transfer_leg(libthread, leg, x, y):
         return True
 
 def stable_up(libthread, leg):
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+2)%4, 0, 0, 0.6, 0)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+3)%4, 0, 0, -0.2, 0)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+1)%4, 0, 0, -0.2, 0)
-        for i in range(3): libthread.qout.get()
-        commit(libthread)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              leg, 0, 0, 1.7, 0)
-        libthread.qout.get()
-        commit(libthread)
+    # z_main = 1.7
+    # z_side = 0.2
+    # z_opposite = 0.6
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+2)%4, 0, 0, 0.6, 0)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+3)%4, 0, 0, -0.2, 0)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+1)%4, 0, 0, -0.2, 0)
+    for i in range(3): libthread.qout.get()
+    commit(libthread)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          leg, 0, 0, 1.7, 0)
+    libthread.qout.get()
+    commit(libthread)
 
 def stable_down(libthread, leg):
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+2)%4, 0, 0, -0.6, 0)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+3)%4, 0, 0, 0.2, 0)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              (leg+1)%4, 0, 0, 0.2, 0)
-        for i in range(3): libthread.qout.get()
-        commit(libthread)
-        libthread.thread_call(libthread.Q.change_foot_pos, 
-                              leg, 0, 0, -1.7, 0)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+2)%4, 0, 0, -0.6, 0)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+3)%4, 0, 0, 0.2, 0)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          (leg+1)%4, 0, 0, 0.2, 0)
+    for i in range(3): libthread.qout.get()
+    commit(libthread)
+    libthread.thread_call(libthread.Q.change_foot_pos, 
+                          leg, 0, 0, -1.7, 0)
+    libthread.qout.get()
+    commit(libthread)
+                
+def stable_turn(libthread, angle):
+    global to_turn, cob_moved
+    # 'turn' a leg = move leg to rest pos for a rotated body
+    turning_leg = -1
+    if to_turn <> None:
+        a = angle * len(to_turn)/4.0
+        print "a ", a
+        # if to_turn is empty, refill and move body to center
+        if len(to_turn) == 0:
+            move_body_in_steps(libthread, cob_moved[0], cob_moved[1],
+                               cob_moved[2], 1)
+            to_turn = None
+            return True
+        # try to move to support any leg in to_turn
+        for i in to_turn:
+            if move_to_lift(libthread, i, 2, 5):
+                to_turn.remove(i) # remove from que
+                turning_leg = i
+                break
+        if turning_leg == -1:
+            print "failed to move any leg in", to_turn
+            return False
+    else:
+        to_turn = range(4)
+        cob_moved[0] = 0.0
+        cob_moved[1] = 0.0
+        cob_moved[2] = 0.0
+        if angle < 0: to_turn.reverse()
+        return stable_turn(libthread, angle)
+    # we're in a position to lift turning_leg
+    time.sleep(0.1)
+    libthread.thread_call(libthread.Q.get_foot_rest_vector_delta,
+                          turning_leg, 2, a)
+    rest_vector = libthread.qout.get()
+    if not transfer_leg(libthread, turning_leg,
+        rest_vector[0] - cob_moved[0],
+        rest_vector[1] - cob_moved[1]):
+        # failed to transfer leg
+        print "failed to transfer leg ", turning_leg
+        to_turn.append(turning_leg) # re add to turning que
+        return False
+    # leg has been moved, time to rotate the body
+    libthread.thread_call(libthread.Q.change_body_rotation, 2, angle/4.0)
+    if not libthread.qout.get():
+        # body rotation failed, but leg was moved
+        print "body rotation failed, but leg ", turning_leg, " was moved"
+        return False
+    return True
+
+def move_body_in_steps(libthread, x, y, z, stepcount):
+    global cob_moved
+    dx = float(x) / stepcount
+    dy = float(y) / stepcount
+    dz = float(z) / stepcount
+    # check if final position is reachable
+    libthread.thread_call(libthread.Q.change_all_feet_pos, x, y, z)
+    if libthread.qout.get():
+        libthread.thread_call(libthread.Q.change_all_feet_pos, -x, -y, -z)
+        libthread.qout.get()
+    else:
+        print "move body in steps: end position unreachable"
+        return False
+    for i in range(stepcount):
+        libthread.thread_call(libthread.Q.change_all_feet_pos, dx, dy, dz)
         libthread.qout.get()
         commit(libthread)
-                
+        time.sleep(0.05)
+    cob_moved[0] -= x;
+    cob_moved[1] -= y;
+    cob_moved[2] -= z;
+    return True
+
+def move_to_lift(libthread, index, margin, stepcount):
+    # move to a support pattern that allows lifting of index
+    L1 = (index - 1)%4
+    L2 = (index + 1)%4
+    libthread.thread_call(libthread.Q.find_vector_to_diagonal, L1, L2)
+    xyz = libthread.qout.get()
+    distance = xyz[2]
+    print "distance to diagonal: ", distance
+    stable = xyz[3]
+    if stable == index:
+        if distance >= margin*0.9:
+            # selected leg is stable
+            print "move to lift: already there"
+            return True
+        else:
+            print "moving to lift leg ", index
+            angle = math.atan2(xyz[1], xyz[0])
+            if not move_body_in_steps(libthread, 
+                math.cos(angle) * (margin - distance),
+                math.sin(angle) * (margin - distance),
+                0, stepcount):
+                print "leg ", index, " can't be lifted now"
+                return False
+            else:
+                return True
+    else:
+        print "moving to lift leg ", index, " (opposite dir)"
+        angle = math.atan2(xyz[1], xyz[0]) + math.pi
+        if not move_body_in_steps(libthread,
+            math.cos(angle) * (distance + margin),
+            math.sin(angle) * (distance + margin),
+            0, stepcount):
+            print "leg ", index, " can't be lifted now"
+            return False
+        else:
+            return True
