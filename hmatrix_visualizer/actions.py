@@ -108,7 +108,8 @@ def act_on_key(char, libthread):
         # move selection
         if cob_selected:
             print "'w': body Y+", speed 
-            libthread.thread_call(libthread.Q.change_all_feet_pos, 0, -speed, 0)
+            libthread.thread_call(libthread.Q.change_all_feet_pos,
+                                  0, -speed, 0)
             result = libthread.qout.get()
             if result:
                 cob_moved[1] += speed
@@ -178,7 +179,8 @@ def act_on_key(char, libthread):
         # move selection
         if cob_selected:
             print "'d': body X+", speed 
-            libthread.thread_call(libthread.Q.change_all_feet_pos, -speed, 0, 0)
+            libthread.thread_call(libthread.Q.change_all_feet_pos,
+                                  -speed, 0, 0)
             result = libthread.qout.get()
             if result:
                 cob_moved[0] += speed
@@ -261,7 +263,43 @@ def act_on_key(char, libthread):
         high_force = True
         for i in range(5): stable_turn(libthread, -0.3)
         print ""
-    
+    elif char == '{': # ----------------------------------------- BODY ROTATION
+        print "'{': rotate body around Y axis (+)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 1, 0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+    elif char == '}': # -Y
+        print "'}': rotate body around Y axis (-)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 1, -0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+    elif char == '[': # +Z
+        print "'[': rotate body around Z axis (+)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 2, 0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+    elif char == ']': # -Z
+        print "']': rotate body around Z axis (-)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 2, -0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+    elif char == ';': # +X
+        print "';': rotate body around X axis (+)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 0, 0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+    elif char == "'": # -X
+        print "''': rotate body around X axis (-)"
+        libthread.thread_call(libthread.Q.change_body_rotation, 0, -0.1*speed)
+        if not libthread.qout.get():
+            print " rotation failed"
+        print ""
+        
 def sync_from_device(libthread):
     libthread.thread_call(libthread.Q.sync_from_device)
     result = libthread.qout.get()
