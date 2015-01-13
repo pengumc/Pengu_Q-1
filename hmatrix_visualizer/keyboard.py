@@ -1,3 +1,6 @@
+import threading
+import Queue
+
 # as seen on http://stackoverflow.com/questions/510357/
 class _Getch:
     # Gets a single character from standard input.  Does not echo to the screen.
@@ -34,8 +37,25 @@ class _GetchWindows:
         import msvcrt
         return msvcrt.getch()
 
-
 getch = _Getch()
+
+# thread to put keyboard chars on a queue
+class KeyboardThread (threading.Thread):
+
+    def __init__(self, queue):
+        threading.Thread.__init__(self)
+        self.queue = queue
+        self.running = False
+
+    def run(self):
+        self.running = True
+        while self.running:
+            c = getch()
+            if c == 'q':
+                self.running = False
+            self.queue.put(c)
+        print "keyboard thread dying..."
+        
 
 if __name__ == '__main__':
     print("press 'q' to exit")

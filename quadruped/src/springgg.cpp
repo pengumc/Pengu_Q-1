@@ -82,7 +82,6 @@ void SpringGG::CalculateForces() {
     springs[i].A()->AddForce(-Fx, -Fy);
     springs[i].B()->AddForce(Fx, Fy);
   }
-  PrintForces();
 }
 
 // --------------------------------------------------------------------IsInside
