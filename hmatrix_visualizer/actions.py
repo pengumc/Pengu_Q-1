@@ -1,7 +1,7 @@
 # actions to perform for each keypress
 import math
 import time
-import plotthread
+
 
 connected = False
 leg = 0
@@ -39,6 +39,7 @@ def act_on_key(char, libthread):
                 raise AttributeError
         except AttributeError:
             print "'p': starting plot thread"
+            import plotthread            
             plot_thread = plotthread.PlotThread(libthread.qvis)
             plot_thread.start()
             libthread.thread_call(libthread.queue_visual_data)
