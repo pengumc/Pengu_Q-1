@@ -6,7 +6,7 @@
         </pivot>
         <!-- pivot one is defined mirrored in its own z because its frame is the horn instead of the servo body -->
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="-0.07" offset="0.0" abs_max="0.52359877559">
-            <pos x="3.6" y="0" z="0"/>
+            <pos x="3.372" y="-1.1" z="1.01"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="2" rotx="0" roty="3.14159" rotz="-0.04" offset="-0.0" abs_max="0.52359877559">
@@ -14,7 +14,7 @@
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="3" rotx="0" roty="0" rotz="0.0" offset="0.0" abs_max="0.52359877559">
-            <pos x="0" y="-10" z="0"/>
+            <pos x="0" y="-9.983" z="0.643"/>
         </pivot>
     </leg>
     <leg id="1">
@@ -24,7 +24,7 @@
             <!-- 980..1927-->
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="+0.08" offset="0.00" abs_max="0.7853981633974483">
-            <pos x="3.6" y="0" z="0"/>
+            <pos x="3.372" y="-1.1" z="1.01"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="2" rotx="0" roty="3.1415926" rotz="0.17" offset="00.00" abs_max="0.7853981633974483">
@@ -32,7 +32,7 @@
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="3" rotx="0" roty="0" rotz="0" offset="0.0" abs_max="0.52359877559">
-            <pos x="0" y="-10" z="0"/>
+            <pos x="0" y="-9.983" z="0.643"/>
         </pivot>
     </leg>
     <leg id="2">
@@ -42,7 +42,7 @@
             <!--1073 1983 -->
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="0" offset="0.0" abs_max="0.7853981633974483">
-            <pos x="3.6" y="0" z="0"/>
+            <pos x="3.372" y="-1.1" z="1.01"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="2" rotx="0" roty="3.14159" rotz="-0.25" offset="0.0" abs_max="0.78539816339">
@@ -50,17 +50,17 @@
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="3" rotx="0" roty="0" rotz="0" offset="0.0" abs_max="0.52359877559">
-            <pos x="0" y="-10" z="0"/>
+            <pos x="0" y="-9.983" z="0.643"/>
         </pivot>
     </leg>
     <leg id="3">
-        <pivot id="0" rotx="0" roty="0" rotz="-.78539816339" offset="0.0" abs_max="0.7853981633974483">
+        <pivot id="0" rotx="0" roty="0" rotz="-.88539816339" offset="0.0" abs_max="0.7853981633974483">
             <pos x="3.8" y="-5.8" z="0.0"/>
             <pw zero="1355e-6" sixty="731e-6"/>
             <!--887  1827-->
         </pivot>
         <pivot id="1" rotx="1.57079632679" roty="0" rotz="-0.06" offset="-0.0" abs_max="0.7853981633974483">
-            <pos x="3.6" y="0" z="0"/>
+            <pos x="3.372" y="-1.1" z="1.01"/>
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="2" rotx="0" roty="3.14159" rotz="-0.06" offset="-0.0" abs_max="0.52359877559">
@@ -68,7 +68,7 @@
             <pw zero="1500e-6" sixty="1000e-6"/>
         </pivot>
         <pivot id="3" rotx="0" roty="0" rotz="0" offset="0.0" abs_max="0.52359877559">
-            <pos x="0" y="-10" z="0"/>
+            <pos x="0" y="-9.983" z="0.643"/>
         </pivot>
     </leg>
     <gaitgenerator 

@@ -88,9 +88,13 @@ class LibraryThread(threading.Thread):
                     pass
         self.Q.update_spring_gg()
         # rest vector are not updated at any time
-        d = 3.8 + 7.35 - 1
-        h = 11
+        #d = 3.8 + 7.35 - 1
+        d = 3.8 + 8.19 - 2
+        # actual h
+        #h = 8.89 + 1
+        h = 10
         self.Q.set_foot_rest_vector(0, d, d+2, -h);
         self.Q.set_foot_rest_vector(1, -d, d+2, -h);
         self.Q.set_foot_rest_vector(2, -d, -d-2, -h);
         self.Q.set_foot_rest_vector(3, d, -d-2, -h);
+        

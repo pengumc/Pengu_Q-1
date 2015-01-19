@@ -89,6 +89,12 @@ def act_on_key(char, libthread):
         restpos(libthread)
         high_force = True
         print ""
+    elif char == "R": # ------------------------------------------- ANGLES TO 0
+        print "'R': set all angles to 0"
+        libthread.thread_call(libthread.Q.set_all_angles_to_0)
+        libthread.qout.get()
+        commit(libthread)
+        print ""
     elif char == '`': # -------------------------------------- SYNC FROM DEVICE
         print "'`': sync from device"
         sync_from_device(libthread)
@@ -335,7 +341,7 @@ def act_on_key(char, libthread):
     elif char == "l": # -------------------------------------- MOVE TO LIFT LEG
         if not cob_selected:
             print "'l': move CoB to lift leg ", leg
-            if not move_to_lift(libthread, leg, 2.0, 10):
+            if not move_to_lift(libthread, leg, 1.0, 10):
                 print " movement failed"
             commit(libthread)
             print ""
@@ -388,7 +394,7 @@ def cycle(libthread, angle, force):
             print " transferring leg ", A, "by ", v[0], v[1]
             if transfer_leg(libthread, A, v[0], v[1]):
                 walk_counter = walk_counter + 1
-                libthread.thread_call(libthread.Q.equalize_feet_levels, -11)
+                libthread.thread_call(libthread.Q.equalize_feet_levels, -10)
                 libthread.qout.get()
                 return True
             else:
@@ -446,6 +452,7 @@ def stable_up(libthread, leg):
                           (leg+1)%4, 0, 0, -0.2, 0)
     for i in range(3): libthread.qout.get()
     commit(libthread)
+    time.sleep(0.05)
     libthread.thread_call(libthread.Q.change_foot_pos, 
                           leg, 0, 0, 2.0, 0)
     libthread.qout.get()
