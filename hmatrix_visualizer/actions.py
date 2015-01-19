@@ -269,37 +269,76 @@ def act_on_key(char, libthread):
         libthread.thread_call(libthread.Q.change_body_rotation, 1, 0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
     elif char == '}': # -Y
         print "'}': rotate body around Y axis (-)"
         libthread.thread_call(libthread.Q.change_body_rotation, 1, -0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
     elif char == '[': # +Z
         print "'[': rotate body around Z axis (+)"
         libthread.thread_call(libthread.Q.change_body_rotation, 2, 0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
     elif char == ']': # -Z
         print "']': rotate body around Z axis (-)"
         libthread.thread_call(libthread.Q.change_body_rotation, 2, -0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
     elif char == ';': # +X
         print "';': rotate body around X axis (+)"
         libthread.thread_call(libthread.Q.change_body_rotation, 0, 0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
     elif char == "'": # -X
         print "''': rotate body around X axis (-)"
         libthread.thread_call(libthread.Q.change_body_rotation, 0, -0.1*speed)
         if not libthread.qout.get():
             print " rotation failed"
+        commit(libthread)
         print ""
+    elif char == "-": # ---------------------------------------------- CHANGE Z
+        if not cob_selected:
+            print "'-': leg ", leg, " Z -", speed
+            libthread.thread_call(libthread.Q.change_foot_pos,
+                                  leg, 0, 0, -speed, 0)
+        else:
+            print "'-': body Z -", speed
+            libthread.thread_call(libthread.Q.change_all_feet_pos, 
+                                  0, 0, speed)
+        if not libthread.qout.get():
+            print " movement failed"
+        commit(libthread)
+        print ""
+    elif char == "+": # +Z
+        if not cob_selected:
+            print "'+': leg ", leg, " Z +", speed
+            libthread.thread_call(libthread.Q.change_foot_pos,
+                                  leg, 0, 0, speed, 0)
+        else:
+            print "'-': body Z +", speed
+            libthread.thread_call(libthread.Q.change_all_feet_pos, 
+                                  0, 0, -speed)
+        if not libthread.qout.get():
+            print " movement failed"
+        commit(libthread)
+        print ""
+    elif char == "l": # -------------------------------------- MOVE TO LIFT LEG
+        if not cob_selected:
+            print "'l': move CoB to lift leg ", leg
+            if not move_to_lift(libthread, leg, 2.0, 10):
+                print " movement failed"
+            commit(libthread)
+            print ""
         
 def sync_from_device(libthread):
     libthread.thread_call(libthread.Q.sync_from_device)
@@ -361,7 +400,7 @@ def cycle(libthread, angle, force):
 def transfer_leg(libthread, leg, x, y):
     print "legtransfer ", leg, x, y
     t = 0.3
-    dz = 1.7
+    dz = 2.0
     # lift
     libthread.thread_call(libthread.Q.change_foot_pos, leg, 0, 0, dz, 0)
     L1 = libthread.qout.get()
@@ -408,7 +447,7 @@ def stable_up(libthread, leg):
     for i in range(3): libthread.qout.get()
     commit(libthread)
     libthread.thread_call(libthread.Q.change_foot_pos, 
-                          leg, 0, 0, 1.7, 0)
+                          leg, 0, 0, 2.0, 0)
     libthread.qout.get()
     commit(libthread)
 
@@ -422,7 +461,7 @@ def stable_down(libthread, leg):
     for i in range(3): libthread.qout.get()
     commit(libthread)
     libthread.thread_call(libthread.Q.change_foot_pos, 
-                          leg, 0, 0, -1.7, 0)
+                          leg, 0, 0, -2.0, 0)
     libthread.qout.get()
     commit(libthread)
                 
@@ -492,7 +531,7 @@ def move_body_in_steps(libthread, x, y, z, stepcount):
         libthread.thread_call(libthread.Q.change_all_feet_pos, dx, dy, dz)
         libthread.qout.get()
         commit(libthread)
-        time.sleep(0.05)
+        time.sleep(0.02)
     cob_moved[0] -= x;
     cob_moved[1] -= y;
     cob_moved[2] -= z;

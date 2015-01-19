@@ -37,16 +37,16 @@
      guidetolerance="10"
      id="base"
      inkscape:current-layer="layer1"
-     inkscape:cx="611.97762"
-     inkscape:cy="232.59081"
+     inkscape:cx="528.17105"
+     inkscape:cy="110.56939"
      inkscape:document-units="px"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:window-height="1017"
-     inkscape:window-width="1920"
-     inkscape:window-x="1672"
+     inkscape:window-height="1027"
+     inkscape:window-width="1680"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:zoom="1"
+     inkscape:zoom="1.4142136"
      objecttolerance="10"
      pagecolor="#ffffff"
      showgrid="false"
@@ -4211,7 +4211,7 @@
        transform="matrix(0.40650151,0,0,0.40650151,567.77655,134.90461)" />
     <path
        style="fill:none;stroke:#0000c8;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 531.98736,373.01791 16.03148,-149.9375 -31.21852,-0.0625"
+       d="m 635.48736,336.01791 -87.46852,-112.9375 -31.21852,-0.0625"
        id="path4301-4-1-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
@@ -4264,13 +4264,47 @@
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000c8;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
-       x="498.26025"
-       y="394.28784"
+       x="622.26025"
+       y="354.28784"
        id="text4297-1-8-7-5-1-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="498.26025"
-         y="394.28784"
+         x="622.26025"
+         y="354.28784"
          id="tspan4481-5">rotate around X</tspan></text>
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:0.11764706;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3473-4-1-6-5-1"
+       width="37.476658"
+       height="36.946327"
+       x="452.40579"
+       y="204.4381" />
+    <path
+       style="fill:none;stroke:#0000c8;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 472.35452,231.90318 65.31297,127.75001"
+       id="path4301-0-1-9-1-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#0000c8;fill-opacity:1;stroke:#0000c8;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path5481-79-9-8-2-7-4"
+       sodipodi:cx="18.384775"
+       sodipodi:cy="114.85785"
+       sodipodi:rx="3.7123106"
+       sodipodi:ry="3.7123106"
+       d="m 22.097086,114.85785 a 3.7123106,3.7123106 0 1 1 -7.424621,0 3.7123106,3.7123106 0 1 1 7.424621,0 z"
+       transform="matrix(0.40650151,0,0,0.40650151,464.93498,185.19173)" />
+    <text
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000c8;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+       x="511.12753"
+       y="385.79077"
+       id="text4297-1-8-7-5-1-9-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="511.12753"
+         y="385.79077"
+         id="tspan4481-5-9">move CoB to lift leg</tspan></text>
   </g>
 </svg>
