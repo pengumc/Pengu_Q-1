@@ -12,6 +12,9 @@
 *.csv
 *.s#*
 *.b#*
+*.bak
+*.[0-9]*
+*.stf
 /quadruped/doc
 /quadruped/log.txt
 /quadruped/cpplint.py
