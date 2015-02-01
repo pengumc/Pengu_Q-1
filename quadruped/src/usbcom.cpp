@@ -204,15 +204,17 @@ int UsbCom::WriteServoPulsewidths(const double* pulsewidths) {
   return 0;
 }
 
-// -----------------------------------------------------------------ReadMiscData
-/** @brief read misc data from device, returns pointer to \ref misc_buf_ 
- * or NULL on error
+// ------------------------------------------------------------------readWithCmd
+/** @brief send cmd and read the returned data from the device.
+ *
+ * Data is stored in \ref misc_buf_
+ * @return True on success
  */
-const uint8_t* UsbCom::ReadMiscData() {
-  if (!handle_) return NULL;
+bool UsbCom::ReadWithCmd(uint8_t cmd) {
+  if (!handle_) return false;
   // send getdata command
   wbuf_[0] = 0x00;
-  wbuf_[1] = 0x02;
+  wbuf_[1] = cmd;
   int res = hid_write(handle_, wbuf_, sizeof(wbuf_));
   if (res < 0) {
     last_error_ = hid_error(handle_);
@@ -224,12 +226,37 @@ const uint8_t* UsbCom::ReadMiscData() {
     last_error_ = hid_error(handle_);
     return NULL;
   }
+  // store in misc_buf_
   if (memcmp(kUsbSuccess, rbuf_, kUsbReadBufferSize / sizeof(uint8_t))) {
     memcpy(misc_buf_, rbuf_, sizeof(rbuf_));
+    return true;
+  } else {
+    printf("usbcom: received 'success' after request instead of data\n");
+    return false;
+  }
+}
+
+// -----------------------------------------------------------------ReadMiscData
+/** @brief read misc data from device, returns pointer to \ref misc_buf_ 
+ * or NULL on error
+ */
+const uint8_t* UsbCom::ReadMiscData() {
+  if (ReadWithCmd(kUsbCustomGetMiscData)) {
     return misc_buf_;
   } else {
-    printf("usbcom: received success after data req\n");
-    return NULL;  // ReadMiscData();
+    return NULL;
+  }
+}
+
+// ------------------------------------------------------------------ReadAdcData
+/** @brief read adc data from device, returns pointer to \ref misc_buf_ 
+ * or NULL on error
+ */
+const uint8_t* UsbCom::ReadAdcData() {
+  if (ReadWithCmd(kUsbCustomGetAdcData)) {
+    return misc_buf_;
+  } else {
+    return NULL;
   }
 }
 

@@ -345,6 +345,12 @@ def act_on_key(char, libthread):
                 print " movement failed"
             commit(libthread)
             print ""
+    elif char == "g": # ----------------------------------------- GET ADC DATA
+        print "'g': grabbing adc data"
+        libthread.thread_call(libthread.Q.get_adc_data)
+        data = libthread.qout.get()
+        if data:
+            print "  ", data[0:8]
         
 def sync_from_device(libthread):
     libthread.thread_call(libthread.Q.sync_from_device)

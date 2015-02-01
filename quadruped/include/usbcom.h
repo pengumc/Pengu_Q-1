@@ -37,6 +37,8 @@ class UsbCom {
   static const uint8_t kUsbCustomGetPos4To7 = 0x06;
   static const uint8_t kUsbCustomGetPos8To11 = 0x07;
   static const uint8_t kUsbCustomSetData = 0x03;
+  static const uint8_t kUsbCustomGetMiscData = 0x02;
+  static const uint8_t kUsbCustomGetAdcData = 0x08;
   static const uint8_t kUsbSuccess[kUsbReadBufferSize];
   // constructor, destructor
   UsbCom();
@@ -50,6 +52,7 @@ class UsbCom {
   int ReadServoPulsewidths();
   int WriteServoPulsewidths(const double* pulsewidths);
   const uint8_t* ReadMiscData();
+  const uint8_t* ReadAdcData();
 
  private:
   hid_device* handle_;/**< @brief usb device handle*/
@@ -67,6 +70,7 @@ class UsbCom {
    * pw = 2107e-6 - x*22/12e6<br>
    * x = 1500e-6 - (angle/full_range * 1000e-6)<br>
    */
+  bool ReadWithCmd(uint8_t cmd);
 };
 
 }  // namespace Q1

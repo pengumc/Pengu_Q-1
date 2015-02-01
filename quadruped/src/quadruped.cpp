@@ -327,6 +327,12 @@ const uint8_t* Quadruped::GetMiscDataFromDevice() {
   return usb_.ReadMiscData();
 }
 
+// ---------------------------------------------------------GetAdcDataFromDevice
+/** @brief calls UsbCom::ReadAdcData */
+const uint8_t* Quadruped::GetAdcDataFromDevice() {
+  return usb_.ReadAdcData();
+}
+
 // ---------------------------------------------------------------UpdateSpringGG
 /** @brief update the spring gaitgenerator with the current feet, com, 
  * and rest positions

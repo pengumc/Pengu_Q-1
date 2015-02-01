@@ -257,6 +257,12 @@ extern "C" const uint8_t* QuadrupedGetMiscData(Quadruped* q) {
   return q->GetMiscDataFromDevice();
 }
 
+// ----------------------------------------------------------QuadrupedGetAdcData
+/** @brief calls \ref UsbCom::ReadAdcData */
+extern "C" const uint8_t* QuadrupedGetAdcData(Quadruped* q) {
+  return q->GetAdcDataFromDevice();
+}
+
 // ------------------------------------------------QuadrupedFindVectorToDiagonal
 /** @brief calls \ref Quadruped::FindVectorToDiagonal */
 extern "C" const double* QuadrupedFindVectorToDiagonal(Quadruped* q,

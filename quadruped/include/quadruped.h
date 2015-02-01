@@ -58,13 +58,14 @@ class Quadruped {
   bool ChangeBodyRotation(HMatrix R);
   bool SetBodyRotation(HMatrix R);
   void ResetBody();
-  // functions for oter configuration
+  // functions for other configuration
   void SetFootRestVector(int leg_index, double x, double y, double z);
   // functions handling usb communication
   int ConnectDevice(uint16_t vid, uint16_t pid);
   bool SyncToDevice();
   bool SyncFromDevice();
   const uint8_t* GetMiscDataFromDevice();
+  const uint8_t* GetAdcDataFromDevice();
   // functions to do gaitgeneration
   void UpdateSpringGG();
   void ZeroSpringGG();

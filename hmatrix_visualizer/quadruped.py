@@ -21,6 +21,7 @@ class Quadruped:
         self.lib.QuadrupedSetBodyRotation.restype = c_bool
         self.lib.QuadrupedChangeBodyRotation.restype = c_bool
         self.lib.QuadrupedGetMiscData.restype = POINTER(c_uint8)
+        self.lib.QuadrupedGetAdcData.restype = POINTER(c_uint8)
         self.lib.QuadrupedFindVectorToDiagonal.restype = POINTER(c_double)
         self.lib.QuadrupedGetFootRestVector.restype = POINTER(c_double)
         #startup
@@ -128,6 +129,13 @@ class Quadruped:
         
     def get_misc_data(self):
         r = self.lib.QuadrupedGetMiscData(self.q)
+        if r:
+            return r
+        else:
+            return None
+
+    def get_adc_data(self):
+        r = self.lib.QuadrupedGetAdcData(self.q)
         if r:
             return r
         else:
